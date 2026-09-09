@@ -10,6 +10,10 @@
     tailwind.config = { darkMode: 'class' }
   </script>
   
+  <!-- Firebase SDK (Compat Version for Standalone Vanilla HTML) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
   <!-- AES Cryptography Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -20,10 +24,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
-    /* Dynamic Scalable Root Font Sizes */
     html.font-sm { font-size: 13.5px; }
-    html.font-md { font-size: 15px; }   /* Default Normal */
-    html.font-lg { font-size: 17.5px; } /* High Legibility */
+    html.font-md { font-size: 15px; }
+    html.font-lg { font-size: 17.5px; }
 
     body { 
       font-family: 'Plus Jakarta Sans', sans-serif; 
@@ -34,14 +37,12 @@
     .tab-content.active { display: block; animation: fadeIn 0.15s ease-in-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Scenic Glassmorphism Login Background */
     .login-scenic-bg {
       background: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.55)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop');
       background-size: cover;
       background-position: center;
     }
 
-    /* Glass Card */
     .glass-card {
       background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(20px);
@@ -55,7 +56,6 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Printable A4 */
     @media print {
       body * { visibility: hidden; }
       #printableA4Card, #printableA4Card * { visibility: visible; }
@@ -85,7 +85,7 @@
           BK Operations & Management System မှ ကြိုဆိုပါသည်။ နယ်စပ်ရေကြောင်း ကုန်စည်ပို့ဆောင်ရေးနှင့် အကောက်ခွန် ဝန်ဆောင်မှု စီမံခန့်ခွဲရေး ပေါ်တယ်လ်။
         </p>
         <div class="pt-2 text-[11px] text-slate-300 hidden md:block">
-          🛡️ Protected by AES-256 & Multi-Role Access Control
+          ☁️ Powered by Google Firebase Cloud Real-Time Database
         </div>
       </div>
 
@@ -129,7 +129,7 @@
               <input type="checkbox" id="rememberMeCheckbox" class="rounded text-blue-600">
               <span>Remember username</span>
             </label>
-            <span class="text-blue-600 dark:text-blue-400 font-semibold">BK System v16.1</span>
+            <span class="text-blue-600 dark:text-blue-400 font-semibold">BK System v17.0</span>
           </div>
 
           <!-- Error Msg -->
@@ -145,14 +145,14 @@
         </form>
 
         <div class="pt-2 text-center text-[11px] text-slate-400">
-          Authorized personnel only. All activities are monitored.
+          Authorized personnel only. Real-Time Synchronized.
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- ================= TOP HEADER (RESPONSIVE PC & TABLET) ================= -->
+  <!-- ================= TOP HEADER ================= -->
   <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30 shadow-sm transition-colors duration-200">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-2.5">
       
@@ -166,8 +166,10 @@
           <div class="flex items-center gap-1.5 flex-wrap">
             <span id="headerRoleBadge" class="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full"></span>
             <span id="headerUserDisplayName" class="text-[10px] text-slate-500 dark:text-slate-400 font-medium"></span>
-            <span class="inline-flex items-center gap-0.5 text-[8px] sm:text-[9px] font-bold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 px-1.5 py-0.5 rounded">
-              🛡️ AES-256
+            
+            <!-- CLOUD SYNC BADGE -->
+            <span id="cloudStatusBadge" class="inline-flex items-center gap-1 text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-300 px-2 py-0.5 rounded-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> <span>Cloud Live</span>
             </span>
           </div>
         </div>
@@ -200,13 +202,13 @@
 
         <!-- FONT SIZE CONTROLS -->
         <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700 select-none">
-          <button onclick="changeFontSize('sm')" id="btnFontSm" class="px-1.5 py-1 rounded text-[10px] font-bold text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 transition" title="စာလုံး သေးမည်">A-</button>
-          <button onclick="changeFontSize('md')" id="btnFontMd" class="px-1.5 py-1 rounded text-[10px] font-bold text-blue-950 dark:text-white bg-white dark:bg-slate-700 shadow-sm transition" title="စာလုံး ပုံမှန်">A</button>
-          <button onclick="changeFontSize('lg')" id="btnFontLg" class="px-1.5 py-1 rounded text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 transition" title="စာလုံး ကြီးမည်">A+</button>
+          <button onclick="changeFontSize('sm')" id="btnFontSm" class="px-1.5 py-1 rounded text-[10px] font-bold text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 transition">A-</button>
+          <button onclick="changeFontSize('md')" id="btnFontMd" class="px-1.5 py-1 rounded text-[10px] font-bold text-blue-950 dark:text-white bg-white dark:bg-slate-700 shadow-sm transition">A</button>
+          <button onclick="changeFontSize('lg')" id="btnFontLg" class="px-1.5 py-1 rounded text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 transition">A+</button>
         </div>
 
         <!-- FULLSCREEN BUTTON -->
-        <button onclick="toggleFullScreen()" id="btnFullscreen" class="p-1 px-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Full Screen အဖွင့်/အပိတ်">
+        <button onclick="toggleFullScreen()" id="btnFullscreen" class="p-1 px-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition" title="Full Screen">
           <span id="fullscreenIcon">⛶</span>
         </button>
 
@@ -214,8 +216,7 @@
           <span id="themeIcon">🌙</span>
         </button>
 
-        <!-- LOG OUT BUTTON -->
-        <button onclick="handleLogout()" class="p-1 px-2 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-900 hover:bg-rose-100 transition flex items-center gap-1 font-semibold" title="စနစ်မှ ထွက်မည်">
+        <button onclick="handleLogout()" class="p-1 px-2.5 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-900 hover:bg-rose-100 transition flex items-center gap-1 font-semibold">
           <span>🚪 Logout</span>
         </button>
       </div>
@@ -257,7 +258,6 @@
           <h3 id="statTHB" class="text-lg sm:text-2xl font-bold text-indigo-700 dark:text-indigo-400 mt-0.5">฿0</h3>
           <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">ဘတ်ငွေ စုစုပေါင်း တန်ဖိုး</p>
         </div>
-        <!-- Amount Card (HIDDEN FOR STAFF) -->
         <div id="cardAdminAmount" class="not-for-staff bg-gradient-to-br from-blue-950 to-slate-900 text-white p-3 rounded-xl shadow-md col-span-2 md:col-span-1">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-blue-300">AMOUNT (THB)</p>
           <h3 id="statAmount" class="text-lg sm:text-2xl font-bold text-emerald-400 mt-0.5">฿0</h3>
@@ -305,7 +305,7 @@
             <span>➕ စာရင်းအသစ်</span>
           </button>
 
-          <button onclick="clearAllData()" class="admin-only-item text-xs text-rose-600 font-semibold px-2 py-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition" title="Cargo စာရင်းအားလုံးရှင်းမည်">
+          <button onclick="clearAllData()" class="admin-only-item text-xs text-rose-600 font-semibold px-2 py-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition">
             🗑️ ရှင်းမည်
           </button>
         </div>
@@ -362,7 +362,6 @@
                 <th onclick="sortTable('usd')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Inv: (USD) <span id="sort-usd">↕</span></th>
                 <th onclick="sortTable('rate')" class="p-3 text-center cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">RATE <span id="sort-rate">↕</span></th>
                 <th onclick="sortTable('thb')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Inv: (THB) <span id="sort-thb">↕</span></th>
-                <!-- ADMIN / VIEWER ONLY COLUMNS -->
                 <th id="thAdminPct" onclick="sortTable('pct')" class="not-for-staff p-3 text-center cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">% <span id="sort-pct">↕</span></th>
                 <th id="thAdminAmount" onclick="sortTable('amount')" class="not-for-staff p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">AMOUNT (THB) <span id="sort-amount">↕</span></th>
                 <th onclick="sortTable('remark')" class="p-3 text-center cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Customer <span id="sort-remark">↕</span></th>
@@ -430,12 +429,12 @@
       </div>
     </div>
 
-    <!-- ================= TAB 3: CARGO BREAKDOWN (ADMIN & VIEWER) ================= -->
+    <!-- ================= TAB 3: CARGO BREAKDOWN ================= -->
     <div id="tab-breakdown" class="tab-content">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
           <div>
-            <h2 class="text-base font-bold text-slate-900 dark:text-white">Cargo - Customer (Client / Shipper) အလိုက် လချုပ်စာရင်း</h2>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">Cargo - Customer အလိုက် လချုပ်စာရင်း</h2>
             <p class="text-xs text-slate-500">Customer တစ်ခုချင်းစီ၏ စုစုပေါင်း ကုန်ချိန်နှင့် ဝန်ဆောင်ခများ</p>
           </div>
           <button onclick="switchTab('dashboard')" class="text-xs text-blue-900 dark:text-blue-400 font-semibold hover:underline">
@@ -462,7 +461,7 @@
       </div>
     </div>
 
-    <!-- ================= TAB 4: SEPARATE ED SERVICE DASHBOARD (ADMIN & VIEWER) ================= -->
+    <!-- ================= TAB 4: SEPARATE ED SERVICE DASHBOARD ================= -->
     <div id="tab-ed-dashboard" class="tab-content">
       
       <div class="flex items-center justify-between mb-2">
@@ -537,7 +536,7 @@
             <span>➕ ED စာရင်းအသစ်</span>
           </button>
 
-          <button onclick="clearAllEdData()" class="admin-only-item text-xs text-rose-600 font-semibold px-2 py-1.5 hover:bg-rose-50 rounded-lg transition" title="ED စာရင်းအားလုံးရှင်းမည်">
+          <button onclick="clearAllEdData()" class="admin-only-item text-xs text-rose-600 font-semibold px-2 py-1.5 hover:bg-rose-50 rounded-lg transition">
             🗑️ ရှင်းမည်
           </button>
         </div>
@@ -572,12 +571,12 @@
 
     </div>
 
-    <!-- ================= TAB 5: SEPARATE ED BREAKDOWN (ADMIN & VIEWER) ================= -->
+    <!-- ================= TAB 5: SEPARATE ED BREAKDOWN ================= -->
     <div id="tab-ed-breakdown" class="tab-content">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
           <div>
-            <h2 class="text-base font-bold text-slate-900 dark:text-white">ED Service - Customer (Co,.Ltd) အလိုက် လချုပ်စာရင်း</h2>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">ED Service - Customer အလိုက် လချုပ်စာရင်း</h2>
             <p class="text-xs text-slate-500">Customer တစ်ခုချင်းစီ၏ ED အကြိမ်ရေ၊ ဒေါ်လာတန်ဖိုးနှင့် ကျသင့်ငွေ မြန်မာကျပ်ငွေ စာရင်းချုပ်</p>
           </div>
           <button onclick="switchTab('ed-dashboard')" class="text-xs text-indigo-900 dark:text-indigo-400 font-semibold hover:underline">
@@ -608,7 +607,7 @@
     <div id="tab-companies" class="tab-content">
       <div class="max-w-5xl mx-auto space-y-6">
         
-        <!-- ================= COLLAPSIBLE SERVER & USER MANAGEMENT ================= -->
+        <!-- SERVER & USER MANAGEMENT -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-sm space-y-4">
           
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
@@ -626,16 +625,13 @@
                 Server: Owner Mode
               </span>
               
-              <!-- TOGGLE BUTTON -->
               <button onclick="toggleUserManagementSection()" id="btnToggleUserMgr" class="text-xs font-bold bg-indigo-50 dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 text-indigo-900 dark:text-indigo-300 hover:bg-indigo-100 px-3 py-1 rounded-lg transition flex items-center gap-1.5 shadow-sm">
                 <span id="userMgrToggleIcon">🙈</span> <span id="userMgrToggleText">အကောင့်များ စီမံခန့်ခွဲမှု ပိတ်မည်</span>
               </button>
             </div>
           </div>
 
-          <!-- COLLAPSIBLE BODY (OPENED IN SCREENSHOT) -->
           <div id="userManagementCollapsibleBody" class="space-y-4 pt-1 transition-all">
-            <!-- USER ENTRY / EDIT FORM -->
             <form onsubmit="handleUserFormSubmit(event)" class="space-y-4">
               <input type="hidden" id="editingUserId" value="">
               
@@ -678,7 +674,6 @@
               </div>
             </form>
 
-            <!-- USER ACCOUNTS TABLE -->
             <div class="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl">
               <table class="w-full text-left border-collapse text-xs">
                 <thead class="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold uppercase select-none">
@@ -698,7 +693,7 @@
 
         </div>
 
-        <!-- BACKUP & RESTORE SECTION WITH ADMIN PASSWORD PROTECTION -->
+        <!-- BACKUP & RESTORE SECTION -->
         <div class="bg-gradient-to-r from-blue-950 via-slate-900 to-blue-900 text-white rounded-2xl p-5 sm:p-6 shadow-md space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-blue-900/60 pb-3">
             <div>
@@ -721,7 +716,7 @@
             </div>
           </div>
           <p class="text-[11px] text-blue-200">
-            🔒 လုံခြုံရေးမှတ်ချက်: Backup ဖိုင်ကို အခြားသူများ ရရှိသွားသည့်တိုင်အောင် အဆိုပါဖိုင်ထုတ်စဉ်က သုံးခဲ့သော Admin Password အမှန် မသိပါက မည်သည့်စက်တွင်မှ Restore လုပ်၍ စာရင်းများ ဖွင့်ကြည့်၍ မရနိုင်ပါ။
+            🔒 လုံခြုံရေးမှတ်ချက်: Backup ဖိုင်ကို အခြားသူများ ရရှိသွားသည့်တိုင်အောင် သက်ဆိုင်ရာ Admin Password မသိပါက မည်သည့်စက်တွင်မှ Restore လုပ်၍ စာရင်းများ ဖွင့်ကြည့်၍ မရနိုင်ပါ။
           </p>
         </div>
 
@@ -971,10 +966,9 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-3 transition-colors">
     <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-xs text-slate-400 dark:text-slate-500">© 2026 BK Operations & Management System. Version 16.1 (Account Sync Edition).</p>
+      <p class="text-xs text-slate-400 dark:text-slate-500">© 2026 BK Operations & Management System. Version 17.0 (Cloud Real-Time Sync Edition).</p>
     </div>
   </footer>
 
@@ -1030,27 +1024,104 @@
     // ================= 2. FULLSCREEN CONTROLLER =================
     function toggleFullScreen() {
       if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-          console.warn("Fullscreen request error:", err);
-        });
+        document.documentElement.requestFullscreen().catch(err => console.warn(err));
         document.getElementById('fullscreenIcon').innerText = '🗗';
       } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        }
+        if (document.exitFullscreen) document.exitFullscreen();
         document.getElementById('fullscreenIcon').innerText = '⛶';
       }
     }
 
     document.addEventListener('fullscreenchange', () => {
       const icon = document.getElementById('fullscreenIcon');
-      if (icon) {
-        icon.innerText = document.fullscreenElement ? '🗗' : '⛶';
-      }
+      if (icon) icon.innerText = document.fullscreenElement ? '🗗' : '⛶';
     });
 
-    // ================= 3. USER MANAGEMENT & AUTHENTICATION =================
-    // UPDATED ACCORDING TO USER'S SCREENSHOT
+    // ================= 3. GOOGLE FIREBASE CLOUD REAL-TIME DATABASE SETUP =================
+    const firebaseConfig = {
+      apiKey: "AIzaSyA9bHT8REIxVN4yZ60e7BjfEC9oHU1t8zc",
+      authDomain: "bhone-kyaw.firebaseapp.com",
+      databaseURL: "https://bhone-kyaw-default-rtdb.firebaseio.com",
+      projectId: "bhone-kyaw",
+      storageBucket: "bhone-kyaw.firebasestorage.app",
+      messagingSenderId: "334844664096",
+      appId: "1:334844664096:web:944f71d067c9dc788ddf45"
+    };
+
+    let firebaseDb = null;
+    let isCloudConnected = false;
+
+    function initFirebaseCloudSync() {
+      try {
+        if (window.firebase) {
+          if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+          }
+          firebaseDb = firebase.database();
+          
+          // Monitor Real-Time Connection
+          const connectedRef = firebaseDb.ref(".info/connected");
+          connectedRef.on("value", (snap) => {
+            const statusBadge = document.getElementById('cloudStatusBadge');
+            if (snap.val() === true) {
+              isCloudConnected = true;
+              if (statusBadge) {
+                statusBadge.className = "inline-flex items-center gap-1 text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-300 px-2 py-0.5 rounded-full";
+                statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> <span>Cloud Live</span>`;
+              }
+            } else {
+              isCloudConnected = false;
+              if (statusBadge) {
+                statusBadge.className = "inline-flex items-center gap-1 text-[9px] font-bold bg-amber-50 text-amber-700 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-300 px-2 py-0.5 rounded-full";
+                statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <span>Connecting...</span>`;
+              }
+            }
+          });
+
+          // REAL-TIME LISTENER: Listen for changes across all devices
+          firebaseDb.ref("bk_operations_master").on("value", (snapshot) => {
+            const val = snapshot.val();
+            if (val) {
+              if (val.cargoData) localStorage.setItem('bk_CargoData_enc', encryptPayload(val.cargoData));
+              if (val.edData) localStorage.setItem('bk_EdServiceData_enc', encryptPayload(val.edData));
+              if (val.userAccounts) localStorage.setItem('bk_user_accounts_enc', encryptPayload(val.userAccounts));
+              if (val.creditCompanies) localStorage.setItem('bk_CreditCompanies_enc', encryptPayload(val.creditCompanies));
+              if (val.customers) localStorage.setItem('bk_CompanyMap_enc', encryptPayload(val.customers));
+
+              // Auto-refresh all views instantly on change
+              populateMonthDropdown();
+              populateEdMonthDropdown();
+              filterData();
+              filterEdData();
+              renderDailyReport();
+              renderUserAccountsTable();
+              renderCreditCoTable();
+              renderCustomerTable();
+            } else {
+              // Initial cloud push if cloud is empty
+              syncFullStateToCloud();
+            }
+          });
+        }
+      } catch (err) {
+        console.warn("Firebase Init fallback to LocalStorage:", err);
+      }
+    }
+
+    function syncFullStateToCloud() {
+      if (!firebaseDb) return;
+      const payload = {
+        cargoData: getCargoData(),
+        edData: getEdData(),
+        userAccounts: getUserAccounts(),
+        creditCompanies: getCreditCompanies(),
+        customers: getCustomers(),
+        lastUpdated: Date.now()
+      };
+      firebaseDb.ref("bk_operations_master").set(payload).catch(e => console.warn(e));
+    }
+
+    // ================= 4. USER MANAGEMENT & AUTHENTICATION =================
     const INITIAL_USERS = [
       { id: 'usr_1', username: 'Bhonekyaw', password: '1672000', displayName: 'BK Server', role: 'admin', isOwner: true },
       { id: 'usr_2', username: 'Paingsoe', password: 'paingsoe2026', displayName: 'Operations Staff', role: 'staff', isOwner: false },
@@ -1070,6 +1141,7 @@
     function saveUserAccounts(list) {
       localStorage.setItem('bk_user_accounts_enc', encryptPayload(list));
       renderUserAccountsTable();
+      if (firebaseDb) firebaseDb.ref("bk_operations_master/userAccounts").set(list);
     }
 
     let currentUser = null;
@@ -1205,7 +1277,7 @@
       }
     }
 
-    // ================= 4. USER MANAGEMENT CRUD =================
+    // ================= 5. USER CRUD =================
     function renderUserAccountsTable() {
       const list = getUserAccounts();
       const tbody = document.getElementById('userAccountsTableBody');
@@ -1263,7 +1335,7 @@
         alert(`အကောင့် [${username}] အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!`);
       } else {
         if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
-          return alert("ဤ Username ဖြင့် အကောင့်ရှိပြီးသား ဖြစ်ပါသည်။ အခြား အမည်သုံးပါ။");
+          return alert("ဤ Username ဖြင့် အကောင့်ရှိပြီးသား ဖြစ်ပါသည်။");
         }
         users.push({
           id: generateId('usr'),
@@ -1317,7 +1389,7 @@
       });
     }
 
-    // ================= 5. BACKUP & RESTORE WITH ADMIN PASSWORD =================
+    // ================= 6. BACKUP & RESTORE WITH ADMIN PASSWORD =================
     function triggerEncryptedBackup() {
       if (currentUser && currentUser.role !== 'admin') {
         return alert("Admin အကောင့်သာ Backup ပြုလုပ်ခွင့် ရှိပါသည်။");
@@ -1334,7 +1406,7 @@
       }
 
       const backupData = {
-        version: "16.1",
+        version: "17.0",
         system: "BK Operations & Management System",
         exportDate: new Date().toISOString(),
         exportedBy: currentUser.username,
@@ -1356,7 +1428,7 @@
 
       const fileContainer = {
         meta: "BK_ENCRYPTED_BACKUP",
-        version: "16.1",
+        version: "17.0",
         timestamp: Date.now(),
         data: encryptedPayload
       };
@@ -1382,10 +1454,7 @@
 
           if (rawObj.meta === "BK_ENCRYPTED_BACKUP" && rawObj.data) {
             const pwd = prompt("ဤ Backup ဖိုင်ကို ပြန်လည်ဖွင့်ဖော်ရန် မူလ Admin Password ကို ရိုက်ထည့်ပါ:");
-            if (!pwd) {
-              e.target.value = '';
-              return;
-            }
+            if (!pwd) { e.target.value = ''; return; }
 
             if (rawObj.data.startsWith("BK_AES::") && window.CryptoJS && CryptoJS.AES) {
               try {
@@ -1410,13 +1479,14 @@
             throw new Error("ဖိုင်ပုံစံ မှားယွင်းနေပါသည်။");
           }
 
-          if (confirm(`Backup ဖိုင်မှ ဒေတာများကို လက်ရှိစနစ်ထဲသို့ Restore အစားထိုး သိမ်းဆည်းမှာ သေချာပါသလား?`)) {
+          if (confirm(`Backup ဖိုင်မှ ဒေတာများကို Cloud နှင့် စနစ်ထဲသို့ Restore အစားထိုး သိမ်းဆည်းမှာ သေချာပါသလား?`)) {
             if (finalData.cargoData) saveCargoData(finalData.cargoData);
             if (finalData.edData) saveEdData(finalData.edData);
             if (finalData.creditCompanies) saveCreditCompanies(finalData.creditCompanies);
             if (finalData.customers) saveCustomers(finalData.customers);
             if (finalData.userAccounts) saveUserAccounts(finalData.userAccounts);
 
+            syncFullStateToCloud();
             populateMonthDropdown();
             populateEdMonthDropdown();
             filterData();
@@ -1432,21 +1502,16 @@
       r.readAsText(file);
     }
 
-    // ================= 6. AES LOCALSTORAGE ENCRYPTION ENGINE =================
+    // ================= 7. AES LOCALSTORAGE ENCRYPTION ENGINE =================
     const SECURITY_SALT = "BK_Operations_Internal_Salt_2026";
-
-    function getEncryptionKey() {
-      return "BK_MASTER_KEY_" + SECURITY_SALT;
-    }
+    function getEncryptionKey() { return "BK_MASTER_KEY_" + SECURITY_SALT; }
 
     function encryptPayload(dataObj) {
       const jsonStr = JSON.stringify(dataObj);
       const key = getEncryptionKey();
 
       if (window.CryptoJS && CryptoJS.AES) {
-        try {
-          return "AES::" + CryptoJS.AES.encrypt(jsonStr, key).toString();
-        } catch(e) {}
+        try { return "AES::" + CryptoJS.AES.encrypt(jsonStr, key).toString(); } catch(e) {}
       }
       try {
         const encoded = encodeURIComponent(jsonStr);
@@ -1455,9 +1520,7 @@
           out += String.fromCharCode(encoded.charCodeAt(i) ^ key.charCodeAt(i % key.length));
         }
         return "XOR::" + btoa(out);
-      } catch(err) {
-        return jsonStr;
-      }
+      } catch(err) { return jsonStr; }
     }
 
     function decryptPayload(storedRaw) {
@@ -1485,7 +1548,7 @@
       try { return JSON.parse(storedRaw); } catch(e) { return null; }
     }
 
-    // ================= 7. DATASETS & ACCESSORS =================
+    // ================= 8. DATASETS & ACCESSORS =================
     const DEFAULT_STABLE_HOPE_BANNER = "data:image/jpeg;base64," + 
       "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAx" +
       "NDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy" +
@@ -1571,6 +1634,7 @@
       populateCreditCoDropdowns();
       renderCreditCoTable();
       renderDailyReport();
+      if (firebaseDb) firebaseDb.ref("bk_operations_master/creditCompanies").set(l);
     }
 
     function getCustomers() {
@@ -1588,6 +1652,7 @@
       localStorage.setItem('bk_CompanyMap_enc', encryptPayload(m));
       populateCustomerDropdowns();
       renderCustomerTable();
+      if (firebaseDb) firebaseDb.ref("bk_operations_master/customers").set(m);
     }
 
     function getCargoData() {
@@ -1597,6 +1662,7 @@
     }
     function saveCargoData(d) {
       localStorage.setItem('bk_CargoData_enc', encryptPayload(d));
+      if (firebaseDb) firebaseDb.ref("bk_operations_master/cargoData").set(d);
     }
 
     function getEdData() {
@@ -1606,6 +1672,7 @@
     }
     function saveEdData(d) {
       localStorage.setItem('bk_EdServiceData_enc', encryptPayload(d));
+      if (firebaseDb) firebaseDb.ref("bk_operations_master/edData").set(d);
     }
 
     function changeFontSize(size) {
@@ -1835,7 +1902,6 @@
 
       const role = currentUser ? currentUser.role : 'staff';
       const isStaff = role === 'staff';
-      const isViewer = role === 'viewer';
       const isAdmin = role === 'admin';
 
       list.forEach((item, index) => {
@@ -1983,7 +2049,7 @@
           kg: parseFloat(document.getElementById('cargoModalKG').value) || 0,
           usd, rate, thb, pct, amount
         });
-        alert("စာရင်းအသစ် သိမ်းဆည်းပြီးပါပြီ။");
+        alert("စာရင်းအသစ် Cloud သို့ သိမ်းဆည်းပြီးပါပြီ။");
       }
       saveCargoData(all);
       populateMonthDropdown();
@@ -2279,7 +2345,7 @@
           id: generateId('ed'), no: all.length + 1,
           date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate
         });
-        alert("ED စာရင်းအသစ် သိမ်းဆည်းပြီးပါပြီ။");
+        alert("ED စာရင်းအသစ် Cloud သို့ သိမ်းဆည်းပြီးပါပြီ။");
       }
       saveEdData(all);
       populateEdMonthDropdown();
@@ -2388,7 +2454,7 @@
           populateEdMonthDropdown();
           populateEdCustDropdown();
           filterEdData();
-          alert(`ED စာရင်းပေါင်း (${parsedList.length}) ခု ထည့်သွင်းပြီးပါပြီ။`);
+          alert(`ED စာရင်းပေါင်း (${parsedList.length}) ခု Cloud သို့ ထည့်သွင်းပြီးပါပြီ။`);
         } catch(err) {
           alert("Error: " + err.message);
         } finally { event.target.value = ''; }
@@ -2717,7 +2783,7 @@
           populateMonthDropdown();
           filterData();
           renderDailyReport();
-          alert(`Cargo စာရင်းပေါင်း (${parsedList.length}) ခု ထည့်သွင်းပြီးပါပြီ။`);
+          alert(`Cargo စာရင်းပေါင်း (${parsedList.length}) ခု Cloud သို့ ထည့်သွင်းပြီးပါပြီ။`);
         } catch(err) {
           alert("Error: " + err.message);
         } finally { e.target.value = ''; }
@@ -2835,6 +2901,7 @@
       renderUserAccountsTable();
       renderCreditCoTable();
       renderCustomerTable();
+      initFirebaseCloudSync();
     });
   </script>
 </body>
