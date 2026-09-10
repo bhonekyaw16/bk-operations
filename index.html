@@ -6,22 +6,20 @@
   <title>BK Operations & Management System</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { darkMode: 'class' }
-  </script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
   
-  <!-- Firebase SDK (Compat Version for Standalone Vanilla HTML) -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-  <!-- AES Cryptography Library -->
+  <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Times+New+Roman&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Times+New+Roman&display=swap" rel="stylesheet">
   
   <style>
     html.font-sm { font-size: 13.5px; }
@@ -29,7 +27,7 @@
     html.font-lg { font-size: 17.5px; }
 
     body { 
-      font-family: 'Plus Jakarta Sans', sans-serif; 
+      font-family: 'Plus Jakarta Sans', 'Padauk', sans-serif; 
       user-select: none;
       -webkit-user-select: none;
     }
@@ -46,36 +44,38 @@
     .glass-card {
       background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.6);
     }
     .dark .glass-card {
       background: rgba(15, 23, 42, 0.88);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* DAILY REPORT TIMES NEW ROMAN & PERFECT ALIGNMENT (A4 SIZE 1:1.414) */
+    /* DAILY REPORT A4 PROPORTION */
     #printableA4Card {
-      font-family: 'Times New Roman', Times, 'Pyidaungsu', 'Myanmar3', serif !important;
-      width: 794px !important;      /* Exact A4 width at 96 DPI */
-      min-height: 1123px !important;/* Exact A4 height at 96 DPI */
+      font-family: 'Times New Roman', 'Padauk', serif !important;
+      width: 794px !important;
+      min-height: 1123px !important;
       margin: 0 auto;
       background: #ffffff;
       color: #000000;
     }
     #printableA4Card table {
       border-collapse: collapse !important;
-      font-size: 13px !important;   /* Size 13 per requirement */
+      font-size: 13px !important;
     }
     #printableA4Card table th, 
     #printableA4Card table td {
       vertical-align: middle !important;
       text-align: center;
-      padding-top: 10px !important;
-      padding-bottom: 10px !important;
+      padding-top: 9px !important;
+      padding-bottom: 9px !important;
       line-height: 1.3 !important;
+    }
+
+    .mm-text {
+      font-family: 'Padauk', 'Pyidaungsu', sans-serif !important;
     }
 
     @media print {
@@ -93,7 +93,6 @@
   <div id="authScreen" class="fixed inset-0 z-50 login-scenic-bg flex items-center justify-center p-4 sm:p-8 overflow-y-auto">
     <div class="w-full max-w-5xl flex flex-col md:flex-row items-center justify-between gap-8 my-auto">
       
-      <!-- LEFT BRANDING -->
       <div class="text-white space-y-4 md:max-w-md text-center md:text-left">
         <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 text-white font-extrabold text-3xl shadow-xl">
           BK
@@ -111,7 +110,6 @@
         </div>
       </div>
 
-      <!-- RIGHT GLASS CARD (LOGIN FORM) -->
       <div class="glass-card rounded-3xl p-6 sm:p-9 w-full max-w-md shadow-2xl space-y-5 transition-all">
         <div class="space-y-1">
           <div class="flex items-center gap-2">
@@ -197,7 +195,6 @@
         <button id="btn-daily" onclick="switchTab('daily')" class="nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-xs">
           📄 Daily
         </button>
-
         <button id="btn-breakdown" onclick="switchTab('breakdown')" class="not-for-staff nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-xs">
           📑 Credit လချုပ်
         </button>
@@ -210,7 +207,6 @@
         <button id="btn-mpu" onclick="switchTab('mpu')" class="nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-amber-900 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-slate-800 transition border border-amber-200 dark:border-amber-900 text-xs">
           💳 MPU လိုင်စင်
         </button>
-        
         <button id="btn-companies" onclick="switchTab('companies')" class="admin-only-item nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-xs">
           👥 Users & Settings
         </button>
@@ -224,11 +220,9 @@
         <button onclick="toggleFullScreen()" id="btnFullscreen" class="p-1 px-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition" title="Full Screen">
           <span id="fullscreenIcon">⛶</span>
         </button>
-
         <button onclick="toggleDarkMode()" id="themeToggleBtn" class="p-1 px-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-amber-400 hover:bg-slate-200 transition" title="Dark / Light">
           <span id="themeIcon">🌙</span>
         </button>
-
         <button onclick="handleLogout()" class="p-1 px-2.5 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-900 hover:bg-rose-100 transition flex items-center gap-1 font-semibold">
           <span>🚪 Logout</span>
         </button>
@@ -239,9 +233,8 @@
   <!-- ================= MAIN CONTENT ================= -->
   <main class="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-5 flex-1 w-full">
 
-    <!-- ================= TAB 1: CREDIT DASHBOARD (Renamed from Cargo) ================= -->
+    <!-- ================= TAB 1: CREDIT DASHBOARD ================= -->
     <div id="tab-dashboard" class="tab-content active">
-      
       <div class="flex items-center justify-between mb-2">
         <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Credit Summary Statistics</span>
         <button onclick="toggleCargoCards()" class="text-xs text-blue-900 dark:text-blue-400 hover:underline flex items-center gap-1 font-semibold">
@@ -249,7 +242,6 @@
         </button>
       </div>
 
-      <!-- METRIC CARDS -->
       <div id="cargoMetricCardsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 mb-4 transition-all duration-200">
         <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Trips</p>
@@ -278,94 +270,76 @@
         </div>
       </div>
 
-      <!-- ACTIONS TOOLBAR -->
       <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm mb-4 flex flex-wrap items-center justify-between gap-2">
         <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-semibold text-slate-500">လ:</span>
             <select id="filterMonth" onchange="filterData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none"></select>
           </div>
-
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-semibold text-slate-500">Credit Co:</span>
             <select id="filterCreditCo" onchange="filterData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none"></select>
           </div>
-
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-semibold text-slate-500">Customer:</span>
             <select id="filterRemark" onchange="filterData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none"></select>
           </div>
-
           <input id="searchInput" onkeyup="filterData()" type="text" placeholder="လှေအမည် / Inv ရှာရန်..." class="text-xs border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 w-32 sm:w-36 bg-white dark:bg-slate-800 text-slate-800 dark:text-white outline-none focus:ring-1 focus:ring-blue-900">
         </div>
 
         <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <input type="file" id="excelFileInput" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleExcelImport(event)">
-          
           <button onclick="document.getElementById('excelFileInput').click()" class="admin-only-item text-xs bg-emerald-700 text-white font-semibold px-2.5 py-1.5 rounded-lg hover:bg-emerald-800 transition shadow-sm">
             <span>📥 Import</span>
           </button>
-
           <button onclick="exportToExcel()" class="text-xs bg-blue-950 dark:bg-blue-900 text-white font-semibold px-2.5 py-1.5 rounded-lg hover:bg-blue-900 transition shadow-sm">
             <span>📊 Export (<span id="exportCount">0</span>)</span>
           </button>
-
-          <!-- BATCH BUTTON -->
           <button id="btnToggleBatchTool" onclick="toggleBatchTool()" class="admin-only-item text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-2.5 py-1.5 rounded-lg transition shadow-sm">
             <span>⚡ % / Rate ပြောင်းရန်</span>
           </button>
-
           <button id="btnNewCargoEntry" onclick="openNewCargoEntry()" class="can-add-entry text-xs bg-blue-900 hover:bg-blue-800 text-white font-bold px-3 py-1.5 rounded-lg transition shadow-sm">
             <span>➕ Credit စာရင်းအသစ်</span>
           </button>
-
           <button onclick="clearAllData()" class="admin-only-item text-xs text-rose-600 font-semibold px-2 py-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition">
             🗑️ ရှင်းမည်
           </button>
         </div>
       </div>
 
-      <!-- BATCH % & RATE UPDATE PANEL (HIDDEN BY DEFAULT UPON LOGIN) -->
+      <!-- BATCH % & RATE UPDATE PANEL -->
       <div id="batchUpdatePanel" class="hidden bg-indigo-50 dark:bg-slate-800/90 border border-indigo-200 dark:border-slate-700 rounded-xl p-4 mb-4 shadow-sm">
         <div class="flex items-center justify-between mb-3 border-b border-indigo-200 dark:border-slate-700 pb-2">
-          <div class="flex items-center gap-2">
-            <span class="text-base">⚡</span>
-            <h4 class="text-xs font-bold text-indigo-950 dark:text-indigo-300">ရက်စွဲအလိုက် ကော်မရှင် % နှင့် RATE ငွေလဲနှုန်း အစုလိုက် ပြောင်းလဲသတ်မှတ်ခြင်း (Batch Update)</h4>
-          </div>
+          <h4 class="text-xs font-bold text-indigo-950 dark:text-indigo-300">⚡ ရက်စွဲအလိုက် ကော်မရှင် % နှင့် RATE ငွေလဲနှုန်း အစုလိုက် ပြောင်းလဲသတ်မှတ်ခြင်း</h4>
           <button onclick="toggleBatchTool()" class="text-xs text-slate-400 hover:text-slate-600">✕ ပိတ်မည်</button>
         </div>
-
         <form onsubmit="handleBatchUpdateSubmit(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-xs">
           <div class="sm:col-span-3">
-            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Customer ရွေးရန်</label>
-            <select id="batchCustomer" class="w-full text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-lg p-2 font-semibold outline-none"></select>
+            <label class="block font-semibold mb-1">Customer ရွေးရန်</label>
+            <select id="batchCustomer" class="w-full text-xs border rounded-lg p-2 dark:bg-slate-800 font-semibold"></select>
           </div>
           <div class="sm:col-span-2">
-            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">စတင်ရက် (From)</label>
-            <input id="batchStartDate" type="date" required class="w-full text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-lg p-2 outline-none">
+            <label class="block font-semibold mb-1">စတင်ရက် (From)</label>
+            <input id="batchStartDate" type="date" required class="w-full text-xs border rounded-lg p-2 dark:bg-slate-800">
           </div>
           <div class="sm:col-span-2">
-            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">ပြီးဆုံးရက် (To)</label>
-            <input id="batchEndDate" type="date" required class="w-full text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-lg p-2 outline-none">
+            <label class="block font-semibold mb-1">ပြီးဆုံးရက် (To)</label>
+            <input id="batchEndDate" type="date" required class="w-full text-xs border rounded-lg p-2 dark:bg-slate-800">
           </div>
           <div class="sm:col-span-2">
-            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">RATE အသစ် (ချန်ထားနိုင်)</label>
-            <input id="batchNewRate" type="number" step="0.01" placeholder="e.g. 34.7" class="w-full text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 font-bold text-blue-900 dark:text-blue-300 rounded-lg p-2 outline-none">
+            <label class="block font-semibold mb-1">RATE အသစ်</label>
+            <input id="batchNewRate" type="number" step="0.01" placeholder="e.g. 34.7" class="w-full text-xs border rounded-lg p-2 dark:bg-slate-800 font-bold text-blue-900">
           </div>
           <div class="sm:col-span-2">
-            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">% အသစ် (ချန်ထားနိုင်)</label>
-            <input id="batchNewPct" type="number" step="0.1" placeholder="e.g. 4.0" class="w-full text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 font-bold text-indigo-900 dark:text-indigo-300 rounded-lg p-2 outline-none">
+            <label class="block font-semibold mb-1">% အသစ်</label>
+            <input id="batchNewPct" type="number" step="0.1" placeholder="e.g. 4.0" class="w-full text-xs border rounded-lg p-2 dark:bg-slate-800 font-bold text-indigo-900">
           </div>
           <div class="sm:col-span-1 flex items-end">
-            <button type="submit" class="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-2 rounded-lg text-xs transition shadow-sm">
-              ပြောင်းမည်
-            </button>
+            <button type="submit" class="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-2 rounded-lg text-xs transition">ပြောင်းမည်</button>
           </div>
         </form>
-        <p class="text-[10px] text-slate-500 mt-2">* RATE သို့မဟုတ် % တစ်ခုတည်းကိုသာ ပြောင်းလိုပါက မပြောင်းလိုသော အကွက်ကို အလွတ်ချန်ထားနိုင်ပါသည်။</p>
       </div>
 
-      <!-- CREDIT DATA TABLE (Renamed from Cargo) -->
       <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
         <div class="overflow-x-auto max-h-[580px]">
           <table class="w-full text-left border-collapse text-xs">
@@ -390,66 +364,42 @@
             <tbody id="cargoTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300"></tbody>
           </table>
         </div>
-        <div id="noResultsMsg" class="p-8 text-center text-slate-400 dark:text-slate-500 text-xs hidden">
-          ရှာဖွေထားသော စာရင်း မတွေ့ရှိပါ။
-        </div>
+        <div id="noResultsMsg" class="p-8 text-center text-slate-400 text-xs hidden">ရှာဖွေထားသော စာရင်း မတွေ့ရှိပါ။</div>
       </div>
-
     </div>
 
-    <!-- ================= TAB 2: DAILY REPORT (A4 - TIMES NEW ROMAN & JPG) ================= -->
+    <!-- ================= TAB 2: DAILY REPORT (A4 SIZE) ================= -->
     <div id="tab-daily" class="tab-content">
       <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm mb-5 flex flex-wrap items-center justify-between gap-2.5">
         <div class="flex flex-wrap items-center gap-2.5">
           <div class="flex items-center gap-1.5 text-xs">
-            <span class="font-bold text-slate-700 dark:text-slate-300">ရက်စွဲ:</span>
-            <input id="reportDatePicker" onchange="renderDailyReport()" type="date" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1 bg-slate-50 dark:bg-slate-800 font-bold text-slate-800 dark:text-white outline-none">
+            <span class="font-bold">ရက်စွဲ:</span>
+            <input id="reportDatePicker" onchange="renderDailyReport()" type="date" class="border rounded-lg px-2 py-1 bg-slate-50 dark:bg-slate-800 font-bold">
           </div>
-
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-bold text-blue-900 dark:text-blue-400">Credit Co:</span>
-            <select id="reportCreditCoSelect" onchange="onCreditCoChange()" class="border border-blue-900 dark:border-blue-700 rounded-lg px-2 py-1 bg-white dark:bg-slate-800 font-bold text-blue-950 dark:text-white outline-none"></select>
+            <select id="reportCreditCoSelect" onchange="onCreditCoChange()" class="border rounded-lg px-2 py-1 bg-white dark:bg-slate-800 font-bold"></select>
           </div>
-
           <label class="flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400 cursor-pointer select-none">
-            <input type="checkbox" id="filterOnlySelectedCreditCo" onchange="renderDailyReport()" checked class="rounded border-slate-300 text-blue-900">
+            <input type="checkbox" id="filterOnlySelectedCreditCo" onchange="renderDailyReport()" checked class="rounded">
             <span>ဤ Credit Co သာ ပြမည်</span>
           </label>
-
           <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg text-xs font-semibold">
-            <button id="btn-report-type-detail" onclick="setDailyReportType('detail')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm transition">
-              ပုံ ၂: အသေးစိတ်
-            </button>
-            <button id="btn-report-type-summary" onclick="setDailyReportType('summary')" class="px-2 py-1 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 transition">
-              ပုံ ၁: စီးရေ & USD
-            </button>
+            <button id="btn-report-type-detail" onclick="setDailyReportType('detail')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm">ပုံ ၂: အသေးစိတ်</button>
+            <button id="btn-report-type-summary" onclick="setDailyReportType('summary')" class="px-2 py-1 rounded text-slate-600 dark:text-slate-400">ပုံ ၁: စီးရေ & USD</button>
           </div>
         </div>
 
         <div class="flex items-center flex-wrap gap-2">
           <input type="file" id="letterheadImageInput" accept="image/*" class="hidden" onchange="handleLetterheadImageUpload(event)">
-          <button onclick="document.getElementById('letterheadImageInput').click()" class="admin-only-item text-xs bg-slate-100 dark:bg-slate-800 border border-slate-300 text-slate-700 dark:text-slate-300 font-semibold px-2.5 py-1.5 rounded-lg hover:bg-slate-200 transition shadow-sm">
-            <span>📷 Letterhead ချိန်းမည်</span>
-          </button>
-          
-          <!-- JPG DOWNLOAD BUTTON -->
-          <button onclick="downloadReportJPG()" class="text-xs bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg transition shadow-sm flex items-center gap-1">
-            <span>📸 Download JPG (A4 Size)</span>
-          </button>
-
-          <!-- PNG DOWNLOAD BUTTON -->
-          <button onclick="downloadReportPNG()" class="text-xs bg-teal-700 hover:bg-teal-800 text-white font-bold px-2.5 py-1.5 rounded-lg transition shadow-sm flex items-center gap-1">
-            <span>PNG</span>
-          </button>
-
-          <button onclick="window.print()" class="text-xs bg-blue-950 dark:bg-blue-900 text-white font-bold px-3 py-1.5 rounded-lg hover:bg-blue-900 transition shadow-sm">
-            <span>🖨️ Print / PDF</span>
-          </button>
+          <button onclick="document.getElementById('letterheadImageInput').click()" class="admin-only-item text-xs bg-slate-100 dark:bg-slate-800 border px-2.5 py-1.5 rounded-lg">📷 Letterhead ချိန်းမည်</button>
+          <button onclick="downloadReportJPG()" class="text-xs bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg shadow-sm">📸 Download JPG</button>
+          <button onclick="downloadReportPNG()" class="text-xs bg-teal-700 hover:bg-teal-800 text-white font-bold px-2.5 py-1.5 rounded-lg shadow-sm">PNG</button>
+          <button onclick="window.print()" class="text-xs bg-blue-950 dark:bg-blue-900 text-white font-bold px-3 py-1.5 rounded-lg">🖨️ Print / PDF</button>
         </div>
       </div>
 
       <div class="overflow-x-auto pb-10">
-        <!-- EXACT A4 DIMENSION CONTAINER -->
         <div id="printableA4Card" class="shadow-2xl border border-slate-200 p-8 sm:p-12">
           <div id="letterheadRenderArea" class="mb-5"></div>
           <div id="dailyReportContentArea"></div>
@@ -460,38 +410,30 @@
     <!-- ================= TAB 3: CREDIT BREAKDOWN ================= -->
     <div id="tab-breakdown" class="tab-content">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div class="flex items-center justify-between mb-4 border-b pb-3">
           <div>
             <h2 class="text-base font-bold text-slate-900 dark:text-white">Credit - Customer အလိုက် လချုပ်စာရင်း</h2>
             <p class="text-xs text-slate-500">Customer တစ်ခုချင်းစီ၏ စုစုပေါင်း ကုန်ချိန်နှင့် ဝန်ဆောင်ခများ (ကိန်းပြည့် ဘတ်ငွေ)</p>
           </div>
-          <button onclick="switchTab('dashboard')" class="text-xs text-blue-900 dark:text-blue-400 font-semibold hover:underline">
-            ← Credit သို့
-          </button>
+          <button onclick="switchTab('dashboard')" class="text-xs text-blue-900 dark:text-blue-400 font-semibold hover:underline">← Credit သို့</button>
         </div>
-
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
-            <thead class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold uppercase">
+            <thead class="bg-slate-50 dark:bg-slate-800 border-b font-bold uppercase">
               <tr>
-                <th class="p-3">Customer Code</th>
-                <th class="p-3">Company Full Name</th>
-                <th class="p-3 text-center">လှေအကြိမ်ရေ</th>
-                <th class="p-3 text-right">စုစုပေါင်း KG</th>
-                <th class="p-3 text-right">Total Inv: (USD)</th>
-                <th class="p-3 text-right">Total Inv: (THB)</th>
+                <th class="p-3">Customer Code</th><th class="p-3">Company Full Name</th><th class="p-3 text-center">လှေအကြိမ်ရေ</th>
+                <th class="p-3 text-right">စုစုပေါင်း KG</th><th class="p-3 text-right">Total Inv: (USD)</th><th class="p-3 text-right">Total Inv: (THB)</th>
                 <th class="p-3 text-right">ရရှိသည့် ဝန်ဆောင်ခ (THB)</th>
               </tr>
             </thead>
-            <tbody id="breakdownTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300"></tbody>
+            <tbody id="breakdownTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ================= TAB 4: SEPARATE ED SERVICE DASHBOARD ================= -->
+    <!-- ================= TAB 4: ED SERVICE DASHBOARD ================= -->
     <div id="tab-ed-dashboard" class="tab-content">
-      
       <div class="flex items-center justify-between mb-2">
         <span class="text-xs font-bold text-indigo-950 dark:text-indigo-300 uppercase tracking-wider">ED Service Summary Statistics</span>
         <button onclick="toggleEdCards()" class="text-xs text-indigo-700 dark:text-indigo-400 hover:underline flex items-center gap-1 font-semibold">
@@ -499,148 +441,115 @@
         </button>
       </div>
 
-      <div id="edMetricCardsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 mb-4 transition-all duration-200">
-        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+      <div id="edMetricCardsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 mb-4 transition-all">
+        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border shadow-sm">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total ED Shipments</p>
-          <h3 id="edStatTrips" class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">0</h3>
-          <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">ED တင်သည့် အကြိမ်ရေ</p>
+          <h3 id="edStatTrips" class="text-lg sm:text-2xl font-bold mt-0.5">0</h3>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border shadow-sm">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Invoice (USD)</p>
-          <h3 id="edStatUSD" class="text-lg sm:text-2xl font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">$0</h3>
-          <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">ကုန်တန်ဖိုး ဒေါ်လာ စုစုပေါင်း</p>
+          <h3 id="edStatUSD" class="text-lg sm:text-2xl font-bold text-emerald-700 mt-0.5">$0</h3>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border shadow-sm">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total 2% (MMK)</p>
-          <h3 id="edStat2Pct" class="text-lg sm:text-2xl font-bold text-indigo-700 dark:text-indigo-400 mt-0.5">0 Ks</h3>
-          <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">၂% ကော်မရှင် (ကိန်းပြည့်)</p>
+          <h3 id="edStat2Pct" class="text-lg sm:text-2xl font-bold text-indigo-700 mt-0.5">0 Ks</h3>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border shadow-sm">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">MF / Service (MMK)</p>
-          <h3 id="edStatMF" class="text-lg sm:text-2xl font-bold text-blue-900 dark:text-blue-300 mt-0.5">0 Ks</h3>
-          <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">MF ဝန်ဆောင်ခ</p>
+          <h3 id="edStatMF" class="text-lg sm:text-2xl font-bold text-blue-900 mt-0.5">0 Ks</h3>
         </div>
         <div class="bg-gradient-to-br from-indigo-950 to-slate-900 text-white p-3 rounded-xl shadow-md col-span-2 md:col-span-1">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-indigo-300">TOTAL PAYABLE (MMK)</p>
           <h3 id="edStatTotal" class="text-lg sm:text-2xl font-bold text-emerald-400 mt-0.5">0 Ks</h3>
-          <p class="text-[9px] sm:text-[10px] text-slate-300 mt-0.5">စုစုပေါင်း ကျသင့်ငွေ (ကိန်းပြည့်ကျပ်)</p>
         </div>
       </div>
 
-      <!-- ED TOOLBAR -->
-      <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm mb-4 flex flex-wrap items-center justify-between gap-2">
+      <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border shadow-sm mb-4 flex flex-wrap items-center justify-between gap-2">
         <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-semibold text-slate-500">လ:</span>
-            <select id="filterEdMonth" onchange="filterEdData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none"></select>
+            <select id="filterEdMonth" onchange="filterEdData()" class="border rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold"></select>
           </div>
-
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-semibold text-slate-500">ရက်စွဲ:</span>
-            <input id="filterEdDate" type="date" onchange="filterEdData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none">
-            <button onclick="document.getElementById('filterEdDate').value=''; filterEdData();" class="text-[10px] text-slate-400 hover:text-slate-600">ရှင်း</button>
+            <input id="filterEdDate" type="date" onchange="filterEdData()" class="border rounded-lg px-2 py-1 bg-slate-50 dark:bg-slate-800 font-semibold">
+            <button onclick="document.getElementById('filterEdDate').value=''; filterEdData();" class="text-[10px] text-slate-400">ရှင်း</button>
           </div>
-
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-semibold text-slate-500">Customer:</span>
-            <select id="filterEdCust" onchange="filterEdData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none"></select>
+            <select id="filterEdCust" onchange="filterEdData()" class="border rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold"></select>
           </div>
-
-          <input id="searchEdInput" onkeyup="filterEdData()" type="text" placeholder="လှေအမည် / Inv ရှာရန်..." class="text-xs border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 w-32 sm:w-36 bg-white dark:bg-slate-800 text-slate-800 dark:text-white outline-none focus:ring-1 focus:ring-indigo-900">
+          <input id="searchEdInput" onkeyup="filterEdData()" type="text" placeholder="လှေအမည် / Inv ရှာရန်..." class="text-xs border rounded-lg px-2.5 py-1.5 w-32 sm:w-36">
         </div>
 
         <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <input type="file" id="edExcelFileInput" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleEdExcelImport(event)">
-          
-          <button onclick="document.getElementById('edExcelFileInput').click()" class="admin-only-item text-xs bg-emerald-700 text-white font-semibold px-2.5 py-1.5 rounded-lg hover:bg-emerald-800 transition shadow-sm">
-            <span>📥 Import ED</span>
-          </button>
-
-          <button onclick="exportEdToExcel()" class="text-xs bg-indigo-900 text-white font-semibold px-2.5 py-1.5 rounded-lg hover:bg-indigo-800 transition shadow-sm">
-            <span>📊 Export ED (<span id="edExportCount">0</span>)</span>
-          </button>
-
-          <button onclick="openNewEdEntryModal()" class="admin-only-item text-xs bg-blue-950 dark:bg-blue-900 text-white font-bold px-3 py-1.5 rounded-lg hover:bg-blue-900 transition shadow-sm">
-            <span>➕ ED စာရင်းအသစ်</span>
-          </button>
-
-          <button onclick="clearAllEdData()" class="admin-only-item text-xs text-rose-600 font-semibold px-2 py-1.5 hover:bg-rose-50 rounded-lg transition">
-            🗑️ ရှင်းမည်
-          </button>
+          <button onclick="document.getElementById('edExcelFileInput').click()" class="admin-only-item text-xs bg-emerald-700 text-white font-semibold px-2.5 py-1.5 rounded-lg">📥 Import ED</button>
+          <button onclick="exportEdToExcel()" class="text-xs bg-indigo-900 text-white font-semibold px-2.5 py-1.5 rounded-lg">📊 Export ED (<span id="edExportCount">0</span>)</button>
+          <button onclick="openNewEdEntryModal()" class="admin-only-item text-xs bg-blue-950 dark:bg-blue-900 text-white font-bold px-3 py-1.5 rounded-lg">➕ ED စာရင်းအသစ်</button>
+          <button onclick="clearAllEdData()" class="admin-only-item text-xs text-rose-600 font-semibold px-2 py-1.5 hover:bg-rose-50 rounded-lg">🗑️ ရှင်းမည်</button>
         </div>
       </div>
 
-      <!-- ED TABLE -->
-      <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+      <div class="bg-white dark:bg-slate-900 rounded-xl border overflow-hidden shadow-sm">
         <div class="overflow-x-auto max-h-[580px]">
           <table class="w-full text-left border-collapse text-xs">
-            <thead class="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold sticky top-0 z-10 select-none">
+            <thead class="bg-slate-50 dark:bg-slate-800/80 border-b font-bold sticky top-0 z-10 select-none">
               <tr>
                 <th class="p-3 w-12 text-center">No</th>
-                <th onclick="sortEdTable('date')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Date <span id="sort-ed-date">↕</span></th>
-                <th onclick="sortEdTable('boat')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">လှေအမည် <span id="sort-ed-boat">↕</span></th>
-                <th onclick="sortEdTable('invNo')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Inv No. <span id="sort-ed-invNo">↕</span></th>
-                <th onclick="sortEdTable('invVl')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Invoice VL (USD) <span id="sort-ed-invVl">↕</span></th>
-                <th onclick="sortEdTable('customer')" class="p-3 text-center cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Co,.Ltd <span id="sort-ed-customer">↕</span></th>
-                <th onclick="sortEdTable('tax2Pct')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">2% (MMK) <span id="sort-ed-tax2Pct">↕</span></th>
-                <th onclick="sortEdTable('mfService')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">MF / Service (MMK) <span id="sort-ed-mfService">↕</span></th>
-                <th onclick="sortEdTable('total')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-slate-900 dark:text-white">Total (MMK) <span id="sort-ed-total">↕</span></th>
-                <th onclick="sortEdTable('payDate')" class="p-3 text-center cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Pay Date <span id="sort-ed-payDate">↕</span></th>
+                <th onclick="sortEdTable('date')" class="p-3 cursor-pointer hover:bg-slate-200">Date <span id="sort-ed-date">↕</span></th>
+                <th onclick="sortEdTable('boat')" class="p-3 cursor-pointer hover:bg-slate-200">လှေအမည် <span id="sort-ed-boat">↕</span></th>
+                <th onclick="sortEdTable('invNo')" class="p-3 cursor-pointer hover:bg-slate-200">Inv No. <span id="sort-ed-invNo">↕</span></th>
+                <th onclick="sortEdTable('invVl')" class="p-3 text-right cursor-pointer hover:bg-slate-200">Invoice VL (USD) <span id="sort-ed-invVl">↕</span></th>
+                <th onclick="sortEdTable('customer')" class="p-3 text-center cursor-pointer hover:bg-slate-200">Co,.Ltd <span id="sort-ed-customer">↕</span></th>
+                <th onclick="sortEdTable('tax2Pct')" class="p-3 text-right cursor-pointer hover:bg-slate-200">2% (MMK) <span id="sort-ed-tax2Pct">↕</span></th>
+                <th onclick="sortEdTable('mfService')" class="p-3 text-right cursor-pointer hover:bg-slate-200">MF / Service (MMK) <span id="sort-ed-mfService">↕</span></th>
+                <th onclick="sortEdTable('total')" class="p-3 text-right cursor-pointer hover:bg-slate-200 font-bold">Total (MMK) <span id="sort-ed-total">↕</span></th>
+                <th onclick="sortEdTable('payDate')" class="p-3 text-center cursor-pointer hover:bg-slate-200">Pay Date <span id="sort-ed-payDate">↕</span></th>
                 <th class="p-3 text-center">ပြင်/ဖျက်/VC</th>
               </tr>
             </thead>
-            <tbody id="edTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300"></tbody>
+            <tbody id="edTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
           </table>
         </div>
-        <div id="noEdResultsMsg" class="p-8 text-center text-slate-400 text-xs hidden">
-          ရှာဖွေထားသော ED စာရင်း မတွေ့ရှိပါ။
-        </div>
+        <div id="noEdResultsMsg" class="p-8 text-center text-slate-400 text-xs hidden">ရှာဖွေထားသော ED စာရင်း မတွေ့ရှိပါ။</div>
       </div>
-
     </div>
 
-    <!-- ================= TAB 5: SEPARATE ED BREAKDOWN ================= -->
+    <!-- ================= TAB 5: ED BREAKDOWN ================= -->
     <div id="tab-ed-breakdown" class="tab-content">
-      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4 border-b pb-3">
           <div>
-            <h2 class="text-base font-bold text-slate-900 dark:text-white">ED Service - Customer အလိုက် လချုပ်စာရင်း</h2>
+            <h2 class="text-base font-bold">ED Service - Customer အလိုက် လချုပ်စာရင်း</h2>
             <p class="text-xs text-slate-500">Customer တစ်ခုချင်းစီ၏ ED အကြိမ်ရေ၊ ဒေါ်လာတန်ဖိုးနှင့် ကျသင့်ငွေ (ကိန်းပြည့် မြန်မာကျပ်ငွေ)</p>
           </div>
-          <button onclick="switchTab('ed-dashboard')" class="text-xs text-indigo-900 dark:text-indigo-400 font-semibold hover:underline">
-            ← ED သို့
-          </button>
+          <button onclick="switchTab('ed-dashboard')" class="text-xs text-indigo-900 dark:text-indigo-400 font-semibold hover:underline">← ED သို့</button>
         </div>
-
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
-            <thead class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold uppercase">
+            <thead class="bg-slate-50 dark:bg-slate-800 border-b font-bold uppercase">
               <tr>
-                <th class="p-3">Customer (Co,.Ltd)</th>
-                <th class="p-3 text-center">ED အကြိမ်ရေ</th>
-                <th class="p-3 text-right">Total Invoice (USD)</th>
-                <th class="p-3 text-right">စုစုပေါင်း 2% (MMK)</th>
-                <th class="p-3 text-right">MF / Service (MMK)</th>
-                <th class="p-3 text-right font-bold text-indigo-950 dark:text-indigo-300">Grand Total (MMK)</th>
-                <th class="p-3 text-center">အခြေအနေ</th>
+                <th class="p-3">Customer (Co,.Ltd)</th><th class="p-3 text-center">ED အကြိမ်ရေ</th><th class="p-3 text-right">Total Invoice (USD)</th>
+                <th class="p-3 text-right">စုစုပေါင်း 2% (MMK)</th><th class="p-3 text-right">MF / Service (MMK)</th><th class="p-3 text-right font-bold">Grand Total (MMK)</th><th class="p-3 text-center">အခြေအနေ</th>
               </tr>
             </thead>
-            <tbody id="edBreakdownTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300"></tbody>
+            <tbody id="edBreakdownTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ================= TAB 6: MPU LEDGER (NEW) ================= -->
+    <!-- ================= TAB 6: MPU LEDGER ================= -->
     <div id="tab-mpu" class="tab-content">
       <div class="flex items-center justify-between mb-4">
         <div>
           <h2 class="text-base font-bold text-amber-900 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
             <span>💳</span> MPU လိုင်စင်စာရင်း (Ledger & Wallet)
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) ဖြတ်တောက်မှုများနှင့် ငွေကြိုသွင်းမှု မှတ်တမ်း (AYA & uab)</p>
+          <p class="text-xs text-slate-500 mt-0.5">န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) ဖြတ်တောက်မှုများနှင့် ငွေကြိုသွင်းမှု မှတ်တမ်း (AYA & uab)</p>
         </div>
-        <button onclick="openMpuTopupModal()" class="admin-only-item bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5 transition">
+        <button onclick="openMpuTopupModal()" class="admin-only-item bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5">
           <span>➕</span> <span>ငွေသွင်းမည် (Top-up)</span>
         </button>
       </div>
@@ -660,237 +569,146 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+      <div class="bg-white dark:bg-slate-900 rounded-xl border overflow-hidden shadow-sm">
         <div class="overflow-x-auto max-h-[550px]">
           <table class="w-full text-left border-collapse text-xs">
-            <thead class="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold sticky top-0 z-10">
+            <thead class="bg-slate-50 dark:bg-slate-800/80 border-b font-bold sticky top-0 z-10">
               <tr>
-                <th class="p-3 w-12 text-center">No</th>
-                <th class="p-3 w-28">Date</th>
-                <th class="p-3">Description</th>
-                <th class="p-3 w-28 text-center">Bank/Type</th>
-                <th class="p-3 w-32 text-right text-emerald-600 dark:text-emerald-400">IN (Ks)</th>
-                <th class="p-3 w-32 text-right text-rose-600 dark:text-rose-400">OUT (Ks)</th>
-                <th class="p-3 w-36 text-right font-bold">Balance</th>
-                <th class="p-3 w-16 text-center">ဖျက်</th>
+                <th class="p-3 w-12 text-center">No</th><th class="p-3 w-28">Date</th><th class="p-3">Description</th><th class="p-3 w-28 text-center">Bank/Type</th>
+                <th class="p-3 w-32 text-right text-emerald-600">IN (Ks)</th><th class="p-3 w-32 text-right text-rose-600">OUT (Ks)</th><th class="p-3 w-36 text-right font-bold">Balance</th><th class="p-3 w-16 text-center">ဖျက်</th>
               </tr>
             </thead>
-            <tbody id="mpuLedgerTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300"></tbody>
+            <tbody id="mpuLedgerTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ================= TAB 7: SETTINGS & USER MANAGEMENT (ADMIN ONLY) ================= -->
+    <!-- ================= TAB 7: USERS & SETTINGS ================= -->
     <div id="tab-companies" class="tab-content">
       <div class="max-w-5xl mx-auto space-y-6">
-        
-        <!-- SERVER & USER MANAGEMENT -->
-        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-sm space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
+        <!-- USER MANAGEMENT -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 sm:p-6 shadow-sm space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
             <div>
               <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <span class="text-lg">👥</span> Server & User Management (အကောင့်နှင့် Permission စီမံခန့်ခွဲမှု)
               </h2>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Super Admin အနေဖြင့် ဝန်ထမ်းအကောင့်များ၊ Password များနှင့် အသုံးပြုခွင့်များကို စီမံနိုင်ပါသည်
-              </p>
+              <p class="text-xs text-slate-500 mt-0.5">Super Admin အနေဖြင့် ဝန်ထမ်းအကောင့်များ၊ Password များကို စီမံနိုင်ပါသည်</p>
             </div>
-            
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800 px-3 py-1 rounded-lg">
-                Server: Owner Mode
-              </span>
-              
-              <button onclick="toggleUserManagementSection()" id="btnToggleUserMgr" class="text-xs font-bold bg-indigo-50 dark:bg-slate-800 border border-indigo-200 dark:border-slate-700 text-indigo-900 dark:text-indigo-300 hover:bg-indigo-100 px-3 py-1 rounded-lg transition flex items-center gap-1.5 shadow-sm">
-                <span id="userMgrToggleIcon">🙈</span> <span id="userMgrToggleText">အကောင့်များ စီမံခန့်ခွဲမှု ပိတ်မည်</span>
-              </button>
-            </div>
+            <button onclick="toggleUserManagementSection()" id="btnToggleUserMgr" class="text-xs font-bold bg-indigo-50 dark:bg-slate-800 border px-3 py-1 rounded-lg">
+              <span id="userMgrToggleIcon">🙈</span> <span id="userMgrToggleText">အကောင့်များ စီမံခန့်ခွဲမှု ပိတ်မည်</span>
+            </button>
           </div>
 
-          <div id="userManagementCollapsibleBody" class="space-y-4 pt-1 transition-all">
+          <div id="userManagementCollapsibleBody" class="space-y-4 pt-1">
             <form onsubmit="handleUserFormSubmit(event)" class="space-y-4">
               <input type="hidden" id="editingUserId" value="">
-              
               <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-xs">
                 <div class="sm:col-span-3">
-                  <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Username</label>
-                  <input id="inUserUsername" type="text" placeholder="e.g. staff2" required
-                    class="w-full border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold outline-none focus:ring-1 focus:ring-blue-600">
+                  <label class="block font-bold mb-1">Username</label>
+                  <input id="inUserUsername" type="text" placeholder="e.g. staff2" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold">
                 </div>
-
                 <div class="sm:col-span-3">
-                  <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Password</label>
-                  <input id="inUserPassword" type="text" placeholder="Password" required
-                    class="w-full border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-mono outline-none focus:ring-1 focus:ring-blue-600">
+                  <label class="block font-bold mb-1">Password</label>
+                  <input id="inUserPassword" type="text" placeholder="Password" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-mono">
                 </div>
-
                 <div class="sm:col-span-3">
-                  <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">အမည် (Display Name)</label>
-                  <input id="inUserDisplayName" type="text" placeholder="Operations Officer" required
-                    class="w-full border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-blue-600">
+                  <label class="block font-bold mb-1">အမည် (Display Name)</label>
+                  <input id="inUserDisplayName" type="text" placeholder="Operations Officer" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800">
                 </div>
-
                 <div class="sm:col-span-3">
-                  <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Role / Permission</label>
-                  <select id="inUserRole" class="w-full border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold outline-none focus:ring-1 focus:ring-blue-600">
+                  <label class="block font-bold mb-1">Role / Permission</label>
+                  <select id="inUserRole" class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold">
                     <option value="staff">Staff (Daily Entry Only)</option>
-                    <option value="viewer">Viewer (Read-Only / ကြည့်ရှုခွင့်သီးသန့်)</option>
+                    <option value="viewer">Viewer (Read-Only)</option>
                     <option value="admin">Admin (Full Access)</option>
                   </select>
                 </div>
               </div>
-
               <div class="flex justify-end gap-2 text-xs">
-                <button type="button" onclick="resetUserForm()" class="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition font-semibold">
-                  Cancel
-                </button>
-                <button type="submit" id="btnSaveUser" class="px-5 py-2 bg-indigo-950 dark:bg-indigo-900 hover:bg-indigo-900 text-white font-bold rounded-lg transition shadow-sm flex items-center gap-1.5">
-                  <span>💾</span> <span>အကောင့် သိမ်းဆည်းမည်</span>
-                </button>
+                <button type="button" onclick="resetUserForm()" class="px-4 py-2 border rounded-lg">Cancel</button>
+                <button type="submit" id="btnSaveUser" class="px-5 py-2 bg-indigo-950 text-white font-bold rounded-lg">💾 အကောင့် သိမ်းဆည်းမည်</button>
               </div>
             </form>
 
-            <div class="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl">
+            <div class="overflow-x-auto border rounded-xl">
               <table class="w-full text-left border-collapse text-xs">
-                <thead class="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold uppercase select-none">
+                <thead class="bg-slate-50 dark:bg-slate-800/80 border-b font-bold uppercase select-none">
                   <tr>
-                    <th class="p-3 w-12 text-center">NO</th>
-                    <th class="p-3 w-36">USERNAME</th>
-                    <th class="p-3 w-36">PASSWORD</th>
-                    <th class="p-3">DISPLAY NAME</th>
-                    <th class="p-3 w-28 text-center">ROLE</th>
-                    <th class="p-3 w-24 text-center">ပြင်/ဖျက်</th>
+                    <th class="p-3 w-12 text-center">NO</th><th class="p-3 w-36">USERNAME</th><th class="p-3 w-36">PASSWORD</th><th class="p-3">DISPLAY NAME</th><th class="p-3 w-28 text-center">ROLE</th><th class="p-3 w-24 text-center">ပြင်/ဖျက်</th>
                   </tr>
                 </thead>
-                <tbody id="userAccountsTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300 font-medium"></tbody>
+                <tbody id="userAccountsTableBody" class="divide-y text-slate-700 dark:text-slate-300 font-medium"></tbody>
               </table>
             </div>
           </div>
-
         </div>
 
-        <!-- BACKUP & RESTORE SECTION -->
+        <!-- BACKUP & RESTORE -->
         <div class="bg-gradient-to-r from-blue-950 via-slate-900 to-blue-900 text-white rounded-2xl p-5 sm:p-6 shadow-md space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-blue-900/60 pb-3">
             <div>
-              <h2 class="text-sm sm:text-base font-bold flex items-center gap-2">
-                <span>💾</span> Data Backup & Restore (Admin Password ဖြင့် အပြည့်အဝ ကာကွယ်ထားသောစနစ်)
-              </h2>
-              <p class="text-xs text-slate-300 mt-0.5">
-                Credit၊ ED စာရင်းများနှင့် အသုံးပြုသူ အကောင့်အားလုံးကို Admin Password ဖြင့် AES-256 ကုဒ်ဝှက်ကာ လုံခြုံစွာ အရန်သိမ်း/ပြန်ဖော်နိုင်ပါသည်
-              </p>
+              <h2 class="text-sm sm:text-base font-bold">💾 Data Backup & Restore (AES-256 Protected)</h2>
+              <p class="text-xs text-slate-300 mt-0.5">Admin Password မသိပါက မည်သည့်စက်တွင်မှ Restore ပြုလုပ်၍ မရနိုင်ပါ</p>
             </div>
-            
             <div class="flex items-center gap-2">
               <input type="file" id="backupFileInput" accept=".json" class="hidden" onchange="handleRestoreFileSelected(event)">
-              <button onclick="triggerEncryptedBackup()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                <span>📤</span> <span>Backup ထုတ်ယူမည် (Export)</span>
-              </button>
-              <button onclick="document.getElementById('backupFileInput').click()" class="text-xs bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                <span>📥</span> <span>Backup မှ ပြန်သွင်းမည် (Restore)</span>
-              </button>
+              <button onclick="triggerEncryptedBackup()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl transition">📤 Backup ထုတ်ယူမည်</button>
+              <button onclick="document.getElementById('backupFileInput').click()" class="text-xs bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2.5 rounded-xl transition">📥 Restore ပြန်သွင်းမည်</button>
             </div>
           </div>
-          <p class="text-[11px] text-blue-200">
-            🔒 လုံခြုံရေးမှတ်ချက်: Backup ဖိုင်ကို အခြားသူများ ရရှိသွားသည့်တိုင်အောင် သက်ဆိုင်ရာ Admin Password မသိပါက မည်သည့်စက်တွင်မှ Restore လုပ်၍ စာရင်းများ ဖွင့်ကြည့်၍ မရနိုင်ပါ။
-          </p>
         </div>
 
-        <!-- CREDIT CO SECTION -->
-        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-3 border-b border-slate-100 dark:border-slate-800 pb-2.5">
+        <!-- CREDIT CO -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-3 border-b pb-2.5">
             <div>
-              <h2 class="text-sm font-bold text-slate-900 dark:text-white">🏛️ Credit Co.,Ltd (လိုင်စင်ရ ကုမ္ပဏီများနှင့် Letterhead)</h2>
+              <h2 class="text-sm font-bold">🏛️ Credit Co.,Ltd (လိုင်စင်ရ ကုမ္ပဏီများနှင့် Letterhead)</h2>
               <p class="text-xs text-slate-500">Stable Hope, Tide Wave စသည့် ကုမ္ပဏီများ စီမံခြင်း</p>
             </div>
-            <button onclick="resetDefaultCreditCompanies()" class="text-xs text-blue-900 dark:text-blue-400 font-semibold hover:underline">
-              🔄 မူလ Credit Co ပြန်ယူမည်
-            </button>
+            <button onclick="resetDefaultCreditCompanies()" class="text-xs text-blue-900 font-semibold hover:underline">🔄 မူလ Credit Co ပြန်ယူမည်</button>
           </div>
-
-          <form onsubmit="handleAddNewCreditCo(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 text-xs mb-4 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
-            <div class="sm:col-span-3">
-              <label class="block font-semibold mb-1">Credit Co Code</label>
-              <input id="newCreditCode" type="text" placeholder="TW" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700 uppercase">
-            </div>
-            <div class="sm:col-span-5">
-              <label class="block font-semibold mb-1">Company Full Name</label>
-              <input id="newCreditName" type="text" placeholder="TIDE WAVE CO.,LTD" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-            </div>
-            <div class="sm:col-span-4">
-              <label class="block font-semibold mb-1">လိပ်စာ</label>
-              <input id="newCreditAddress" type="text" placeholder="Yangon, Myanmar." class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-            </div>
-            <div class="sm:col-span-12 flex justify-end">
-              <button type="submit" class="bg-blue-950 dark:bg-blue-900 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs hover:bg-blue-900 transition shadow-sm">
-                ➕ ထည့်မည်
-              </button>
-            </div>
+          <form onsubmit="handleAddNewCreditCo(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 text-xs mb-4 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border">
+            <div class="sm:col-span-3"><label class="block font-semibold mb-1">Credit Co Code</label><input id="newCreditCode" type="text" placeholder="TW" required class="w-full border rounded-lg p-2 dark:bg-slate-800 uppercase"></div>
+            <div class="sm:col-span-5"><label class="block font-semibold mb-1">Company Full Name</label><input id="newCreditName" type="text" placeholder="TIDE WAVE CO.,LTD" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+            <div class="sm:col-span-4"><label class="block font-semibold mb-1">လိပ်စာ</label><input id="newCreditAddress" type="text" placeholder="Yangon, Myanmar." class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+            <div class="sm:col-span-12 flex justify-end"><button type="submit" class="bg-blue-950 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs">➕ ထည့်မည်</button></div>
           </form>
-
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-xs">
-              <thead class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold uppercase">
-                <tr>
-                  <th class="p-2.5 w-16">Code</th>
-                  <th class="p-2.5">Credit Company Name</th>
-                  <th class="p-2.5">Letterhead အခြေအနေ</th>
-                  <th class="p-2.5 text-center">Letterhead ပြင်ရန်</th>
-                  <th class="p-2.5 text-center w-16">ဖျက်ရန်</th>
-                </tr>
+              <thead class="bg-slate-50 dark:bg-slate-800 border-b font-bold uppercase">
+                <tr><th class="p-2.5 w-16">Code</th><th class="p-2.5">Credit Company Name</th><th class="p-2.5">Letterhead</th><th class="p-2.5 text-center">ပြင်ရန်</th><th class="p-2.5 text-center w-16">ဖျက်ရန်</th></tr>
               </thead>
-              <tbody id="creditCoTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300"></tbody>
+              <tbody id="creditCoTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
             </table>
           </div>
         </div>
 
-        <!-- CUSTOMERS SECTION (NOW WITH EDIT ✏️ FUNCTIONALITY) -->
-        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-3 border-b border-slate-100 dark:border-slate-800 pb-2.5">
+        <!-- CUSTOMERS -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-3 border-b pb-2.5">
             <div>
-              <h2 class="text-sm font-bold text-slate-900 dark:text-white">👥 Customers / Shippers (ကာစတန်မာ ကုမ္ပဏီများနှင့် ပုံသေ %)</h2>
-              <p class="text-xs text-slate-500">ကာစတန်မာ ကုမ္ပဏီအမည်နှင့် ပုံသေ % များကို အသစ်ထည့်သွင်းခြင်း သို့မဟုတ် ပြန်လည်ပြင်ဆင်ခြင်း</p>
+              <h2 class="text-sm font-bold">👥 Customers / Shippers (ကာစတန်မာ ကုမ္ပဏီများနှင့် ပုံသေ %)</h2>
+              <p class="text-xs text-slate-500">ကုမ္ပဏီအမည်နှင့် ပုံသေ % များကို အချိန်မရွေး ပြန်လည်ပြင်ဆင်နိုင်ပါသည်</p>
             </div>
           </div>
-
           <form onsubmit="handleCustomerFormSubmit(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 text-xs mb-3">
             <input type="hidden" id="editingCustomerOriginalCode" value="">
-            
-            <div class="sm:col-span-3">
-              <label class="block font-semibold mb-1">Customer Code</label>
-              <input id="newCustCode" type="text" placeholder="SKP" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700 uppercase font-mono">
-            </div>
-            <div class="sm:col-span-4">
-              <label class="block font-semibold mb-1">Customer Full Name</label>
-              <input id="newCustName" type="text" placeholder="Shwe Kyal Pwin" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-            </div>
-            <div class="sm:col-span-2">
-              <label class="block font-semibold mb-1">ပုံသေ %</label>
-              <input id="newCustPct" type="number" step="0.1" value="4.0" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold">
-            </div>
+            <div class="sm:col-span-3"><label class="block font-semibold mb-1">Customer Code</label><input id="newCustCode" type="text" placeholder="SKP" required class="w-full border rounded-lg p-2 dark:bg-slate-800 uppercase font-mono"></div>
+            <div class="sm:col-span-4"><label class="block font-semibold mb-1">Customer Full Name</label><input id="newCustName" type="text" placeholder="Shwe Kyal Pwin" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+            <div class="sm:col-span-2"><label class="block font-semibold mb-1">ပုံသေ %</label><input id="newCustPct" type="number" step="0.1" value="4.0" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
             <div class="sm:col-span-3 flex items-end gap-1.5">
-              <button type="button" id="btnCancelEditCustomer" onclick="resetCustomerForm()" class="hidden px-2.5 py-2 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs">
-                Cancel
-              </button>
-              <button type="submit" id="btnSaveCustomer" class="flex-1 bg-blue-950 dark:bg-blue-900 text-white font-bold py-2 rounded-lg text-xs hover:bg-blue-900 transition shadow-sm">
-                ➕ ထည့်မည်
-              </button>
+              <button type="button" id="btnCancelEditCustomer" onclick="resetCustomerForm()" class="hidden px-2.5 py-2 border rounded-lg text-xs">Cancel</button>
+              <button type="submit" id="btnSaveCustomer" class="flex-1 bg-blue-950 text-white font-bold py-2 rounded-lg text-xs">➕ ထည့်မည်</button>
             </div>
           </form>
-
           <div class="overflow-x-auto max-h-[380px]">
             <table class="w-full text-left border-collapse text-xs">
-              <thead class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold uppercase sticky top-0">
-                <tr>
-                  <th class="p-2.5 w-14">No</th>
-                  <th class="p-2.5 w-24">Code</th>
-                  <th class="p-2.5">Customer Full Name</th>
-                  <th class="p-2.5 text-center w-20">ပုံသေ %</th>
-                  <th class="p-2.5 text-center w-24">ပြင်/ဖျက်</th>
-                </tr>
+              <thead class="bg-slate-50 dark:bg-slate-800 border-b font-bold uppercase sticky top-0">
+                <tr><th class="p-2.5 w-14">No</th><th class="p-2.5 w-24">Code</th><th class="p-2.5">Customer Full Name</th><th class="p-2.5 text-center w-20">ပုံသေ %</th><th class="p-2.5 text-center w-24">ပြင်/ဖျက်</th></tr>
               </thead>
-              <tbody id="customerTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300"></tbody>
+              <tbody id="customerTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
             </table>
           </div>
         </div>
@@ -902,90 +720,49 @@
 
   <!-- ================= MODAL: CREDIT SHIPMENT ENTRY ================= -->
   <div id="cargoEntryModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-      <div class="flex items-center justify-between mb-3 border-b border-slate-100 dark:border-slate-800 pb-2">
-        <h3 id="cargoModalTitle" class="text-sm font-bold text-slate-900 dark:text-white">➕ Credit စာရင်းအသစ် ထည့်သွင်းခြင်း</h3>
-        <button onclick="closeCargoEntryModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div class="flex items-center justify-between mb-3 border-b pb-2">
+        <h3 id="cargoModalTitle" class="text-sm font-bold">➕ Credit စာရင်းအသစ် ထည့်သွင်းခြင်း</h3>
+        <button onclick="closeCargoEntryModal()" class="text-slate-400">✕</button>
       </div>
 
       <form onsubmit="handleCargoSubmit(event)" class="space-y-3 text-xs">
         <input type="hidden" id="editCargoId" value="">
-        
         <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-semibold mb-1">Credit Co.,Ltd</label>
-            <select id="cargoModalCreditCo" class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700"></select>
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Customer (Remark)</label>
-            <input id="cargoModalRemark" list="remarkDataList" oninput="onCustomerInput(this.value)" type="text" placeholder="AG" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700 uppercase">
-            <datalist id="remarkDataList"></datalist>
-          </div>
+          <div><label class="block font-semibold mb-1">Credit Co.,Ltd</label><select id="cargoModalCreditCo" class="w-full border rounded-lg p-2 dark:bg-slate-800"></select></div>
+          <div><label class="block font-semibold mb-1">Customer (Remark)</label><input id="cargoModalRemark" list="remarkDataList" oninput="onCustomerInput(this.value)" type="text" placeholder="AG" required class="w-full border rounded-lg p-2 dark:bg-slate-800 uppercase"><datalist id="remarkDataList"></datalist></div>
         </div>
-
         <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-semibold mb-1">ရက်စွဲ (Date)</label>
-            <input id="cargoModalDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">လှေအမည်</label>
-            <input id="cargoModalBoat" type="text" placeholder="ရတနာတိုး-၉၇" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-          </div>
+          <div><label class="block font-semibold mb-1">ရက်စွဲ (Date)</label><input id="cargoModalDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+          <div><label class="block font-semibold mb-1">လှေအမည်</label><input id="cargoModalBoat" type="text" placeholder="ရတနာတိုး-၉၇" required class="w-full border rounded-lg p-2 dark:bg-slate-800 mm-text"></div>
         </div>
-
         <div class="grid grid-cols-3 gap-3">
-          <div>
-            <label class="block font-semibold mb-1">Inv: No.</label>
-            <input id="cargoModalInvNo" type="text" placeholder="323" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">ED No.</label>
-            <input id="cargoModalEdNo" type="text" placeholder="20016781234" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">အလေးချိန် (KG)</label>
-            <input id="cargoModalKG" type="number" step="any" placeholder="28430" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-          </div>
+          <div><label class="block font-semibold mb-1">Inv: No.</label><input id="cargoModalInvNo" type="text" placeholder="323" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+          <div><label class="block font-semibold mb-1">ED No.</label><input id="cargoModalEdNo" type="text" placeholder="20016781234" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+          <div><label class="block font-semibold mb-1">အလေးချိန် (KG)</label><input id="cargoModalKG" type="number" step="any" placeholder="28430" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
         </div>
 
-        <!-- MPU CHECKBOX -->
-        <div class="grid grid-cols-1">
+        <div>
           <label class="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 p-2.5 rounded-lg border border-amber-200 dark:border-amber-800 cursor-pointer select-none">
-            <input type="checkbox" id="cargoModalLicense" class="w-4 h-4 rounded text-amber-600 focus:ring-amber-500">
-            <span>န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) တင်မည် (MPU မှ အလိုအလျောက် ဖြတ်တောက်မည်)</span>
+            <input type="checkbox" id="cargoModalLicense" class="w-4 h-4 rounded text-amber-600">
+            <span>န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) တင်မည် (MPU Wallet မှ အလိုအလျောက် ဖြတ်တောက်မည်)</span>
           </label>
         </div>
 
-        <div class="grid grid-cols-3 gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
-          <div>
-            <label class="block font-semibold mb-1">Inv: (USD)</label>
-            <input id="cargoModalUSD" oninput="calculateCargoPreview()" type="number" step="0.01" placeholder="28979.70" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold">
-          </div>
-          <div id="modalSecRate" class="not-for-staff">
-            <label class="block font-semibold mb-1">RATE</label>
-            <input id="cargoModalRate" oninput="calculateCargoPreview()" type="number" step="0.01" value="34.7" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold">
-          </div>
-          <div id="modalSecPct" class="not-for-staff">
-            <label class="block font-semibold mb-1">%</label>
-            <input id="cargoModalPct" oninput="calculateCargoPreview()" type="number" step="0.1" value="4.0" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold">
-          </div>
+        <div class="grid grid-cols-3 gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border">
+          <div><label class="block font-semibold mb-1">Inv: (USD)</label><input id="cargoModalUSD" oninput="calculateCargoPreview()" type="number" step="0.01" placeholder="28979.70" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
+          <div id="modalSecRate" class="not-for-staff"><label class="block font-semibold mb-1">RATE</label><input id="cargoModalRate" oninput="calculateCargoPreview()" type="number" step="0.01" value="34.7" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
+          <div id="modalSecPct" class="not-for-staff"><label class="block font-semibold mb-1">%</label><input id="cargoModalPct" oninput="calculateCargoPreview()" type="number" step="0.1" value="4.0" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
         </div>
 
         <div id="modalSecPreviews" class="not-for-staff grid grid-cols-2 gap-3 text-center">
-          <div class="p-2 border rounded-lg bg-slate-50 dark:bg-slate-800">
-            <span class="text-[10px] text-slate-400 block">Inv: (THB - ကိန်းပြည့်)</span>
-            <span id="cargoPreviewTHB" class="font-bold text-indigo-700 dark:text-indigo-400">0 THB</span>
-          </div>
-          <div class="p-2 border rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200">
-            <span class="text-[10px] text-emerald-600 block">AMOUNT (THB - ကိန်းပြည့်)</span>
-            <span id="cargoPreviewAmount" class="font-bold text-emerald-700 dark:text-emerald-400">0 THB</span>
-          </div>
+          <div class="p-2 border rounded-lg bg-slate-50 dark:bg-slate-800"><span class="text-[10px] text-slate-400 block">Inv: (THB - ကိန်းပြည့်)</span><span id="cargoPreviewTHB" class="font-bold text-indigo-700">0 THB</span></div>
+          <div class="p-2 border rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200"><span class="text-[10px] text-emerald-600 block">AMOUNT (THB - ကိန်းပြည့်)</span><span id="cargoPreviewAmount" class="font-bold text-emerald-700">0 THB</span></div>
         </div>
 
         <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeCargoEntryModal()" class="px-3.5 py-1.5 border rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">ပိတ်မည်</button>
-          <button type="submit" class="px-4 py-1.5 bg-blue-950 dark:bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-900">💾 သိမ်းဆည်းမည်</button>
+          <button type="button" onclick="closeCargoEntryModal()" class="px-3.5 py-1.5 border rounded-lg">ပိတ်မည်</button>
+          <button type="submit" class="px-4 py-1.5 bg-blue-950 text-white font-bold rounded-lg">💾 သိမ်းဆည်းမည်</button>
         </div>
       </form>
     </div>
@@ -993,64 +770,31 @@
 
   <!-- ================= MODAL: ED ENTRY ================= -->
   <div id="edEntryModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-      <div class="flex items-center justify-between mb-3 border-b border-slate-100 dark:border-slate-800 pb-2">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div class="flex items-center justify-between mb-3 border-b pb-2">
         <h3 id="edModalTitle" class="text-sm font-bold text-indigo-950 dark:text-indigo-300">➕ ED Service စာရင်းအသစ် ထည့်သွင်းခြင်း</h3>
-        <button onclick="closeEdEntryModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+        <button onclick="closeEdEntryModal()" class="text-slate-400">✕</button>
       </div>
-
       <form onsubmit="handleEdSubmit(event)" class="space-y-3 text-xs">
         <input type="hidden" id="editEdId" value="">
-
         <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-semibold mb-1">ရက်စွဲ (Date)</label>
-            <input id="inEdDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">လှေအမည်</label>
-            <input id="inEdBoat" type="text" placeholder="အောင်မြင့်နိုင်" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-          </div>
+          <div><label class="block font-semibold mb-1">ရက်စွဲ (Date)</label><input id="inEdDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+          <div><label class="block font-semibold mb-1">လှေအမည်</label><input id="inEdBoat" type="text" placeholder="အောင်မြင့်နိုင်" required class="w-full border rounded-lg p-2 dark:bg-slate-800 mm-text"></div>
         </div>
-
         <div class="grid grid-cols-3 gap-3">
-          <div>
-            <label class="block font-semibold mb-1">Inv No.</label>
-            <input id="inEdInvNo" type="text" placeholder="286" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Customer (Co,.Ltd)</label>
-            <input id="inEdCustomer" list="remarkDataList" type="text" placeholder="SPSS" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700 uppercase">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Invoice VL (USD)</label>
-            <input id="inEdUSD" oninput="calculateEdPreview()" type="number" step="0.01" placeholder="10879.60" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold">
-          </div>
+          <div><label class="block font-semibold mb-1">Inv No.</label><input id="inEdInvNo" type="text" placeholder="286" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+          <div><label class="block font-semibold mb-1">Customer (Co,.Ltd)</label><input id="inEdCustomer" list="remarkDataList" type="text" placeholder="SPSS" required class="w-full border rounded-lg p-2 dark:bg-slate-800 uppercase"></div>
+          <div><label class="block font-semibold mb-1">Invoice VL (USD)</label><input id="inEdUSD" oninput="calculateEdPreview()" type="number" step="0.01" placeholder="10879.60" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
         </div>
-
-        <div class="grid grid-cols-3 gap-3 p-3 bg-indigo-50/50 dark:bg-slate-800/60 rounded-xl border border-indigo-100 dark:border-slate-700">
-          <div>
-            <label class="block font-semibold text-slate-500 mb-1">2% (USD × 42 - ကိန်းပြည့်)</label>
-            <input id="inEd2Pct" type="number" step="1" readonly class="w-full border rounded-lg p-2 bg-slate-100 dark:bg-slate-800 font-bold text-indigo-900 dark:text-indigo-400">
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-500 mb-1">MF / Service</label>
-            <input id="inEdMF" oninput="calculateEdPreview()" type="number" value="60000" required class="w-full border rounded-lg p-2 bg-white dark:bg-slate-800 font-bold text-blue-900 dark:text-blue-300">
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-500 mb-1">Total (MMK - ကိန်းပြည့်)</label>
-            <input id="inEdTotal" type="number" step="1" readonly class="w-full border rounded-lg p-2 bg-slate-100 dark:bg-slate-800 font-bold text-emerald-700 dark:text-emerald-400">
-          </div>
+        <div class="grid grid-cols-3 gap-3 p-3 bg-indigo-50/50 dark:bg-slate-800/60 rounded-xl border">
+          <div><label class="block font-semibold text-slate-500 mb-1">2% (USD × 42 - ကိန်းပြည့်)</label><input id="inEd2Pct" type="number" step="1" readonly class="w-full border rounded-lg p-2 bg-slate-100 dark:bg-slate-800 font-bold text-indigo-900"></div>
+          <div><label class="block font-semibold text-slate-500 mb-1">MF / Service</label><input id="inEdMF" oninput="calculateEdPreview()" type="number" value="60000" required class="w-full border rounded-lg p-2 bg-white dark:bg-slate-800 font-bold text-blue-900"></div>
+          <div><label class="block font-semibold text-slate-500 mb-1">Total (MMK - ကိန်းပြည့်)</label><input id="inEdTotal" type="number" step="1" readonly class="w-full border rounded-lg p-2 bg-slate-100 dark:bg-slate-800 font-bold text-emerald-700"></div>
         </div>
-
-        <div>
-          <label class="block font-semibold mb-1">Pay Date (ငွေချေသည့်ရက်စွဲ)</label>
-          <input id="inEdPayDate" type="date" class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-        </div>
-
+        <div><label class="block font-semibold mb-1">Pay Date (ငွေချေသည့်ရက်စွဲ)</label><input id="inEdPayDate" type="date" class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
         <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeEdEntryModal()" class="px-3.5 py-1.5 border rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">ပိတ်မည်</button>
-          <button type="submit" class="px-4 py-1.5 bg-indigo-950 dark:bg-indigo-900 text-white font-bold rounded-lg hover:bg-indigo-900">💾 သိမ်းဆည်းမည်</button>
+          <button type="button" onclick="closeEdEntryModal()" class="px-3.5 py-1.5 border rounded-lg">ပိတ်မည်</button>
+          <button type="submit" class="px-4 py-1.5 bg-indigo-950 text-white font-bold rounded-lg">💾 သိမ်းဆည်းမည်</button>
         </div>
       </form>
     </div>
@@ -1058,89 +802,141 @@
 
   <!-- ================= MODAL: MPU TOP-UP ================= -->
   <div id="mpuTopupModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 max-w-sm w-full shadow-2xl">
-      <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-sm w-full shadow-2xl">
+      <div class="flex items-center justify-between mb-4 border-b pb-2">
         <h3 class="text-sm font-bold text-amber-900 dark:text-amber-400">➕ MPU ငွေကြိုသွင်းခြင်း (Top-up)</h3>
-        <button onclick="closeMpuTopupModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+        <button onclick="closeMpuTopupModal()" class="text-slate-400">✕</button>
       </div>
-
       <form onsubmit="handleMpuTopupSubmit(event)" class="space-y-4 text-xs">
-        <div>
-          <label class="block font-semibold mb-1">ရက်စွဲ (Date)</label>
-          <input id="inMpuDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-        </div>
-        <div>
-          <label class="block font-semibold mb-1">ဘဏ်အကောင့် (Bank)</label>
-          <select id="inMpuBank" class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700 font-semibold">
-            <option value="AYA Bank">AYA Bank</option>
-            <option value="uab Bank">uab Bank</option>
-          </select>
-        </div>
-        <div>
-          <label class="block font-semibold mb-1">ငွေပမာဏ (Amount - Ks)</label>
-          <input id="inMpuAmount" type="number" step="1" placeholder="1000000" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold text-emerald-600">
-        </div>
-        <div>
-          <label class="block font-semibold mb-1">မှတ်ချက် (Remark)</label>
-          <input id="inMpuRemark" type="text" placeholder="MPU e-commerce သို့ ငွေလွှဲသွင်းခြင်း" value="MPU သို့ ငွေသွင်းခြင်း" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
-        </div>
+        <div><label class="block font-semibold mb-1">ရက်စွဲ (Date)</label><input id="inMpuDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+        <div><label class="block font-semibold mb-1">ဘဏ်အကောင့် (Bank)</label><select id="inMpuBank" class="w-full border rounded-lg p-2 dark:bg-slate-800 font-semibold"><option value="AYA Bank">AYA Bank</option><option value="uab Bank">uab Bank</option></select></div>
+        <div><label class="block font-semibold mb-1">ငွေပမာဏ (Amount - Ks)</label><input id="inMpuAmount" type="number" step="1" placeholder="1000000" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold text-emerald-600"></div>
+        <div><label class="block font-semibold mb-1">မှတ်ချက် (Remark)</label><input id="inMpuRemark" type="text" value="MPU သို့ ငွေသွင်းခြင်း" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
         <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeMpuTopupModal()" class="px-3.5 py-1.5 border rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">ပိတ်မည်</button>
-          <button type="submit" class="px-4 py-1.5 bg-amber-600 text-white font-bold rounded-lg hover:bg-amber-700">💾 သိမ်းဆည်းမည်</button>
+          <button type="button" onclick="closeMpuTopupModal()" class="px-3.5 py-1.5 border rounded-lg">ပိတ်မည်</button>
+          <button type="submit" class="px-4 py-1.5 bg-amber-600 text-white font-bold rounded-lg">💾 သိမ်းဆည်းမည်</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- ================= HIDDEN ED VOUCHER TEMPLATE FOR HTML2CANVAS ================= -->
-  <div id="voucherPrintArea" class="fixed -left-[9999px] top-0 bg-[#fdf8e2] border-[6px] border-double border-[#d4af37] w-[600px] p-6 font-serif text-slate-900 shadow-2xl rounded-lg overflow-hidden">
-      <!-- HEADER -->
-      <div id="voucherHeaderBg" class="bg-[#0a192f] text-center p-4 rounded text-white border-2 border-[#d4af37] mb-6 relative z-10 shadow-md">
-          <h1 class="text-3xl font-extrabold tracking-wider" style="font-family: 'Times New Roman', serif;">
-              <span id="vcCustomer" class="text-white drop-shadow-md"></span> 
-              <span id="vcCode" class="text-[#d4af37] drop-shadow-md"></span>
-          </h1>
-          <p class="text-xl font-bold mt-2 tracking-wide">Date : <span id="vcDate"></span></p>
+  <!-- ================= MODAL: VOUCHER PREVIEW & DOWNLOAD MODAL ================= -->
+  <div id="voucherPreviewModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border shadow-2xl max-w-3xl w-full p-4 sm:p-6 flex flex-col items-center gap-4 my-auto">
+      
+      <div class="w-full flex items-center justify-between border-b pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📸</span>
+          <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">ED Official Voucher Preview</h3>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="downloadLiveVoucherJPG()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition shadow-sm flex items-center gap-1.5">
+            <span>📸</span> <span>Download JPG</span>
+          </button>
+          <button onclick="closeVoucherPreviewModal()" class="text-slate-400 hover:text-slate-600 text-lg p-1">✕</button>
+        </div>
       </div>
-      <!-- TABLE -->
-      <div class="bg-white/80 p-5 rounded border-2 border-[#d4af37]/30 relative z-10">
-          <table class="w-full text-[22px] font-bold">
-              <tr class="border-b-[3px] border-[#d4af37]">
-                  <td class="py-3 text-left text-slate-800">Description</td>
-                  <td class="py-3 text-right text-slate-800">Amount (Ks)</td>
-              </tr>
-              <tr class="border-b border-[#d4af37]/40">
-                  <td class="py-5 text-left">2%</td>
-                  <td class="py-5 text-right"><span id="vc2Pct"></span> Ks</td>
-              </tr>
-              <tr class="border-b border-[#d4af37]/40">
-                  <td class="py-5 text-left">Mass Feed</td>
-                  <td class="py-5 text-right"><span id="vcMass"></span> Ks</td>
-              </tr>
-              <tr class="border-b-[3px] border-slate-400">
-                  <td class="py-5 text-left">Service</td>
-                  <td class="py-5 text-right"><span id="vcService"></span> Ks</td>
-              </tr>
-              <tr>
-                  <td class="py-5 pt-6 text-left text-3xl font-extrabold">Total</td>
-                  <td class="py-5 pt-6 text-right text-3xl font-extrabold text-rose-700"><span id="vcTotal"></span> Ks</td>
-              </tr>
-          </table>
-      </div>
-      <!-- PAID STAMP (Hidden by default) -->
-      <div id="vcStamp" class="absolute inset-0 flex items-center justify-center opacity-0 z-0 pointer-events-none">
-          <div class="border-[12px] border-green-700/80 text-green-700/80 rounded-full w-[400px] h-[400px] flex flex-col items-center justify-center -rotate-[25deg] mix-blend-multiply border-double">
-              <span class="text-2xl font-bold tracking-widest uppercase mb-1">Transaction Complete</span>
-              <span class="text-[90px] font-extrabold tracking-widest leading-none">PAID</span>
-              <span class="text-6xl">✔</span>
-              <span class="text-2xl font-bold tracking-widest uppercase mt-3">Transaction Complete</span>
+
+      <!-- AUTHENTIC HIGH-FIDELITY VOUCHER CARD -->
+      <div class="overflow-x-auto w-full flex justify-center py-2">
+        <div id="voucherTargetCard" class="w-[620px] rounded-2xl p-7 shadow-2xl relative select-none" style="background-color: #fdf8e6; border: 8px double #c59e47; font-family: 'Times New Roman', 'Padauk', serif;">
+          
+          <!-- CORNER ORNAMENTS (SVG) -->
+          <div class="absolute top-2 left-2 w-9 h-9 pointer-events-none opacity-85">
+            <svg viewBox="0 0 100 100" class="w-full h-full fill-current text-[#c59e47]"><path d="M5,5 L45,5 C30,15 15,30 5,45 Z M5,5 L5,95 C12,70 30,50 50,50 C30,50 12,30 5,5 Z"/></svg>
           </div>
+          <div class="absolute top-2 right-2 w-9 h-9 pointer-events-none opacity-85 rotate-90">
+            <svg viewBox="0 0 100 100" class="w-full h-full fill-current text-[#c59e47]"><path d="M5,5 L45,5 C30,15 15,30 5,45 Z M5,5 L5,95 C12,70 30,50 50,50 C30,50 12,30 5,5 Z"/></svg>
+          </div>
+          <div class="absolute bottom-2 left-2 w-9 h-9 pointer-events-none opacity-85 -rotate-90">
+            <svg viewBox="0 0 100 100" class="w-full h-full fill-current text-[#c59e47]"><path d="M5,5 L45,5 C30,15 15,30 5,45 Z M5,5 L5,95 C12,70 30,50 50,50 C30,50 12,30 5,5 Z"/></svg>
+          </div>
+          <div class="absolute bottom-2 right-2 w-9 h-9 pointer-events-none opacity-85 rotate-180">
+            <svg viewBox="0 0 100 100" class="w-full h-full fill-current text-[#c59e47]"><path d="M5,5 L45,5 C30,15 15,30 5,45 Z M5,5 L5,95 C12,70 30,50 50,50 C30,50 12,30 5,5 Z"/></svg>
+          </div>
+
+          <!-- HEADER RIBBON (Solid Hex Style to never vanish) -->
+          <div id="vcHeaderBox" style="background-color: #0b1a30; border: 2px solid #c59e47;" class="text-center py-4 px-6 rounded-xl relative z-10 shadow-md mb-6">
+            <h1 class="text-3xl font-extrabold tracking-wider leading-snug">
+              <span id="vcCustomer" class="text-white drop-shadow"></span> 
+              <span id="vcCode" class="text-[#e5c158] drop-shadow ml-1 mm-text"></span>
+            </h1>
+            <p class="text-lg font-bold text-white mt-1.5 tracking-wide">
+              Date : <span id="vcDate"></span>
+            </p>
+          </div>
+
+          <!-- INNER TABLE CARD -->
+          <div id="vcTableBox" style="background-color: rgba(255,255,255,0.7); border: 2px solid rgba(197, 158, 71, 0.4);" class="rounded-xl p-6 relative z-10 shadow-inner">
+            <table class="w-full text-left border-collapse text-[22px] font-bold">
+              <thead>
+                <tr style="border-bottom: 3px solid #c59e47;">
+                  <th class="py-3 text-left font-bold text-slate-800">Description</th>
+                  <th class="py-3 text-right font-bold text-slate-800">Amount (Ks)</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-900">
+                <tr style="border-bottom: 1px solid rgba(197, 158, 71, 0.3);">
+                  <td class="py-4 text-left font-bold">2%</td>
+                  <td class="py-4 text-right font-bold"><span id="vc2Pct"></span> Ks</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(197, 158, 71, 0.3);">
+                  <td class="py-4 text-left font-bold">Mass Feed</td>
+                  <td class="py-4 text-right font-bold"><span id="vcMass"></span> Ks</td>
+                </tr>
+                <tr style="border-bottom: 3px solid #94a3b8;">
+                  <td class="py-4 text-left font-bold">Service</td>
+                  <td class="py-4 text-right font-bold"><span id="vcService"></span> Ks</td>
+                </tr>
+                <tr>
+                  <td class="py-5 pt-6 text-left text-3xl font-extrabold text-slate-950">Total</td>
+                  <td class="py-5 pt-6 text-right text-3xl font-extrabold text-[#c01525]">
+                    <span id="vcTotal"></span> Ks
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- AUTHENTIC PAID VECTOR STAMP -->
+            <div id="vcPaidStamp" class="hidden absolute inset-0 flex items-center justify-center pointer-events-none select-none z-20">
+              <div class="transform -rotate-[18deg] opacity-90 filter drop-shadow-md">
+                <svg width="330" height="330" viewBox="0 0 300 300">
+                  <circle cx="150" cy="150" r="140" fill="none" stroke="#134d28" stroke-width="7" stroke-dasharray="8 3" />
+                  <circle cx="150" cy="150" r="130" fill="none" stroke="#134d28" stroke-width="4" />
+                  <circle cx="150" cy="150" r="88" fill="none" stroke="#134d28" stroke-width="3" />
+                  <path id="curveTop" d="M 40,150 A 110,110 0 0,1 260,150" fill="none" />
+                  <text fill="#134d28" font-size="16" font-weight="900" letter-spacing="4" text-anchor="middle">
+                    <textPath href="#curveTop" startOffset="50%">TRANSACTION COMPLETE</textPath>
+                  </text>
+                  <path id="curveBottom" d="M 260,150 A 110,110 0 0,1 40,150" fill="none" />
+                  <text fill="#134d28" font-size="16" font-weight="900" letter-spacing="4" text-anchor="middle">
+                    <textPath href="#curveBottom" startOffset="50%">TRANSACTION COMPLETE</textPath>
+                  </text>
+                  <rect x="25" y="115" width="250" height="70" fill="#134d28" rx="6" />
+                  <text x="150" y="165" fill="#ffffff" font-size="52" font-weight="900" letter-spacing="6" text-anchor="middle" font-family="'Times New Roman', serif">PAID</text>
+                  <path d="M 125,208 L 142,225 L 180,192" fill="none" stroke="#134d28" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- BOTTOM 3 ACCENT BARS -->
+          <div class="flex items-center justify-center gap-4 mt-6">
+            <div class="w-16 h-2 rounded" style="background-color: #c59e47;"></div>
+            <div class="w-16 h-2 rounded" style="background-color: #c59e47;"></div>
+            <div class="w-16 h-2 rounded" style="background-color: #c59e47;"></div>
+          </div>
+
+        </div>
       </div>
+
+    </div>
   </div>
 
-  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-3 transition-colors mt-auto">
+  <footer class="bg-white dark:bg-slate-900 border-t py-3 transition-colors mt-auto">
     <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-xs text-slate-400 dark:text-slate-500">© 2026 BK Operations & Management System. Version 19.0 (MPU License & ED Voucher Release).</p>
+      <p class="text-xs text-slate-400">© 2026 BK Operations & Management System. Version 19.0 (MPU License & High-Fidelity ED Voucher Release).</p>
     </div>
   </footer>
 
@@ -1225,7 +1021,7 @@
               if (val.userAccounts) localStorage.setItem('bk_user_accounts_enc', encryptPayload(val.userAccounts));
               if (val.creditCompanies) localStorage.setItem('bk_CreditCompanies_enc', encryptPayload(val.creditCompanies));
               if (val.customers) localStorage.setItem('bk_CompanyMap_enc', encryptPayload(val.customers));
-              if (val.mpuTopups) localStorage.setItem('bk_MPUTopups_enc', encryptPayload(val.mpuTopups)); // V19 addition
+              if (val.mpuTopups) localStorage.setItem('bk_MPUTopups_enc', encryptPayload(val.mpuTopups));
 
               populateMonthDropdown();
               populateEdMonthDropdown();
@@ -1235,7 +1031,7 @@
               renderUserAccountsTable();
               renderCreditCoTable();
               renderCustomerTable();
-              renderMpuLedger(); // V19
+              renderMpuLedger();
             } else {
               syncFullStateToCloud();
             }
@@ -1397,10 +1193,10 @@
       tbody.innerHTML = list.map((u, idx) => {
         const isOwner = !!u.isOwner;
         let roleBadge = '';
-        if (u.role === 'admin') roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-800 border border-blue-200 dark:bg-blue-950 dark:text-blue-300">👑 Admin</span>`;
-        else if (u.role === 'viewer') roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-purple-50 text-purple-800 border border-purple-200 dark:bg-purple-950 dark:text-purple-300">👁️ Viewer</span>`;
-        else roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-950 dark:text-amber-300">👤 Staff</span>`;
-        const deleteBtn = isOwner ? `<span class="text-slate-300 dark:text-slate-600">-</span>` : `<button onclick="deleteUserAccount('${u.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>`;
+        if (u.role === 'admin') roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-800 border border-blue-200">👑 Admin</span>`;
+        else if (u.role === 'viewer') roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-purple-50 text-purple-800 border border-purple-200">👁️ Viewer</span>`;
+        else roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">👤 Staff</span>`;
+        const deleteBtn = isOwner ? `<span class="text-slate-300">-</span>` : `<button onclick="deleteUserAccount('${u.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>`;
         return `
           <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition border-b border-slate-100 dark:border-slate-800">
             <td class="p-3 text-center text-slate-400 font-mono">${idx + 1}</td>
@@ -1800,8 +1596,8 @@
           <td class="p-3 font-bold text-slate-500 text-center">${index + 1}</td>
           <td class="p-3"><span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">${item.creditCo || 'SH'}</span></td>
           <td class="p-3 whitespace-nowrap font-medium">${item.date || '-'}</td>
-          <td class="p-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap">${item.boat || '-'}</td>
-          <td class="p-3 font-mono">${item.invNo || '-'}</td>
+          <td class="p-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap mm-text">${item.boat || '-'}</td>
+          <td class="p-3 font-mono font-bold">${item.invNo || '-'}</td>
           <td class="p-3 font-mono text-[11px] text-slate-500">${item.edNo || '-'}</td>
           <td class="p-3 text-right font-medium">${Number(item.kg || 0).toLocaleString()}</td>
           <td class="p-3 text-right font-semibold text-emerald-700 dark:text-emerald-400">$${formatNum(item.usd, 2)}</td>
@@ -1814,7 +1610,6 @@
         `;
         tbody.appendChild(tr);
       });
-      // update sort icons
       ['creditCo','date','boat','invNo','edNo','kg','usd','rate','thb','pct','amount','remark'].forEach(col => {
         const span = document.getElementById('sort-' + col);
         if(span) span.innerText = (sortColumn === col) ? (sortAsc ? '▲' : '▼') : '↕';
@@ -1835,7 +1630,7 @@
       document.getElementById('cargoModalInvNo').value = ''; document.getElementById('cargoModalEdNo').value = '';
       document.getElementById('cargoModalKG').value = ''; document.getElementById('cargoModalUSD').value = '';
       document.getElementById('cargoModalRate').value = '34.7'; document.getElementById('cargoModalPct').value = '4.0';
-      document.getElementById('cargoModalLicense').checked = false; // MPU default empty
+      document.getElementById('cargoModalLicense').checked = false;
       calculateCargoPreview();
       document.getElementById('cargoEntryModal').classList.remove('hidden');
     }
@@ -2012,10 +1807,10 @@
 
       list.forEach((item, index) => {
         const tr = document.createElement('tr'); tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 transition";
-        let actionCell = `<button onclick="generateEdVoucher('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher JPG ထုတ်မည်">📸 VC</button>`;
+        let actionCell = `<button onclick="openVoucherModal('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher ကြည့်ရှု/ထုတ်မည်">📸 VC</button>`;
         if (isAdmin) {
           actionCell = `
-            <button onclick="generateEdVoucher('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher JPG ထုတ်မည်">📸 VC</button>
+            <button onclick="openVoucherModal('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher ကြည့်ရှု/ထုတ်မည်">📸 VC</button>
             <button onclick="editEdShipment('${item.id}')" class="text-indigo-600 hover:text-indigo-800 p-1" title="ပြင်မည်">✏️</button>
             <button onclick="deleteEdShipment('${item.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>
           `;
@@ -2023,8 +1818,8 @@
         tr.innerHTML = `
           <td class="p-3 font-bold text-slate-500 text-center">${index + 1}</td>
           <td class="p-3 whitespace-nowrap font-medium">${item.date || '-'}</td>
-          <td class="p-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap">${item.boat || '-'}</td>
-          <td class="p-3 font-mono">${item.invNo || '-'}</td>
+          <td class="p-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap mm-text">${item.boat || '-'}</td>
+          <td class="p-3 font-mono font-bold">${item.invNo || '-'}</td>
           <td class="p-3 text-right font-semibold text-emerald-700 dark:text-emerald-400">$${formatNum(item.invVl, 2)}</td>
           <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-900 border border-indigo-200">${item.customer || '-'}</span></td>
           <td class="p-3 text-right font-medium text-slate-700 dark:text-slate-300">${formatNum(Math.round(item.tax2Pct || 0), 0)} K</td>
@@ -2089,50 +1884,60 @@
       if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) { saveEdData([]); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); }
     }
 
-    // REQUIREMENT 5: ED VOUCHER GENERATOR
-    function generateEdVoucher(id) {
+    // ================= HIGH-FIDELITY ED VOUCHER ENGINE =================
+    let currentVoucherItem = null;
+
+    function openVoucherModal(id) {
       const item = getEdData().find(x => x.id === id); if (!item) return;
+      currentVoucherItem = item;
       const isPaid = !!item.payDate;
-      const area = document.getElementById('voucherPrintArea');
-      const header = document.getElementById('voucherHeaderBg');
-      const stamp = document.getElementById('vcStamp');
-      
-      // Theme toggling
+      const card = document.getElementById('voucherTargetCard');
+      const header = document.getElementById('vcHeaderBox');
+      const stamp = document.getElementById('vcPaidStamp');
+
       if (isPaid) {
-          area.className = "fixed -left-[9999px] top-0 bg-[#eaf5ea] border-[8px] border-double border-[#2f855a] w-[600px] p-6 font-serif text-slate-900 rounded-lg overflow-hidden";
-          header.className = "bg-[#14532d] text-center p-4 rounded text-white border-2 border-[#d4af37] mb-6 relative z-10 shadow-md";
-          stamp.classList.remove('opacity-0');
+        card.style.backgroundColor = "#ebf5ed";
+        card.style.borderColor = "#1b6131";
+        header.style.backgroundColor = "#134d28";
+        stamp.classList.remove('hidden');
       } else {
-          area.className = "fixed -left-[9999px] top-0 bg-[#fdf8e2] border-[8px] border-double border-[#d4af37] w-[600px] p-6 font-serif text-slate-900 rounded-lg overflow-hidden";
-          header.className = "bg-[#0a192f] text-center p-4 rounded text-white border-2 border-[#d4af37] mb-6 relative z-10 shadow-md";
-          stamp.classList.add('opacity-0');
+        card.style.backgroundColor = "#fdf8e6";
+        card.style.borderColor = "#c59e47";
+        header.style.backgroundColor = "#0b1a30";
+        stamp.classList.add('hidden');
       }
 
       document.getElementById('vcCustomer').innerText = item.customer || 'CUSTOMER';
       document.getElementById('vcCode').innerText = `(${item.boat || item.invNo})`;
       document.getElementById('vcDate').innerText = formatReportDate(item.date);
-      
       document.getElementById('vc2Pct').innerText = Math.round(item.tax2Pct || 0).toLocaleString();
       const mf = Math.round(item.mfService || 60000);
-      const splitMf = mf / 2;
-      document.getElementById('vcMass').innerText = splitMf.toLocaleString();
-      document.getElementById('vcService').innerText = splitMf.toLocaleString();
+      document.getElementById('vcMass').innerText = (mf / 2).toLocaleString();
+      document.getElementById('vcService').innerText = (mf / 2).toLocaleString();
       document.getElementById('vcTotal').innerText = Math.round(item.total || 0).toLocaleString();
 
-      // Temporarily bring it to viewport for render but hidden behind modal overlay or just z-index
-      area.classList.remove('-left-[9999px]');
-      area.style.left = '0px'; area.style.zIndex = '-100';
+      document.getElementById('voucherPreviewModal').classList.remove('hidden');
+    }
 
-      html2canvas(area, { scale: 3, useCORS: true }).then(canvas => {
-          area.classList.add('-left-[9999px]'); area.style.left = '';
-          const a = document.createElement('a');
-          a.download = `Voucher_${item.customer || 'ED'}_${item.invNo}.jpg`;
-          a.href = canvas.toDataURL('image/jpeg', 0.95);
-          a.click();
+    function closeVoucherPreviewModal() {
+      document.getElementById('voucherPreviewModal').classList.add('hidden');
+      currentVoucherItem = null;
+    }
+
+    function downloadLiveVoucherJPG() {
+      if (!currentVoucherItem) return;
+      const card = document.getElementById('voucherTargetCard');
+      html2canvas(card, { scale: 3, useCORS: true, backgroundColor: null }).then(canvas => {
+        const a = document.createElement('a');
+        a.download = `Voucher_${currentVoucherItem.customer || 'ED'}_${currentVoucherItem.invNo}.jpg`;
+        a.href = canvas.toDataURL('image/jpeg', 0.96);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
       });
     }
 
-    // ================= MPU LEDGER LOGIC (REQUIREMENT 6) =================
+    // ================= MPU LEDGER LOGIC =================
     function openMpuTopupModal() {
       if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ငွေသွင်းခွင့် ရှိပါသည်။");
       document.getElementById('inMpuDate').value = new Date().toISOString().split('T')[0];
@@ -2169,26 +1974,25 @@
 
     function renderMpuLedger() {
       const topups = getMpuTopups();
-      const creditData = getCargoData().filter(c => c.hasLicense); // Filter only checked licenses
+      const creditData = getCargoData().filter(c => c.hasLicense);
       let ledger = [];
       
       topups.forEach(t => {
-          ledger.push({
-              date: t.date, desc: t.remark || 'ငွေသွင်း (Top-up)', bank: t.bank,
-              inAmt: Number(t.amount), outAmt: 0, id: t.id, isTopup: true
-          });
+        ledger.push({
+          date: t.date, desc: t.remark || 'ငွေသွင်း (Top-up)', bank: t.bank,
+          inAmt: Number(t.amount), outAmt: 0, id: t.id, isTopup: true
+        });
       });
       creditData.forEach(c => {
-          ledger.push({
-              date: c.date, desc: `လိုင်စင်ဖြတ် (လှေ: ${c.boat} | Inv: ${c.invNo})`, bank: 'MPU',
-              inAmt: 0, outAmt: 15000, id: c.id, isTopup: false
-          });
+        ledger.push({
+          date: c.date, desc: `လိုင်စင်ဖြတ် (လှေ: ${c.boat} | Inv: ${c.invNo})`, bank: 'MPU',
+          inAmt: 0, outAmt: 15000, id: c.id, isTopup: false
+        });
       });
 
-      // Sort by date Ascending
       ledger.sort((a,b) => {
-         const comp = a.date.localeCompare(b.date);
-         return comp !== 0 ? comp : (a.isTopup ? -1 : 1); // Topup first on same day
+        const comp = a.date.localeCompare(b.date);
+        return comp !== 0 ? comp : (a.isTopup ? -1 : 1);
       });
 
       let balance = 0; let totalIn = 0; let totalOut = 0;
@@ -2196,23 +2000,23 @@
       tbody.innerHTML = '';
       
       ledger.forEach((row, i) => {
-          balance += row.inAmt - row.outAmt;
-          totalIn += row.inAmt; totalOut += row.outAmt;
-          const actionBtn = (row.isTopup && currentUser && currentUser.role === 'admin') 
-              ? `<button onclick="deleteMpuTopup('${row.id}')" class="text-rose-600 hover:bg-rose-100 p-1 rounded">🗑️</button>` 
-              : `<span class="text-slate-400 text-[9px] bg-slate-100 px-1 py-0.5 rounded">Auto</span>`;
-          tbody.innerHTML += `
-             <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
-               <td class="p-3 text-center text-slate-500 font-bold">${i+1}</td>
-               <td class="p-3 font-medium">${row.date}</td>
-               <td class="p-3">${row.desc}</td>
-               <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${row.bank.includes('AYA') ? 'bg-blue-50 text-blue-800' : (row.bank.includes('uab') ? 'bg-indigo-50 text-indigo-800' : 'bg-slate-100 text-slate-600')}">${row.bank}</span></td>
-               <td class="p-3 text-right font-semibold text-emerald-600 dark:text-emerald-400">${row.inAmt > 0 ? row.inAmt.toLocaleString() : '-'}</td>
-               <td class="p-3 text-right font-semibold text-rose-600 dark:text-rose-400">${row.outAmt > 0 ? row.outAmt.toLocaleString() : '-'}</td>
-               <td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">${balance.toLocaleString()}</td>
-               <td class="p-3 text-center">${actionBtn}</td>
-             </tr>
-          `;
+        balance += row.inAmt - row.outAmt;
+        totalIn += row.inAmt; totalOut += row.outAmt;
+        const actionBtn = (row.isTopup && currentUser && currentUser.role === 'admin') 
+          ? `<button onclick="deleteMpuTopup('${row.id}')" class="text-rose-600 hover:bg-rose-100 p-1 rounded">🗑️</button>` 
+          : `<span class="text-slate-400 text-[9px] bg-slate-100 px-1 py-0.5 rounded">Auto</span>`;
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
+            <td class="p-3 text-center text-slate-500 font-bold">${i+1}</td>
+            <td class="p-3 font-medium">${row.date}</td>
+            <td class="p-3 mm-text">${row.desc}</td>
+            <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${row.bank.includes('AYA') ? 'bg-blue-50 text-blue-800' : (row.bank.includes('uab') ? 'bg-indigo-50 text-indigo-800' : 'bg-slate-100 text-slate-600')}">${row.bank}</span></td>
+            <td class="p-3 text-right font-semibold text-emerald-600 dark:text-emerald-400">${row.inAmt > 0 ? row.inAmt.toLocaleString() : '-'}</td>
+            <td class="p-3 text-right font-semibold text-rose-600 dark:text-rose-400">${row.outAmt > 0 ? row.outAmt.toLocaleString() : '-'}</td>
+            <td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">${balance.toLocaleString()}</td>
+            <td class="p-3 text-center">${actionBtn}</td>
+          </tr>
+        `;
       });
       
       document.getElementById('mpuStatTopup').innerText = totalIn.toLocaleString() + ' Ks';
@@ -2324,7 +2128,6 @@
       const contentDiv = document.getElementById('dailyReportContentArea'); const formattedDate = formatReportDate(selectedDate);
       const totalBoats = dailyRows.length; const totalUSD = dailyRows.reduce((acc, cur) => acc + Number(cur.usd || 0), 0);
 
-      // REQUIREMENT 3: VERTICAL ALIGN MIDDLE & FONT SIZE 13 ALREADY IN CSS
       if (currentDailyReportType === 'summary') {
         contentDiv.innerHTML = `
           <div class="mt-8 flex flex-col items-center justify-center">
@@ -2361,7 +2164,7 @@
           rowsHtml += `
             <tr>
               <td class="border border-black text-center font-bold">${idx + 1}</td>
-              <td class="border border-black text-left pl-3 font-bold">${r.boat}</td>
+              <td class="border border-black text-left pl-3 font-bold mm-text">${r.boat}</td>
               <td class="border border-black text-center font-bold">${r.invNo}</td>
               <td class="border border-black text-right pr-3 font-bold">${Number(r.kg || 0).toLocaleString()}</td>
               <td class="border border-black text-right font-bold pr-3">${formatNum(r.usd, 3)}</td>
@@ -2423,7 +2226,6 @@
       const card = document.getElementById('printableA4Card');
       const dateVal = document.getElementById('reportDatePicker').value || 'daily';
       const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH';
-      // Use scale:3 on the exactly measured 794px container -> outputs ~2382 x 3369 which is perfect A4 ratio.
       html2canvas(card, { scale: 3.123, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
         const a = document.createElement('a'); a.download = `${creditVal}_DailyReport_${dateVal}.jpg`; a.href = canvas.toDataURL('image/jpeg', 1.0);
         document.body.appendChild(a); a.click(); a.remove();
