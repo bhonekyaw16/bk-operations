@@ -56,26 +56,33 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* DAILY REPORT TIMES NEW ROMAN & PERFECT ALIGNMENT */
+    /* DAILY REPORT TIMES NEW ROMAN & PERFECT ALIGNMENT (A4 SIZE 1:1.414) */
     #printableA4Card {
       font-family: 'Times New Roman', Times, 'Pyidaungsu', 'Myanmar3', serif !important;
+      width: 794px !important;      /* Exact A4 width at 96 DPI */
+      min-height: 1123px !important;/* Exact A4 height at 96 DPI */
+      margin: 0 auto;
+      background: #ffffff;
+      color: #000000;
     }
     #printableA4Card table {
       border-collapse: collapse !important;
+      font-size: 13px !important;   /* Size 13 per requirement */
     }
     #printableA4Card table th, 
     #printableA4Card table td {
       vertical-align: middle !important;
-      padding-top: 8px !important;
-      padding-bottom: 8px !important;
-      line-height: 1.25 !important;
+      text-align: center;
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+      line-height: 1.3 !important;
     }
 
     @media print {
       body * { visibility: hidden; }
       #printableA4Card, #printableA4Card * { visibility: visible; }
       #printableA4Card {
-        position: absolute; left: 0; top: 0; width: 100% !important; margin: 0 !important; padding: 20px !important; box-shadow: none !important; border: none !important;
+        position: absolute; left: 0; top: 0; width: 100% !important; height: 100% !important; margin: 0 !important; padding: 20px !important; box-shadow: none !important; border: none !important;
       }
     }
   </style>
@@ -100,7 +107,7 @@
           BK Operations & Management System မှ ကြိုဆိုပါသည်။ နယ်စပ်ရေကြောင်း ကုန်စည်ပို့ဆောင်ရေးနှင့် အကောက်ခွန် ဝန်ဆောင်မှု စီမံခန့်ခွဲရေး ပေါ်တယ်လ်။
         </p>
         <div class="pt-2 text-[11px] text-slate-300 hidden md:block">
-          ☁️ Powered by Google Firebase Cloud Real-Time Database (v18.0)
+          ☁️ Powered by Google Firebase Cloud Real-Time Database (v19.0)
         </div>
       </div>
 
@@ -141,7 +148,7 @@
               <input type="checkbox" id="rememberMeCheckbox" class="rounded text-blue-600">
               <span>Remember username</span>
             </label>
-            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 18.0</span>
+            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 19.0</span>
           </div>
 
           <div id="loginErrorBox" class="p-2.5 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 rounded-xl text-rose-600 dark:text-rose-300 text-xs font-semibold hidden text-center">
@@ -185,20 +192,23 @@
       
       <div class="flex items-center flex-wrap gap-1 sm:gap-1.5 text-xs font-semibold">
         <button id="btn-dashboard" onclick="switchTab('dashboard')" class="nav-btn px-2.5 py-1.5 rounded-lg bg-blue-950 text-white shadow-sm transition text-xs">
-          📊 Cargo
+          📊 Credit
         </button>
         <button id="btn-daily" onclick="switchTab('daily')" class="nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-xs">
           📄 Daily
         </button>
 
         <button id="btn-breakdown" onclick="switchTab('breakdown')" class="not-for-staff nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-xs">
-          📑 Cargo လချုပ်
+          📑 Credit လချုပ်
         </button>
         <button id="btn-ed-dashboard" onclick="switchTab('ed-dashboard')" class="not-for-staff nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-indigo-950 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-slate-800 transition border border-indigo-200 dark:border-indigo-900 text-xs">
           📋 ED Service
         </button>
         <button id="btn-ed-breakdown" onclick="switchTab('ed-breakdown')" class="not-for-staff nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-indigo-950 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-slate-800 transition border border-indigo-200 dark:border-indigo-900 text-xs">
           📑 ED လချုပ်
+        </button>
+        <button id="btn-mpu" onclick="switchTab('mpu')" class="nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-amber-900 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-slate-800 transition border border-amber-200 dark:border-amber-900 text-xs">
+          💳 MPU လိုင်စင်
         </button>
         
         <button id="btn-companies" onclick="switchTab('companies')" class="admin-only-item nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-xs">
@@ -229,11 +239,11 @@
   <!-- ================= MAIN CONTENT ================= -->
   <main class="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-5 flex-1 w-full">
 
-    <!-- ================= TAB 1: CARGO DASHBOARD ================= -->
+    <!-- ================= TAB 1: CREDIT DASHBOARD (Renamed from Cargo) ================= -->
     <div id="tab-dashboard" class="tab-content active">
       
       <div class="flex items-center justify-between mb-2">
-        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Cargo Summary Statistics</span>
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Credit Summary Statistics</span>
         <button onclick="toggleCargoCards()" class="text-xs text-blue-900 dark:text-blue-400 hover:underline flex items-center gap-1 font-semibold">
           <span id="cargoCardsToggleIcon">👁️</span> <span id="cargoCardsToggleText">Summary Cards ပိတ်မည်</span>
         </button>
@@ -244,10 +254,10 @@
         <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Trips</p>
           <h3 id="statTrips" class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">0</h3>
-          <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">လှေကုန်တင်အကြိမ်ရေ</p>
+          <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">လှေအကြိမ်ရေ</p>
         </div>
         <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-          <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Cargo (KG)</p>
+          <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Credit (KG)</p>
           <h3 id="statKG" class="text-lg sm:text-2xl font-bold text-blue-950 dark:text-blue-400 mt-0.5">0</h3>
           <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">စုစုပေါင်း ကုန်ချိန် (ကီလို)</p>
         </div>
@@ -300,13 +310,13 @@
             <span>📊 Export (<span id="exportCount">0</span>)</span>
           </button>
 
-          <!-- BATCH BUTTON: Opens/Closes the hidden panel -->
+          <!-- BATCH BUTTON -->
           <button id="btnToggleBatchTool" onclick="toggleBatchTool()" class="admin-only-item text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-2.5 py-1.5 rounded-lg transition shadow-sm">
             <span>⚡ % / Rate ပြောင်းရန်</span>
           </button>
 
           <button id="btnNewCargoEntry" onclick="openNewCargoEntry()" class="can-add-entry text-xs bg-blue-900 hover:bg-blue-800 text-white font-bold px-3 py-1.5 rounded-lg transition shadow-sm">
-            <span>➕ စာရင်းအသစ်</span>
+            <span>➕ Credit စာရင်းအသစ်</span>
           </button>
 
           <button onclick="clearAllData()" class="admin-only-item text-xs text-rose-600 font-semibold px-2 py-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition">
@@ -355,7 +365,7 @@
         <p class="text-[10px] text-slate-500 mt-2">* RATE သို့မဟုတ် % တစ်ခုတည်းကိုသာ ပြောင်းလိုပါက မပြောင်းလိုသော အကွက်ကို အလွတ်ချန်ထားနိုင်ပါသည်။</p>
       </div>
 
-      <!-- CARGO DATA TABLE -->
+      <!-- CREDIT DATA TABLE (Renamed from Cargo) -->
       <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
         <div class="overflow-x-auto max-h-[580px]">
           <table class="w-full text-left border-collapse text-xs">
@@ -365,7 +375,7 @@
                 <th onclick="sortTable('creditCo')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Credit Co <span id="sort-creditCo">↕</span></th>
                 <th onclick="sortTable('date')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Date <span id="sort-date">↕</span></th>
                 <th onclick="sortTable('boat')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">လှေအမည် <span id="sort-boat">↕</span></th>
-                <th onclick="sortTable('invNo')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Inv: No. <span id="sort-invNo">↕</span></th>
+                <th onclick="sortTable('invNo')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 text-blue-600">Inv: No. <span id="sort-invNo">▲</span></th>
                 <th onclick="sortTable('edNo')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">ED No. <span id="sort-edNo">↕</span></th>
                 <th onclick="sortTable('kg')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">KG <span id="sort-kg">↕</span></th>
                 <th onclick="sortTable('usd')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Inv: (USD) <span id="sort-usd">↕</span></th>
@@ -424,7 +434,7 @@
           
           <!-- JPG DOWNLOAD BUTTON -->
           <button onclick="downloadReportJPG()" class="text-xs bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg transition shadow-sm flex items-center gap-1">
-            <span>📸 Download JPG</span>
+            <span>📸 Download JPG (A4 Size)</span>
           </button>
 
           <!-- PNG DOWNLOAD BUTTON -->
@@ -439,23 +449,24 @@
       </div>
 
       <div class="overflow-x-auto pb-10">
-        <div id="printableA4Card" class="bg-white text-slate-900 p-6 sm:p-12 shadow-2xl rounded-sm mx-auto max-w-3xl min-h-[850px] border border-slate-200">
+        <!-- EXACT A4 DIMENSION CONTAINER -->
+        <div id="printableA4Card" class="shadow-2xl border border-slate-200 p-8 sm:p-12">
           <div id="letterheadRenderArea" class="mb-5"></div>
           <div id="dailyReportContentArea"></div>
         </div>
       </div>
     </div>
 
-    <!-- ================= TAB 3: CARGO BREAKDOWN ================= -->
+    <!-- ================= TAB 3: CREDIT BREAKDOWN ================= -->
     <div id="tab-breakdown" class="tab-content">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
           <div>
-            <h2 class="text-base font-bold text-slate-900 dark:text-white">Cargo - Customer အလိုက် လချုပ်စာရင်း</h2>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">Credit - Customer အလိုက် လချုပ်စာရင်း</h2>
             <p class="text-xs text-slate-500">Customer တစ်ခုချင်းစီ၏ စုစုပေါင်း ကုန်ချိန်နှင့် ဝန်ဆောင်ခများ (ကိန်းပြည့် ဘတ်ငွေ)</p>
           </div>
           <button onclick="switchTab('dashboard')" class="text-xs text-blue-900 dark:text-blue-400 font-semibold hover:underline">
-            ← Cargo သို့
+            ← Credit သို့
           </button>
         </div>
 
@@ -501,17 +512,17 @@
         </div>
         <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total 2% (MMK)</p>
-          <h3 id="edStat2Pct" class="text-lg sm:text-2xl font-bold text-indigo-700 dark:text-indigo-400 mt-0.5">0 K</h3>
+          <h3 id="edStat2Pct" class="text-lg sm:text-2xl font-bold text-indigo-700 dark:text-indigo-400 mt-0.5">0 Ks</h3>
           <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">၂% ကော်မရှင် (ကိန်းပြည့်)</p>
         </div>
         <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">MF / Service (MMK)</p>
-          <h3 id="edStatMF" class="text-lg sm:text-2xl font-bold text-blue-900 dark:text-blue-300 mt-0.5">0 K</h3>
-          <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">MF ဝန်ဆောင်ခ (၆၀,၀၀၀ ပေါင်း)</p>
+          <h3 id="edStatMF" class="text-lg sm:text-2xl font-bold text-blue-900 dark:text-blue-300 mt-0.5">0 Ks</h3>
+          <p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">MF ဝန်ဆောင်ခ</p>
         </div>
         <div class="bg-gradient-to-br from-indigo-950 to-slate-900 text-white p-3 rounded-xl shadow-md col-span-2 md:col-span-1">
           <p class="text-[10px] sm:text-[11px] font-bold uppercase text-indigo-300">TOTAL PAYABLE (MMK)</p>
-          <h3 id="edStatTotal" class="text-lg sm:text-2xl font-bold text-emerald-400 mt-0.5">0 K</h3>
+          <h3 id="edStatTotal" class="text-lg sm:text-2xl font-bold text-emerald-400 mt-0.5">0 Ks</h3>
           <p class="text-[9px] sm:text-[10px] text-slate-300 mt-0.5">စုစုပေါင်း ကျသင့်ငွေ (ကိန်းပြည့်ကျပ်)</p>
         </div>
       </div>
@@ -575,7 +586,7 @@
                 <th onclick="sortEdTable('mfService')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">MF / Service (MMK) <span id="sort-ed-mfService">↕</span></th>
                 <th onclick="sortEdTable('total')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-slate-900 dark:text-white">Total (MMK) <span id="sort-ed-total">↕</span></th>
                 <th onclick="sortEdTable('payDate')" class="p-3 text-center cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Pay Date <span id="sort-ed-payDate">↕</span></th>
-                <th class="p-3 text-center">ပြင်/ဖျက်</th>
+                <th class="p-3 text-center">ပြင်/ဖျက်/VC</th>
               </tr>
             </thead>
             <tbody id="edTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300"></tbody>
@@ -620,7 +631,57 @@
       </div>
     </div>
 
-    <!-- ================= TAB 6: SETTINGS & USER MANAGEMENT (ADMIN ONLY) ================= -->
+    <!-- ================= TAB 6: MPU LEDGER (NEW) ================= -->
+    <div id="tab-mpu" class="tab-content">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-base font-bold text-amber-900 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
+            <span>💳</span> MPU လိုင်စင်စာရင်း (Ledger & Wallet)
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) ဖြတ်တောက်မှုများနှင့် ငွေကြိုသွင်းမှု မှတ်တမ်း (AYA & uab)</p>
+        </div>
+        <button onclick="openMpuTopupModal()" class="admin-only-item bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5 transition">
+          <span>➕</span> <span>ငွေသွင်းမည် (Top-up)</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+        <div class="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 p-4 rounded-xl shadow-sm">
+          <p class="text-xs font-bold text-emerald-700 dark:text-emerald-400">Total Top-ups (IN)</p>
+          <h3 id="mpuStatTopup" class="text-xl sm:text-2xl font-bold text-emerald-900 dark:text-emerald-300 mt-1">0 Ks</h3>
+        </div>
+        <div class="bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 p-4 rounded-xl shadow-sm">
+          <p class="text-xs font-bold text-rose-700 dark:text-rose-400">Total Licenses (OUT)</p>
+          <h3 id="mpuStatExpense" class="text-xl sm:text-2xl font-bold text-rose-900 dark:text-rose-300 mt-1">0 Ks</h3>
+        </div>
+        <div class="bg-gradient-to-r from-amber-600 to-amber-500 text-white p-4 rounded-xl shadow-md">
+          <p class="text-xs font-bold text-amber-100">MPU Balance (AYA & uab)</p>
+          <h3 id="mpuStatBalance" class="text-xl sm:text-2xl font-bold mt-1">0 Ks</h3>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+        <div class="overflow-x-auto max-h-[550px]">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold sticky top-0 z-10">
+              <tr>
+                <th class="p-3 w-12 text-center">No</th>
+                <th class="p-3 w-28">Date</th>
+                <th class="p-3">Description</th>
+                <th class="p-3 w-28 text-center">Bank/Type</th>
+                <th class="p-3 w-32 text-right text-emerald-600 dark:text-emerald-400">IN (Ks)</th>
+                <th class="p-3 w-32 text-right text-rose-600 dark:text-rose-400">OUT (Ks)</th>
+                <th class="p-3 w-36 text-right font-bold">Balance</th>
+                <th class="p-3 w-16 text-center">ဖျက်</th>
+              </tr>
+            </thead>
+            <tbody id="mpuLedgerTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 7: SETTINGS & USER MANAGEMENT (ADMIN ONLY) ================= -->
     <div id="tab-companies" class="tab-content">
       <div class="max-w-5xl mx-auto space-y-6">
         
@@ -717,7 +778,7 @@
                 <span>💾</span> Data Backup & Restore (Admin Password ဖြင့် အပြည့်အဝ ကာကွယ်ထားသောစနစ်)
               </h2>
               <p class="text-xs text-slate-300 mt-0.5">
-                Cargo၊ ED စာရင်းများနှင့် အသုံးပြုသူ အကောင့်အားလုံးကို Admin Password ဖြင့် AES-256 ကုဒ်ဝှက်ကာ လုံခြုံစွာ အရန်သိမ်း/ပြန်ဖော်နိုင်ပါသည်
+                Credit၊ ED စာရင်းများနှင့် အသုံးပြုသူ အကောင့်အားလုံးကို Admin Password ဖြင့် AES-256 ကုဒ်ဝှက်ကာ လုံခြုံစွာ အရန်သိမ်း/ပြန်ဖော်နိုင်ပါသည်
               </p>
             </div>
             
@@ -839,11 +900,11 @@
 
   </main>
 
-  <!-- ================= MODAL: CARGO SHIPMENT ENTRY ================= -->
+  <!-- ================= MODAL: CREDIT SHIPMENT ENTRY ================= -->
   <div id="cargoEntryModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
       <div class="flex items-center justify-between mb-3 border-b border-slate-100 dark:border-slate-800 pb-2">
-        <h3 id="cargoModalTitle" class="text-sm font-bold text-slate-900 dark:text-white">➕ ကုန်တင် စာရင်းအသစ် ထည့်သွင်းခြင်း</h3>
+        <h3 id="cargoModalTitle" class="text-sm font-bold text-slate-900 dark:text-white">➕ Credit စာရင်းအသစ် ထည့်သွင်းခြင်း</h3>
         <button onclick="closeCargoEntryModal()" class="text-slate-400 hover:text-slate-600">✕</button>
       </div>
 
@@ -876,7 +937,7 @@
         <div class="grid grid-cols-3 gap-3">
           <div>
             <label class="block font-semibold mb-1">Inv: No.</label>
-            <input id="cargoModalInvNo" type="text" placeholder="173" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
+            <input id="cargoModalInvNo" type="text" placeholder="323" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
           </div>
           <div>
             <label class="block font-semibold mb-1">ED No.</label>
@@ -886,6 +947,14 @@
             <label class="block font-semibold mb-1">အလေးချိန် (KG)</label>
             <input id="cargoModalKG" type="number" step="any" placeholder="28430" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
           </div>
+        </div>
+
+        <!-- MPU CHECKBOX -->
+        <div class="grid grid-cols-1">
+          <label class="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 p-2.5 rounded-lg border border-amber-200 dark:border-amber-800 cursor-pointer select-none">
+            <input type="checkbox" id="cargoModalLicense" class="w-4 h-4 rounded text-amber-600 focus:ring-amber-500">
+            <span>န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) တင်မည် (MPU မှ အလိုအလျောက် ဖြတ်တောက်မည်)</span>
+          </label>
         </div>
 
         <div class="grid grid-cols-3 gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
@@ -987,41 +1056,103 @@
     </div>
   </div>
 
-  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-3 transition-colors">
+  <!-- ================= MODAL: MPU TOP-UP ================= -->
+  <div id="mpuTopupModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 max-w-sm w-full shadow-2xl">
+      <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">
+        <h3 class="text-sm font-bold text-amber-900 dark:text-amber-400">➕ MPU ငွေကြိုသွင်းခြင်း (Top-up)</h3>
+        <button onclick="closeMpuTopupModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+
+      <form onsubmit="handleMpuTopupSubmit(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold mb-1">ရက်စွဲ (Date)</label>
+          <input id="inMpuDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">ဘဏ်အကောင့် (Bank)</label>
+          <select id="inMpuBank" class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700 font-semibold">
+            <option value="AYA Bank">AYA Bank</option>
+            <option value="uab Bank">uab Bank</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">ငွေပမာဏ (Amount - Ks)</label>
+          <input id="inMpuAmount" type="number" step="1" placeholder="1000000" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold text-emerald-600">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">မှတ်ချက် (Remark)</label>
+          <input id="inMpuRemark" type="text" placeholder="MPU e-commerce သို့ ငွေလွှဲသွင်းခြင်း" value="MPU သို့ ငွေသွင်းခြင်း" required class="w-full border rounded-lg p-2 dark:bg-slate-800 dark:border-slate-700">
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeMpuTopupModal()" class="px-3.5 py-1.5 border rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">ပိတ်မည်</button>
+          <button type="submit" class="px-4 py-1.5 bg-amber-600 text-white font-bold rounded-lg hover:bg-amber-700">💾 သိမ်းဆည်းမည်</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= HIDDEN ED VOUCHER TEMPLATE FOR HTML2CANVAS ================= -->
+  <div id="voucherPrintArea" class="fixed -left-[9999px] top-0 bg-[#fdf8e2] border-[6px] border-double border-[#d4af37] w-[600px] p-6 font-serif text-slate-900 shadow-2xl rounded-lg overflow-hidden">
+      <!-- HEADER -->
+      <div id="voucherHeaderBg" class="bg-[#0a192f] text-center p-4 rounded text-white border-2 border-[#d4af37] mb-6 relative z-10 shadow-md">
+          <h1 class="text-3xl font-extrabold tracking-wider" style="font-family: 'Times New Roman', serif;">
+              <span id="vcCustomer" class="text-white drop-shadow-md"></span> 
+              <span id="vcCode" class="text-[#d4af37] drop-shadow-md"></span>
+          </h1>
+          <p class="text-xl font-bold mt-2 tracking-wide">Date : <span id="vcDate"></span></p>
+      </div>
+      <!-- TABLE -->
+      <div class="bg-white/80 p-5 rounded border-2 border-[#d4af37]/30 relative z-10">
+          <table class="w-full text-[22px] font-bold">
+              <tr class="border-b-[3px] border-[#d4af37]">
+                  <td class="py-3 text-left text-slate-800">Description</td>
+                  <td class="py-3 text-right text-slate-800">Amount (Ks)</td>
+              </tr>
+              <tr class="border-b border-[#d4af37]/40">
+                  <td class="py-5 text-left">2%</td>
+                  <td class="py-5 text-right"><span id="vc2Pct"></span> Ks</td>
+              </tr>
+              <tr class="border-b border-[#d4af37]/40">
+                  <td class="py-5 text-left">Mass Feed</td>
+                  <td class="py-5 text-right"><span id="vcMass"></span> Ks</td>
+              </tr>
+              <tr class="border-b-[3px] border-slate-400">
+                  <td class="py-5 text-left">Service</td>
+                  <td class="py-5 text-right"><span id="vcService"></span> Ks</td>
+              </tr>
+              <tr>
+                  <td class="py-5 pt-6 text-left text-3xl font-extrabold">Total</td>
+                  <td class="py-5 pt-6 text-right text-3xl font-extrabold text-rose-700"><span id="vcTotal"></span> Ks</td>
+              </tr>
+          </table>
+      </div>
+      <!-- PAID STAMP (Hidden by default) -->
+      <div id="vcStamp" class="absolute inset-0 flex items-center justify-center opacity-0 z-0 pointer-events-none">
+          <div class="border-[12px] border-green-700/80 text-green-700/80 rounded-full w-[400px] h-[400px] flex flex-col items-center justify-center -rotate-[25deg] mix-blend-multiply border-double">
+              <span class="text-2xl font-bold tracking-widest uppercase mb-1">Transaction Complete</span>
+              <span class="text-[90px] font-extrabold tracking-widest leading-none">PAID</span>
+              <span class="text-6xl">✔</span>
+              <span class="text-2xl font-bold tracking-widest uppercase mt-3">Transaction Complete</span>
+          </div>
+      </div>
+  </div>
+
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-3 transition-colors mt-auto">
     <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-xs text-slate-400 dark:text-slate-500">© 2026 BK Operations & Management System. Version 18.0 (Precision & Quality Release).</p>
+      <p class="text-xs text-slate-400 dark:text-slate-500">© 2026 BK Operations & Management System. Version 19.0 (MPU License & ED Voucher Release).</p>
     </div>
   </footer>
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
     // ================= 1. ANTI-DEVTOOLS & SECURITY ARMOR =================
-    document.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-      showSecurityToast("⚠️ Right-Click ပိတ်ထားပါသည် (Protected by BK System)");
-    });
-
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); showSecurityToast("⚠️ Right-Click ပိတ်ထားပါသည် (Protected by BK System)"); });
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'F12' || e.keyCode === 123) {
-        e.preventDefault();
-        showSecurityToast("⚠️ Developer Tools (F12) ဖွင့်ခွင့် မပြုပါ");
-        return false;
-      }
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) {
-        e.preventDefault();
-        showSecurityToast("⚠️ Inspect Element ဖွင့်ခွင့် မပြုပါ");
-        return false;
-      }
-      if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U')) {
-        e.preventDefault();
-        showSecurityToast("⚠️ Source Code ကြည့်ရှုခွင့် ပိတ်ထားပါသည်");
-        return false;
-      }
-      if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
-        e.preventDefault();
-        showSecurityToast("⚠️ Web Page သိမ်းဆည်းခွင့် ပိတ်ထားပါသည်");
-        return false;
-      }
+      if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); showSecurityToast("⚠️ Developer Tools (F12) ဖွင့်ခွင့် မပြုပါ"); return false; }
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) { e.preventDefault(); showSecurityToast("⚠️ Inspect Element ဖွင့်ခွင့် မပြုပါ"); return false; }
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U')) { e.preventDefault(); showSecurityToast("⚠️ Source Code ကြည့်ရှုခွင့် ပိတ်ထားပါသည်"); return false; }
+      if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) { e.preventDefault(); showSecurityToast("⚠️ Web Page သိမ်းဆည်းခွင့် ပိတ်ထားပါသည်"); return false; }
     });
 
     function showSecurityToast(msg) {
@@ -1042,21 +1173,11 @@
       }, 2200);
     }
 
-    // ================= 2. FULLSCREEN CONTROLLER =================
     function toggleFullScreen() {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => console.warn(err));
-        document.getElementById('fullscreenIcon').innerText = '🗗';
-      } else {
-        if (document.exitFullscreen) document.exitFullscreen();
-        document.getElementById('fullscreenIcon').innerText = '⛶';
-      }
+      if (!document.fullscreenElement) { document.documentElement.requestFullscreen().catch(err => console.warn(err)); document.getElementById('fullscreenIcon').innerText = '🗗'; }
+      else { if (document.exitFullscreen) document.exitFullscreen(); document.getElementById('fullscreenIcon').innerText = '⛶'; }
     }
-
-    document.addEventListener('fullscreenchange', () => {
-      const icon = document.getElementById('fullscreenIcon');
-      if (icon) icon.innerText = document.fullscreenElement ? '🗗' : '⛶';
-    });
+    document.addEventListener('fullscreenchange', () => { const icon = document.getElementById('fullscreenIcon'); if (icon) icon.innerText = document.fullscreenElement ? '🗗' : '⛶'; });
 
     // ================= 3. FIREBASE CLOUD REAL-TIME DATABASE SETUP =================
     const firebaseConfig = {
@@ -1075,9 +1196,7 @@
     function initFirebaseCloudSync() {
       try {
         if (window.firebase) {
-          if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-          }
+          if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
           firebaseDb = firebase.database();
           
           const connectedRef = firebaseDb.ref(".info/connected");
@@ -1098,7 +1217,6 @@
             }
           });
 
-          // Live Database Sync Listener
           firebaseDb.ref("bk_operations_master").on("value", (snapshot) => {
             const val = snapshot.val();
             if (val) {
@@ -1107,6 +1225,7 @@
               if (val.userAccounts) localStorage.setItem('bk_user_accounts_enc', encryptPayload(val.userAccounts));
               if (val.creditCompanies) localStorage.setItem('bk_CreditCompanies_enc', encryptPayload(val.creditCompanies));
               if (val.customers) localStorage.setItem('bk_CompanyMap_enc', encryptPayload(val.customers));
+              if (val.mpuTopups) localStorage.setItem('bk_MPUTopups_enc', encryptPayload(val.mpuTopups)); // V19 addition
 
               populateMonthDropdown();
               populateEdMonthDropdown();
@@ -1116,14 +1235,13 @@
               renderUserAccountsTable();
               renderCreditCoTable();
               renderCustomerTable();
+              renderMpuLedger(); // V19
             } else {
               syncFullStateToCloud();
             }
           });
         }
-      } catch (err) {
-        console.warn("Firebase Init fallback to LocalStorage:", err);
-      }
+      } catch (err) { console.warn("Firebase Init fallback to LocalStorage:", err); }
     }
 
     function syncFullStateToCloud() {
@@ -1134,6 +1252,7 @@
         userAccounts: getUserAccounts(),
         creditCompanies: getCreditCompanies(),
         customers: getCustomers(),
+        mpuTopups: getMpuTopups(),
         lastUpdated: Date.now()
       };
       firebaseDb.ref("bk_operations_master").set(payload).catch(e => console.warn(e));
@@ -1143,8 +1262,8 @@
     const INITIAL_USERS = [
       { id: 'usr_1', username: 'Bhonekyaw', password: '1672000', displayName: 'BK Server', role: 'admin', isOwner: true },
       { id: 'usr_2', username: 'Paingsoe', password: 'paingsoe2026', displayName: 'Operations Staff', role: 'staff', isOwner: false },
-      { id: 'usr_3', username: 'Kothiha', password: 'thiha2026', displayName: 'Admin', role: 'viewer', isOwner: false },
-      { id: 'usr_4', username: 'Kozawlin', password: 'zawlin2026', displayName: 'Admin', role: 'viewer', isOwner: false }
+      { id: 'usr_3', username: 'Thiha', password: 'thiha2026', displayName: 'Admin', role: 'viewer', isOwner: false },
+      { id: 'usr_4', username: 'Zawlin', password: 'zawlin2026', displayName: 'Admin', role: 'viewer', isOwner: false }
     ];
 
     function getUserAccounts() {
@@ -1155,7 +1274,6 @@
       }
       return INITIAL_USERS;
     }
-
     function saveUserAccounts(list) {
       localStorage.setItem('bk_user_accounts_enc', encryptPayload(list));
       renderUserAccountsTable();
@@ -1163,7 +1281,6 @@
     }
 
     let currentUser = null;
-
     function checkAuthSession() {
       const saved = sessionStorage.getItem('bk_current_user');
       const authScreen = document.getElementById('authScreen');
@@ -1173,14 +1290,11 @@
         document.getElementById('loginUsername').value = remUser;
         document.getElementById('rememberMeCheckbox').checked = true;
       }
-
       if (saved) {
         currentUser = JSON.parse(saved);
         authScreen.classList.add('hidden');
         applyRolePermissions();
-      } else {
-        authScreen.classList.remove('hidden');
-      }
+      } else { authScreen.classList.remove('hidden'); }
     }
 
     function handleLoginSubmit(e) {
@@ -1196,10 +1310,8 @@
       if (match) {
         currentUser = { id: match.id, username: match.username, displayName: match.displayName, role: match.role, isOwner: match.isOwner };
         sessionStorage.setItem('bk_current_user', JSON.stringify(currentUser));
-        
         if (remCheck) localStorage.setItem('bk_remembered_username', match.username);
         else localStorage.removeItem('bk_remembered_username');
-
         errBox.classList.add('hidden');
         document.getElementById('authScreen').classList.add('hidden');
         document.getElementById('loginPassword').value = '';
@@ -1221,18 +1333,12 @@
     function togglePasswordVisibility() {
       const pwd = document.getElementById('loginPassword');
       const eye = document.getElementById('eyeIcon');
-      if (pwd.type === 'password') {
-        pwd.type = 'text';
-        eye.innerText = '🙈';
-      } else {
-        pwd.type = 'password';
-        eye.innerText = '👁️';
-      }
+      if (pwd.type === 'password') { pwd.type = 'text'; eye.innerText = '🙈'; }
+      else { pwd.type = 'password'; eye.innerText = '👁️'; }
     }
 
     function applyRolePermissions() {
       if (!currentUser) return;
-
       const role = currentUser.role;
       const isStaff = role === 'staff';
       const isViewer = role === 'viewer';
@@ -1254,35 +1360,25 @@
 
       userLabel.innerText = `• ${currentUser.displayName || currentUser.username}`;
 
-      // Admin Only Elements
       document.querySelectorAll('.admin-only-item').forEach(el => {
         if (isAdmin) el.classList.remove('hidden');
         else el.classList.add('hidden');
       });
-
-      // Hide percentages/amount from staff
       document.querySelectorAll('.not-for-staff').forEach(el => {
         if (isStaff) el.classList.add('hidden');
         else el.classList.remove('hidden');
       });
-
-      // Entry buttons for staff & admin, hidden from viewer
       document.querySelectorAll('.can-add-entry').forEach(el => {
         if (isViewer) el.classList.add('hidden');
         else el.classList.remove('hidden');
       });
 
-      // REQUIREMENT 1 FIX: Ensure Batch Panel is always hidden by default upon login
       const batchPanel = document.getElementById('batchUpdatePanel');
       if (batchPanel) batchPanel.classList.add('hidden');
 
       const activeTabId = document.querySelector('.tab-content.active')?.id;
-      if (isStaff && ['tab-breakdown', 'tab-ed-dashboard', 'tab-ed-breakdown', 'tab-companies'].includes(activeTabId)) {
-        switchTab('dashboard');
-      }
-      if (isViewer && ['tab-companies'].includes(activeTabId)) {
-        switchTab('dashboard');
-      }
+      if (isStaff && ['tab-breakdown', 'tab-ed-dashboard', 'tab-ed-breakdown', 'tab-companies', 'tab-mpu'].includes(activeTabId)) switchTab('dashboard');
+      if (isViewer && ['tab-companies'].includes(activeTabId)) switchTab('dashboard');
     }
 
     function toggleUserManagementSection() {
@@ -1290,39 +1386,21 @@
       const icon = document.getElementById('userMgrToggleIcon');
       const text = document.getElementById('userMgrToggleText');
       const isHidden = body.classList.contains('hidden');
-
-      if (isHidden) {
-        body.classList.remove('hidden');
-        icon.innerText = '🙈';
-        text.innerText = 'အကောင့်များ စီမံခန့်ခွဲမှု ပိတ်မည်';
-      } else {
-        body.classList.add('hidden');
-        icon.innerText = '👁️';
-        text.innerText = 'အကောင့်များ စီမံခန့်ခွဲရန် ဖွင့်မည်';
-      }
+      if (isHidden) { body.classList.remove('hidden'); icon.innerText = '🙈'; text.innerText = 'အကောင့်များ စီမံခန့်ခွဲမှု ပိတ်မည်'; }
+      else { body.classList.add('hidden'); icon.innerText = '👁️'; text.innerText = 'အကောင့်များ စီမံခန့်ခွဲရန် ဖွင့်မည်'; }
     }
 
-    // ================= 5. USER CRUD =================
     function renderUserAccountsTable() {
       const list = getUserAccounts();
       const tbody = document.getElementById('userAccountsTableBody');
       if (!tbody) return;
-
       tbody.innerHTML = list.map((u, idx) => {
         const isOwner = !!u.isOwner;
         let roleBadge = '';
-        if (u.role === 'admin') {
-          roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-800 border border-blue-200 dark:bg-blue-950 dark:text-blue-300">👑 Admin</span>`;
-        } else if (u.role === 'viewer') {
-          roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-purple-50 text-purple-800 border border-purple-200 dark:bg-purple-950 dark:text-purple-300">👁️ Viewer</span>`;
-        } else {
-          roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-950 dark:text-amber-300">👤 Staff</span>`;
-        }
-
-        const deleteBtn = isOwner 
-          ? `<span class="text-slate-300 dark:text-slate-600">-</span>`
-          : `<button onclick="deleteUserAccount('${u.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>`;
-
+        if (u.role === 'admin') roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-800 border border-blue-200 dark:bg-blue-950 dark:text-blue-300">👑 Admin</span>`;
+        else if (u.role === 'viewer') roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-purple-50 text-purple-800 border border-purple-200 dark:bg-purple-950 dark:text-purple-300">👁️ Viewer</span>`;
+        else roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-950 dark:text-amber-300">👤 Staff</span>`;
+        const deleteBtn = isOwner ? `<span class="text-slate-300 dark:text-slate-600">-</span>` : `<button onclick="deleteUserAccount('${u.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>`;
         return `
           <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition border-b border-slate-100 dark:border-slate-800">
             <td class="p-3 text-center text-slate-400 font-mono">${idx + 1}</td>
@@ -1331,9 +1409,7 @@
             <td class="p-3 font-medium text-slate-800 dark:text-slate-200">${escapeHtml(u.displayName || u.username)}</td>
             <td class="p-3 text-center">${roleBadge}</td>
             <td class="p-3 text-center space-x-1.5 whitespace-nowrap">
-              <button onclick="editUserAccount('${u.id}')" class="text-amber-600 hover:text-amber-800 font-semibold inline-flex items-center gap-0.5" title="ပြင်မည်">
-                <span>✏️</span> <span>ပြင်</span>
-              </button>
+              <button onclick="editUserAccount('${u.id}')" class="text-amber-600 hover:text-amber-800 font-semibold inline-flex items-center gap-0.5" title="ပြင်မည်"><span>✏️</span> <span>ပြင်</span></button>
               ${deleteBtn}
             </td>
           </tr>
@@ -1348,27 +1424,16 @@
       const password = document.getElementById('inUserPassword').value.trim();
       const displayName = document.getElementById('inUserDisplayName').value.trim();
       const role = document.getElementById('inUserRole').value;
-
       if (!username || !password) return alert("Username နှင့် Password မဖြစ်မနေ ထည့်ရပါမည်။");
-
       let users = getUserAccounts();
-
       if (editId) {
-        users = users.map(u => u.id === editId ? {
-          ...u, username, password, displayName, role
-        } : u);
+        users = users.map(u => u.id === editId ? { ...u, username, password, displayName, role } : u);
         alert(`အကောင့် [${username}] အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!`);
       } else {
-        if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
-          return alert("ဤ Username ဖြင့် အကောင့်ရှိပြီးသား ဖြစ်ပါသည်။");
-        }
-        users.push({
-          id: generateId('usr'),
-          username, password, displayName, role, isOwner: false
-        });
+        if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) return alert("ဤ Username ဖြင့် အကောင့်ရှိပြီးသား ဖြစ်ပါသည်။");
+        users.push({ id: generateId('usr'), username, password, displayName, role, isOwner: false });
         alert(`အကောင့်အသစ် [${username}] အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ!`);
       }
-
       saveUserAccounts(users);
       resetUserForm();
     }
@@ -1377,13 +1442,11 @@
       const users = getUserAccounts();
       const target = users.find(u => u.id === id);
       if (!target) return;
-
       document.getElementById('editingUserId').value = target.id;
       document.getElementById('inUserUsername').value = target.username;
       document.getElementById('inUserPassword').value = target.password;
       document.getElementById('inUserDisplayName').value = target.displayName || '';
       document.getElementById('inUserRole').value = target.role;
-
       document.getElementById('btnSaveUser').innerHTML = `<span>✏️</span> <span>ပြင်ဆင်မှု သိမ်းမည်</span>`;
       window.scrollTo({ top: document.getElementById('inUserUsername').offsetTop - 120, behavior: 'smooth' });
     }
@@ -1393,45 +1456,26 @@
       const target = users.find(u => u.id === id);
       if (!target) return;
       if (target.isOwner) return alert("Super Admin (Owner) အကောင့်ကို ဖျက်၍မရပါ။");
-
-      if (confirm(`အကောင့် [${target.username} (${target.displayName})] ကို ဖျက်ရန် သေချာပါသလား?`)) {
-        saveUserAccounts(users.filter(u => u.id !== id));
-      }
+      if (confirm(`အကောင့် [${target.username} (${target.displayName})] ကို ဖျက်ရန် သေချာပါသလား?`)) saveUserAccounts(users.filter(u => u.id !== id));
     }
-
     function resetUserForm() {
-      document.getElementById('editingUserId').value = '';
-      document.getElementById('inUserUsername').value = '';
-      document.getElementById('inUserPassword').value = '';
-      document.getElementById('inUserDisplayName').value = '';
-      document.getElementById('inUserRole').value = 'staff';
-      document.getElementById('btnSaveUser').innerHTML = `<span>💾</span> <span>အကောင့် သိမ်းဆည်းမည်</span>`;
+      document.getElementById('editingUserId').value = ''; document.getElementById('inUserUsername').value = '';
+      document.getElementById('inUserPassword').value = ''; document.getElementById('inUserDisplayName').value = '';
+      document.getElementById('inUserRole').value = 'staff'; document.getElementById('btnSaveUser').innerHTML = `<span>💾</span> <span>အကောင့် သိမ်းဆည်းမည်</span>`;
     }
-
-    function escapeHtml(str) {
-      return String(str || '').replace(/[&<>"']/g, function(m) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
-      });
-    }
+    function escapeHtml(str) { return String(str || '').replace(/[&<>"']/g, function(m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]; }); }
 
     // ================= 6. BACKUP & RESTORE WITH ADMIN PASSWORD =================
     function triggerEncryptedBackup() {
-      if (currentUser && currentUser.role !== 'admin') {
-        return alert("Admin အကောင့်သာ Backup ပြုလုပ်ခွင့် ရှိပါသည်။");
-      }
-
+      if (currentUser && currentUser.role !== 'admin') return alert("Admin အကောင့်သာ Backup ပြုလုပ်ခွင့် ရှိပါသည်။");
       const adminPasswordInput = prompt("Backup ဖိုင်ကို လုံခြုံစွာ Encrypt ပြုလုပ်ရန် Admin Password ကို အတည်ပြု ရိုက်ထည့်ပါ:");
       if (!adminPasswordInput) return;
-
       const users = getUserAccounts();
       const isValidAdmin = users.some(u => u.role === 'admin' && u.password === adminPasswordInput.trim());
-
-      if (!isValidAdmin) {
-        return alert("Admin Password မှားယွင်းနေပါသည်။ Backup ဆွဲယူခွင့် မပြုပါ။");
-      }
+      if (!isValidAdmin) return alert("Admin Password မှားယွင်းနေပါသည်။ Backup ဆွဲယူခွင့် မပြုပါ။");
 
       const backupData = {
-        version: "18.0",
+        version: "19.0",
         system: "BK Operations & Management System",
         exportDate: new Date().toISOString(),
         exportedBy: currentUser.username,
@@ -1439,31 +1483,18 @@
         edData: getEdData(),
         creditCompanies: getCreditCompanies(),
         customers: getCustomers(),
-        userAccounts: getUserAccounts()
+        userAccounts: getUserAccounts(),
+        mpuTopups: getMpuTopups()
       };
-
       const jsonString = JSON.stringify(backupData);
       let encryptedPayload = "";
-      
-      if (window.CryptoJS && CryptoJS.AES) {
-        encryptedPayload = "BK_AES::" + CryptoJS.AES.encrypt(jsonString, adminPasswordInput.trim()).toString();
-      } else {
-        encryptedPayload = "BK_RAW::" + btoa(encodeURIComponent(jsonString));
-      }
-
-      const fileContainer = {
-        meta: "BK_ENCRYPTED_BACKUP",
-        version: "18.0",
-        timestamp: Date.now(),
-        data: encryptedPayload
-      };
-
+      if (window.CryptoJS && CryptoJS.AES) encryptedPayload = "BK_AES::" + CryptoJS.AES.encrypt(jsonString, adminPasswordInput.trim()).toString();
+      else encryptedPayload = "BK_RAW::" + btoa(encodeURIComponent(jsonString));
+      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "19.0", timestamp: Date.now(), data: encryptedPayload };
       const a = document.createElement('a');
       a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fileContainer, null, 2));
       a.download = `BK_Operations_ProtectedBackup_${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      document.body.appendChild(a); a.click(); a.remove();
       alert("Admin Password ဖြင့် အောင်မြင်စွာ Encrypt ပြုလုပ်ထားသော Backup ဖိုင်ကို ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!");
     }
 
@@ -1471,16 +1502,13 @@
       const file = e.target.files[0];
       if (!file) return;
       const r = new FileReader();
-
       r.onload = function(evt) {
         try {
           const rawObj = JSON.parse(evt.target.result);
           let finalData = null;
-
           if (rawObj.meta === "BK_ENCRYPTED_BACKUP" && rawObj.data) {
             const pwd = prompt("ဤ Backup ဖိုင်ကို ပြန်လည်ဖွင့်ဖော်ရန် မူလ Admin Password ကို ရိုက်ထည့်ပါ:");
             if (!pwd) { e.target.value = ''; return; }
-
             if (rawObj.data.startsWith("BK_AES::") && window.CryptoJS && CryptoJS.AES) {
               try {
                 const cipher = rawObj.data.substring(8);
@@ -1488,41 +1516,25 @@
                 const decStr = decryptedBytes.toString(CryptoJS.enc.Utf8);
                 if (!decStr) throw new Error("Incorrect Password");
                 finalData = JSON.parse(decStr);
-              } catch(err) {
-                alert("❌ Password မှားယွင်းနေပါသည်။ Backup ဖိုင်ထဲမှ ဒေတာများကို ဖွင့်၍မရပါ!");
-                e.target.value = '';
-                return;
-              }
+              } catch(err) { alert("❌ Password မှားယွင်းနေပါသည်။ Backup ဖိုင်ထဲမှ ဒေတာများကို ဖွင့်၍မရပါ!"); e.target.value = ''; return; }
             } else if (rawObj.data.startsWith("BK_RAW::")) {
               finalData = JSON.parse(decodeURIComponent(atob(rawObj.data.substring(8))));
             }
-          } else {
-            finalData = rawObj;
-          }
+          } else { finalData = rawObj; }
 
-          if (!finalData || !finalData.creditCompanies || !finalData.customers) {
-            throw new Error("ဖိုင်ပုံစံ မှားယွင်းနေပါသည်။");
-          }
-
+          if (!finalData || !finalData.creditCompanies || !finalData.customers) throw new Error("ဖိုင်ပုံစံ မှားယွင်းနေပါသည်။");
           if (confirm(`Backup ဖိုင်မှ ဒေတာများကို Cloud နှင့် စနစ်ထဲသို့ Restore အစားထိုး သိမ်းဆည်းမှာ သေချာပါသလား?`)) {
             if (finalData.cargoData) saveCargoData(finalData.cargoData);
             if (finalData.edData) saveEdData(finalData.edData);
             if (finalData.creditCompanies) saveCreditCompanies(finalData.creditCompanies);
             if (finalData.customers) saveCustomers(finalData.customers);
             if (finalData.userAccounts) saveUserAccounts(finalData.userAccounts);
-
+            if (finalData.mpuTopups) saveMpuTopups(finalData.mpuTopups);
             syncFullStateToCloud();
-            populateMonthDropdown();
-            populateEdMonthDropdown();
-            filterData();
-            filterEdData();
+            populateMonthDropdown(); populateEdMonthDropdown(); filterData(); filterEdData(); renderMpuLedger();
             alert("Data Restore လုပ်ခြင်း အောင်မြင်ပါသည်!");
           }
-        } catch(err) {
-          alert("Error: " + err.message);
-        } finally {
-          e.target.value = '';
-        }
+        } catch(err) { alert("Error: " + err.message); } finally { e.target.value = ''; }
       };
       r.readAsText(file);
     }
@@ -1530,28 +1542,20 @@
     // ================= 7. AES LOCALSTORAGE ENCRYPTION ENGINE =================
     const SECURITY_SALT = "BK_Operations_Internal_Salt_2026";
     function getEncryptionKey() { return "BK_MASTER_KEY_" + SECURITY_SALT; }
-
     function encryptPayload(dataObj) {
       const jsonStr = JSON.stringify(dataObj);
       const key = getEncryptionKey();
-
-      if (window.CryptoJS && CryptoJS.AES) {
-        try { return "AES::" + CryptoJS.AES.encrypt(jsonStr, key).toString(); } catch(e) {}
-      }
+      if (window.CryptoJS && CryptoJS.AES) { try { return "AES::" + CryptoJS.AES.encrypt(jsonStr, key).toString(); } catch(e) {} }
       try {
         const encoded = encodeURIComponent(jsonStr);
         let out = '';
-        for (let i = 0; i < encoded.length; i++) {
-          out += String.fromCharCode(encoded.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-        }
+        for (let i = 0; i < encoded.length; i++) out += String.fromCharCode(encoded.charCodeAt(i) ^ key.charCodeAt(i % key.length));
         return "XOR::" + btoa(out);
       } catch(err) { return jsonStr; }
     }
-
     function decryptPayload(storedRaw) {
       if (!storedRaw) return null;
       const key = getEncryptionKey();
-
       if (storedRaw.startsWith("AES::") && window.CryptoJS && CryptoJS.AES) {
         try {
           const cipherText = storedRaw.substring(5);
@@ -1564,9 +1568,7 @@
         try {
           const decodedRaw = atob(storedRaw.substring(5));
           let out = '';
-          for (let i = 0; i < decodedRaw.length; i++) {
-            out += String.fromCharCode(decodedRaw.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-          }
+          for (let i = 0; i < decodedRaw.length; i++) out += String.fromCharCode(decodedRaw.charCodeAt(i) ^ key.charCodeAt(i % key.length));
           return JSON.parse(decodeURIComponent(out));
         } catch(e) {}
       }
@@ -1574,31 +1576,8 @@
     }
 
     // ================= 8. DATASETS & ACCESSORS =================
-    const DEFAULT_STABLE_HOPE_BANNER = "data:image/jpeg;base64," + 
-      "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAx" +
-      "NDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy" +
-      "MjIyMjIyMjL/wAARCADHA7EDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUF" +
-      "BAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVW" +
-      "V1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi" +
-      "4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECA" +
-      "xEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVm" +
-      "Z2hpamtsbW5vd3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq" +
-      "8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACii" +
-      "igAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiig" +
-      "AooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoo" +
-      "ooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK" +
-      "KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKK" +
-      "ACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACii" +
-      "igAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAo" +
-      "oooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK" +
-      "KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKA" +
-      "CiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiig" +
-      "AooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoooo" +
-      "AKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKK" +
-      "ACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Z";
-
     const DEFAULT_CREDIT_COMPANIES = [
-      { code: "SH", name: "STABLE HOPE COMPANY LIMITED", bannerImage: DEFAULT_STABLE_HOPE_BANNER, address: "No. 73, Padauk Pin Street, Kyi Myin Daing Township, Yangon, Myanmar.", phone: "Ph: 09 762675854, 09 677353152", email: "Email: stablehope@rgp.com.mm" },
+      { code: "SH", name: "STABLE HOPE COMPANY LIMITED", bannerImage: "", address: "No. 73, Padauk Pin Street, Kyi Myin Daing Township, Yangon, Myanmar.", phone: "Ph: 09 762675854, 09 677353152", email: "Email: stablehope@rgp.com.mm" },
       { code: "TW", name: "TIDE WAVE CO.,LTD", bannerImage: "", address: "Yangon, Myanmar.", phone: "", email: "" },
       { code: "TCS", name: "THREE COLOR STAR CONSTRUCTION CO.,LTD", bannerImage: "", address: "Yangon, Myanmar.", phone: "", email: "" },
       { code: "UO", name: "UNIVERSAL OXEN LIMITED", bannerImage: "", address: "Yangon, Myanmar.", phone: "", email: "" },
@@ -1623,8 +1602,8 @@
       'WHM': { name: 'Waihin Moe', defaultPct: 4.0 }
     };
 
-    let sortColumn = 'date';
-    let sortAsc = false;
+    let sortColumn = 'invNo'; // REQUIREMENT 1: DEFAULT SORT INV NO ASCENDING
+    let sortAsc = true;
     let currentDailyReportType = 'detail';
     let currentFilteredList = [];
 
@@ -1632,18 +1611,8 @@
     let sortEdAsc = false;
     let currentEdFilteredList = [];
 
-    function getCreditCompanies() {
-      const enc = localStorage.getItem('bk_CreditCompanies_enc');
-      if (enc) return decryptPayload(enc) || DEFAULT_CREDIT_COMPANIES;
-      return DEFAULT_CREDIT_COMPANIES;
-    }
-    function saveCreditCompanies(l) {
-      localStorage.setItem('bk_CreditCompanies_enc', encryptPayload(l));
-      populateCreditCoDropdowns();
-      renderCreditCoTable();
-      renderDailyReport();
-      if (firebaseDb) firebaseDb.ref("bk_operations_master/creditCompanies").set(l);
-    }
+    function getCreditCompanies() { const enc = localStorage.getItem('bk_CreditCompanies_enc'); return enc ? decryptPayload(enc) || DEFAULT_CREDIT_COMPANIES : DEFAULT_CREDIT_COMPANIES; }
+    function saveCreditCompanies(l) { localStorage.setItem('bk_CreditCompanies_enc', encryptPayload(l)); populateCreditCoDropdowns(); renderCreditCoTable(); renderDailyReport(); if (firebaseDb) firebaseDb.ref("bk_operations_master/creditCompanies").set(l); }
 
     function getCustomers() {
       const enc = localStorage.getItem('bk_CompanyMap_enc');
@@ -1656,108 +1625,48 @@
       }
       return norm;
     }
-    function saveCustomers(m) {
-      localStorage.setItem('bk_CompanyMap_enc', encryptPayload(m));
-      populateCustomerDropdowns();
-      renderCustomerTable();
-      if (firebaseDb) firebaseDb.ref("bk_operations_master/customers").set(m);
-    }
+    function saveCustomers(m) { localStorage.setItem('bk_CompanyMap_enc', encryptPayload(m)); populateCustomerDropdowns(); renderCustomerTable(); if (firebaseDb) firebaseDb.ref("bk_operations_master/customers").set(m); }
 
-    function getCargoData() {
-      const enc = localStorage.getItem('bk_CargoData_enc');
-      if (enc) return decryptPayload(enc) || [];
-      return [];
-    }
-    function saveCargoData(d) {
-      localStorage.setItem('bk_CargoData_enc', encryptPayload(d));
-      if (firebaseDb) firebaseDb.ref("bk_operations_master/cargoData").set(d);
-    }
+    function getCargoData() { const enc = localStorage.getItem('bk_CargoData_enc'); return enc ? decryptPayload(enc) || [] : []; }
+    function saveCargoData(d) { localStorage.setItem('bk_CargoData_enc', encryptPayload(d)); if (firebaseDb) firebaseDb.ref("bk_operations_master/cargoData").set(d); }
 
-    function getEdData() {
-      const enc = localStorage.getItem('bk_EdServiceData_enc');
-      if (enc) return decryptPayload(enc) || [];
-      return [];
-    }
-    function saveEdData(d) {
-      localStorage.setItem('bk_EdServiceData_enc', encryptPayload(d));
-      if (firebaseDb) firebaseDb.ref("bk_operations_master/edData").set(d);
-    }
+    function getEdData() { const enc = localStorage.getItem('bk_EdServiceData_enc'); return enc ? decryptPayload(enc) || [] : []; }
+    function saveEdData(d) { localStorage.setItem('bk_EdServiceData_enc', encryptPayload(d)); if (firebaseDb) firebaseDb.ref("bk_operations_master/edData").set(d); }
+
+    function getMpuTopups() { const enc = localStorage.getItem('bk_MPUTopups_enc'); return enc ? decryptPayload(enc) || [] : []; }
+    function saveMpuTopups(l) { localStorage.setItem('bk_MPUTopups_enc', encryptPayload(l)); if (firebaseDb) firebaseDb.ref("bk_operations_master/mpuTopups").set(l); }
 
     function changeFontSize(size) {
-      document.documentElement.classList.remove('font-sm', 'font-md', 'font-lg');
-      document.documentElement.classList.add('font-' + size);
+      document.documentElement.classList.remove('font-sm', 'font-md', 'font-lg'); document.documentElement.classList.add('font-' + size);
       localStorage.setItem('bk_FontSize', size);
-
       ['sm', 'md', 'lg'].forEach(s => {
         const btn = document.getElementById('btnFont' + s.charAt(0).toUpperCase() + s.slice(1));
-        if (s === size) {
-          btn.className = "px-1.5 py-1 rounded text-[10px] font-bold text-blue-950 dark:text-white bg-white dark:bg-slate-700 shadow-sm transition";
-        } else {
-          btn.className = "px-1.5 py-1 rounded text-[10px] font-bold text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 transition";
-        }
+        if (s === size) btn.className = "px-1.5 py-1 rounded text-[10px] font-bold text-blue-950 dark:text-white bg-white dark:bg-slate-700 shadow-sm transition";
+        else btn.className = "px-1.5 py-1 rounded text-[10px] font-bold text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 transition";
       });
     }
-
-    function initFontSize() {
-      const saved = localStorage.getItem('bk_FontSize') || 'md';
-      changeFontSize(saved);
-    }
+    function initFontSize() { const saved = localStorage.getItem('bk_FontSize') || 'md'; changeFontSize(saved); }
 
     function toggleCargoCards() {
-      const c = document.getElementById('cargoMetricCardsContainer');
-      const icon = document.getElementById('cargoCardsToggleIcon');
-      const text = document.getElementById('cargoCardsToggleText');
-      c.classList.toggle('hidden');
-      icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️';
-      text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
+      const c = document.getElementById('cargoMetricCardsContainer'); const icon = document.getElementById('cargoCardsToggleIcon'); const text = document.getElementById('cargoCardsToggleText');
+      c.classList.toggle('hidden'); icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
     }
-
     function toggleEdCards() {
-      const c = document.getElementById('edMetricCardsContainer');
-      const icon = document.getElementById('edCardsToggleIcon');
-      const text = document.getElementById('edCardsToggleText');
-      c.classList.toggle('hidden');
-      icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️';
-      text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
+      const c = document.getElementById('edMetricCardsContainer'); const icon = document.getElementById('edCardsToggleIcon'); const text = document.getElementById('edCardsToggleText');
+      c.classList.toggle('hidden'); icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
     }
 
-    function generateId(prefix = 'bk') {
-      return prefix + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
-    }
-    
-    // FORMAT NUMBER (WITH SPECIFIC DECIMALS)
-    function formatNum(n, decimals = 2) {
-      return Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
-    }
-    function formatReportDate(iso) {
-      if (!iso) return "";
-      const p = iso.split('-');
-      return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : iso;
-    }
+    function generateId(prefix = 'bk') { return prefix + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
+    function formatNum(n, decimals = 2) { return Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }); }
+    function formatReportDate(iso) { if (!iso) return ""; const p = iso.split('-'); return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : iso; }
 
-    function initTheme() {
-      if (localStorage.getItem('theme') === 'dark') {
-        document.documentElement.classList.add('dark');
-        document.getElementById('themeIcon').innerText = '☀️';
-      }
-    }
-    function toggleDarkMode() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      document.getElementById('themeIcon').innerText = isDark ? '☀️' : '🌙';
-    }
+    function initTheme() { if (localStorage.getItem('theme') === 'dark') { document.documentElement.classList.add('dark'); document.getElementById('themeIcon').innerText = '☀️'; } }
+    function toggleDarkMode() { const isDark = document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', isDark ? 'dark' : 'light'); document.getElementById('themeIcon').innerText = isDark ? '☀️' : '🌙'; }
 
     function switchTab(tabName) {
       const role = currentUser ? currentUser.role : 'staff';
-
-      if (role === 'staff' && ['breakdown', 'ed-dashboard', 'ed-breakdown', 'companies'].includes(tabName)) {
-        showSecurityToast("⚠️ ဝန်ထမ်းအကောင့်အတွက် ဤကဏ္ဍ ဖွင့်ခွင့်မရှိပါ");
-        return;
-      }
-      if (role === 'viewer' && ['companies'].includes(tabName)) {
-        showSecurityToast("⚠️ Viewer အကောင့်အတွက် Settings ဖွင့်ခွင့်မရှိပါ");
-        return;
-      }
+      if (role === 'staff' && ['breakdown', 'ed-dashboard', 'ed-breakdown', 'companies', 'mpu'].includes(tabName)) { showSecurityToast("⚠️ ဝန်ထမ်းအကောင့်အတွက် ဤကဏ္ဍ ဖွင့်ခွင့်မရှိပါ"); return; }
+      if (role === 'viewer' && ['companies'].includes(tabName)) { showSecurityToast("⚠️ Viewer အကောင့်အတွက် Settings ဖွင့်ခွင့်မရှိပါ"); return; }
 
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
       document.getElementById('tab-' + tabName).classList.add('active');
@@ -1777,80 +1686,43 @@
       if (tabName === 'breakdown') renderBreakdown();
       if (tabName === 'ed-dashboard') filterEdData();
       if (tabName === 'ed-breakdown') renderEdBreakdown();
+      if (tabName === 'mpu') renderMpuLedger();
       if (tabName === 'companies') { renderUserAccountsTable(); renderCreditCoTable(); renderCustomerTable(); }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ================= CARGO BUSINESS LOGIC =================
+    // ================= CREDIT BUSINESS LOGIC =================
     function populateMonthDropdown() {
-      const all = getCargoData();
-      const s = document.getElementById('filterMonth');
-      if (!s) return;
+      const all = getCargoData(); const s = document.getElementById('filterMonth'); if (!s) return;
       const cur = s.value || 'ALL';
       const mSet = new Set(all.map(i => (i.date || '').substring(0, 7)).filter(x => x.length === 7));
       const sorted = Array.from(mSet).sort().reverse();
       let opts = '<option value="ALL">အားလုံး (All Months)</option>';
       sorted.forEach(m => { opts += `<option value="${m}">${m}</option>`; });
-      s.innerHTML = opts;
-      if (sorted.includes(cur) || cur === 'ALL') s.value = cur;
+      s.innerHTML = opts; if (sorted.includes(cur) || cur === 'ALL') s.value = cur;
     }
-
     function populateCreditCoDropdowns() {
       const list = getCreditCompanies();
       const reportSelect = document.getElementById('reportCreditCoSelect');
-      if (reportSelect) {
-        const cur = reportSelect.value || 'SH';
-        reportSelect.innerHTML = list.map(c => `<option value="${c.code}">${c.name}</option>`).join('');
-        reportSelect.value = cur;
-      }
+      if (reportSelect) { const cur = reportSelect.value || 'SH'; reportSelect.innerHTML = list.map(c => `<option value="${c.code}">${c.name}</option>`).join(''); reportSelect.value = cur; }
       const filterCredit = document.getElementById('filterCreditCo');
-      if (filterCredit) {
-        const cur = filterCredit.value || 'ALL';
-        let opts = '<option value="ALL">အားလုံး (All Credit Co)</option>';
-        opts += list.map(c => `<option value="${c.code}">${c.code} - ${c.name}</option>`).join('');
-        filterCredit.innerHTML = opts;
-        filterCredit.value = cur;
-      }
+      if (filterCredit) { const cur = filterCredit.value || 'ALL'; let opts = '<option value="ALL">အားလုံး (All Credit Co)</option>'; opts += list.map(c => `<option value="${c.code}">${c.code} - ${c.name}</option>`).join(''); filterCredit.innerHTML = opts; filterCredit.value = cur; }
       const modalCredit = document.getElementById('cargoModalCreditCo');
-      if (modalCredit) {
-        modalCredit.innerHTML = list.map(c => `<option value="${c.code}">${c.code} - ${c.name}</option>`).join('');
-      }
+      if (modalCredit) { modalCredit.innerHTML = list.map(c => `<option value="${c.code}">${c.code} - ${c.name}</option>`).join(''); }
     }
-
     function populateCustomerDropdowns() {
-      const map = getCustomers();
-      const keys = Object.keys(map).sort();
+      const map = getCustomers(); const keys = Object.keys(map).sort();
       const filterCust = document.getElementById('filterRemark');
-      if (filterCust) {
-        const cur = filterCust.value || 'ALL';
-        let opts = '<option value="ALL">အားလုံး (All Customers)</option>';
-        opts += keys.map(k => `<option value="${k}">${k} - ${map[k].name}</option>`).join('');
-        filterCust.innerHTML = opts;
-        filterCust.value = cur;
-      }
+      if (filterCust) { const cur = filterCust.value || 'ALL'; let opts = '<option value="ALL">အားလုံး (All Customers)</option>'; opts += keys.map(k => `<option value="${k}">${k} - ${map[k].name}</option>`).join(''); filterCust.innerHTML = opts; filterCust.value = cur; }
       const batchCust = document.getElementById('batchCustomer');
-      if (batchCust) {
-        let bOpts = '<option value="ALL">အားလုံး (All Customers)</option>';
-        bOpts += keys.map(k => `<option value="${k}">${k} - ${map[k].name}</option>`).join('');
-        batchCust.innerHTML = bOpts;
-      }
+      if (batchCust) { let bOpts = '<option value="ALL">အားလုံး (All Customers)</option>'; bOpts += keys.map(k => `<option value="${k}">${k} - ${map[k].name}</option>`).join(''); batchCust.innerHTML = bOpts; }
       const dataList = document.getElementById('remarkDataList');
-      if (dataList) {
-        dataList.innerHTML = keys.map(k => `<option value="${k}">${map[k].name} (${map[k].defaultPct}%)</option>`).join('');
-      }
+      if (dataList) { dataList.innerHTML = keys.map(k => `<option value="${k}">${map[k].name} (${map[k].defaultPct}%)</option>`).join(''); }
       populateEdCustDropdown();
     }
-
     function onCustomerInput(code) {
-      const cCode = (code || '').trim().toUpperCase();
-      const customers = getCustomers();
-      if (customers[cCode] && customers[cCode].defaultPct) {
-        const pctInput = document.getElementById('cargoModalPct');
-        if (pctInput) {
-          pctInput.value = customers[cCode].defaultPct;
-          calculateCargoPreview();
-        }
-      }
+      const cCode = (code || '').trim().toUpperCase(); const customers = getCustomers();
+      if (customers[cCode] && customers[cCode].defaultPct) { const pctInput = document.getElementById('cargoModalPct'); if (pctInput) { pctInput.value = customers[cCode].defaultPct; calculateCargoPreview(); } }
     }
 
     function filterData() {
@@ -1874,58 +1746,49 @@
         return matchesMonth && matchesCredit && matchesRemark && matchesSearch;
       });
 
+      // REQUIREMENT 1: ASCENDING SORT BY INV NO SUPPORT
       filtered.sort((a, b) => {
         let valA = a[sortColumn], valB = b[sortColumn];
-        if (['kg', 'usd', 'rate', 'thb', 'pct', 'amount'].includes(sortColumn)) {
-          valA = Number(valA || 0); valB = Number(valB || 0);
-        } else { valA = String(valA || ''); valB = String(valB || ''); }
+        if (sortColumn === 'invNo') {
+          const comp = String(valA || '').localeCompare(String(valB || ''), undefined, {numeric: true});
+          return sortAsc ? comp : -comp;
+        }
+        if (['kg', 'usd', 'rate', 'thb', 'pct', 'amount'].includes(sortColumn)) { valA = Number(valA || 0); valB = Number(valB || 0); }
+        else { valA = String(valA || ''); valB = String(valB || ''); }
         if (valA < valB) return sortAsc ? -1 : 1;
         if (valA > valB) return sortAsc ? 1 : -1;
         return 0;
       });
 
       currentFilteredList = filtered;
-      const countEl = document.getElementById('exportCount');
-      if (countEl) countEl.innerText = filtered.length;
-
-      renderCargoTable(filtered);
-      updateCargoSummaryCards(filtered);
+      const countEl = document.getElementById('exportCount'); if (countEl) countEl.innerText = filtered.length;
+      renderCargoTable(filtered); updateCargoSummaryCards(filtered);
     }
 
     function updateCargoSummaryCards(list) {
       document.getElementById('statTrips').innerText = list.length;
       document.getElementById('statKG').innerText = Math.round(list.reduce((a, b) => a + Number(b.kg || 0), 0)).toLocaleString();
       document.getElementById('statUSD').innerText = '$' + formatNum(list.reduce((a, b) => a + Number(b.usd || 0), 0), 2);
-      
-      // REQUIREMENT 2: THB IS INTEGER
       const totalTHB = Math.round(list.reduce((a, b) => a + Number(b.thb || 0), 0));
       document.getElementById('statTHB').innerText = '฿' + formatNum(totalTHB, 0);
-      
       const totalAmount = Math.round(list.reduce((a, b) => a + Number(b.amount || 0), 0));
-      const statAmtEl = document.getElementById('statAmount');
-      if (statAmtEl) statAmtEl.innerText = '฿' + formatNum(totalAmount, 0);
+      const statAmtEl = document.getElementById('statAmount'); if (statAmtEl) statAmtEl.innerText = '฿' + formatNum(totalAmount, 0);
     }
 
     function renderCargoTable(list) {
-      const tbody = document.getElementById('cargoTableBody');
-      const noMsg = document.getElementById('noResultsMsg');
+      const tbody = document.getElementById('cargoTableBody'); const noMsg = document.getElementById('noResultsMsg');
       tbody.innerHTML = '';
       if (list.length === 0) { noMsg.classList.remove('hidden'); return; }
       noMsg.classList.add('hidden');
 
       const role = currentUser ? currentUser.role : 'staff';
-      const isStaff = role === 'staff';
-      const isAdmin = role === 'admin';
+      const isStaff = role === 'staff'; const isAdmin = role === 'admin';
 
       list.forEach((item, index) => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 transition";
-        
         let pctCell = isStaff ? '' : `<td class="p-3 text-center font-bold text-indigo-700 dark:text-indigo-300">${item.pct || 4}%</td>`;
-        
-        // REQUIREMENT 2: THB & AMOUNT FORMATTED TO INTEGERS
         let amtCell = isStaff ? '' : `<td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">฿${formatNum(Math.round(item.amount || 0), 0)}</td>`;
-
         let actionCell = `<span class="text-slate-300 dark:text-slate-600">-</span>`;
         if (isAdmin) {
           actionCell = `
@@ -1933,10 +1796,9 @@
             <button onclick="deleteCargoShipment('${item.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>
           `;
         }
-
         tr.innerHTML = `
           <td class="p-3 font-bold text-slate-500 text-center">${index + 1}</td>
-          <td class="p-3"><span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200 dark:bg-indigo-950 dark:text-indigo-300">${item.creditCo || 'SH'}</span></td>
+          <td class="p-3"><span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">${item.creditCo || 'SH'}</span></td>
           <td class="p-3 whitespace-nowrap font-medium">${item.date || '-'}</td>
           <td class="p-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap">${item.boat || '-'}</td>
           <td class="p-3 font-mono">${item.invNo || '-'}</td>
@@ -1947,50 +1809,43 @@
           <td class="p-3 text-right font-semibold text-indigo-700 dark:text-indigo-400">฿${formatNum(Math.round(item.thb || 0), 0)}</td>
           ${pctCell}
           ${amtCell}
-          <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-900 border border-blue-200 dark:bg-blue-950 dark:text-blue-300">${item.remark || '-'}</span></td>
+          <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-900 border border-blue-200">${item.remark || '-'}</span></td>
           <td class="p-3 text-center space-x-1 whitespace-nowrap">${actionCell}</td>
         `;
         tbody.appendChild(tr);
       });
+      // update sort icons
+      ['creditCo','date','boat','invNo','edNo','kg','usd','rate','thb','pct','amount','remark'].forEach(col => {
+        const span = document.getElementById('sort-' + col);
+        if(span) span.innerText = (sortColumn === col) ? (sortAsc ? '▲' : '▼') : '↕';
+      });
     }
 
     function sortTable(col) {
-      if (sortColumn === col) sortAsc = !sortAsc;
-      else { sortColumn = col; sortAsc = true; }
+      if (sortColumn === col) sortAsc = !sortAsc; else { sortColumn = col; sortAsc = true; }
       filterData();
     }
 
     function openNewCargoEntry() {
-      if (currentUser && currentUser.role === 'viewer') {
-        return alert("Viewer အကောင့်အတွက် စာရင်းအသစ် ထည့်သွင်းခွင့် မရှိပါ။");
-      }
+      if (currentUser && currentUser.role === 'viewer') return alert("Viewer အကောင့်အတွက် စာရင်းအသစ် ထည့်သွင်းခွင့် မရှိပါ။");
       document.getElementById('editCargoId').value = '';
-      document.getElementById('cargoModalTitle').innerText = "➕ ကုန်တင် စာရင်းအသစ် ထည့်သွင်းခြင်း";
+      document.getElementById('cargoModalTitle').innerText = "➕ Credit စာရင်းအသစ် ထည့်သွင်းခြင်း";
       document.getElementById('cargoModalDate').value = new Date().toISOString().split('T')[0];
-      document.getElementById('cargoModalBoat').value = '';
-      document.getElementById('cargoModalRemark').value = '';
-      document.getElementById('cargoModalInvNo').value = '';
-      document.getElementById('cargoModalEdNo').value = '';
-      document.getElementById('cargoModalKG').value = '';
-      document.getElementById('cargoModalUSD').value = '';
-      document.getElementById('cargoModalRate').value = '34.7';
-      document.getElementById('cargoModalPct').value = '4.0';
+      document.getElementById('cargoModalBoat').value = ''; document.getElementById('cargoModalRemark').value = '';
+      document.getElementById('cargoModalInvNo').value = ''; document.getElementById('cargoModalEdNo').value = '';
+      document.getElementById('cargoModalKG').value = ''; document.getElementById('cargoModalUSD').value = '';
+      document.getElementById('cargoModalRate').value = '34.7'; document.getElementById('cargoModalPct').value = '4.0';
+      document.getElementById('cargoModalLicense').checked = false; // MPU default empty
       calculateCargoPreview();
       document.getElementById('cargoEntryModal').classList.remove('hidden');
     }
-    function closeCargoEntryModal() {
-      document.getElementById('cargoEntryModal').classList.add('hidden');
-    }
+    function closeCargoEntryModal() { document.getElementById('cargoEntryModal').classList.add('hidden'); }
 
     function editCargoShipment(id) {
-      if (currentUser && currentUser.role !== 'admin') {
-        return alert("Admin သာလျှင် စာရင်းပြင်ဆင်ခွင့် ရှိပါသည်။");
-      }
-      const all = getCargoData();
-      const item = all.find(x => x.id === id);
-      if (!item) return;
+      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် စာရင်းပြင်ဆင်ခွင့် ရှိပါသည်။");
+      const all = getCargoData(); const item = all.find(x => x.id === id); if (!item) return;
       document.getElementById('editCargoId').value = item.id;
-      document.getElementById('cargoModalTitle').innerText = "✏️ ကုန်တင် စာရင်း ပြင်ဆင်ခြင်း";
+      document.getElementById('cargoModalTitle').innerText = "✏️ Credit စာရင်း ပြင်ဆင်ခြင်း";
       document.getElementById('cargoModalCreditCo').value = item.creditCo || 'SH';
       document.getElementById('cargoModalRemark').value = item.remark || '';
       document.getElementById('cargoModalDate').value = item.date || '';
@@ -2001,17 +1856,16 @@
       document.getElementById('cargoModalUSD').value = item.usd || '';
       document.getElementById('cargoModalRate').value = item.rate || 34.7;
       document.getElementById('cargoModalPct').value = item.pct || 4.0;
+      document.getElementById('cargoModalLicense').checked = item.hasLicense || false;
       calculateCargoPreview();
       document.getElementById('cargoEntryModal').classList.remove('hidden');
     }
 
-    // REQUIREMENT 2: THB & AMOUNT IN PREVIEWS ARE INTEGERS
     function calculateCargoPreview() {
       const usd = parseFloat(document.getElementById('cargoModalUSD').value) || 0;
       const rate = parseFloat(document.getElementById('cargoModalRate').value) || 34.7;
       const pct = parseFloat(document.getElementById('cargoModalPct').value) || 4.0;
-      const thb = Math.round(usd * rate);
-      const amt = Math.round(thb * (pct / 100));
+      const thb = Math.round(usd * rate); const amt = Math.round(thb * (pct / 100));
       document.getElementById('cargoPreviewTHB').innerText = '฿' + formatNum(thb, 0);
       document.getElementById('cargoPreviewAmount').innerText = '฿' + formatNum(amt, 0);
     }
@@ -2019,505 +1873,411 @@
     function handleCargoSubmit(e) {
       e.preventDefault();
       const editId = document.getElementById('editCargoId').value;
-
-      if (currentUser && currentUser.role === 'viewer') {
-        return alert("Viewer အကောင့်အတွက် စာရင်းသိမ်းဆည်းခွင့် မရှိပါ။");
-      }
-      if (editId && currentUser && currentUser.role === 'staff') {
-        return alert("Staff အကောင့်အတွက် စာရင်းပြင်ဆင်ခွင့် ပိတ်ထားပါသည်။");
-      }
+      if (currentUser && currentUser.role === 'viewer') return alert("Viewer အကောင့်အတွက် စာရင်းသိမ်းဆည်းခွင့် မရှိပါ။");
+      if (editId && currentUser && currentUser.role === 'staff') return alert("Staff အကောင့်အတွက် စာရင်းပြင်ဆင်ခွင့် ပိတ်ထားပါသည်။");
 
       const usd = parseFloat(document.getElementById('cargoModalUSD').value) || 0;
       const creditCo = document.getElementById('cargoModalCreditCo').value || 'SH';
       const remark = document.getElementById('cargoModalRemark').value.trim().toUpperCase();
       const custMap = getCustomers();
       const companyName = custMap[remark] ? custMap[remark].name : remark;
+      const hasLicense = document.getElementById('cargoModalLicense').checked;
 
       let rate = parseFloat(document.getElementById('cargoModalRate').value) || 34.7;
       let pct = parseFloat(document.getElementById('cargoModalPct').value) || 4.0;
+      if (currentUser && currentUser.role === 'staff') { rate = 34.7; pct = custMap[remark] ? custMap[remark].defaultPct : 4.0; }
 
-      if (currentUser && currentUser.role === 'staff') {
-        rate = 34.7;
-        pct = custMap[remark] ? custMap[remark].defaultPct : 4.0;
-      }
-
-      // REQUIREMENT 2: ROUND THB & AMOUNT TO INTEGER
-      const thb = Math.round(usd * rate);
-      const amount = Math.round(thb * (pct / 100));
+      const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100));
 
       let all = getCargoData();
       if (editId) {
         all = all.map(i => i.id === editId ? {
           ...i, creditCo, date: document.getElementById('cargoModalDate').value,
           boat: document.getElementById('cargoModalBoat').value, remark, companyName,
-          invNo: document.getElementById('cargoModalInvNo').value,
-          edNo: document.getElementById('cargoModalEdNo').value,
-          kg: parseFloat(document.getElementById('cargoModalKG').value) || 0,
-          usd, rate, thb, pct, amount
+          invNo: document.getElementById('cargoModalInvNo').value, edNo: document.getElementById('cargoModalEdNo').value,
+          kg: parseFloat(document.getElementById('cargoModalKG').value) || 0, usd, rate, thb, pct, amount, hasLicense
         } : i);
         alert("စာရင်းပြင်ဆင်မှု အောင်မြင်ပါသည်။");
       } else {
         all.unshift({
-          id: generateId('bk'), no: all.length + 1, creditCo,
-          date: document.getElementById('cargoModalDate').value,
+          id: generateId('bk'), no: all.length + 1, creditCo, date: document.getElementById('cargoModalDate').value,
           boat: document.getElementById('cargoModalBoat').value, remark, companyName,
-          invNo: document.getElementById('cargoModalInvNo').value,
-          edNo: document.getElementById('cargoModalEdNo').value,
-          kg: parseFloat(document.getElementById('cargoModalKG').value) || 0,
-          usd, rate, thb, pct, amount
+          invNo: document.getElementById('cargoModalInvNo').value, edNo: document.getElementById('cargoModalEdNo').value,
+          kg: parseFloat(document.getElementById('cargoModalKG').value) || 0, usd, rate, thb, pct, amount, hasLicense
         });
-        alert("စာရင်းအသစ် Cloud သို့ သိမ်းဆည်းပြီးပါပြီ။");
+        alert("Credit စာရင်းအသစ် Cloud သို့ သိမ်းဆည်းပြီးပါပြီ။");
       }
-      saveCargoData(all);
-      populateMonthDropdown();
-      closeCargoEntryModal();
-      filterData();
+      saveCargoData(all); populateMonthDropdown(); closeCargoEntryModal(); filterData(); renderMpuLedger();
     }
 
     function deleteCargoShipment(id) {
-      if (currentUser && currentUser.role !== 'admin') {
-        return alert("Admin သာလျှင် စာရင်းဖျက်ပိုင်ခွင့် ရှိပါသည်။");
-      }
+      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် စာရင်းဖျက်ပိုင်ခွင့် ရှိပါသည်။");
       if (confirm("ဤစာရင်းကို ဖျက်မှာ သေချာပါသလား?")) {
-        saveCargoData(getCargoData().filter(i => i.id !== id));
-        populateMonthDropdown();
-        filterData();
-        renderDailyReport();
+        saveCargoData(getCargoData().filter(i => i.id !== id)); populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger();
       }
     }
-
     function clearAllData() {
-      if (currentUser && currentUser.role !== 'admin') {
-        return alert("Admin သာလျှင် ဒေတာရှင်းထုတ်ခွင့် ရှိပါသည်။");
-      }
-      if (confirm("Cargo စာရင်းအားလုံးကို ရှင်းထုတ်မှာ သေချာပါသလား?")) {
-        saveCargoData([]);
-        populateMonthDropdown();
-        filterData();
-        renderDailyReport();
+      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ဒေတာရှင်းထုတ်ခွင့် ရှိပါသည်။");
+      if (confirm("Credit စာရင်းအားလုံးကို ရှင်းထုတ်မှာ သေချာပါသလား?")) {
+        saveCargoData([]); populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger();
       }
     }
 
-    // REQUIREMENT 1: TOGGLE BATCH TOOL
     function toggleBatchTool() {
-      const p = document.getElementById('batchUpdatePanel');
-      p.classList.toggle('hidden');
+      const p = document.getElementById('batchUpdatePanel'); p.classList.toggle('hidden');
       if (!p.classList.contains('hidden')) {
         const today = new Date().toISOString().split('T')[0];
-        document.getElementById('batchStartDate').value = today.substring(0, 8) + '01';
-        document.getElementById('batchEndDate').value = today;
+        document.getElementById('batchStartDate').value = today.substring(0, 8) + '01'; document.getElementById('batchEndDate').value = today;
       }
     }
-
-    // REQUIREMENT 2: BATCH % & RATE SIMULTANEOUS UPDATE
     function handleBatchUpdateSubmit(e) {
       e.preventDefault();
-      const cust = document.getElementById('batchCustomer').value;
-      const start = document.getElementById('batchStartDate').value;
-      const end = document.getElementById('batchEndDate').value;
-      
-      const newRateInput = document.getElementById('batchNewRate').value.trim();
-      const newPctInput = document.getElementById('batchNewPct').value.trim();
-
-      if (!newRateInput && !newPctInput) {
-        return alert("RATE သို့မဟုတ် % အနက် အနည်းဆုံး တစ်ခုကို ထည့်သွင်းပေးရပါမည်။");
-      }
-
-      const newRate = newRateInput ? parseFloat(newRateInput) : null;
-      const newPct = newPctInput ? parseFloat(newPctInput) : null;
-
-      let all = getCargoData();
-      let count = 0;
-
+      const cust = document.getElementById('batchCustomer').value; const start = document.getElementById('batchStartDate').value; const end = document.getElementById('batchEndDate').value;
+      const newRateInput = document.getElementById('batchNewRate').value.trim(); const newPctInput = document.getElementById('batchNewPct').value.trim();
+      if (!newRateInput && !newPctInput) return alert("RATE သို့မဟုတ် % အနက် အနည်းဆုံး တစ်ခုကို ထည့်သွင်းပေးရပါမည်။");
+      const newRate = newRateInput ? parseFloat(newRateInput) : null; const newPct = newPctInput ? parseFloat(newPctInput) : null;
+      let all = getCargoData(); let count = 0;
       all = all.map(i => {
         if ((cust === 'ALL' || i.remark.trim().toUpperCase() === cust) && (i.date >= start && i.date <= end)) {
-          count++;
-          const usd = Number(i.usd || 0);
-          const rate = newRate !== null ? newRate : Number(i.rate || 34.7);
-          const pct = newPct !== null ? newPct : Number(i.pct || 4.0);
-          const thb = Math.round(usd * rate);
-          const amount = Math.round(thb * (pct / 100));
-          return { ...i, rate, pct, thb, amount };
+          count++; const usd = Number(i.usd || 0); const rate = newRate !== null ? newRate : Number(i.rate || 34.7); const pct = newPct !== null ? newPct : Number(i.pct || 4.0);
+          const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); return { ...i, rate, pct, thb, amount };
         }
         return i;
       });
-
       if (!count) return alert("ရွေးချယ်ထားသော ရက်စွဲအတွင်း သက်ဆိုင်ရာ စာရင်းမရှိပါ။");
-      saveCargoData(all);
-      filterData();
-      renderDailyReport();
-      renderBreakdown();
-      toggleBatchTool();
-      alert(`စာရင်းပေါင်း (${count}) ခု၏ Data ကို အောင်မြင်စွာ Update ပြုလုပ်ပြီးပါပြီ။`);
+      saveCargoData(all); filterData(); renderDailyReport(); renderBreakdown(); toggleBatchTool(); alert(`စာရင်းပေါင်း (${count}) ခု၏ Data ကို အောင်မြင်စွာ Update ပြုလုပ်ပြီးပါပြီ။`);
     }
 
     function exportToExcel() {
-      const list = currentFilteredList;
-      if (!list || !list.length) return alert("Export ထုတ်ရန် စာရင်းမရှိပါ။");
-      const custMap = getCustomers();
-      const isStaff = currentUser && currentUser.role === 'staff';
-
+      const list = currentFilteredList; if (!list || !list.length) return alert("Export ထုတ်ရန် စာရင်းမရှိပါ။");
+      const custMap = getCustomers(); const isStaff = currentUser && currentUser.role === 'staff';
       const rows = list.map((r, i) => {
         const baseRow = {
           "No": i + 1, "Credit Co": r.creditCo || 'SH', "Date": r.date, "လှေအမည်": r.boat,
           "Inv: No.": r.invNo, "ED No.": String(r.edNo), "KG": Number(r.kg || 0),
-          "Inv: (USD)": Number(r.usd || 0), "RATE": Number(r.rate || 34.7),
-          "Inv: (THB)": Math.round(Number(r.thb || 0))
+          "Inv: (USD)": Number(r.usd || 0), "RATE": Number(r.rate || 34.7), "Inv: (THB)": Math.round(Number(r.thb || 0))
         };
-        if (!isStaff) {
-          baseRow["%"] = Number(r.pct || 4);
-          baseRow["AMOUNT (THB)"] = Math.round(Number(r.amount || 0));
-        }
-        baseRow["Remark"] = r.remark;
-        baseRow["Company Name"] = r.companyName || (custMap[r.remark] ? custMap[r.remark].name : '');
-        return baseRow;
+        if (!isStaff) { baseRow["%"] = Number(r.pct || 4); baseRow["AMOUNT (THB)"] = Math.round(Number(r.amount || 0)); }
+        baseRow["Remark"] = r.remark; baseRow["Company Name"] = r.companyName || (custMap[r.remark] ? custMap[r.remark].name : ''); return baseRow;
       });
-
-      const ws = XLSX.utils.json_to_sheet(rows);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Cargo_Report");
-      XLSX.writeFile(wb, "BK_Cargo_Report.xlsx");
+      const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Credit_Report"); XLSX.writeFile(wb, "BK_Credit_Report.xlsx");
     }
 
     // ================= ED SERVICE LOGIC =================
     function populateEdMonthDropdown() {
-      const all = getEdData();
-      const s = document.getElementById('filterEdMonth');
-      if (!s) return;
-      const cur = s.value || 'ALL';
-      const mSet = new Set(all.map(i => (i.date || '').substring(0, 7)).filter(x => x.length === 7));
-      const sorted = Array.from(mSet).sort().reverse();
-      let opts = '<option value="ALL">အားလုံး (All Months)</option>';
+      const all = getEdData(); const s = document.getElementById('filterEdMonth'); if (!s) return;
+      const cur = s.value || 'ALL'; const mSet = new Set(all.map(i => (i.date || '').substring(0, 7)).filter(x => x.length === 7));
+      const sorted = Array.from(mSet).sort().reverse(); let opts = '<option value="ALL">အားလုံး (All Months)</option>';
       sorted.forEach(m => { opts += `<option value="${m}">${m}</option>`; });
-      s.innerHTML = opts;
-      if (sorted.includes(cur) || cur === 'ALL') s.value = cur;
+      s.innerHTML = opts; if (sorted.includes(cur) || cur === 'ALL') s.value = cur;
     }
-
     function populateEdCustDropdown() {
-      const all = getEdData();
-      const s = document.getElementById('filterEdCust');
-      if (!s) return;
-      const cur = s.value || 'ALL';
-      const cSet = new Set(all.map(i => (i.customer || '').trim().toUpperCase()).filter(Boolean));
-      const sorted = Array.from(cSet).sort();
-      let opts = '<option value="ALL">အားလုံး (All Customers)</option>';
+      const all = getEdData(); const s = document.getElementById('filterEdCust'); if (!s) return;
+      const cur = s.value || 'ALL'; const cSet = new Set(all.map(i => (i.customer || '').trim().toUpperCase()).filter(Boolean));
+      const sorted = Array.from(cSet).sort(); let opts = '<option value="ALL">အားလုံး (All Customers)</option>';
       sorted.forEach(c => { opts += `<option value="${c}">${c}</option>`; });
-      s.innerHTML = opts;
-      if (sorted.includes(cur) || cur === 'ALL') s.value = cur;
+      s.innerHTML = opts; if (sorted.includes(cur) || cur === 'ALL') s.value = cur;
     }
-
     function filterEdData() {
-      const all = getEdData();
-      const mVal = document.getElementById('filterEdMonth').value;
-      const dVal = document.getElementById('filterEdDate').value;
-      const cVal = document.getElementById('filterEdCust').value;
-      const search = document.getElementById('searchEdInput').value.trim().toLowerCase();
-
+      const all = getEdData(); const mVal = document.getElementById('filterEdMonth').value; const dVal = document.getElementById('filterEdDate').value;
+      const cVal = document.getElementById('filterEdCust').value; const search = document.getElementById('searchEdInput').value.trim().toLowerCase();
       let filtered = all.filter(item => {
-        const itemMonth = (item.date || '').substring(0, 7);
-        const matchesMonth = (mVal === 'ALL') || (itemMonth === mVal);
-        const matchesDate = !dVal || (item.date === dVal);
-        const itemCust = (item.customer || '').trim().toUpperCase();
-        const matchesCust = (cVal === 'ALL') || (itemCust === cVal);
-        const matchesSearch = !search || 
-          (item.boat && item.boat.toLowerCase().includes(search)) ||
-          (item.invNo && String(item.invNo).toLowerCase().includes(search));
+        const itemMonth = (item.date || '').substring(0, 7); const matchesMonth = (mVal === 'ALL') || (itemMonth === mVal);
+        const matchesDate = !dVal || (item.date === dVal); const itemCust = (item.customer || '').trim().toUpperCase(); const matchesCust = (cVal === 'ALL') || (itemCust === cVal);
+        const matchesSearch = !search || (item.boat && item.boat.toLowerCase().includes(search)) || (item.invNo && String(item.invNo).toLowerCase().includes(search));
         return matchesMonth && matchesDate && matchesCust && matchesSearch;
       });
-
       filtered.sort((a, b) => {
         let valA = a[sortEdColumn], valB = b[sortEdColumn];
-        if (['invVl', 'tax2Pct', 'mfService', 'total'].includes(sortEdColumn)) {
-          valA = Number(valA || 0); valB = Number(valB || 0);
-        } else { valA = String(valA || ''); valB = String(valB || ''); }
-        if (valA < valB) return sortEdAsc ? -1 : 1;
-        if (valA > valB) return sortEdAsc ? 1 : -1;
-        return 0;
+        if (['invVl', 'tax2Pct', 'mfService', 'total'].includes(sortEdColumn)) { valA = Number(valA || 0); valB = Number(valB || 0); }
+        else { valA = String(valA || ''); valB = String(valB || ''); }
+        if (valA < valB) return sortEdAsc ? -1 : 1; if (valA > valB) return sortEdAsc ? 1 : -1; return 0;
       });
-
-      currentEdFilteredList = filtered;
-      const countEl = document.getElementById('edExportCount');
-      if (countEl) countEl.innerText = filtered.length;
-
-      renderEdTable(filtered);
-      updateEdSummaryCards(filtered);
+      currentEdFilteredList = filtered; const countEl = document.getElementById('edExportCount'); if (countEl) countEl.innerText = filtered.length;
+      renderEdTable(filtered); updateEdSummaryCards(filtered);
     }
+    function sortEdTable(col) { if (sortEdColumn === col) sortEdAsc = !sortEdAsc; else { sortEdColumn = col; sortEdAsc = true; } filterEdData(); }
 
-    function sortEdTable(col) {
-      if (sortEdColumn === col) sortEdAsc = !sortEdAsc;
-      else { sortEdColumn = col; sortEdAsc = true; }
-      filterEdData();
-    }
-
-    // REQUIREMENT 4: ED SUMMARY MMK INTEGERS
     function updateEdSummaryCards(list) {
-      const trips = list.length;
-      const totalUSD = list.reduce((a, b) => a + Number(b.invVl || 0), 0);
-      const total2Pct = Math.round(list.reduce((a, b) => a + Number(b.tax2Pct || 0), 0));
-      const totalMF = Math.round(list.reduce((a, b) => a + Number(b.mfService || 0), 0));
-      const grandTotal = Math.round(list.reduce((a, b) => a + Number(b.total || 0), 0));
-
-      document.getElementById('edStatTrips').innerText = trips;
-      document.getElementById('edStatUSD').innerText = '$' + formatNum(totalUSD, 2);
-      document.getElementById('edStat2Pct').innerText = total2Pct.toLocaleString() + ' K';
-      document.getElementById('edStatMF').innerText = totalMF.toLocaleString() + ' K';
-      document.getElementById('edStatTotal').innerText = grandTotal.toLocaleString() + ' K';
+      document.getElementById('edStatTrips').innerText = list.length; document.getElementById('edStatUSD').innerText = '$' + formatNum(list.reduce((a, b) => a + Number(b.invVl || 0), 0), 2);
+      document.getElementById('edStat2Pct').innerText = Math.round(list.reduce((a, b) => a + Number(b.tax2Pct || 0), 0)).toLocaleString() + ' Ks';
+      document.getElementById('edStatMF').innerText = Math.round(list.reduce((a, b) => a + Number(b.mfService || 0), 0)).toLocaleString() + ' Ks';
+      document.getElementById('edStatTotal').innerText = Math.round(list.reduce((a, b) => a + Number(b.total || 0), 0)).toLocaleString() + ' Ks';
     }
 
-    // REQUIREMENT 4: ED TABLE MMK INTEGERS
     function renderEdTable(list) {
-      const tbody = document.getElementById('edTableBody');
-      const noMsg = document.getElementById('noEdResultsMsg');
-      tbody.innerHTML = '';
-      if (list.length === 0) { noMsg.classList.remove('hidden'); return; }
-      noMsg.classList.add('hidden');
-
+      const tbody = document.getElementById('edTableBody'); const noMsg = document.getElementById('noEdResultsMsg'); tbody.innerHTML = '';
+      if (list.length === 0) { noMsg.classList.remove('hidden'); return; } noMsg.classList.add('hidden');
       const isAdmin = currentUser && currentUser.role === 'admin';
 
       list.forEach((item, index) => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 transition";
-        
-        let actionCell = `<span class="text-slate-300 dark:text-slate-600">-</span>`;
+        const tr = document.createElement('tr'); tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 transition";
+        let actionCell = `<button onclick="generateEdVoucher('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher JPG ထုတ်မည်">📸 VC</button>`;
         if (isAdmin) {
           actionCell = `
+            <button onclick="generateEdVoucher('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher JPG ထုတ်မည်">📸 VC</button>
             <button onclick="editEdShipment('${item.id}')" class="text-indigo-600 hover:text-indigo-800 p-1" title="ပြင်မည်">✏️</button>
             <button onclick="deleteEdShipment('${item.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>
           `;
         }
-
         tr.innerHTML = `
           <td class="p-3 font-bold text-slate-500 text-center">${index + 1}</td>
           <td class="p-3 whitespace-nowrap font-medium">${item.date || '-'}</td>
           <td class="p-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap">${item.boat || '-'}</td>
           <td class="p-3 font-mono">${item.invNo || '-'}</td>
           <td class="p-3 text-right font-semibold text-emerald-700 dark:text-emerald-400">$${formatNum(item.invVl, 2)}</td>
-          <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950 dark:text-indigo-300">${item.customer || '-'}</span></td>
+          <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-900 border border-indigo-200">${item.customer || '-'}</span></td>
           <td class="p-3 text-right font-medium text-slate-700 dark:text-slate-300">${formatNum(Math.round(item.tax2Pct || 0), 0)} K</td>
           <td class="p-3 text-right font-medium text-blue-900 dark:text-blue-300">${formatNum(Math.round(item.mfService || 0), 0)} K</td>
           <td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">${formatNum(Math.round(item.total || 0), 0)} K</td>
-          <td class="p-3 text-center whitespace-nowrap">
-            ${item.payDate ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">${item.payDate}</span>` : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Pending</span>`}
-          </td>
+          <td class="p-3 text-center whitespace-nowrap">${item.payDate ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">${item.payDate}</span>` : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Pending</span>`}</td>
           <td class="p-3 text-center space-x-1 whitespace-nowrap">${actionCell}</td>
         `;
         tbody.appendChild(tr);
       });
+      ['date','boat','invNo','invVl','customer','tax2Pct','mfService','total','payDate'].forEach(col => {
+        const span = document.getElementById('sort-ed-' + col); if(span) span.innerText = (sortEdColumn === col) ? (sortEdAsc ? '▲' : '▼') : '↕';
+      });
     }
 
     function openNewEdEntryModal() {
-      if (currentUser && currentUser.role !== 'admin') {
-        return alert("Admin သာလျှင် ED စာရင်းအသစ် ထည့်သွင်းခွင့် ရှိပါသည်။");
-      }
-      document.getElementById('editEdId').value = '';
-      document.getElementById('edModalTitle').innerText = "➕ ED Service စာရင်းအသစ် ထည့်သွင်းခြင်း";
-      document.getElementById('inEdDate').value = new Date().toISOString().split('T')[0];
-      document.getElementById('inEdBoat').value = '';
-      document.getElementById('inEdInvNo').value = '';
-      document.getElementById('inEdCustomer').value = '';
-      document.getElementById('inEdUSD').value = '';
-      document.getElementById('inEdMF').value = '60000';
-      document.getElementById('inEdPayDate').value = '';
-      calculateEdPreview();
-      document.getElementById('edEntryModal').classList.remove('hidden');
+      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်းအသစ် ထည့်သွင်းခွင့် ရှိပါသည်။");
+      document.getElementById('editEdId').value = ''; document.getElementById('edModalTitle').innerText = "➕ ED Service စာရင်းအသစ် ထည့်သွင်းခြင်း";
+      document.getElementById('inEdDate').value = new Date().toISOString().split('T')[0]; document.getElementById('inEdBoat').value = '';
+      document.getElementById('inEdInvNo').value = ''; document.getElementById('inEdCustomer').value = ''; document.getElementById('inEdUSD').value = '';
+      document.getElementById('inEdMF').value = '60000'; document.getElementById('inEdPayDate').value = ''; calculateEdPreview(); document.getElementById('edEntryModal').classList.remove('hidden');
     }
-    function closeEdEntryModal() {
-      document.getElementById('edEntryModal').classList.add('hidden');
-    }
+    function closeEdEntryModal() { document.getElementById('edEntryModal').classList.add('hidden'); }
 
     function editEdShipment(id) {
-      if (currentUser && currentUser.role !== 'admin') {
-        return alert("Admin သာလျှင် ED စာရင်း ပြင်ဆင်ခွင့် ရှိပါသည်။");
-      }
-      const all = getEdData();
-      const item = all.find(x => x.id === id);
-      if (!item) return;
-      document.getElementById('editEdId').value = item.id;
-      document.getElementById('edModalTitle').innerText = "✏️ ED Service စာရင်း ပြင်ဆင်ခြင်း";
-      document.getElementById('inEdDate').value = item.date || '';
-      document.getElementById('inEdBoat').value = item.boat || '';
-      document.getElementById('inEdInvNo').value = item.invNo || '';
-      document.getElementById('inEdCustomer').value = item.customer || '';
-      document.getElementById('inEdUSD').value = item.invVl || '';
-      document.getElementById('inEdMF').value = item.mfService || 60000;
-      document.getElementById('inEdPayDate').value = item.payDate || '';
-      calculateEdPreview();
-      document.getElementById('edEntryModal').classList.remove('hidden');
+      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်း ပြင်ဆင်ခွင့် ရှိပါသည်။");
+      const all = getEdData(); const item = all.find(x => x.id === id); if (!item) return;
+      document.getElementById('editEdId').value = item.id; document.getElementById('edModalTitle').innerText = "✏️ ED Service စာရင်း ပြင်ဆင်ခြင်း";
+      document.getElementById('inEdDate').value = item.date || ''; document.getElementById('inEdBoat').value = item.boat || '';
+      document.getElementById('inEdInvNo').value = item.invNo || ''; document.getElementById('inEdCustomer').value = item.customer || '';
+      document.getElementById('inEdUSD').value = item.invVl || ''; document.getElementById('inEdMF').value = item.mfService || 60000;
+      document.getElementById('inEdPayDate').value = item.payDate || ''; calculateEdPreview(); document.getElementById('edEntryModal').classList.remove('hidden');
     }
-
-    // REQUIREMENT 4: ED MODAL PREVIEWS ARE INTEGERS
     function calculateEdPreview() {
-      const usd = parseFloat(document.getElementById('inEdUSD').value) || 0;
-      const mf = parseFloat(document.getElementById('inEdMF').value) || 0;
-      const tax2 = Math.round(usd * 42);
-      const total = Math.round(tax2 + mf);
-      document.getElementById('inEd2Pct').value = tax2;
-      document.getElementById('inEdTotal').value = total;
+      const usd = parseFloat(document.getElementById('inEdUSD').value) || 0; const mf = parseFloat(document.getElementById('inEdMF').value) || 0;
+      const tax2 = Math.round(usd * 42); const total = Math.round(tax2 + mf);
+      document.getElementById('inEd2Pct').value = tax2; document.getElementById('inEdTotal').value = total;
     }
-
     function handleEdSubmit(e) {
-      e.preventDefault();
-      if (currentUser && currentUser.role !== 'admin') {
-        return alert("Admin သာလျှင် ED စာရင်း သိမ်းဆည်းခွင့် ရှိပါသည်။");
-      }
-      const editId = document.getElementById('editEdId').value;
-      const date = document.getElementById('inEdDate').value;
-      const boat = document.getElementById('inEdBoat').value.trim();
-      const invNo = document.getElementById('inEdInvNo').value.trim();
-      const customer = document.getElementById('inEdCustomer').value.trim().toUpperCase();
-      const invVl = parseFloat(document.getElementById('inEdUSD').value) || 0;
-      const mfService = Math.round(parseFloat(document.getElementById('inEdMF').value) || 60000);
-      
-      // REQUIREMENT 4: INTEGER ROUNDING
-      const tax2Pct = Math.round(invVl * 42);
-      const total = Math.round(tax2Pct + mfService);
-      const payDate = document.getElementById('inEdPayDate').value;
-
+      e.preventDefault(); if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်း သိမ်းဆည်းခွင့် ရှိပါသည်။");
+      const editId = document.getElementById('editEdId').value; const date = document.getElementById('inEdDate').value;
+      const boat = document.getElementById('inEdBoat').value.trim(); const invNo = document.getElementById('inEdInvNo').value.trim();
+      const customer = document.getElementById('inEdCustomer').value.trim().toUpperCase(); const invVl = parseFloat(document.getElementById('inEdUSD').value) || 0;
+      const mfService = Math.round(parseFloat(document.getElementById('inEdMF').value) || 60000); const tax2Pct = Math.round(invVl * 42);
+      const total = Math.round(tax2Pct + mfService); const payDate = document.getElementById('inEdPayDate').value;
       let all = getEdData();
       if (editId) {
-        all = all.map(i => i.id === editId ? {
-          ...i, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate
-        } : i);
+        all = all.map(i => i.id === editId ? { ...i, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate } : i);
         alert("ED စာရင်းပြင်ဆင်မှု အောင်မြင်ပါသည်။");
       } else {
-        all.unshift({
-          id: generateId('ed'), no: all.length + 1,
-          date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate
-        });
+        all.unshift({ id: generateId('ed'), no: all.length + 1, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate });
         alert("ED စာရင်းအသစ် Cloud သို့ သိမ်းဆည်းပြီးပါပြီ။");
       }
-      saveEdData(all);
-      populateEdMonthDropdown();
-      populateEdCustDropdown();
-      closeEdEntryModal();
-      filterEdData();
+      saveEdData(all); populateEdMonthDropdown(); populateEdCustDropdown(); closeEdEntryModal(); filterEdData();
     }
-
     function deleteEdShipment(id) {
-      if (currentUser && currentUser.role !== 'admin') {
-        return alert("Admin သာလျှင် ED စာရင်း ဖျက်ပိုင်ခွင့် ရှိပါသည်။");
+      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်း ဖျက်ပိုင်ခွင့် ရှိပါသည်။");
+      if (confirm("ဤ ED စာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { saveEdData(getEdData().filter(i => i.id !== id)); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); }
+    }
+    function clearAllEdData() {
+      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်း ရှင်းထုတ်ပိုင်ခွင့် ရှိပါသည်။");
+      if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) { saveEdData([]); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); }
+    }
+
+    // REQUIREMENT 5: ED VOUCHER GENERATOR
+    function generateEdVoucher(id) {
+      const item = getEdData().find(x => x.id === id); if (!item) return;
+      const isPaid = !!item.payDate;
+      const area = document.getElementById('voucherPrintArea');
+      const header = document.getElementById('voucherHeaderBg');
+      const stamp = document.getElementById('vcStamp');
+      
+      // Theme toggling
+      if (isPaid) {
+          area.className = "fixed -left-[9999px] top-0 bg-[#eaf5ea] border-[8px] border-double border-[#2f855a] w-[600px] p-6 font-serif text-slate-900 rounded-lg overflow-hidden";
+          header.className = "bg-[#14532d] text-center p-4 rounded text-white border-2 border-[#d4af37] mb-6 relative z-10 shadow-md";
+          stamp.classList.remove('opacity-0');
+      } else {
+          area.className = "fixed -left-[9999px] top-0 bg-[#fdf8e2] border-[8px] border-double border-[#d4af37] w-[600px] p-6 font-serif text-slate-900 rounded-lg overflow-hidden";
+          header.className = "bg-[#0a192f] text-center p-4 rounded text-white border-2 border-[#d4af37] mb-6 relative z-10 shadow-md";
+          stamp.classList.add('opacity-0');
       }
-      if (confirm("ဤ ED စာရင်းကို ဖျက်မှာ သေချာပါသလား?")) {
-        saveEdData(getEdData().filter(i => i.id !== id));
-        populateEdMonthDropdown();
-        populateEdCustDropdown();
-        filterEdData();
+
+      document.getElementById('vcCustomer').innerText = item.customer || 'CUSTOMER';
+      document.getElementById('vcCode').innerText = `(${item.boat || item.invNo})`;
+      document.getElementById('vcDate').innerText = formatReportDate(item.date);
+      
+      document.getElementById('vc2Pct').innerText = Math.round(item.tax2Pct || 0).toLocaleString();
+      const mf = Math.round(item.mfService || 60000);
+      const splitMf = mf / 2;
+      document.getElementById('vcMass').innerText = splitMf.toLocaleString();
+      document.getElementById('vcService').innerText = splitMf.toLocaleString();
+      document.getElementById('vcTotal').innerText = Math.round(item.total || 0).toLocaleString();
+
+      // Temporarily bring it to viewport for render but hidden behind modal overlay or just z-index
+      area.classList.remove('-left-[9999px]');
+      area.style.left = '0px'; area.style.zIndex = '-100';
+
+      html2canvas(area, { scale: 3, useCORS: true }).then(canvas => {
+          area.classList.add('-left-[9999px]'); area.style.left = '';
+          const a = document.createElement('a');
+          a.download = `Voucher_${item.customer || 'ED'}_${item.invNo}.jpg`;
+          a.href = canvas.toDataURL('image/jpeg', 0.95);
+          a.click();
+      });
+    }
+
+    // ================= MPU LEDGER LOGIC (REQUIREMENT 6) =================
+    function openMpuTopupModal() {
+      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ငွေသွင်းခွင့် ရှိပါသည်။");
+      document.getElementById('inMpuDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('inMpuBank').value = 'AYA Bank';
+      document.getElementById('inMpuAmount').value = '';
+      document.getElementById('inMpuRemark').value = 'MPU သို့ ငွေသွင်းခြင်း';
+      document.getElementById('mpuTopupModal').classList.remove('hidden');
+    }
+    function closeMpuTopupModal() { document.getElementById('mpuTopupModal').classList.add('hidden'); }
+
+    function handleMpuTopupSubmit(e) {
+      e.preventDefault();
+      if (currentUser && currentUser.role !== 'admin') return;
+      const date = document.getElementById('inMpuDate').value;
+      const bank = document.getElementById('inMpuBank').value;
+      const amount = parseFloat(document.getElementById('inMpuAmount').value) || 0;
+      const remark = document.getElementById('inMpuRemark').value.trim();
+      let topups = getMpuTopups();
+      topups.push({ id: generateId('mpu'), date, bank, amount, remark });
+      saveMpuTopups(topups);
+      closeMpuTopupModal();
+      renderMpuLedger();
+      alert("MPU သို့ ငွေသွင်းခြင်း မှတ်တမ်းတင်ပြီးပါပြီ။");
+    }
+
+    function deleteMpuTopup(id) {
+      if (currentUser && currentUser.role !== 'admin') return;
+      if (confirm("ဤ ငွေသွင်းမှတ်တမ်းကို ဖျက်မှာ သေချာပါသလား?")) {
+        let topups = getMpuTopups();
+        saveMpuTopups(topups.filter(t => t.id !== id));
+        renderMpuLedger();
       }
     }
 
-    function clearAllEdData() {
-      if (currentUser && currentUser.role !== 'admin') {
-        return alert("Admin သာလျှင် ED စာရင်း ရှင်းထုတ်ပိုင်ခွင့် ရှိပါသည်။");
-      }
-      if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) {
-        saveEdData([]);
-        populateEdMonthDropdown();
-        populateEdCustDropdown();
-        filterEdData();
-      }
+    function renderMpuLedger() {
+      const topups = getMpuTopups();
+      const creditData = getCargoData().filter(c => c.hasLicense); // Filter only checked licenses
+      let ledger = [];
+      
+      topups.forEach(t => {
+          ledger.push({
+              date: t.date, desc: t.remark || 'ငွေသွင်း (Top-up)', bank: t.bank,
+              inAmt: Number(t.amount), outAmt: 0, id: t.id, isTopup: true
+          });
+      });
+      creditData.forEach(c => {
+          ledger.push({
+              date: c.date, desc: `လိုင်စင်ဖြတ် (လှေ: ${c.boat} | Inv: ${c.invNo})`, bank: 'MPU',
+              inAmt: 0, outAmt: 15000, id: c.id, isTopup: false
+          });
+      });
+
+      // Sort by date Ascending
+      ledger.sort((a,b) => {
+         const comp = a.date.localeCompare(b.date);
+         return comp !== 0 ? comp : (a.isTopup ? -1 : 1); // Topup first on same day
+      });
+
+      let balance = 0; let totalIn = 0; let totalOut = 0;
+      const tbody = document.getElementById('mpuLedgerTableBody');
+      tbody.innerHTML = '';
+      
+      ledger.forEach((row, i) => {
+          balance += row.inAmt - row.outAmt;
+          totalIn += row.inAmt; totalOut += row.outAmt;
+          const actionBtn = (row.isTopup && currentUser && currentUser.role === 'admin') 
+              ? `<button onclick="deleteMpuTopup('${row.id}')" class="text-rose-600 hover:bg-rose-100 p-1 rounded">🗑️</button>` 
+              : `<span class="text-slate-400 text-[9px] bg-slate-100 px-1 py-0.5 rounded">Auto</span>`;
+          tbody.innerHTML += `
+             <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
+               <td class="p-3 text-center text-slate-500 font-bold">${i+1}</td>
+               <td class="p-3 font-medium">${row.date}</td>
+               <td class="p-3">${row.desc}</td>
+               <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${row.bank.includes('AYA') ? 'bg-blue-50 text-blue-800' : (row.bank.includes('uab') ? 'bg-indigo-50 text-indigo-800' : 'bg-slate-100 text-slate-600')}">${row.bank}</span></td>
+               <td class="p-3 text-right font-semibold text-emerald-600 dark:text-emerald-400">${row.inAmt > 0 ? row.inAmt.toLocaleString() : '-'}</td>
+               <td class="p-3 text-right font-semibold text-rose-600 dark:text-rose-400">${row.outAmt > 0 ? row.outAmt.toLocaleString() : '-'}</td>
+               <td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">${balance.toLocaleString()}</td>
+               <td class="p-3 text-center">${actionBtn}</td>
+             </tr>
+          `;
+      });
+      
+      document.getElementById('mpuStatTopup').innerText = totalIn.toLocaleString() + ' Ks';
+      document.getElementById('mpuStatExpense').innerText = totalOut.toLocaleString() + ' Ks';
+      document.getElementById('mpuStatBalance').innerText = balance.toLocaleString() + ' Ks';
     }
 
     function exportEdToExcel() {
-      const list = currentEdFilteredList;
-      if (!list || !list.length) return alert("Export ထုတ်ရန် ED စာရင်းမရှိပါ။");
+      const list = currentEdFilteredList; if (!list || !list.length) return alert("Export ထုတ်ရန် ED စာရင်းမရှိပါ။");
       const rows = list.map((r, i) => ({
-        "No": i + 1, "Date": r.date, "လှေအမည်": r.boat, "Inv No.": r.invNo,
-        "Invoice VL (USD)": Number(r.invVl || 0), "Co,.Ltd": r.customer,
+        "No": i + 1, "Date": r.date, "လှေအမည်": r.boat, "Inv No.": r.invNo, "Invoice VL (USD)": Number(r.invVl || 0), "Co,.Ltd": r.customer,
         "2% (MMK)": Math.round(Number(r.tax2Pct || 0)), "MF / Service": Math.round(Number(r.mfService || 0)),
         "Total (MMK)": Math.round(Number(r.total || 0)), "Pay Date": r.payDate || 'Pending'
       }));
-      const ws = XLSX.utils.json_to_sheet(rows);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "ED_Report");
-      XLSX.writeFile(wb, "BK_ED_Report.xlsx");
+      const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "ED_Report"); XLSX.writeFile(wb, "BK_ED_Report.xlsx");
     }
 
     function handleEdExcelImport(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
+      const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
       reader.onload = function(e) {
         try {
-          const data = new Uint8Array(e.target.result);
-          const workbook = XLSX.read(data, { type: 'array', cellDates: false });
-          const sheetName = workbook.SheetNames[0];
-          const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
-
+          const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: false });
+          const sheetName = workbook.SheetNames[0]; const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
           let headerIdx = 0;
           for (let i = 0; i < Math.min(rawRows.length, 10); i++) {
             const rowStr = (rawRows[i] || []).join(' ').toLowerCase();
-            if (rowStr.includes('လှေ') || rowStr.includes('inv') || rowStr.includes('2%')) {
-              headerIdx = i; break;
-            }
+            if (rowStr.includes('လှေ') || rowStr.includes('inv') || rowStr.includes('2%')) { headerIdx = i; break; }
           }
-
           const headers = rawRows[headerIdx].map(h => String(h || '').trim().toLowerCase());
-          const colDate = headers.findIndex(h => h.includes('date') && !h.includes('pay'));
-          const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat'));
-          const colInv = headers.findIndex(h => h.includes('inv') && !h.includes('vl') && !h.includes('usd'));
-          const colVl = headers.findIndex(h => h.includes('vl') || h.includes('usd'));
-          const colCust = headers.findIndex(h => h.includes('co') || h.includes('ltd') || h.includes('cust'));
-          const col2Pct = headers.findIndex(h => h.includes('2%') || h.includes('2'));
-          const colMF = headers.findIndex(h => h.includes('mf') || h.includes('service'));
-          const colTotal = headers.findIndex(h => h.includes('total'));
-          const colPayDate = headers.findIndex(h => h.includes('pay'));
+          const colDate = headers.findIndex(h => h.includes('date') && !h.includes('pay')); const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat'));
+          const colInv = headers.findIndex(h => h.includes('inv') && !h.includes('vl') && !h.includes('usd')); const colVl = headers.findIndex(h => h.includes('vl') || h.includes('usd'));
+          const colCust = headers.findIndex(h => h.includes('co') || h.includes('ltd') || h.includes('cust')); const col2Pct = headers.findIndex(h => h.includes('2%') || h.includes('2'));
+          const colMF = headers.findIndex(h => h.includes('mf') || h.includes('service')); const colTotal = headers.findIndex(h => h.includes('total')); const colPayDate = headers.findIndex(h => h.includes('pay'));
 
           const parsedList = [];
           for (let r = headerIdx + 1; r < rawRows.length; r++) {
-            const row = rawRows[r];
-            if (!row || !row.length) continue;
-            if (String(row[0] || '').trim().toLowerCase().includes('total')) continue;
-
-            const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : '');
-            const boat = (colBoat !== -1 && row[colBoat]) ? String(row[colBoat]).trim() : '';
-            const invVl = (colVl !== -1 && row[colVl]) ? parseFloat(row[colVl]) || 0 : 0;
+            const row = rawRows[r]; if (!row || !row.length) continue; if (String(row[0] || '').trim().toLowerCase().includes('total')) continue;
+            const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : ''); const boat = (colBoat !== -1 && row[colBoat]) ? String(row[colBoat]).trim() : ''; const invVl = (colVl !== -1 && row[colVl]) ? parseFloat(row[colVl]) || 0 : 0;
             if (!dateStr && !boat && !invVl) continue;
-
-            const invNo = (colInv !== -1 && row[colInv] !== undefined) ? String(row[colInv]).trim() : '';
-            const customer = (colCust !== -1 && row[colCust]) ? String(row[colCust]).trim().toUpperCase() : 'OTHER';
+            const invNo = (colInv !== -1 && row[colInv] !== undefined) ? String(row[colInv]).trim() : ''; const customer = (colCust !== -1 && row[colCust]) ? String(row[colCust]).trim().toUpperCase() : 'OTHER';
             const tax2Pct = Math.round((col2Pct !== -1 && row[col2Pct]) ? parseFloat(row[col2Pct]) || (invVl * 42) : (invVl * 42));
             const mfService = Math.round((colMF !== -1 && row[colMF]) ? parseFloat(row[colMF]) || 60000 : 60000);
             const total = Math.round((colTotal !== -1 && row[colTotal]) ? parseFloat(row[colTotal]) || (tax2Pct + mfService) : (tax2Pct + mfService));
             const payDate = (colPayDate !== -1 && row[colPayDate]) ? parseExactExcelDate(row[colPayDate]) : '';
-
-            parsedList.push({
-              id: generateId('ed'), no: parsedList.length + 1,
-              date: dateStr, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate
-            });
+            parsedList.push({ id: generateId('ed'), no: parsedList.length + 1, date: dateStr, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate });
           }
-
           if (!parsedList.length) return alert("ED စာရင်းများ မတွေ့ရှိပါ။");
           const isReplace = confirm(`ED စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။ အစားထိုး သိမ်းဆည်းမည်လား?`);
-          const existing = getEdData();
-          saveEdData(isReplace ? parsedList : [...existing, ...parsedList]);
-          populateEdMonthDropdown();
-          populateEdCustDropdown();
-          filterEdData();
-          alert(`ED စာရင်းပေါင်း (${parsedList.length}) ခု Cloud သို့ ထည့်သွင်းပြီးပါပြီ။`);
-        } catch(err) {
-          alert("Error: " + err.message);
-        } finally { event.target.value = ''; }
+          const existing = getEdData(); saveEdData(isReplace ? parsedList : [...existing, ...parsedList]);
+          populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); alert(`ED စာရင်းပေါင်း (${parsedList.length}) ခု Cloud သို့ ထည့်သွင်းပြီးပါပြီ။`);
+        } catch(err) { alert("Error: " + err.message); } finally { event.target.value = ''; }
       };
       reader.readAsArrayBuffer(file);
     }
 
     function renderEdBreakdown() {
-      const all = getEdData();
-      const map = {};
+      const all = getEdData(); const map = {};
       all.forEach(i => {
         const c = (i.customer || 'OTHER').trim().toUpperCase();
         if (!map[c]) map[c] = { cust: c, trips: 0, usd: 0, tax2: 0, mf: 0, total: 0, paid: 0, pending: 0 };
-        map[c].trips += 1;
-        map[c].usd += Number(i.invVl || 0);
-        map[c].tax2 += Math.round(Number(i.tax2Pct || 0));
-        map[c].mf += Math.round(Number(i.mfService || 0));
-        map[c].total += Math.round(Number(i.total || 0));
-        if (i.payDate) map[c].paid += Math.round(Number(i.total || 0));
-        else map[c].pending += Math.round(Number(i.total || 0));
+        map[c].trips += 1; map[c].usd += Number(i.invVl || 0); map[c].tax2 += Math.round(Number(i.tax2Pct || 0));
+        map[c].mf += Math.round(Number(i.mfService || 0)); map[c].total += Math.round(Number(i.total || 0));
+        if (i.payDate) map[c].paid += Math.round(Number(i.total || 0)); else map[c].pending += Math.round(Number(i.total || 0));
       });
-
-      const list = Object.values(map).sort((a, b) => b.total - a.total);
-      const tbody = document.getElementById('edBreakdownTableBody');
+      const list = Object.values(map).sort((a, b) => b.total - a.total); const tbody = document.getElementById('edBreakdownTableBody');
       tbody.innerHTML = list.map(b => `
         <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
           <td class="p-3 font-bold font-mono text-indigo-950 dark:text-indigo-400">${b.cust}</td>
@@ -2526,9 +2286,7 @@
           <td class="p-3 text-right font-medium">${b.tax2.toLocaleString()} K</td>
           <td class="p-3 text-right font-medium text-blue-900 dark:text-blue-300">${b.mf.toLocaleString()} K</td>
           <td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">${b.total.toLocaleString()} K</td>
-          <td class="p-3 text-center">
-            ${b.pending > 0 ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700">ကျန်: ${b.pending.toLocaleString()} K</span>` : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">အကုန်ချေပြီး</span>`}
-          </td>
+          <td class="p-3 text-center">${b.pending > 0 ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700">ကျန်: ${b.pending.toLocaleString()} K</span>` : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">အကုန်ချေပြီး</span>`}</td>
         </tr>
       `).join('');
     }
@@ -2537,23 +2295,14 @@
     function onCreditCoChange() { renderDailyReport(); }
 
     function renderDailyReport() {
-      const all = getCargoData();
-      const creditCompanies = getCreditCompanies();
-      const custMap = getCustomers();
+      const all = getCargoData(); const creditCompanies = getCreditCompanies(); const custMap = getCustomers();
       let selectedDate = document.getElementById('reportDatePicker').value;
-      if (!selectedDate) {
-        const dates = all.map(d => d.date).filter(Boolean).sort();
-        selectedDate = dates.length > 0 ? dates[dates.length - 1] : "2026-09-09";
-        document.getElementById('reportDatePicker').value = selectedDate;
-      }
-      const selectedCreditCode = document.getElementById('reportCreditCoSelect').value || 'SH';
-      const creditCoObj = creditCompanies.find(c => c.code === selectedCreditCode) || creditCompanies[0];
+      if (!selectedDate) { const dates = all.map(d => d.date).filter(Boolean).sort(); selectedDate = dates.length > 0 ? dates[dates.length - 1] : "2026-09-09"; document.getElementById('reportDatePicker').value = selectedDate; }
+      const selectedCreditCode = document.getElementById('reportCreditCoSelect').value || 'SH'; const creditCoObj = creditCompanies.find(c => c.code === selectedCreditCode) || creditCompanies[0];
       const onlyThisCreditCo = document.getElementById('filterOnlySelectedCreditCo').checked;
-
       const letterArea = document.getElementById('letterheadRenderArea');
-      if (creditCoObj.bannerImage && creditCoObj.bannerImage.trim() !== "") {
-        letterArea.innerHTML = `<div class="w-full text-center"><img src="${creditCoObj.bannerImage}" alt="Letterhead" class="w-full object-contain max-h-44 mx-auto select-none"></div>`;
-      } else {
+      if (creditCoObj.bannerImage && creditCoObj.bannerImage.trim() !== "") { letterArea.innerHTML = `<div class="w-full text-center"><img src="${creditCoObj.bannerImage}" alt="Letterhead" class="w-full object-contain max-h-44 mx-auto select-none"></div>`; }
+      else {
         letterArea.innerHTML = `
           <div class="flex items-start justify-between pb-3 border-b-2 border-slate-700">
             <div class="w-16 h-16 rounded-xl bg-blue-950 text-white font-bold flex items-center justify-center text-2xl">${creditCoObj.code}</div>
@@ -2566,39 +2315,39 @@
           </div>
         `;
       }
-
       let dailyRows = all.filter(r => r.date === selectedDate);
       if (onlyThisCreditCo) dailyRows = dailyRows.filter(r => (r.creditCo || 'SH') === selectedCreditCode);
 
-      const contentDiv = document.getElementById('dailyReportContentArea');
-      const formattedDate = formatReportDate(selectedDate);
-      const totalBoats = dailyRows.length;
-      const totalUSD = dailyRows.reduce((acc, cur) => acc + Number(cur.usd || 0), 0);
+      // REQUIREMENT 1: ASCENDING SORT BY INV NO IN DAILY REPORT
+      dailyRows.sort((a,b) => String(a.invNo || '').localeCompare(String(b.invNo || ''), undefined, {numeric: true}));
 
-      // REQUIREMENT 5: PERFECT CENTERED VERTICAL-ALIGN & TIMES NEW ROMAN
+      const contentDiv = document.getElementById('dailyReportContentArea'); const formattedDate = formatReportDate(selectedDate);
+      const totalBoats = dailyRows.length; const totalUSD = dailyRows.reduce((acc, cur) => acc + Number(cur.usd || 0), 0);
+
+      // REQUIREMENT 3: VERTICAL ALIGN MIDDLE & FONT SIZE 13 ALREADY IN CSS
       if (currentDailyReportType === 'summary') {
         contentDiv.innerHTML = `
           <div class="mt-8 flex flex-col items-center justify-center">
             <div class="w-full max-w-xl">
-              <table class="w-full border-collapse border border-black text-sm text-slate-900" style="font-family: 'Times New Roman', Times, serif;">
+              <table class="w-full border-collapse border border-black text-slate-900">
                 <thead>
                   <tr class="font-bold border border-black bg-slate-50">
-                    <th class="border border-black p-2.5 text-center w-16" style="vertical-align: middle;">No.</th>
-                    <th class="border border-black p-2.5 text-center w-36" style="vertical-align: middle;">Date</th>
-                    <th class="border border-black p-2.5 text-center w-32" style="vertical-align: middle;">စီးရေ</th>
-                    <th class="border border-black p-2.5 text-center" style="vertical-align: middle;">Inv,Amt: (USD)</th>
+                    <th class="border border-black p-2.5 text-center w-16">No.</th>
+                    <th class="border border-black p-2.5 text-center w-36">Date</th>
+                    <th class="border border-black p-2.5 text-center w-32">စီးရေ</th>
+                    <th class="border border-black p-2.5 text-center">Inv,Amt: (USD)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="border border-black p-2.5 text-center font-medium" style="vertical-align: middle;">1</td>
-                    <td class="border border-black p-2.5 text-center font-medium" style="vertical-align: middle;">${formattedDate}</td>
-                    <td class="border border-black p-2.5 text-center font-medium" style="vertical-align: middle;">${totalBoats}</td>
-                    <td class="border border-black p-2.5 text-right font-bold pr-4" style="vertical-align: middle;">${formatNum(totalUSD, 3)}</td>
+                    <td class="border border-black p-2.5 text-center font-bold">1</td>
+                    <td class="border border-black p-2.5 text-center font-bold">${formattedDate}</td>
+                    <td class="border border-black p-2.5 text-center font-bold">${totalBoats}</td>
+                    <td class="border border-black p-2.5 text-right font-bold pr-4">${formatNum(totalUSD, 3)}</td>
                   </tr>
                   <tr class="font-bold border-t-2 border-black">
-                    <td colspan="3" class="border border-black p-2.5 text-center font-bold tracking-wider" style="vertical-align: middle;">TOTAL</td>
-                    <td class="border border-black p-2.5 text-right font-bold pr-4" style="vertical-align: middle;">${formatNum(totalUSD, 3)}</td>
+                    <td colspan="3" class="border border-black p-2.5 text-center font-bold tracking-wider">TOTAL</td>
+                    <td class="border border-black p-2.5 text-right font-bold pr-4">${formatNum(totalUSD, 3)}</td>
                   </tr>
                 </tbody>
               </table>
@@ -2610,41 +2359,41 @@
         dailyRows.forEach((r, idx) => {
           const compName = r.companyName || (custMap[r.remark] ? custMap[r.remark].name : r.remark) || '';
           rowsHtml += `
-            <tr class="text-xs">
-              <td class="border border-black p-2 text-center font-medium" style="vertical-align: middle;">${idx + 1}</td>
-              <td class="border border-black p-2 font-medium text-left pl-3" style="vertical-align: middle;">${r.boat}</td>
-              <td class="border border-black p-2 text-center font-mono" style="vertical-align: middle;">${r.invNo}</td>
-              <td class="border border-black p-2 text-right pr-3 font-mono" style="vertical-align: middle;">${Number(r.kg || 0).toLocaleString()}</td>
-              <td class="border border-black p-2 text-right font-bold pr-3" style="vertical-align: middle;">${formatNum(r.usd, 3)}</td>
-              <td class="border border-black p-2 text-center font-medium" style="vertical-align: middle;">${compName}</td>
-              <td class="border border-black p-2 text-center font-medium" style="vertical-align: middle;"></td>
+            <tr>
+              <td class="border border-black text-center font-bold">${idx + 1}</td>
+              <td class="border border-black text-left pl-3 font-bold">${r.boat}</td>
+              <td class="border border-black text-center font-bold">${r.invNo}</td>
+              <td class="border border-black text-right pr-3 font-bold">${Number(r.kg || 0).toLocaleString()}</td>
+              <td class="border border-black text-right font-bold pr-3">${formatNum(r.usd, 3)}</td>
+              <td class="border border-black text-center font-bold">${compName}</td>
+              <td class="border border-black text-center font-bold"></td>
             </tr>
           `;
         });
-        if (!dailyRows.length) rowsHtml = `<tr><td colspan="7" class="border border-black p-6 text-center text-slate-400 italic" style="vertical-align: middle;">ရွေးချယ်ထားသော ရက်စွဲတွင် စာရင်း မရှိသေးပါ။</td></tr>`;
+        if (!dailyRows.length) rowsHtml = `<tr><td colspan="7" class="border border-black p-6 text-center text-slate-400 italic">ရွေးချယ်ထားသော ရက်စွဲတွင် စာရင်း မရှိသေးပါ။</td></tr>`;
 
         contentDiv.innerHTML = `
-          <div class="mt-4" style="font-family: 'Times New Roman', Times, serif;">
-            <h3 class="text-center font-bold text-base text-slate-900 mb-2">Daily Report (Kawthaung Office)</h3>
-            <div class="text-right font-bold text-xs text-slate-900 mb-2">Date : ${formattedDate}</div>
-            <table class="w-full border-collapse border border-black text-xs text-slate-900">
+          <div class="mt-4">
+            <h3 class="text-center font-bold text-lg text-slate-900 mb-2">Daily Report (Kawthaung Office)</h3>
+            <div class="text-right font-bold text-slate-900 mb-2" style="font-size: 14px;">Date : ${formattedDate}</div>
+            <table class="w-full border-collapse border border-black text-slate-900">
               <thead>
                 <tr class="font-bold border border-black bg-slate-50">
-                  <th class="border border-black p-2 text-center w-10" style="vertical-align: middle;">No.</th>
-                  <th class="border border-black p-2 text-center w-36" style="vertical-align: middle;">Ship Name</th>
-                  <th class="border border-black p-2 text-center w-16" style="vertical-align: middle;">Inv: No</th>
-                  <th class="border border-black p-2 text-center w-24" style="vertical-align: middle;">Quantity (Kg)</th>
-                  <th class="border border-black p-2 text-center w-32" style="vertical-align: middle;">Inv,Amt: (USD)</th>
-                  <th class="border border-black p-2 text-center w-36" style="vertical-align: middle;">Company Name</th>
-                  <th class="border border-black p-2 text-center w-16" style="vertical-align: middle;">Ramark</th>
+                  <th class="border border-black text-center w-12">No.</th>
+                  <th class="border border-black text-center w-40">Ship Name</th>
+                  <th class="border border-black text-center w-16">Inv: No</th>
+                  <th class="border border-black text-center w-28">Quantity (Kg)</th>
+                  <th class="border border-black text-center w-36">Inv,Amt: (USD)</th>
+                  <th class="border border-black text-center w-40">Company Name</th>
+                  <th class="border border-black text-center w-20">Ramark</th>
                 </tr>
               </thead>
               <tbody>
                 ${rowsHtml}
                 <tr class="font-bold border-t-2 border-black">
-                  <td colspan="4" class="border border-black p-2.5 text-center font-bold tracking-widest" style="vertical-align: middle;">TOTAL</td>
-                  <td class="border border-black p-2.5 text-right font-bold pr-3" style="vertical-align: middle;">${formatNum(totalUSD, 3)}</td>
-                  <td class="border border-black p-2" style="vertical-align: middle;"></td><td class="border border-black p-2" style="vertical-align: middle;"></td>
+                  <td colspan="4" class="border border-black text-center font-bold tracking-widest uppercase">TOTAL</td>
+                  <td class="border border-black text-right font-bold pr-3">${formatNum(totalUSD, 3)}</td>
+                  <td class="border border-black"></td><td class="border border-black"></td>
                 </tr>
               </tbody>
             </table>
@@ -2655,48 +2404,29 @@
 
     function setDailyReportType(type) {
       currentDailyReportType = type;
-      const btnDetail = document.getElementById('btn-report-type-detail');
-      const btnSummary = document.getElementById('btn-report-type-summary');
-      if (type === 'detail') {
-        btnDetail.className = "px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm transition";
-        btnSummary.className = "px-2 py-1 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 transition";
-      } else {
-        btnSummary.className = "px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm transition";
-        btnDetail.className = "px-2 py-1 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 transition";
-      }
+      const btnDetail = document.getElementById('btn-report-type-detail'); const btnSummary = document.getElementById('btn-report-type-summary');
+      if (type === 'detail') { btnDetail.className = "px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm transition"; btnSummary.className = "px-2 py-1 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 transition"; }
+      else { btnSummary.className = "px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm transition"; btnDetail.className = "px-2 py-1 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 transition"; }
       renderDailyReport();
     }
 
     function handleLetterheadImageUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const r = new FileReader();
+      const file = e.target.files[0]; if (!file) return; const r = new FileReader();
       r.onload = function(evt) {
-        const code = document.getElementById('reportCreditCoSelect').value || 'SH';
-        const list = getCreditCompanies();
-        const target = list.find(c => c.code === code);
-        if (target) {
-          target.bannerImage = evt.target.result;
-          saveCreditCompanies(list);
-          alert(`[${target.name}] Letterhead ပုံ တင်ပြီးပါပြီ!`);
-        }
-      };
-      r.readAsDataURL(file);
-      e.target.value = '';
+        const code = document.getElementById('reportCreditCoSelect').value || 'SH'; const list = getCreditCompanies(); const target = list.find(c => c.code === code);
+        if (target) { target.bannerImage = evt.target.result; saveCreditCompanies(list); alert(`[${target.name}] Letterhead ပုံ တင်ပြီးပါပြီ!`); }
+      }; r.readAsDataURL(file); e.target.value = '';
     }
 
-    // REQUIREMENT 5: HIGH QUALITY JPG DOWNLOAD
+    // REQUIREMENT 2: STANDARD A4 SIZE EXACTLY
     function downloadReportJPG() {
       const card = document.getElementById('printableA4Card');
       const dateVal = document.getElementById('reportDatePicker').value || 'daily';
       const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH';
-      html2canvas(card, { scale: 2.5, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
-        const a = document.createElement('a');
-        a.download = `${creditVal}_DailyReport_${dateVal}.jpg`;
-        a.href = canvas.toDataURL('image/jpeg', 0.95);
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+      // Use scale:3 on the exactly measured 794px container -> outputs ~2382 x 3369 which is perfect A4 ratio.
+      html2canvas(card, { scale: 3.123, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
+        const a = document.createElement('a'); a.download = `${creditVal}_DailyReport_${dateVal}.jpg`; a.href = canvas.toDataURL('image/jpeg', 1.0);
+        document.body.appendChild(a); a.click(); a.remove();
       });
     }
 
@@ -2704,32 +2434,21 @@
       const card = document.getElementById('printableA4Card');
       const dateVal = document.getElementById('reportDatePicker').value || 'daily';
       const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH';
-      html2canvas(card, { scale: 2.5, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
-        const a = document.createElement('a');
-        a.download = `${creditVal}_DailyReport_${dateVal}.png`;
-        a.href = canvas.toDataURL('image/png');
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+      html2canvas(card, { scale: 3.123, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
+        const a = document.createElement('a'); a.download = `${creditVal}_DailyReport_${dateVal}.png`; a.href = canvas.toDataURL('image/png');
+        document.body.appendChild(a); a.click(); a.remove();
       });
     }
 
     function renderBreakdown() {
-      const all = getCargoData();
-      const custMap = getCustomers();
-      const map = {};
+      const all = getCargoData(); const custMap = getCustomers(); const map = {};
       all.forEach(item => {
-        const r = (item.remark || 'N/A').trim().toUpperCase();
-        const fullName = custMap[r] ? custMap[r].name : r;
+        const r = (item.remark || 'N/A').trim().toUpperCase(); const fullName = custMap[r] ? custMap[r].name : r;
         if (!map[r]) map[r] = { remark: r, name: fullName, trips: 0, kg: 0, usd: 0, thb: 0, amount: 0 };
-        map[r].trips += 1;
-        map[r].kg += Number(item.kg || 0);
-        map[r].usd += Number(item.usd || 0);
-        map[r].thb += Math.round(Number(item.thb || 0));
-        map[r].amount += Math.round(Number(item.amount || 0));
+        map[r].trips += 1; map[r].kg += Number(item.kg || 0); map[r].usd += Number(item.usd || 0);
+        map[r].thb += Math.round(Number(item.thb || 0)); map[r].amount += Math.round(Number(item.amount || 0));
       });
-      const list = Object.values(map).sort((a, b) => b.amount - a.amount);
-      const tbody = document.getElementById('breakdownTableBody');
+      const list = Object.values(map).sort((a, b) => b.amount - a.amount); const tbody = document.getElementById('breakdownTableBody');
       tbody.innerHTML = list.map(b => `
         <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
           <td class="p-3 font-bold text-blue-950 dark:text-blue-400 font-mono">${b.remark}</td>
@@ -2745,114 +2464,56 @@
 
     function parseExactExcelDate(val) {
       if (!val) return '';
-      if (typeof val === 'number') {
-        const d = new Date((Math.floor(val) - 25569) * 86400 * 1000);
-        return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
-      }
-      if (val instanceof Date) {
-        return `${val.getUTCFullYear()}-${String(val.getUTCMonth() + 1).padStart(2, '0')}-${String(val.getUTCDate()).padStart(2, '0')}`;
-      }
+      if (typeof val === 'number') { const d = new Date((Math.floor(val) - 25569) * 86400 * 1000); return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`; }
+      if (val instanceof Date) { return `${val.getUTCFullYear()}-${String(val.getUTCMonth() + 1).padStart(2, '0')}-${String(val.getUTCDate()).padStart(2, '0')}`; }
       const s = String(val).trim();
-      if (s.includes('.')) {
-        const p = s.split('.');
-        if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
-      }
-      if (s.includes('/')) {
-        const p = s.split('/');
-        if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
-      }
+      if (s.includes('.')) { const p = s.split('.'); if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`; }
+      if (s.includes('/')) { const p = s.split('/'); if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`; }
       return s.split('T')[0];
     }
 
     function handleExcelImport(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const r = new FileReader();
+      const file = e.target.files[0]; if (!file) return; const r = new FileReader();
       r.onload = function(evt) {
         try {
-          const data = new Uint8Array(evt.target.result);
-          const workbook = XLSX.read(data, { type: 'array', cellDates: false });
+          const data = new Uint8Array(evt.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: false });
           let sheetName = workbook.SheetNames.find(s => ['SH', 'TW', 'TCS', 'UO', 'IMP'].includes(s.trim().toUpperCase())) || workbook.SheetNames[0];
           const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
-
           let headerIdx = 0;
           for (let i = 0; i < Math.min(rawRows.length, 10); i++) {
-            const rowStr = (rawRows[i] || []).join(' ').toLowerCase();
-            if (rowStr.includes('လှေအမည်') || (rowStr.includes('inv') && rowStr.includes('kg'))) {
-              headerIdx = i; break;
-            }
+            const rowStr = (rawRows[i] || []).join(' ').toLowerCase(); if (rowStr.includes('လှေအမည်') || (rowStr.includes('inv') && rowStr.includes('kg'))) { headerIdx = i; break; }
           }
-
           const headers = rawRows[headerIdx].map(h => String(h || '').trim().toLowerCase());
-          const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat'));
-          const colDate = headers.findIndex(h => h.includes('date') || h.includes('ရက်'));
-          const colInv = headers.findIndex(h => h.includes('inv') && !h.includes('usd') && !h.includes('thb'));
-          const colEd = headers.findIndex(h => h.includes('ed'));
-          const colKg = headers.findIndex(h => h.includes('kg'));
-          const colUsd = headers.findIndex(h => h.includes('usd'));
-          const colRate = headers.findIndex(h => h.includes('rate'));
-          const colPct = headers.findIndex(h => h.includes('%') || h.includes('pct'));
-          const colRemark = headers.findIndex(h => h.includes('remark') || h.includes('mark'));
-          const colCompany = headers.findIndex(h => h.includes('company') || h.includes('ကုမ္ပဏီ'));
+          const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat')); const colDate = headers.findIndex(h => h.includes('date') || h.includes('ရက်'));
+          const colInv = headers.findIndex(h => h.includes('inv') && !h.includes('usd') && !h.includes('thb')); const colEd = headers.findIndex(h => h.includes('ed'));
+          const colKg = headers.findIndex(h => h.includes('kg')); const colUsd = headers.findIndex(h => h.includes('usd'));
+          const colRate = headers.findIndex(h => h.includes('rate')); const colPct = headers.findIndex(h => h.includes('%') || h.includes('pct'));
+          const colRemark = headers.findIndex(h => h.includes('remark') || h.includes('mark')); const colCompany = headers.findIndex(h => h.includes('company') || h.includes('ကုမ္ပဏီ'));
 
-          const detectedCreditCo = sheetName.toUpperCase();
-          const parsedList = [];
-          const currentCustomers = getCustomers();
-
+          const detectedCreditCo = sheetName.toUpperCase(); const parsedList = []; const currentCustomers = getCustomers();
           for (let rowIdx = headerIdx + 1; rowIdx < rawRows.length; rowIdx++) {
-            const row = rawRows[rowIdx];
-            if (!row || !row.length) continue;
-            if (String(row[0] || '').trim().toLowerCase().includes('total')) continue;
-
-            const boat = (colBoat !== -1 && row[colBoat]) ? String(row[colBoat]).trim() : '';
-            const kg = (colKg !== -1 && row[colKg]) ? parseFloat(row[colKg]) || 0 : 0;
-            const usd = (colUsd !== -1 && row[colUsd]) ? parseFloat(row[colUsd]) || 0 : 0;
-            if (!boat && !kg && !usd) continue;
-
-            const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : '');
-            const invNo = (colInv !== -1 && row[colInv] !== undefined) ? String(row[colInv]).trim() : '';
-            const edNo = (colEd !== -1 && row[colEd] !== undefined) ? String(row[colEd]).trim() : '';
-            const rate = (colRate !== -1 && row[colRate]) ? parseFloat(row[colRate]) || 34.7 : 34.7;
+            const row = rawRows[rowIdx]; if (!row || !row.length) continue; if (String(row[0] || '').trim().toLowerCase().includes('total')) continue;
+            const boat = (colBoat !== -1 && row[colBoat]) ? String(row[colBoat]).trim() : ''; const kg = (colKg !== -1 && row[colKg]) ? parseFloat(row[colKg]) || 0 : 0;
+            const usd = (colUsd !== -1 && row[colUsd]) ? parseFloat(row[colUsd]) || 0 : 0; if (!boat && !kg && !usd) continue;
+            const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : ''); const invNo = (colInv !== -1 && row[colInv] !== undefined) ? String(row[colInv]).trim() : '';
+            const edNo = (colEd !== -1 && row[colEd] !== undefined) ? String(row[colEd]).trim() : ''; const rate = (colRate !== -1 && row[colRate]) ? parseFloat(row[colRate]) || 34.7 : 34.7;
             const pct = (colPct !== -1 && row[colPct] !== undefined) ? parseFloat(row[colPct]) || 4.0 : 4.0;
-            
-            // REQUIREMENT 2: INTEGER ROUNDING
-            const thb = Math.round(usd * rate);
-            const amount = Math.round(thb * (pct / 100));
-            const remark = (colRemark !== -1 && row[colRemark]) ? String(row[colRemark]).trim().toUpperCase() : 'OTHER';
-
+            const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); const remark = (colRemark !== -1 && row[colRemark]) ? String(row[colRemark]).trim().toUpperCase() : 'OTHER';
             let compName = (colCompany !== -1 && row[colCompany]) ? String(row[colCompany]).trim() : '';
-            if (compName && remark !== 'OTHER' && !currentCustomers[remark]) {
-              currentCustomers[remark] = { name: compName, defaultPct: pct };
-            } else {
-              compName = currentCustomers[remark] ? currentCustomers[remark].name : remark;
-            }
-
-            parsedList.push({
-              id: generateId('bk'), no: parsedList.length + 1, creditCo: detectedCreditCo,
-              date: dateStr, boat, invNo, edNo, kg, usd, rate, thb, pct, amount, remark, companyName: compName
-            });
+            if (compName && remark !== 'OTHER' && !currentCustomers[remark]) { currentCustomers[remark] = { name: compName, defaultPct: pct }; } else { compName = currentCustomers[remark] ? currentCustomers[remark].name : remark; }
+            parsedList.push({ id: generateId('bk'), no: parsedList.length + 1, creditCo: detectedCreditCo, date: dateStr, boat, invNo, edNo, kg, usd, rate, thb, pct, amount, remark, companyName: compName, hasLicense: false });
           }
-
           saveCustomers(currentCustomers);
-          const isReplace = confirm(`Cargo စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။ အစားထိုး သိမ်းမည်လား?`);
-          const existing = getCargoData();
-          saveCargoData(isReplace ? parsedList : [...existing, ...parsedList]);
-          populateMonthDropdown();
-          filterData();
-          renderDailyReport();
-          alert(`Cargo စာရင်းပေါင်း (${parsedList.length}) ခု Cloud သို့ ထည့်သွင်းပြီးပါပြီ။`);
-        } catch(err) {
-          alert("Error: " + err.message);
-        } finally { e.target.value = ''; }
-      };
-      r.readAsArrayBuffer(file);
+          const isReplace = confirm(`Credit စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။ အစားထိုး သိမ်းမည်လား?`);
+          const existing = getCargoData(); saveCargoData(isReplace ? parsedList : [...existing, ...parsedList]);
+          populateMonthDropdown(); filterData(); renderDailyReport(); alert(`Credit စာရင်းပေါင်း (${parsedList.length}) ခု Cloud သို့ ထည့်သွင်းပြီးပါပြီ။`);
+        } catch(err) { alert("Error: " + err.message); } finally { e.target.value = ''; }
+      }; r.readAsArrayBuffer(file);
     }
 
     // ================= DIRECTORY & CUSTOMER MANAGEMENT =================
     function renderCreditCoTable() {
-      const list = getCreditCompanies();
-      const tbody = document.getElementById('creditCoTableBody');
-      if (!tbody) return;
+      const list = getCreditCompanies(); const tbody = document.getElementById('creditCoTableBody'); if (!tbody) return;
       tbody.innerHTML = list.map(c => `
         <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
           <td class="p-2.5 font-mono font-bold text-blue-950 dark:text-blue-400">${c.code}</td>
@@ -2863,56 +2524,28 @@
         </tr>
       `).join('');
     }
-
     let pendingUploadCode = null;
     function triggerCreditBannerUpload(code) {
-      pendingUploadCode = code;
-      const input = document.getElementById('letterheadImageInput');
+      pendingUploadCode = code; const input = document.getElementById('letterheadImageInput');
       input.onchange = function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const r = new FileReader();
+        const file = e.target.files[0]; if (!file) return; const r = new FileReader();
         r.onload = function(evt) {
-          const list = getCreditCompanies();
-          const target = list.find(c => c.code === pendingUploadCode);
-          if (target) {
-            target.bannerImage = evt.target.result;
-            saveCreditCompanies(list);
-            alert(`[${target.name}] Letterhead ပုံ တင်ပြီးပါပြီ!`);
-          }
+          const list = getCreditCompanies(); const target = list.find(c => c.code === pendingUploadCode);
+          if (target) { target.bannerImage = evt.target.result; saveCreditCompanies(list); alert(`[${target.name}] Letterhead ပုံ တင်ပြီးပါပြီ!`); }
           input.onchange = handleLetterheadImageUpload;
-        };
-        r.readAsDataURL(file);
-        e.target.value = '';
-      };
-      input.click();
+        }; r.readAsDataURL(file); e.target.value = '';
+      }; input.click();
     }
-
     function handleAddNewCreditCo(e) {
-      e.preventDefault();
-      const code = document.getElementById('newCreditCode').value.trim().toUpperCase();
-      const name = document.getElementById('newCreditName').value.trim().toUpperCase();
-      const addr = document.getElementById('newCreditAddress').value.trim();
-      const list = getCreditCompanies();
-      if (list.some(c => c.code === code)) return alert("Code ရှိပြီးသားပါ။");
-      list.push({ code, name, bannerImage: "", address: addr, phone: "", email: "" });
-      saveCreditCompanies(list);
-      e.target.reset();
-      alert("Credit ကုမ္ပဏီ အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ!");
+      e.preventDefault(); const code = document.getElementById('newCreditCode').value.trim().toUpperCase(); const name = document.getElementById('newCreditName').value.trim().toUpperCase(); const addr = document.getElementById('newCreditAddress').value.trim();
+      const list = getCreditCompanies(); if (list.some(c => c.code === code)) return alert("Code ရှိပြီးသားပါ။");
+      list.push({ code, name, bannerImage: "", address: addr, phone: "", email: "" }); saveCreditCompanies(list); e.target.reset(); alert("Credit ကုမ္ပဏီ အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ!");
     }
-    function deleteCreditCo(code) {
-      if (confirm(`ဖျက်မှာ သေချာပါသလား?`)) saveCreditCompanies(getCreditCompanies().filter(c => c.code !== code));
-    }
-    function resetDefaultCreditCompanies() {
-      if (confirm("မူလသို့ ပြန်ချမလား?")) saveCreditCompanies(DEFAULT_CREDIT_COMPANIES);
-    }
+    function deleteCreditCo(code) { if (confirm(`ဖျက်မှာ သေချာပါသလား?`)) saveCreditCompanies(getCreditCompanies().filter(c => c.code !== code)); }
+    function resetDefaultCreditCompanies() { if (confirm("မူလသို့ ပြန်ချမလား?")) saveCreditCompanies(DEFAULT_CREDIT_COMPANIES); }
 
-    // REQUIREMENT 3: RENDER CUSTOMER TABLE WITH EDIT ✏️ BUTTON
     function renderCustomerTable() {
-      const map = getCustomers();
-      const keys = Object.keys(map).sort();
-      const tbody = document.getElementById('customerTableBody');
-      if (!tbody) return;
+      const map = getCustomers(); const keys = Object.keys(map).sort(); const tbody = document.getElementById('customerTableBody'); if (!tbody) return;
       tbody.innerHTML = keys.map((code, idx) => `
         <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
           <td class="p-2.5 text-slate-400 text-center">${idx + 1}</td>
@@ -2920,92 +2553,45 @@
           <td class="p-2.5 font-medium">${map[code].name}</td>
           <td class="p-2.5 text-center font-bold text-indigo-700 dark:text-indigo-400">${map[code].defaultPct}%</td>
           <td class="p-2.5 text-center space-x-2 whitespace-nowrap">
-            <button onclick="editCustomer('${code}')" class="text-amber-600 hover:text-amber-800 font-semibold inline-flex items-center gap-0.5" title="ပြင်ဆင်မည်">
-              <span>✏️</span> <span>ပြင်</span>
-            </button>
-            <button onclick="deleteCustomer('${code}')" class="text-rose-600 hover:text-rose-800" title="ဖျက်မည်">
-              🗑️
-            </button>
+            <button onclick="editCustomer('${code}')" class="text-amber-600 hover:text-amber-800 font-semibold inline-flex items-center gap-0.5" title="ပြင်ဆင်မည်"><span>✏️</span> <span>ပြင်</span></button>
+            <button onclick="deleteCustomer('${code}')" class="text-rose-600 hover:text-rose-800" title="ဖျက်မည်">🗑️</button>
           </td>
         </tr>
       `).join('');
     }
-
-    // REQUIREMENT 3: EDIT CUSTOMER FUNCTIONALITY
     function editCustomer(code) {
-      const map = getCustomers();
-      const cust = map[code];
-      if (!cust) return;
-
-      document.getElementById('editingCustomerOriginalCode').value = code;
-      document.getElementById('newCustCode').value = code;
-      document.getElementById('newCustName').value = cust.name;
-      document.getElementById('newCustPct').value = cust.defaultPct;
-
-      document.getElementById('btnSaveCustomer').innerText = "✏️ ပြင်ဆင်မှု သိမ်းမည်";
-      document.getElementById('btnCancelEditCustomer').classList.remove('hidden');
+      const map = getCustomers(); const cust = map[code]; if (!cust) return;
+      document.getElementById('editingCustomerOriginalCode').value = code; document.getElementById('newCustCode').value = code;
+      document.getElementById('newCustName').value = cust.name; document.getElementById('newCustPct').value = cust.defaultPct;
+      document.getElementById('btnSaveCustomer').innerText = "✏️ ပြင်ဆင်မှု သိမ်းမည်"; document.getElementById('btnCancelEditCustomer').classList.remove('hidden');
       window.scrollTo({ top: document.getElementById('newCustCode').offsetTop - 120, behavior: 'smooth' });
     }
-
     function resetCustomerForm() {
-      document.getElementById('editingCustomerOriginalCode').value = '';
-      document.getElementById('newCustCode').value = '';
-      document.getElementById('newCustName').value = '';
-      document.getElementById('newCustPct').value = '4.0';
-      document.getElementById('btnSaveCustomer').innerText = "➕ ထည့်မည်";
-      document.getElementById('btnCancelEditCustomer').classList.add('hidden');
+      document.getElementById('editingCustomerOriginalCode').value = ''; document.getElementById('newCustCode').value = '';
+      document.getElementById('newCustName').value = ''; document.getElementById('newCustPct').value = '4.0';
+      document.getElementById('btnSaveCustomer').innerText = "➕ ထည့်မည်"; document.getElementById('btnCancelEditCustomer').classList.add('hidden');
     }
-
     function handleCustomerFormSubmit(e) {
-      e.preventDefault();
-      const origCode = document.getElementById('editingCustomerOriginalCode').value.trim().toUpperCase();
-      const code = document.getElementById('newCustCode').value.trim().toUpperCase();
-      const name = document.getElementById('newCustName').value.trim();
-      const pct = parseFloat(document.getElementById('newCustPct').value) || 4.0;
-      if (!code || !name) return;
-
+      e.preventDefault(); const origCode = document.getElementById('editingCustomerOriginalCode').value.trim().toUpperCase();
+      const code = document.getElementById('newCustCode').value.trim().toUpperCase(); const name = document.getElementById('newCustName').value.trim();
+      const pct = parseFloat(document.getElementById('newCustPct').value) || 4.0; if (!code || !name) return;
       const map = getCustomers();
-
       if (origCode) {
-        if (origCode !== code) {
-          delete map[origCode];
-        }
-        map[code] = { name, defaultPct: pct };
-        saveCustomers(map);
-        alert(`Customer [${code} - ${name}] ကို အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!`);
+        if (origCode !== code) delete map[origCode];
+        map[code] = { name, defaultPct: pct }; saveCustomers(map); alert(`Customer [${code} - ${name}] ကို အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!`);
       } else {
         if (map[code]) return alert("ဤ Customer Code ရှိပြီးသား ဖြစ်ပါသည်။");
-        map[code] = { name, defaultPct: pct };
-        saveCustomers(map);
-        alert(`Customer [${code} - ${name}] ကို ထည့်သွင်းပြီးပါပြီ!`);
+        map[code] = { name, defaultPct: pct }; saveCustomers(map); alert(`Customer [${code} - ${name}] ကို ထည့်သွင်းပြီးပါပြီ!`);
       }
-
       resetCustomerForm();
     }
-
-    function deleteCustomer(code) {
-      if (confirm(`Customer [${code}] ကို ဖျက်မှာ သေချာပါသလား?`)) {
-        const map = getCustomers();
-        delete map[code];
-        saveCustomers(map);
-      }
-    }
+    function deleteCustomer(code) { if (confirm(`Customer [${code}] ကို ဖျက်မှာ သေချာပါသလား?`)) { const map = getCustomers(); delete map[code]; saveCustomers(map); } }
 
     // ================= INITIALIZATION =================
     document.addEventListener("DOMContentLoaded", () => {
-      initTheme();
-      initFontSize();
-      checkAuthSession();
-      populateCreditCoDropdowns();
-      populateCustomerDropdowns();
-      populateMonthDropdown();
-      populateEdMonthDropdown();
-      filterData();
-      filterEdData();
-      renderDailyReport();
-      renderUserAccountsTable();
-      renderCreditCoTable();
-      renderCustomerTable();
+      initTheme(); initFontSize(); checkAuthSession();
+      populateCreditCoDropdowns(); populateCustomerDropdowns(); populateMonthDropdown(); populateEdMonthDropdown();
+      filterData(); filterEdData(); renderDailyReport(); renderUserAccountsTable(); renderCreditCoTable(); renderCustomerTable(); renderMpuLedger();
       initFirebaseCloudSync();
     });
   </script>
