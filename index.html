@@ -15,6 +15,8 @@
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- Native DOM to Image Engine (Fixes Myanmar Font Ligatures & Dotted Circles) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,9 +59,10 @@
       font-family: 'Times New Roman', 'Padauk', 'Pyidaungsu', serif !important;
       width: 794px !important;
       min-height: 1123px !important;
-      margin: 0 auto;
+      margin: 0 !important;
       background: #ffffff;
       color: #000000;
+      box-sizing: border-box !important;
     }
     #printableA4Card table {
       border-collapse: collapse !important;
@@ -114,7 +117,7 @@
           BK Operations & Management System မှ ကြိုဆိုပါသည်။ နယ်စပ်ရေကြောင်း ကုန်စည်ပို့ဆောင်ရေးနှင့် အကောက်ခွန် ဝန်ဆောင်မှု စီမံခန့်ခွဲရေး ပေါ်တယ်လ်။
         </p>
         <div class="pt-2 text-[11px] text-slate-300 hidden md:block">
-          ☁️ Powered by Google Firebase Cloud Real-Time Database (v20.0)
+          ☁️ Powered by Google Firebase Cloud Real-Time Database (v20.1)
         </div>
       </div>
 
@@ -154,7 +157,7 @@
               <input type="checkbox" id="rememberMeCheckbox" class="rounded text-blue-600">
               <span>Remember username</span>
             </label>
-            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 20.0</span>
+            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 20.1</span>
           </div>
 
           <div id="loginErrorBox" class="p-2.5 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 rounded-xl text-rose-600 dark:text-rose-300 text-xs font-semibold hidden text-center">
@@ -379,7 +382,7 @@
       </div>
     </div>
 
-    <!-- ================= TAB 2: DAILY REPORT (A4 SIZE WITH PERFECT PADDING) ================= -->
+    <!-- ================= TAB 2: DAILY REPORT (A4 SIZE PERFECT ALIGNMENT & CAPTURE) ================= -->
     <div id="tab-daily" class="tab-content">
       <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm mb-4 flex flex-wrap items-center justify-between gap-2.5">
         <div class="flex flex-wrap items-center gap-2.5">
@@ -410,7 +413,8 @@
         </div>
       </div>
 
-      <div class="overflow-x-auto pb-10">
+      <!-- CENTERED CONTAINER FOR PERFECT A4 EXPORT -->
+      <div class="overflow-x-auto pb-10 flex justify-center">
         <div id="printableA4Card" class="shadow-2xl border border-slate-200 p-8 sm:p-12">
           <div id="letterheadRenderArea" class="mb-5"></div>
           <div id="dailyReportContentArea"></div>
@@ -852,7 +856,7 @@
 
       <!-- AUTHENTIC HIGH-FIDELITY VOUCHER CARD (PREVIEW & CAPTURE TARGET) -->
       <div class="overflow-x-auto w-full flex justify-center py-2">
-        <div id="voucherTargetCard" class="w-[620px] rounded-2xl p-7 shadow-2xl relative select-none" style="background-color: #fdf8e6; border: 8px double #c59e47; font-family: 'Times New Roman', 'Padauk', serif;">
+        <div id="voucherTargetCard" class="w-[620px] rounded-2xl p-7 shadow-2xl relative select-none" style="background-color: #fdf8e6; border: 8px double #c59e47; font-family: 'Times New Roman', 'Padauk', 'Pyidaungsu', serif;">
           
           <!-- CORNER ORNAMENTS -->
           <div class="absolute top-2 left-2 w-9 h-9 pointer-events-none opacity-85">
@@ -872,7 +876,7 @@
           <div id="vcHeaderBox" style="background-color: #0b1a30; border: 2px solid #c59e47;" class="text-center py-4 px-6 rounded-xl relative z-10 shadow-md mb-6">
             <h1 class="text-3xl font-extrabold tracking-wider leading-snug">
               <span id="vcCustomer" class="text-white drop-shadow"></span> 
-              <span id="vcCode" class="text-[#e5c158] drop-shadow ml-1 mm-text"></span>
+              <span id="vcCode" class="text-[#e5c158] drop-shadow ml-1 mm-text font-bold"></span>
             </h1>
             <p class="text-lg font-bold text-white mt-1.5 tracking-wide">
               Date : <span id="vcDate"></span>
@@ -949,7 +953,7 @@
 
   <footer class="bg-white dark:bg-slate-900 border-t py-3 transition-colors mt-auto w-full">
     <div class="w-full max-w-[98%] mx-auto px-4 text-center">
-      <p class="text-xs text-slate-400">© 2026 BK Operations & Management System. Version 20.0 (Clean Stable Release).</p>
+      <p class="text-xs text-slate-400">© 2026 BK Operations & Management System. Version 20.1 (Myanmar Unicode Native Render Release).</p>
     </div>
   </footer>
 
@@ -1284,7 +1288,7 @@
       if (!isValidAdmin) return alert("Admin Password မှားယွင်းနေပါသည်။ Backup ဆွဲယူခွင့် မပြုပါ။");
 
       const backupData = {
-        version: "20.0",
+        version: "20.1",
         system: "BK Operations & Management System",
         exportDate: new Date().toISOString(),
         exportedBy: currentUser.username,
@@ -1299,7 +1303,7 @@
       let encryptedPayload = "";
       if (window.CryptoJS && CryptoJS.AES) encryptedPayload = "BK_AES::" + CryptoJS.AES.encrypt(jsonString, adminPasswordInput.trim()).toString();
       else encryptedPayload = "BK_RAW::" + btoa(encodeURIComponent(jsonString));
-      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "20.0", timestamp: Date.now(), data: encryptedPayload };
+      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "20.1", timestamp: Date.now(), data: encryptedPayload };
       const a = document.createElement('a');
       a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fileContainer, null, 2));
       a.download = `BK_Operations_ProtectedBackup_${new Date().toISOString().split('T')[0]}.json`;
@@ -1897,7 +1901,7 @@
       if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) { saveEdData([]); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); }
     }
 
-    // ================= HIGH-FIDELITY ED VOUCHER ENGINE =================
+    // ================= HIGH-FIDELITY ED VOUCHER ENGINE (NATIVE RENDER) =================
     let currentVoucherItem = null;
 
     function openVoucherModal(id) {
@@ -1937,26 +1941,46 @@
       currentVoucherItem = null;
     }
 
+    // NATIVE BROWSER RENDER PIPELINE TO FIX MYANMAR UNICODE DOTTED CIRCLES
     function downloadLiveVoucherJPG() {
       if (!currentVoucherItem) return;
       const card = document.getElementById('voucherTargetCard');
       const isPaid = !!currentVoucherItem.payDate;
+      const filename = `Voucher_${currentVoucherItem.customer || 'ED'}_${currentVoucherItem.invNo}.jpg`;
+      const bgColor = isPaid ? '#ebf5ed' : '#fdf8e6';
       
-      // Ensure fonts are ready before canvas capture
       document.fonts.ready.then(() => {
-        html2canvas(card, { 
-          scale: 3, 
-          useCORS: true, 
-          allowTaint: true,
-          backgroundColor: isPaid ? '#ebf5ed' : '#fdf8e6' 
-        }).then(canvas => {
-          const a = document.createElement('a');
-          a.download = `Voucher_${currentVoucherItem.customer || 'ED'}_${currentVoucherItem.invNo}.jpg`;
-          a.href = canvas.toDataURL('image/jpeg', 0.98);
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-        });
+        if (window.htmlToImage) {
+          htmlToImage.toJpeg(card, {
+            quality: 0.98,
+            pixelRatio: 3,
+            backgroundColor: bgColor,
+            cacheBust: true
+          }).then(dataUrl => {
+            const a = document.createElement('a');
+            a.download = filename;
+            a.href = dataUrl;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          }).catch(err => {
+            console.warn("htmlToImage error, falling back to html2canvas:", err);
+            fallbackVoucherHtml2Canvas(card, filename, bgColor);
+          });
+        } else {
+          fallbackVoucherHtml2Canvas(card, filename, bgColor);
+        }
+      });
+    }
+
+    function fallbackVoucherHtml2Canvas(card, filename, bgColor) {
+      html2canvas(card, { scale: 3, useCORS: true, allowTaint: true, backgroundColor: bgColor }).then(canvas => {
+        const a = document.createElement('a');
+        a.download = filename;
+        a.href = canvas.toDataURL('image/jpeg', 0.98);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
       });
     }
 
@@ -2310,26 +2334,53 @@
       }; r.readAsDataURL(file); e.target.value = '';
     }
 
-    // STANDARD A4 SIZE & PADDING SAFE RENDERING
+    // STANDARD A4 SIZE & PADDING SAFE RENDERING (OFFSET FIX APPLIED)
     function downloadReportJPG() {
       const card = document.getElementById('printableA4Card');
       const dateVal = document.getElementById('reportDatePicker').value || 'daily';
       const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH';
+      const filename = `${creditVal}_DailyReport_${dateVal}.jpg`;
       
       document.fonts.ready.then(() => {
-        html2canvas(card, { 
-          scale: 3.123, 
-          useCORS: true, 
-          allowTaint: true,
-          backgroundColor: '#ffffff' 
-        }).then(canvas => {
-          const a = document.createElement('a'); 
-          a.download = `${creditVal}_DailyReport_${dateVal}.jpg`; 
-          a.href = canvas.toDataURL('image/jpeg', 1.0);
-          document.body.appendChild(a); 
-          a.click(); 
-          a.remove();
-        });
+        if (window.htmlToImage) {
+          htmlToImage.toJpeg(card, { 
+            quality: 1.0, 
+            pixelRatio: 2.5, 
+            backgroundColor: '#ffffff',
+            cacheBust: true,
+            style: {
+              margin: '0',
+              left: '0',
+              top: '0',
+              transform: 'none',
+              position: 'static'
+            },
+            width: 794
+          }).then(dataUrl => {
+            const a = document.createElement('a'); 
+            a.download = filename; 
+            a.href = dataUrl;
+            document.body.appendChild(a); 
+            a.click(); 
+            a.remove();
+          }).catch(err => {
+            console.warn("htmlToImage report error, fallback to html2canvas:", err);
+            fallbackReportHtml2Canvas(card, filename);
+          });
+        } else {
+          fallbackReportHtml2Canvas(card, filename);
+        }
+      });
+    }
+
+    function fallbackReportHtml2Canvas(card, filename) {
+      html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => {
+        const a = document.createElement('a');
+        a.download = filename;
+        a.href = canvas.toDataURL('image/jpeg', 1.0);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
       });
     }
 
@@ -2337,20 +2388,46 @@
       const card = document.getElementById('printableA4Card');
       const dateVal = document.getElementById('reportDatePicker').value || 'daily';
       const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH';
+      const filename = `${creditVal}_DailyReport_${dateVal}.png`;
+
       document.fonts.ready.then(() => {
-        html2canvas(card, { 
-          scale: 3.123, 
-          useCORS: true, 
-          allowTaint: true,
-          backgroundColor: '#ffffff' 
-        }).then(canvas => {
-          const a = document.createElement('a'); 
-          a.download = `${creditVal}_DailyReport_${dateVal}.png`; 
-          a.href = canvas.toDataURL('image/png');
-          document.body.appendChild(a); 
-          a.click(); 
-          a.remove();
-        });
+        if (window.htmlToImage) {
+          htmlToImage.toPng(card, { 
+            pixelRatio: 2.5, 
+            backgroundColor: '#ffffff',
+            cacheBust: true,
+            style: {
+              margin: '0',
+              left: '0',
+              top: '0',
+              transform: 'none',
+              position: 'static'
+            },
+            width: 794
+          }).then(dataUrl => {
+            const a = document.createElement('a'); 
+            a.download = filename; 
+            a.href = dataUrl;
+            document.body.appendChild(a); 
+            a.click(); 
+            a.remove();
+          }).catch(err => {
+            fallbackReportPngHtml2Canvas(card, filename);
+          });
+        } else {
+          fallbackReportPngHtml2Canvas(card, filename);
+        }
+      });
+    }
+
+    function fallbackReportPngHtml2Canvas(card, filename) {
+      html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => {
+        const a = document.createElement('a'); 
+        a.download = filename; 
+        a.href = canvas.toDataURL('image/png');
+        document.body.appendChild(a); 
+        a.click(); 
+        a.remove();
       });
     }
 
