@@ -15,7 +15,7 @@
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <!-- Native DOM to Image Engine (Fixes Myanmar Font Ligatures & Dotted Circles) -->
+  <!-- Native DOM to Image Engine -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   
@@ -117,7 +117,7 @@
           BK Operations & Management System မှ ကြိုဆိုပါသည်။ နယ်စပ်ရေကြောင်း ကုန်စည်ပို့ဆောင်ရေးနှင့် အကောက်ခွန် ဝန်ဆောင်မှု စီမံခန့်ခွဲရေး ပေါ်တယ်လ်။
         </p>
         <div class="pt-2 text-[11px] text-slate-300 hidden md:block">
-          ☁️ Powered by Google Firebase Cloud Real-Time Database (v20.1)
+          ☁️ Powered by Google Firebase Cloud Real-Time Database (v20.2)
         </div>
       </div>
 
@@ -157,7 +157,7 @@
               <input type="checkbox" id="rememberMeCheckbox" class="rounded text-blue-600">
               <span>Remember username</span>
             </label>
-            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 20.1</span>
+            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 20.2</span>
           </div>
 
           <div id="loginErrorBox" class="p-2.5 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 rounded-xl text-rose-600 dark:text-rose-300 text-xs font-semibold hidden text-center">
@@ -199,7 +199,7 @@
         </div>
       </div>
       
-      <!-- NAV BUTTONS (DARK MODE FIXED) -->
+      <!-- NAV BUTTONS -->
       <div class="flex items-center flex-wrap gap-1 sm:gap-1.5 text-xs font-semibold">
         <button id="btn-dashboard" onclick="switchTab('dashboard')" class="nav-btn px-2.5 py-1.5 rounded-lg bg-blue-950 text-white shadow-sm transition text-xs">
           📊 Credit
@@ -243,7 +243,7 @@
     </div>
   </header>
 
-  <!-- ================= MAIN CONTENT (FULL-WIDTH FLUID LAYOUT) ================= -->
+  <!-- ================= MAIN CONTENT ================= -->
   <main class="w-full max-w-[98%] mx-auto px-2 sm:px-4 py-3 sm:py-4 flex-1">
 
     <!-- ================= TAB 1: CREDIT DASHBOARD ================= -->
@@ -288,6 +288,12 @@
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-semibold text-slate-500">လ:</span>
             <select id="filterMonth" onchange="filterData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none"></select>
+          </div>
+          <!-- NEW: Date Filter -->
+          <div class="flex items-center gap-1.5 text-xs">
+            <span class="font-semibold text-slate-500">ရက်စွဲ:</span>
+            <input id="filterDate" type="date" onchange="filterData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none">
+            <button onclick="document.getElementById('filterDate').value=''; filterData();" class="text-[10px] text-slate-400 hover:text-slate-600 transition">ရှင်း</button>
           </div>
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-semibold text-slate-500">Credit Co:</span>
@@ -382,7 +388,7 @@
       </div>
     </div>
 
-    <!-- ================= TAB 2: DAILY REPORT (A4 SIZE PERFECT ALIGNMENT & CAPTURE) ================= -->
+    <!-- ================= TAB 2: DAILY REPORT ================= -->
     <div id="tab-daily" class="tab-content">
       <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm mb-4 flex flex-wrap items-center justify-between gap-2.5">
         <div class="flex flex-wrap items-center gap-2.5">
@@ -413,7 +419,6 @@
         </div>
       </div>
 
-      <!-- CENTERED CONTAINER FOR PERFECT A4 EXPORT -->
       <div class="overflow-x-auto pb-10 flex justify-center">
         <div id="printableA4Card" class="shadow-2xl border border-slate-200 p-8 sm:p-12">
           <div id="letterheadRenderArea" class="mb-5"></div>
@@ -422,7 +427,7 @@
       </div>
     </div>
 
-    <!-- ================= TAB 3: CREDIT BREAKDOWN (WITH GRAND TOTAL ROW) ================= -->
+    <!-- ================= TAB 3: CREDIT BREAKDOWN ================= -->
     <div id="tab-breakdown" class="tab-content">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4 border-b pb-3">
@@ -532,7 +537,7 @@
       </div>
     </div>
 
-    <!-- ================= TAB 5: ED BREAKDOWN (WITH GRAND TOTAL ROW) ================= -->
+    <!-- ================= TAB 5: ED BREAKDOWN ================= -->
     <div id="tab-ed-breakdown" class="tab-content">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4 border-b pb-3">
@@ -609,7 +614,7 @@
           <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
             <div>
               <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <span class="text-lg">👥</span> Server & User Management (အကောင့်နှင့် Permission စီမံခန့်ခွဲမှု)
+                <span class="text-lg">👥</span> Server & User Management
               </h2>
               <p class="text-xs text-slate-500 mt-0.5">Super Admin အနေဖြင့် ဝန်ထမ်းအကောင့်များ၊ Password များကို စီမံနိုင်ပါသည်</p>
             </div>
@@ -735,7 +740,7 @@
 
   </main>
 
-  <!-- ================= MODAL: CREDIT SHIPMENT ENTRY ================= -->
+  <!-- ================= MODAL: CREDIT ENTRY ================= -->
   <div id="cargoEntryModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
       <div class="flex items-center justify-between mb-3 border-b pb-2">
@@ -787,6 +792,7 @@
 
   <!-- ================= MODAL: ED ENTRY ================= -->
   <div id="edEntryModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <!-- (unchanged ED Modal HTML) -->
     <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
       <div class="flex items-center justify-between mb-3 border-b pb-2">
         <h3 id="edModalTitle" class="text-sm font-bold text-indigo-950 dark:text-indigo-300">➕ ED Service စာရင်းအသစ် ထည့်သွင်းခြင်း</h3>
@@ -819,6 +825,7 @@
 
   <!-- ================= MODAL: MPU TOP-UP ================= -->
   <div id="mpuTopupModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <!-- (unchanged MPU Modal HTML) -->
     <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-sm w-full shadow-2xl">
       <div class="flex items-center justify-between mb-4 border-b pb-2">
         <h3 class="text-sm font-bold text-amber-900 dark:text-amber-400">➕ MPU ငွေကြိုသွင်းခြင်း (Top-up)</h3>
@@ -837,8 +844,9 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: VOUCHER PREVIEW & DOWNLOAD (PIXEL PERFECT RENDER) ================= -->
+  <!-- ================= MODAL: VOUCHER PREVIEW ================= -->
   <div id="voucherPreviewModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <!-- (unchanged Voucher Modal HTML) -->
     <div class="bg-white dark:bg-slate-900 rounded-2xl border shadow-2xl max-w-3xl w-full p-4 sm:p-6 flex flex-col items-center gap-4 my-auto">
       
       <div class="w-full flex items-center justify-between border-b pb-3">
@@ -854,11 +862,9 @@
         </div>
       </div>
 
-      <!-- AUTHENTIC HIGH-FIDELITY VOUCHER CARD (PREVIEW & CAPTURE TARGET) -->
       <div class="overflow-x-auto w-full flex justify-center py-2">
         <div id="voucherTargetCard" class="w-[620px] rounded-2xl p-7 shadow-2xl relative select-none" style="background-color: #fdf8e6; border: 8px double #c59e47; font-family: 'Times New Roman', 'Padauk', 'Pyidaungsu', serif;">
           
-          <!-- CORNER ORNAMENTS -->
           <div class="absolute top-2 left-2 w-9 h-9 pointer-events-none opacity-85">
             <svg viewBox="0 0 100 100" class="w-full h-full fill-current" style="color: #c59e47;"><path d="M5,5 L45,5 C30,15 15,30 5,45 Z M5,5 L5,95 C12,70 30,50 50,50 C30,50 12,30 5,5 Z"/></svg>
           </div>
@@ -872,7 +878,6 @@
             <svg viewBox="0 0 100 100" class="w-full h-full fill-current" style="color: #c59e47;"><path d="M5,5 L45,5 C30,15 15,30 5,45 Z M5,5 L5,95 C12,70 30,50 50,50 C30,50 12,30 5,5 Z"/></svg>
           </div>
 
-          <!-- HEADER RIBBON -->
           <div id="vcHeaderBox" style="background-color: #0b1a30; border: 2px solid #c59e47;" class="text-center py-4 px-6 rounded-xl relative z-10 shadow-md mb-6">
             <h1 class="text-3xl font-extrabold tracking-wider leading-snug">
               <span id="vcCustomer" class="text-white drop-shadow"></span> 
@@ -883,7 +888,6 @@
             </p>
           </div>
 
-          <!-- INNER TABLE CARD -->
           <div id="vcTableBox" style="background-color: #ffffff; border: 2px solid rgba(197, 158, 71, 0.4);" class="rounded-xl p-6 relative z-10 shadow-inner">
             <table class="w-full text-left border-collapse text-[22px] font-bold">
               <thead>
@@ -914,7 +918,6 @@
               </tbody>
             </table>
 
-            <!-- AUTHENTIC PAID VECTOR STAMP -->
             <div id="vcPaidStamp" class="hidden absolute inset-0 flex items-center justify-center pointer-events-none select-none z-20">
               <div class="transform -rotate-[18deg] opacity-90 filter drop-shadow-md">
                 <svg width="330" height="330" viewBox="0 0 300 300">
@@ -938,7 +941,6 @@
 
           </div>
 
-          <!-- BOTTOM 3 ACCENT BARS -->
           <div class="flex items-center justify-center gap-4 mt-6">
             <div class="w-16 h-2 rounded" style="background-color: #c59e47;"></div>
             <div class="w-16 h-2 rounded" style="background-color: #c59e47;"></div>
@@ -953,13 +955,12 @@
 
   <footer class="bg-white dark:bg-slate-900 border-t py-3 transition-colors mt-auto w-full">
     <div class="w-full max-w-[98%] mx-auto px-4 text-center">
-      <p class="text-xs text-slate-400">© 2026 BK Operations & Management System. Version 20.1 (Myanmar Unicode Native Render Release).</p>
+      <p class="text-xs text-slate-400">© 2026 BK Operations & Management System. Version 20.2.</p>
     </div>
   </footer>
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    // ================= 1. ANTI-DEVTOOLS & SECURITY ARMOR =================
     document.addEventListener('contextmenu', function(e) { e.preventDefault(); showSecurityToast("⚠️ Right-Click ပိတ်ထားပါသည် (Protected by BK System)"); });
     document.addEventListener('keydown', function(e) {
       if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); showSecurityToast("⚠️ Developer Tools (F12) ဖွင့်ခွင့် မပြုပါ"); return false; }
@@ -992,7 +993,6 @@
     }
     document.addEventListener('fullscreenchange', () => { const icon = document.getElementById('fullscreenIcon'); if (icon) icon.innerText = document.fullscreenElement ? '🗗' : '⛶'; });
 
-    // ================= 3. FIREBASE CLOUD REAL-TIME DATABASE SETUP =================
     const firebaseConfig = {
       apiKey: "AIzaSyA9bHT8REIxVN4yZ60e7BjfEC9oHU1t8zc",
       authDomain: "bhone-kyaw.firebaseapp.com",
@@ -1071,7 +1071,6 @@
       firebaseDb.ref("bk_operations_master").set(payload).catch(e => console.warn(e));
     }
 
-    // ================= 4. USER MANAGEMENT & AUTHENTICATION =================
     const INITIAL_USERS = [
       { id: 'usr_1', username: 'Bhonekyaw', password: '1672000', displayName: 'BK Server', role: 'admin', isOwner: true },
       { id: 'usr_2', username: 'Paingsoe', password: 'paingsoe2026', displayName: 'Operations Staff', role: 'staff', isOwner: false },
@@ -1278,7 +1277,6 @@
     }
     function escapeHtml(str) { return String(str || '').replace(/[&<>"']/g, function(m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]; }); }
 
-    // ================= 6. BACKUP & RESTORE WITH ADMIN PASSWORD =================
     function triggerEncryptedBackup() {
       if (currentUser && currentUser.role !== 'admin') return alert("Admin အကောင့်သာ Backup ပြုလုပ်ခွင့် ရှိပါသည်။");
       const adminPasswordInput = prompt("Backup ဖိုင်ကို လုံခြုံစွာ Encrypt ပြုလုပ်ရန် Admin Password ကို အတည်ပြု ရိုက်ထည့်ပါ:");
@@ -1288,7 +1286,7 @@
       if (!isValidAdmin) return alert("Admin Password မှားယွင်းနေပါသည်။ Backup ဆွဲယူခွင့် မပြုပါ။");
 
       const backupData = {
-        version: "20.1",
+        version: "20.2",
         system: "BK Operations & Management System",
         exportDate: new Date().toISOString(),
         exportedBy: currentUser.username,
@@ -1303,7 +1301,7 @@
       let encryptedPayload = "";
       if (window.CryptoJS && CryptoJS.AES) encryptedPayload = "BK_AES::" + CryptoJS.AES.encrypt(jsonString, adminPasswordInput.trim()).toString();
       else encryptedPayload = "BK_RAW::" + btoa(encodeURIComponent(jsonString));
-      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "20.1", timestamp: Date.now(), data: encryptedPayload };
+      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "20.2", timestamp: Date.now(), data: encryptedPayload };
       const a = document.createElement('a');
       a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fileContainer, null, 2));
       a.download = `BK_Operations_ProtectedBackup_${new Date().toISOString().split('T')[0]}.json`;
@@ -1352,7 +1350,6 @@
       r.readAsText(file);
     }
 
-    // ================= 7. AES LOCALSTORAGE ENCRYPTION ENGINE =================
     const SECURITY_SALT = "BK_Operations_Internal_Salt_2026";
     function getEncryptionKey() { return "BK_MASTER_KEY_" + SECURITY_SALT; }
     function encryptPayload(dataObj) {
@@ -1388,7 +1385,6 @@
       try { return JSON.parse(storedRaw); } catch(e) { return null; }
     }
 
-    // ================= 8. DATASETS & ACCESSORS =================
     const DEFAULT_CREDIT_COMPANIES = [
       { code: "SH", name: "STABLE HOPE COMPANY LIMITED", bannerImage: "", address: "No. 73, Padauk Pin Street, Kyi Myin Daing Township, Yangon, Myanmar.", phone: "Ph: 09 762675854, 09 677353152", email: "Email: stablehope@rgp.com.mm" },
       { code: "TW", name: "TIDE WAVE CO.,LTD", bannerImage: "", address: "Yangon, Myanmar.", phone: "", email: "" },
@@ -1541,6 +1537,7 @@
     function filterData() {
       const all = getCargoData();
       const mVal = document.getElementById('filterMonth').value;
+      const dVal = document.getElementById('filterDate').value;
       const cVal = document.getElementById('filterCreditCo').value;
       const rVal = document.getElementById('filterRemark').value;
       const search = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -1548,6 +1545,7 @@
       let filtered = all.filter(item => {
         const itemMonth = (item.date || '').substring(0, 7);
         const matchesMonth = (mVal === 'ALL') || (itemMonth === mVal);
+        const matchesDate = !dVal || (item.date === dVal);
         const itemCredit = (item.creditCo || 'SH').trim().toUpperCase();
         const matchesCredit = (cVal === 'ALL') || (itemCredit === cVal);
         const itemRemark = (item.remark || '').trim().toUpperCase();
@@ -1556,10 +1554,9 @@
           (item.boat && item.boat.toLowerCase().includes(search)) ||
           (item.invNo && String(item.invNo).toLowerCase().includes(search)) ||
           (item.edNo && String(item.edNo).toLowerCase().includes(search));
-        return matchesMonth && matchesCredit && matchesRemark && matchesSearch;
+        return matchesMonth && matchesDate && matchesCredit && matchesRemark && matchesSearch;
       });
 
-      // ASCENDING SORT BY INV NO SUPPORT
       filtered.sort((a, b) => {
         let valA = a[sortColumn], valB = b[sortColumn];
         if (sortColumn === 'invNo') {
@@ -1901,7 +1898,7 @@
       if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) { saveEdData([]); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); }
     }
 
-    // ================= HIGH-FIDELITY ED VOUCHER ENGINE (NATIVE RENDER) =================
+    // ================= HIGH-FIDELITY ED VOUCHER ENGINE =================
     let currentVoucherItem = null;
 
     function openVoucherModal(id) {
@@ -1941,7 +1938,6 @@
       currentVoucherItem = null;
     }
 
-    // NATIVE BROWSER RENDER PIPELINE TO FIX MYANMAR UNICODE DOTTED CIRCLES
     function downloadLiveVoucherJPG() {
       if (!currentVoucherItem) return;
       const card = document.getElementById('voucherTargetCard');
@@ -2119,7 +2115,6 @@
       reader.readAsArrayBuffer(file);
     }
 
-    // ================= BREAKDOWN WITH GRAND TOTAL ROWS =================
     function renderBreakdown() {
       const all = getCargoData(); const custMap = getCustomers(); const map = {};
       all.forEach(item => {
@@ -2144,7 +2139,6 @@
         </tr>
       `).join('');
 
-      // GRAND TOTAL ROW FOR CREDIT BREAKDOWN
       const totalTrips = list.reduce((a, b) => a + b.trips, 0);
       const totalKG = Math.round(list.reduce((a, b) => a + b.kg, 0));
       const totalUSD = list.reduce((a, b) => a + b.usd, 0);
@@ -2188,7 +2182,6 @@
         </tr>
       `).join('');
 
-      // GRAND TOTAL ROW FOR ED BREAKDOWN
       const totalTrips = list.reduce((a, b) => a + b.trips, 0);
       const totalUSD = list.reduce((a, b) => a + b.usd, 0);
       const totalTax2 = Math.round(list.reduce((a, b) => a + b.tax2, 0));
@@ -2208,7 +2201,6 @@
       `;
     }
 
-    // ================= DAILY REPORT (A4 - TIMES NEW ROMAN & PERFECT ALIGNMENT) =================
     function onCreditCoChange() { renderDailyReport(); }
 
     function renderDailyReport() {
@@ -2235,7 +2227,6 @@
       let dailyRows = all.filter(r => r.date === selectedDate);
       if (onlyThisCreditCo) dailyRows = dailyRows.filter(r => (r.creditCo || 'SH') === selectedCreditCode);
 
-      // ASCENDING SORT BY INV NO IN DAILY REPORT
       dailyRows.sort((a,b) => String(a.invNo || '').localeCompare(String(b.invNo || ''), undefined, {numeric: true}));
 
       const contentDiv = document.getElementById('dailyReportContentArea'); const formattedDate = formatReportDate(selectedDate);
@@ -2334,7 +2325,6 @@
       }; r.readAsDataURL(file); e.target.value = '';
     }
 
-    // STANDARD A4 SIZE & PADDING SAFE RENDERING (OFFSET FIX APPLIED)
     function downloadReportJPG() {
       const card = document.getElementById('printableA4Card');
       const dateVal = document.getElementById('reportDatePicker').value || 'daily';
@@ -2348,39 +2338,20 @@
             pixelRatio: 2.5, 
             backgroundColor: '#ffffff',
             cacheBust: true,
-            style: {
-              margin: '0',
-              left: '0',
-              top: '0',
-              transform: 'none',
-              position: 'static'
-            },
+            style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' },
             width: 794
           }).then(dataUrl => {
-            const a = document.createElement('a'); 
-            a.download = filename; 
-            a.href = dataUrl;
-            document.body.appendChild(a); 
-            a.click(); 
-            a.remove();
-          }).catch(err => {
-            console.warn("htmlToImage report error, fallback to html2canvas:", err);
-            fallbackReportHtml2Canvas(card, filename);
-          });
-        } else {
-          fallbackReportHtml2Canvas(card, filename);
-        }
+            const a = document.createElement('a'); a.download = filename; a.href = dataUrl;
+            document.body.appendChild(a); a.click(); a.remove();
+          }).catch(err => { fallbackReportHtml2Canvas(card, filename); });
+        } else { fallbackReportHtml2Canvas(card, filename); }
       });
     }
 
     function fallbackReportHtml2Canvas(card, filename) {
       html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => {
-        const a = document.createElement('a');
-        a.download = filename;
-        a.href = canvas.toDataURL('image/jpeg', 1.0);
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+        const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/jpeg', 1.0);
+        document.body.appendChild(a); a.click(); a.remove();
       });
     }
 
@@ -2396,38 +2367,20 @@
             pixelRatio: 2.5, 
             backgroundColor: '#ffffff',
             cacheBust: true,
-            style: {
-              margin: '0',
-              left: '0',
-              top: '0',
-              transform: 'none',
-              position: 'static'
-            },
+            style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' },
             width: 794
           }).then(dataUrl => {
-            const a = document.createElement('a'); 
-            a.download = filename; 
-            a.href = dataUrl;
-            document.body.appendChild(a); 
-            a.click(); 
-            a.remove();
-          }).catch(err => {
-            fallbackReportPngHtml2Canvas(card, filename);
-          });
-        } else {
-          fallbackReportPngHtml2Canvas(card, filename);
-        }
+            const a = document.createElement('a'); a.download = filename; a.href = dataUrl;
+            document.body.appendChild(a); a.click(); a.remove();
+          }).catch(err => { fallbackReportPngHtml2Canvas(card, filename); });
+        } else { fallbackReportPngHtml2Canvas(card, filename); }
       });
     }
 
     function fallbackReportPngHtml2Canvas(card, filename) {
       html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => {
-        const a = document.createElement('a'); 
-        a.download = filename; 
-        a.href = canvas.toDataURL('image/png');
-        document.body.appendChild(a); 
-        a.click(); 
-        a.remove();
+        const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/png');
+        document.body.appendChild(a); a.click(); a.remove();
       });
     }
 
@@ -2459,12 +2412,17 @@
           const colRate = headers.findIndex(h => h.includes('rate')); const colPct = headers.findIndex(h => h.includes('%') || h.includes('pct'));
           const colRemark = headers.findIndex(h => h.includes('remark') || h.includes('mark')); const colCompany = headers.findIndex(h => h.includes('company') || h.includes('ကုမ္ပဏီ'));
 
-          const detectedCreditCo = sheetName.toUpperCase(); const parsedList = []; const currentCustomers = getCustomers();
+          const detectedCreditCo = sheetName.toUpperCase(); let parsedList = []; const currentCustomers = getCustomers();
           for (let rowIdx = headerIdx + 1; rowIdx < rawRows.length; rowIdx++) {
             const row = rawRows[rowIdx]; if (!row || !row.length) continue; if (String(row[0] || '').trim().toLowerCase().includes('total')) continue;
             const boat = (colBoat !== -1 && row[colBoat]) ? String(row[colBoat]).trim() : ''; const kg = (colKg !== -1 && row[colKg]) ? parseFloat(row[colKg]) || 0 : 0;
             const usd = (colUsd !== -1 && row[colUsd]) ? parseFloat(row[colUsd]) || 0 : 0; if (!boat && !kg && !usd) continue;
-            const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : ''); const invNo = (colInv !== -1 && row[colInv] !== undefined) ? String(row[colInv]).trim() : '';
+            const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : ''); 
+            
+            // VERSION 20.2 UPDATE: Pad Inv No to 3 digits if it's a simple number
+            let invNo = (colInv !== -1 && row[colInv] !== undefined) ? String(row[colInv]).trim() : '';
+            if (/^\d{1,2}$/.test(invNo)) { invNo = invNo.padStart(3, '0'); }
+
             const edNo = (colEd !== -1 && row[colEd] !== undefined) ? String(row[colEd]).trim() : ''; const rate = (colRate !== -1 && row[colRate]) ? parseFloat(row[colRate]) || 34.7 : 34.7;
             const pct = (colPct !== -1 && row[colPct] !== undefined) ? parseFloat(row[colPct]) || 4.0 : 4.0;
             const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); const remark = (colRemark !== -1 && row[colRemark]) ? String(row[colRemark]).trim().toUpperCase() : 'OTHER';
@@ -2472,15 +2430,24 @@
             if (compName && remark !== 'OTHER' && !currentCustomers[remark]) { currentCustomers[remark] = { name: compName, defaultPct: pct }; } else { compName = currentCustomers[remark] ? currentCustomers[remark].name : remark; }
             parsedList.push({ id: generateId('bk'), no: parsedList.length + 1, creditCo: detectedCreditCo, date: dateStr, boat, invNo, edNo, kg, usd, rate, thb, pct, amount, remark, companyName: compName, hasLicense: false });
           }
+          
+          if (!parsedList.length) return alert("Credit စာရင်းများ မတွေ့ရှိပါ။");
+
+          // VERSION 20.2 UPDATE: Prompt for MPU License auto-cut
+          const applyLicense = confirm("Import လုပ်မည့် စာရင်းအားလုံးအတွက် န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) ကိုပါ တစ်ခါတည်း ဖြတ်တောက်မည်လား?\n\n(OK နှိပ်ပါက လှေစာရင်းအားလုံးတွင် လိုင်စင်ဖြတ်ပြီးကြောင်း အလိုအလျောက် မှတ်သားပေးမည်ဖြစ်ပါသည်။)");
+          if (applyLicense) {
+            parsedList = parsedList.map(p => ({ ...p, hasLicense: true }));
+          }
+
           saveCustomers(currentCustomers);
           const isReplace = confirm(`Credit စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။ အစားထိုး သိမ်းမည်လား?`);
           const existing = getCargoData(); saveCargoData(isReplace ? parsedList : [...existing, ...parsedList]);
-          populateMonthDropdown(); filterData(); renderDailyReport(); alert(`Credit စာရင်းပေါင်း (${parsedList.length}) ခု Cloud သို့ ထည့်သွင်းပြီးပါပြီ။`);
+          populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); 
+          alert(`Credit စာရင်းပေါင်း (${parsedList.length}) ခု Cloud သို့ ထည့်သွင်းပြီးပါပြီ။`);
         } catch(err) { alert("Error: " + err.message); } finally { e.target.value = ''; }
       }; r.readAsArrayBuffer(file);
     }
 
-    // ================= DIRECTORY & CUSTOMER MANAGEMENT =================
     function renderCreditCoTable() {
       const list = getCreditCompanies(); const tbody = document.getElementById('creditCoTableBody'); if (!tbody) return;
       tbody.innerHTML = list.map(c => `
