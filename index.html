@@ -216,7 +216,7 @@
         <button id="btn-ed-breakdown" onclick="switchTab('ed-breakdown')" class="not-for-staff nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-indigo-950 dark:bg-slate-800 dark:text-indigo-300 dark:border-slate-700 hover:bg-indigo-50 dark:hover:bg-slate-700 transition border border-indigo-200 text-xs">
           📑 ED လချုပ်
         </button>
-        <!-- V20.3 ADMIN ONLY MPU TAB -->
+        <!-- ADMIN ONLY MPU TAB -->
         <button id="btn-mpu" onclick="switchTab('mpu')" class="admin-only-item nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-amber-900 dark:bg-slate-800 dark:text-amber-300 dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-slate-700 transition border border-amber-200 text-xs">
           💳 MPU လိုင်စင်
         </button>
@@ -290,6 +290,7 @@
             <span class="font-semibold text-slate-500">လ:</span>
             <select id="filterMonth" onchange="filterData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none"></select>
           </div>
+          <!-- Date Filter -->
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-semibold text-slate-500">ရက်စွဲ:</span>
             <input id="filterDate" type="date" onchange="filterData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none">
@@ -1185,6 +1186,8 @@
 
       const activeTabId = document.querySelector('.tab-content.active')?.id;
       if (isStaff && ['tab-breakdown', 'tab-ed-dashboard', 'tab-ed-breakdown', 'tab-companies', 'tab-mpu'].includes(activeTabId)) switchTab('dashboard');
+      
+      // VERSION 20.3: Ensure viewers cannot see MPU even if active
       if (isViewer && ['tab-companies', 'tab-mpu'].includes(activeTabId)) switchTab('dashboard');
     }
 
@@ -1471,7 +1474,7 @@
       const role = currentUser ? currentUser.role : 'staff';
       if (role === 'staff' && ['breakdown', 'ed-dashboard', 'ed-breakdown', 'companies', 'mpu'].includes(tabName)) { showSecurityToast("⚠️ ဝန်ထမ်းအကောင့်အတွက် ဤကဏ္ဍ ဖွင့်ခွင့်မရှိပါ"); return; }
       
-      // VERSION 20.3: Prevent viewers from accessing MPU as well
+      // VERSION 20.3: Ensure viewers cannot see MPU even when clicking tab switch
       if (role === 'viewer' && ['companies', 'mpu'].includes(tabName)) { showSecurityToast("⚠️ Viewer အကောင့်အတွက် ဤကဏ္ဍ ဖွင့်ခွင့်မရှိပါ"); return; }
 
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -2209,7 +2212,6 @@
       `;
     }
 
-    // (Remaining functions like renderDailyReport, MPU Logics, User Settings etc. remain unchanged to ensure stability)
     function onCreditCoChange() { renderDailyReport(); }
 
     function renderDailyReport() {
@@ -2324,6 +2326,121 @@
       if (type === 'detail') { btnDetail.className = "px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm transition"; btnSummary.className = "px-2 py-1 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 transition"; }
       else { btnSummary.className = "px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm transition"; btnDetail.className = "px-2 py-1 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 transition"; }
       renderDailyReport();
+    }
+
+    function handleLetterheadImageUpload(e) {
+      const file = e.target.files[0]; if (!file) return; const r = new FileReader();
+      r.onload = function(evt) {
+        const code = document.getElementById('reportCreditCoSelect').value || 'SH'; const list = getCreditCompanies(); const target = list.find(c => c.code === code);
+        if (target) { target.bannerImage = evt.target.result; saveCreditCompanies(list); alert(`[${target.name}] Letterhead ပုံ တင်ပြီးပါပြီ!`); }
+      }; r.readAsDataURL(file); e.target.value = '';
+    }
+
+    // STANDARD A4 SIZE & PADDING SAFE RENDERING (OFFSET FIX APPLIED)
+    function downloadReportJPG() {
+      const card = document.getElementById('printableA4Card');
+      const dateVal = document.getElementById('reportDatePicker').value || 'daily';
+      const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH';
+      const filename = `${creditVal}_DailyReport_${dateVal}.jpg`;
+      
+      document.fonts.ready.then(() => {
+        if (window.htmlToImage) {
+          htmlToImage.toJpeg(card, { 
+            quality: 1.0, 
+            pixelRatio: 2.5, 
+            backgroundColor: '#ffffff',
+            cacheBust: true,
+            style: {
+              margin: '0',
+              left: '0',
+              top: '0',
+              transform: 'none',
+              position: 'static'
+            },
+            width: 794
+          }).then(dataUrl => {
+            const a = document.createElement('a'); 
+            a.download = filename; 
+            a.href = dataUrl;
+            document.body.appendChild(a); 
+            a.click(); 
+            a.remove();
+          }).catch(err => {
+            console.warn("htmlToImage report error, fallback to html2canvas:", err);
+            fallbackReportHtml2Canvas(card, filename);
+          });
+        } else {
+          fallbackReportHtml2Canvas(card, filename);
+        }
+      });
+    }
+
+    function fallbackReportHtml2Canvas(card, filename) {
+      html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => {
+        const a = document.createElement('a');
+        a.download = filename;
+        a.href = canvas.toDataURL('image/jpeg', 1.0);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
+    }
+
+    function downloadReportPNG() {
+      const card = document.getElementById('printableA4Card');
+      const dateVal = document.getElementById('reportDatePicker').value || 'daily';
+      const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH';
+      const filename = `${creditVal}_DailyReport_${dateVal}.png`;
+
+      document.fonts.ready.then(() => {
+        if (window.htmlToImage) {
+          htmlToImage.toPng(card, { 
+            pixelRatio: 2.5, 
+            backgroundColor: '#ffffff',
+            cacheBust: true,
+            style: {
+              margin: '0',
+              left: '0',
+              top: '0',
+              transform: 'none',
+              position: 'static'
+            },
+            width: 794
+          }).then(dataUrl => {
+            const a = document.createElement('a'); 
+            a.download = filename; 
+            a.href = dataUrl;
+            document.body.appendChild(a); 
+            a.click(); 
+            a.remove();
+          }).catch(err => {
+            fallbackReportPngHtml2Canvas(card, filename);
+          });
+        } else {
+          fallbackReportPngHtml2Canvas(card, filename);
+        }
+      });
+    }
+
+    function fallbackReportPngHtml2Canvas(card, filename) {
+      html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => {
+        const a = document.createElement('a'); 
+        a.download = filename; 
+        a.href = canvas.toDataURL('image/png');
+        document.body.appendChild(a); 
+        a.click(); 
+        a.remove();
+      });
+    }
+
+    function parseExactExcelDate(val) {
+      if (!val) return '';
+      if (typeof val === 'number') { const d = new Date((Math.floor(val) - 25569) * 86400 * 1000); return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`; }
+      if (val instanceof Date) { return `${val.getUTCFullYear()}-${String(val.getUTCMonth() + 1).padStart(2, '0')}-${String(val.getUTCDate()).padStart(2, '0')}`; }
+      const s = String(val).trim();
+      if (s.includes('.')) { const p = s.split('.'); if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`; }
+      if (s.includes('/')) { const p = s.split('/'); if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`; }
+      return s.split('T')[0];
     }
 
     // ================= INITIALIZATION =================
