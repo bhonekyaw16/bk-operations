@@ -11,6 +11,7 @@
   <!-- Firebase SDK (Compat Version) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
@@ -83,17 +84,12 @@
       line-height: 1.6 !important;
       box-sizing: border-box;
     }
-
-    .mm-text {
-      font-family: 'Padauk', 'Pyidaungsu', sans-serif !important;
-    }
+    .mm-text { font-family: 'Padauk', 'Pyidaungsu', sans-serif !important; }
 
     @media print {
       body * { visibility: hidden; }
       #printableA4Card, #printableA4Card * { visibility: visible; }
-      #printableA4Card {
-        position: absolute; left: 0; top: 0; width: 100% !important; height: 100% !important; margin: 0 !important; padding: 20px !important; box-shadow: none !important; border: none !important;
-      }
+      #printableA4Card { position: absolute; left: 0; top: 0; width: 100% !important; height: 100% !important; margin: 0 !important; padding: 20px !important; box-shadow: none !important; border: none !important; }
     }
   </style>
 </head>
@@ -112,7 +108,7 @@
         <p class="text-xs sm:text-sm text-slate-200 leading-relaxed drop-shadow">
           BK Operations & Management System မှ ကြိုဆိုပါသည်။ နယ်စပ်ရေကြောင်း ကုန်စည်ပို့ဆောင်ရေးနှင့် အကောက်ခွန် ဝန်ဆောင်မှု စီမံခန့်ခွဲရေး ပေါ်တယ်လ်။
         </p>
-        <div class="pt-2 text-[11px] text-slate-300 hidden md:block">☁️ Powered by Google Firebase Cloud Real-Time Database (v20.8)</div>
+        <div class="pt-2 text-[11px] text-slate-300 hidden md:block">☁️ Powered by Google Firebase Cloud Real-Time Database (v21.2)</div>
       </div>
 
       <div class="glass-card rounded-3xl p-6 sm:p-9 w-full max-w-md shadow-2xl space-y-5 transition-all">
@@ -141,7 +137,7 @@
 
           <div class="flex items-center justify-between text-[11px]">
             <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 dark:text-slate-400"><input type="checkbox" id="rememberMeCheckbox" class="rounded text-blue-600"><span>Remember username</span></label>
-            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 20.8</span>
+            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 21.2</span>
           </div>
 
           <div id="loginErrorBox" class="p-2.5 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 rounded-xl text-rose-600 dark:text-rose-300 text-xs font-semibold hidden text-center">Username သို့မဟုတ် Password မှားယွင်းနေပါသည်။</div>
@@ -168,6 +164,7 @@
         </div>
       </div>
       
+      <!-- NAV BUTTONS -->
       <div class="flex items-center flex-wrap gap-1 sm:gap-1.5 text-xs font-semibold">
         <button id="btn-dashboard" onclick="switchTab('dashboard')" class="nav-btn px-2.5 py-1.5 rounded-lg bg-blue-950 text-white shadow-sm transition text-xs">📊 Credit</button>
         <button id="btn-daily" onclick="switchTab('daily')" class="nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-xs">📄 Daily</button>
@@ -177,6 +174,7 @@
         <button id="btn-mpu" onclick="switchTab('mpu')" class="admin-only-item nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-amber-900 dark:bg-slate-800 dark:text-amber-300 dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-slate-700 transition border border-amber-200 text-xs">💳 MPU လိုင်စင်</button>
         <button id="btn-companies" onclick="switchTab('companies')" class="admin-only-item nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-xs">👥 Users & Settings</button>
 
+        <!-- UTILITY TOOLS -->
         <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700 select-none">
           <button onclick="changeFontSize('sm')" id="btnFontSm" class="px-1.5 py-1 rounded text-[10px] font-bold text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 transition">A-</button>
           <button onclick="changeFontSize('md')" id="btnFontMd" class="px-1.5 py-1 rounded text-[10px] font-bold text-blue-950 dark:text-white bg-white dark:bg-slate-700 shadow-sm transition">A</button>
@@ -200,21 +198,11 @@
       </div>
 
       <div id="cargoMetricCardsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 mb-3.5 transition-all duration-200">
-        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-          <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Trips</p><h3 id="statTrips" class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">0</h3><p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">လှေအကြိမ်ရေ</p>
-        </div>
-        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-          <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Credit (KG)</p><h3 id="statKG" class="text-lg sm:text-2xl font-bold text-blue-950 dark:text-blue-400 mt-0.5">0</h3><p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">စုစုပေါင်း ကုန်ချိန် (ကီလို)</p>
-        </div>
-        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-          <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Inv: Total (USD)</p><h3 id="statUSD" class="text-lg sm:text-2xl font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">$0</h3><p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">ဒေါ်လာ စုစုပေါင်း တန်ဖိုး</p>
-        </div>
-        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-          <p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Inv: Total (THB)</p><h3 id="statTHB" class="text-lg sm:text-2xl font-bold text-indigo-700 dark:text-indigo-400 mt-0.5">฿0</h3><p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">ဘတ်ငွေ ကိန်းပြည့် တန်ဖိုး</p>
-        </div>
-        <div id="cardAdminAmount" class="not-for-staff bg-gradient-to-br from-blue-950 to-slate-900 text-white p-3 rounded-xl shadow-md col-span-2 md:col-span-1">
-          <p class="text-[10px] sm:text-[11px] font-bold uppercase text-blue-300">AMOUNT (THB)</p><h3 id="statAmount" class="text-lg sm:text-2xl font-bold text-emerald-400 mt-0.5">฿0</h3><p class="text-[9px] sm:text-[10px] text-slate-300 mt-0.5">ရရှိသည့် ဝန်ဆောင်ခ (ကိန်းပြည့်)</p>
-        </div>
+        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"><p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Trips</p><h3 id="statTrips" class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">0</h3><p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">လှေအကြိမ်ရေ</p></div>
+        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"><p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Credit (KG)</p><h3 id="statKG" class="text-lg sm:text-2xl font-bold text-blue-950 dark:text-blue-400 mt-0.5">0</h3><p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">စုစုပေါင်း ကုန်ချိန် (ကီလို)</p></div>
+        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"><p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Inv: Total (USD)</p><h3 id="statUSD" class="text-lg sm:text-2xl font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">$0</h3><p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">ဒေါ်လာ စုစုပေါင်း တန်ဖိုး</p></div>
+        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"><p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Inv: Total (THB)</p><h3 id="statTHB" class="text-lg sm:text-2xl font-bold text-indigo-700 dark:text-indigo-400 mt-0.5">฿0</h3><p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">ဘတ်ငွေ ကိန်းပြည့် တန်ဖိုး</p></div>
+        <div id="cardAdminAmount" class="not-for-staff bg-gradient-to-br from-blue-950 to-slate-900 text-white p-3 rounded-xl shadow-md col-span-2 md:col-span-1"><p class="text-[10px] sm:text-[11px] font-bold uppercase text-blue-300">AMOUNT (THB)</p><h3 id="statAmount" class="text-lg sm:text-2xl font-bold text-emerald-400 mt-0.5">฿0</h3><p class="text-[9px] sm:text-[10px] text-slate-300 mt-0.5">ရရှိသည့် ဝန်ဆောင်ခ (ကိန်းပြည့်)</p></div>
       </div>
 
       <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm mb-3.5 flex flex-wrap items-center justify-between gap-2">
@@ -258,9 +246,9 @@
               <tr>
                 <th class="p-3 w-12 text-center">No</th>
                 <th onclick="sortTable('creditCo')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Credit Co <span id="sort-creditCo">↕</span></th>
-                <th onclick="sortTable('date')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Date <span id="sort-date">↕</span></th>
+                <th onclick="sortTable('date')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Date <span id="sort-date">▼</span></th>
                 <th onclick="sortTable('boat')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">လှေအမည် <span id="sort-boat">↕</span></th>
-                <th onclick="sortTable('invNo')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 text-blue-600">Inv: No. <span id="sort-invNo">▲</span></th>
+                <th onclick="sortTable('invNo')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 text-blue-600">Inv: No. <span id="sort-invNo">↕</span></th>
                 <th onclick="sortTable('edNo')" class="p-3 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">ED No. <span id="sort-edNo">↕</span></th>
                 <th onclick="sortTable('kg')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">KG <span id="sort-kg">↕</span></th>
                 <th onclick="sortTable('usd')" class="p-3 text-right cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Inv: (USD) <span id="sort-usd">↕</span></th>
@@ -373,7 +361,7 @@
             <thead class="bg-slate-50 dark:bg-slate-800/80 border-b font-bold sticky top-0 z-10 select-none">
               <tr>
                 <th class="p-3 w-12 text-center">No</th>
-                <th onclick="sortEdTable('date')" class="p-3 cursor-pointer hover:bg-slate-200">Date <span id="sort-ed-date">↕</span></th>
+                <th onclick="sortEdTable('date')" class="p-3 cursor-pointer hover:bg-slate-200">Date <span id="sort-ed-date">▼</span></th>
                 <th onclick="sortEdTable('boat')" class="p-3 cursor-pointer hover:bg-slate-200">လှေအမည် <span id="sort-ed-boat">↕</span></th>
                 <th onclick="sortEdTable('invNo')" class="p-3 cursor-pointer hover:bg-slate-200">Inv No. <span id="sort-ed-invNo">↕</span></th>
                 <th onclick="sortEdTable('invVl')" class="p-3 text-right cursor-pointer hover:bg-slate-200">Invoice VL (USD) <span id="sort-ed-invVl">↕</span></th>
@@ -569,116 +557,14 @@
 
   </main>
 
-  <!-- ================= MODAL: CREDIT ENTRY ================= -->
-  <div id="cargoEntryModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-      <div class="flex items-center justify-between mb-3 border-b pb-2">
-        <h3 id="cargoModalTitle" class="text-sm font-bold">➕ Credit စာရင်းအသစ် ထည့်သွင်းခြင်း</h3>
-        <button onclick="closeCargoEntryModal()" class="text-slate-400">✕</button>
-      </div>
-
-      <form onsubmit="handleCargoSubmit(event)" class="space-y-3 text-xs">
-        <input type="hidden" id="editCargoId" value="">
-        <div class="grid grid-cols-2 gap-3">
-          <div><label class="block font-semibold mb-1">Credit Co.,Ltd</label><select id="cargoModalCreditCo" class="w-full border rounded-lg p-2 dark:bg-slate-800"></select></div>
-          <div><label class="block font-semibold mb-1">Customer (Remark)</label><input id="cargoModalRemark" list="remarkDataList" oninput="onCustomerInput(this.value)" type="text" placeholder="AG" required class="w-full border rounded-lg p-2 dark:bg-slate-800 uppercase"><datalist id="remarkDataList"></datalist></div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div><label class="block font-semibold mb-1">ရက်စွဲ (Date)</label><input id="cargoModalDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
-          <div><label class="block font-semibold mb-1">လှေအမည်</label><input id="cargoModalBoat" type="text" placeholder="ရတနာတိုး-၉၇" required class="w-full border rounded-lg p-2 dark:bg-slate-800 mm-text"></div>
-        </div>
-        <div class="grid grid-cols-3 gap-3">
-          <div><label class="block font-semibold mb-1">Inv: No.</label><input id="cargoModalInvNo" type="text" placeholder="323" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
-          <div><label class="block font-semibold mb-1">ED No.</label><input id="cargoModalEdNo" type="text" placeholder="20016781234" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
-          <div><label class="block font-semibold mb-1">အလေးချိန် (KG)</label><input id="cargoModalKG" type="number" step="any" placeholder="28430" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
-        </div>
-
-        <div>
-          <label class="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 p-2.5 rounded-lg border border-amber-200 dark:border-amber-800 cursor-pointer select-none">
-            <input type="checkbox" id="cargoModalLicense" class="w-4 h-4 rounded text-amber-600">
-            <span>န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) တင်မည် (MPU Wallet မှ အလိုအလျောက် ဖြတ်တောက်မည်)</span>
-          </label>
-        </div>
-
-        <div class="grid grid-cols-3 gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border">
-          <div><label class="block font-semibold mb-1">Inv: (USD)</label><input id="cargoModalUSD" oninput="calculateCargoPreview()" type="number" step="0.01" placeholder="28979.70" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
-          <div id="modalSecRate" class="not-for-staff"><label class="block font-semibold mb-1">RATE</label><input id="cargoModalRate" oninput="calculateCargoPreview()" type="number" step="0.01" value="34.7" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
-          <div id="modalSecPct" class="not-for-staff"><label class="block font-semibold mb-1">%</label><input id="cargoModalPct" oninput="calculateCargoPreview()" type="number" step="0.1" value="4.0" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
-        </div>
-
-        <div id="modalSecPreviews" class="not-for-staff grid grid-cols-2 gap-3 text-center">
-          <div class="p-2 border rounded-lg bg-slate-50 dark:bg-slate-800"><span class="text-[10px] text-slate-400 block">Inv: (THB - ကိန်းပြည့်)</span><span id="cargoPreviewTHB" class="font-bold text-indigo-700">0 THB</span></div>
-          <div class="p-2 border rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200"><span class="text-[10px] text-emerald-600 block">AMOUNT (THB - ကိန်းပြည့်)</span><span id="cargoPreviewAmount" class="font-bold text-emerald-700">0 THB</span></div>
-        </div>
-
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeCargoEntryModal()" class="px-3.5 py-1.5 border rounded-lg">ပိတ်မည်</button>
-          <button type="submit" class="px-4 py-1.5 bg-blue-950 text-white font-bold rounded-lg">💾 သိမ်းဆည်းမည်</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ================= MODAL: ED ENTRY ================= -->
-  <div id="edEntryModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-      <div class="flex items-center justify-between mb-3 border-b pb-2">
-        <h3 id="edModalTitle" class="text-sm font-bold text-indigo-950 dark:text-indigo-300">➕ ED Service စာရင်းအသစ် ထည့်သွင်းခြင်း</h3>
-        <button onclick="closeEdEntryModal()" class="text-slate-400">✕</button>
-      </div>
-      <form onsubmit="handleEdSubmit(event)" class="space-y-3 text-xs">
-        <input type="hidden" id="editEdId" value="">
-        <div class="grid grid-cols-2 gap-3">
-          <div><label class="block font-semibold mb-1">ရက်စွဲ (Date)</label><input id="inEdDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
-          <div><label class="block font-semibold mb-1">လှေအမည်</label><input id="inEdBoat" type="text" placeholder="အောင်မြင့်နိုင်" required class="w-full border rounded-lg p-2 dark:bg-slate-800 mm-text"></div>
-        </div>
-        <div class="grid grid-cols-3 gap-3">
-          <div><label class="block font-semibold mb-1">Inv No.</label><input id="inEdInvNo" type="text" placeholder="286" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
-          <div><label class="block font-semibold mb-1">Customer (Co,.Ltd)</label><input id="inEdCustomer" list="remarkDataList" type="text" placeholder="SPSS" required class="w-full border rounded-lg p-2 dark:bg-slate-800 uppercase"></div>
-          <div><label class="block font-semibold mb-1">Invoice VL (USD)</label><input id="inEdUSD" oninput="calculateEdPreview()" type="number" step="0.01" placeholder="10879.60" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
-        </div>
-        <div class="grid grid-cols-3 gap-3 p-3 bg-indigo-50/50 dark:bg-slate-800/60 rounded-xl border">
-          <div><label class="block font-semibold text-slate-500 mb-1">2% (USD × 42 - ကိန်းပြည့်)</label><input id="inEd2Pct" type="number" step="1" readonly class="w-full border rounded-lg p-2 bg-slate-100 dark:bg-slate-800 font-bold text-indigo-900"></div>
-          <div><label class="block font-semibold text-slate-500 mb-1">MF / Service</label><input id="inEdMF" oninput="calculateEdPreview()" type="number" value="60000" required class="w-full border rounded-lg p-2 bg-white dark:bg-slate-800 font-bold text-blue-900"></div>
-          <div><label class="block font-semibold text-slate-500 mb-1">Total (MMK - ကိန်းပြည့်)</label><input id="inEdTotal" type="number" step="1" readonly class="w-full border rounded-lg p-2 bg-slate-100 dark:bg-slate-800 font-bold text-emerald-700"></div>
-        </div>
-        <div><label class="block font-semibold mb-1">Pay Date (ငွေချေသည့်ရက်စွဲ)</label><input id="inEdPayDate" type="date" class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeEdEntryModal()" class="px-3.5 py-1.5 border rounded-lg">ပိတ်မည်</button>
-          <button type="submit" class="px-4 py-1.5 bg-indigo-950 text-white font-bold rounded-lg">💾 သိမ်းဆည်းမည်</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ================= MODAL: MPU TOP-UP ================= -->
-  <div id="mpuTopupModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-sm w-full shadow-2xl">
-      <div class="flex items-center justify-between mb-4 border-b pb-2">
-        <h3 class="text-sm font-bold text-amber-900 dark:text-amber-400">➕ MPU ငွေကြိုသွင်းခြင်း (Top-up)</h3>
-        <button onclick="closeMpuTopupModal()" class="text-slate-400">✕</button>
-      </div>
-      <form onsubmit="handleMpuTopupSubmit(event)" class="space-y-4 text-xs">
-        <div><label class="block font-semibold mb-1">ရက်စွဲ (Date)</label><input id="inMpuDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
-        <div><label class="block font-semibold mb-1">ဘဏ်အကောင့် (Bank)</label><select id="inMpuBank" class="w-full border rounded-lg p-2 dark:bg-slate-800 font-semibold"><option value="AYA Bank">AYA Bank</option><option value="uab Bank">uab Bank</option></select></div>
-        <div><label class="block font-semibold mb-1">ငွေပမာဏ (Amount - Ks)</label><input id="inMpuAmount" type="number" step="1" placeholder="1000000" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold text-emerald-600"></div>
-        <div><label class="block font-semibold mb-1">မှတ်ချက် (Remark)</label><input id="inMpuRemark" type="text" value="MPU သို့ ငွေသွင်းခြင်း" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeMpuTopupModal()" class="px-3.5 py-1.5 border rounded-lg">ပိတ်မည်</button>
-          <button type="submit" class="px-4 py-1.5 bg-amber-600 text-white font-bold rounded-lg">💾 သိမ်းဆည်းမည်</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ================= MODAL: VOUCHER PREVIEW (V20.8 FIXED STRICT TABLE DESIGN) ================= -->
+  <!-- ================= MODAL: VOUCHER PREVIEW (V21.2 FIXED STRICT TABLE DESIGN) ================= -->
   <div id="voucherPreviewModal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
     <div class="bg-white dark:bg-slate-900 rounded-3xl border shadow-2xl max-w-[760px] w-full p-4 sm:p-6 flex flex-col items-center gap-4 my-auto">
       
       <div class="w-full flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <div class="flex items-center gap-2">
           <span class="text-xl">📸</span>
-          <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">ED Official Voucher Preview (v20.8)</h3>
+          <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">ED Official Voucher Preview (v21.2)</h3>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="downloadLiveVoucherJPG()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1.5">
@@ -689,7 +575,7 @@
       </div>
 
       <div class="overflow-x-auto w-full flex justify-start sm:justify-center py-4">
-        <div id="voucherTargetCard" class="shrink-0 bg-[#fdfaf0] p-4 shadow-2xl relative select-none mx-auto" style="width: 680px !important; min-width: 680px !important; max-width: 680px !important; font-family: 'Times New Roman', 'Padauk', 'Pyidaungsu', serif; border: 1px solid #e0d8c3; box-sizing: border-box;">
+        <div id="voucherTargetCard" class="shrink-0 bg-[#fdfbf4] p-4 shadow-2xl relative select-none mx-auto" style="width: 680px !important; min-width: 680px !important; max-width: 680px !important; font-family: 'Times New Roman', 'Padauk', 'Pyidaungsu', serif; border: 1px solid #e0d8c3; box-sizing: border-box;">
           
           <div class="relative w-full h-full border-[3px] border-[#c59e47] p-8 pb-10" style="box-shadow: inset 0 0 30px rgba(197,158,71,0.1);">
             
@@ -802,28 +688,15 @@
     </div>
   </div>
 
-  <footer class="bg-white dark:bg-slate-900 border-t py-3 transition-colors mt-auto w-full">
-    <div class="w-full max-w-[98%] mx-auto px-4 text-center">
-      <p class="text-xs text-slate-400">© 2026 BK Operations & Management System. Version 20.8.</p>
-    </div>
-  </footer>
-
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    document.addEventListener('contextmenu', function(e) { e.preventDefault(); showSecurityToast("⚠️ Right-Click ပိတ်ထားပါသည် (Protected by BK System)"); });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); showSecurityToast("⚠️ Developer Tools (F12) ဖွင့်ခွင့် မပြုပါ"); return false; }
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) { e.preventDefault(); showSecurityToast("⚠️ Inspect Element ဖွင့်ခွင့် မပြုပါ"); return false; }
-      if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U')) { e.preventDefault(); showSecurityToast("⚠️ Source Code ကြည့်ရှုခွင့် ပိတ်ထားပါသည်"); return false; }
-      if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) { e.preventDefault(); showSecurityToast("⚠️ Web Page သိမ်းဆည်းခွင့် ပိတ်ထားပါသည်"); return false; }
-    });
-
+    // Developer tools / Right click unblocked for debug purposes as requested
     function showSecurityToast(msg) {
       let toast = document.getElementById('securityToast');
       if (!toast) {
         toast = document.createElement('div');
         toast.id = 'securityToast';
-        toast.className = 'fixed bottom-5 right-5 z-[9999] bg-rose-900 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-2xl border border-rose-700 transition-all duration-300 opacity-0 pointer-events-none transform translate-y-2';
+        toast.className = 'fixed bottom-5 right-5 z-[9999] bg-slate-900 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-2xl border border-slate-700 transition-all duration-300 opacity-0 pointer-events-none transform translate-y-2';
         document.body.appendChild(toast);
       }
       toast.innerText = msg;
@@ -833,7 +706,7 @@
       window.__toastTimeout = setTimeout(() => {
         toast.classList.remove('opacity-100', 'translate-y-0');
         toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
-      }, 2200);
+      }, 2500);
     }
 
     function toggleFullScreen() {
@@ -856,7 +729,12 @@
     function initFontSize() { const saved = localStorage.getItem('bk_FontSize') || 'md'; changeFontSize(saved); }
     function formatNum(n, decimals = 2) { return Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }); }
     function formatReportDate(iso) { if (!iso) return ""; const p = iso.split('-'); return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : iso; }
-    function generateId(prefix = 'bk') { return prefix + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
+    
+    // Crypto UUID to prevent duplicate IDs on simultaneous inserts
+    function generateId(prefix = 'bk') { 
+      try { return prefix + '_' + crypto.randomUUID(); } 
+      catch(e) { return prefix + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
+    }
 
     const SECURITY_SALT = "BK_Operations_Internal_Salt_2026";
     function getEncryptionKey() { return "BK_MASTER_KEY_" + SECURITY_SALT; }
@@ -875,20 +753,10 @@
       if (!storedRaw) return null;
       const key = getEncryptionKey();
       if (storedRaw.startsWith("AES::") && window.CryptoJS && CryptoJS.AES) {
-        try {
-          const cipherText = storedRaw.substring(5);
-          const bytes = CryptoJS.AES.decrypt(cipherText, key);
-          const decryptedStr = bytes.toString(CryptoJS.enc.Utf8);
-          if (decryptedStr) return JSON.parse(decryptedStr);
-        } catch(e) {}
+        try { const cipherText = storedRaw.substring(5); const bytes = CryptoJS.AES.decrypt(cipherText, key); const decryptedStr = bytes.toString(CryptoJS.enc.Utf8); if (decryptedStr) return JSON.parse(decryptedStr); } catch(e) {}
       }
       if (storedRaw.startsWith("XOR::")) {
-        try {
-          const decodedRaw = atob(storedRaw.substring(5));
-          let out = '';
-          for (let i = 0; i < decodedRaw.length; i++) out += String.fromCharCode(decodedRaw.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-          return JSON.parse(decodeURIComponent(out));
-        } catch(e) {}
+        try { const decodedRaw = atob(storedRaw.substring(5)); let out = ''; for (let i = 0; i < decodedRaw.length; i++) out += String.fromCharCode(decodedRaw.charCodeAt(i) ^ key.charCodeAt(i % key.length)); return JSON.parse(decodeURIComponent(out)); } catch(e) {}
       }
       try { return JSON.parse(storedRaw); } catch(e) { return null; }
     }
@@ -902,37 +770,18 @@
     ];
 
     const DEFAULT_CUSTOMERS = {
-      'AG': { name: 'Andaman Gull', defaultPct: 4.0 },
-      'APPT': { name: 'Aung Pyae Phyo Tun', defaultPct: 4.0 },
-      'DI': { name: 'Double Island', defaultPct: 4.0 },
-      'DNAM': { name: 'DANA ARMAN', defaultPct: 4.0 },
-      'HPYDN': { name: 'Hein Pyae Yadanar', defaultPct: 4.0 },
-      'HSY': { name: 'Htay Shwe Yaung', defaultPct: 4.0 },
-      'KANW': { name: 'Kyaw Annawar', defaultPct: 4.0 },
-      'KSZ': { name: 'Kaung Su Zaw', defaultPct: 4.0 },
-      'OG': { name: 'Ocean Gull', defaultPct: 4.0 },
-      'RM': { name: 'Rainbow Moetain', defaultPct: 4.0 },
-      'SB': { name: 'Sein Bhone', defaultPct: 4.0 },
-      'SNJP': { name: 'Shwe Ngar Japan', defaultPct: 4.0 },
-      'SPSS': { name: 'Shwe Pyi Soe San', defaultPct: 4.0 },
-      'TI': { name: 'Towel Island', defaultPct: 4.0 },
-      'WHM': { name: 'Waihin Moe', defaultPct: 4.0 }
+      'AG': { name: 'Andaman Gull', defaultPct: 4.0 }, 'APPT': { name: 'Aung Pyae Phyo Tun', defaultPct: 4.0 }, 'DI': { name: 'Double Island', defaultPct: 4.0 }, 'DNAM': { name: 'DANA ARMAN', defaultPct: 4.0 },
+      'HPYDN': { name: 'Hein Pyae Yadanar', defaultPct: 4.0 }, 'HSY': { name: 'Htay Shwe Yaung', defaultPct: 4.0 }, 'KANW': { name: 'Kyaw Annawar', defaultPct: 4.0 }, 'KSZ': { name: 'Kaung Su Zaw', defaultPct: 4.0 },
+      'OG': { name: 'Ocean Gull', defaultPct: 4.0 }, 'RM': { name: 'Rainbow Moetain', defaultPct: 4.0 }, 'SB': { name: 'Sein Bhone', defaultPct: 4.0 }, 'SNJP': { name: 'Shwe Ngar Japan', defaultPct: 4.0 },
+      'SPSS': { name: 'Shwe Pyi Soe San', defaultPct: 4.0 }, 'TI': { name: 'Towel Island', defaultPct: 4.0 }, 'WHM': { name: 'Waihin Moe', defaultPct: 4.0 }
     };
 
-    function getCreditCompanies() {
-      const enc = localStorage.getItem('bk_CreditCompanies_enc');
-      const list = enc ? decryptPayload(enc) : null;
-      if (Array.isArray(list) && list.length > 0) return list;
-      return DEFAULT_CREDIT_COMPANIES;
-    }
+    function getCreditCompanies() { const enc = localStorage.getItem('bk_CreditCompanies_enc'); const list = enc ? decryptPayload(enc) : null; if (Array.isArray(list) && list.length > 0) return list; return DEFAULT_CREDIT_COMPANIES; }
     function saveCreditCompanies(l) { localStorage.setItem('bk_CreditCompanies_enc', encryptPayload(l)); populateCreditCoDropdowns(); renderCreditCoTable(); renderDailyReport(); if (firebaseDb) firebaseDb.ref("bk_operations_master/creditCompanies").set(l); }
 
     function getCustomers() {
-      const enc = localStorage.getItem('bk_CompanyMap_enc');
-      let m = enc ? decryptPayload(enc) : null;
-      if (!m || typeof m !== 'object' || Array.isArray(m) || Object.keys(m).length === 0) {
-        m = DEFAULT_CUSTOMERS;
-      }
+      const enc = localStorage.getItem('bk_CompanyMap_enc'); let m = enc ? decryptPayload(enc) : null;
+      if (!m || typeof m !== 'object' || Array.isArray(m) || Object.keys(m).length === 0) m = DEFAULT_CUSTOMERS;
       const norm = {};
       for (let k in m) {
         if (typeof m[k] === 'string') norm[k] = { name: m[k], defaultPct: 4.0 };
@@ -999,37 +848,12 @@
               if (val.customers) localStorage.setItem('bk_CompanyMap_enc', encryptPayload(val.customers));
               if (val.mpuTopups) localStorage.setItem('bk_MPUTopups_enc', encryptPayload(val.mpuTopups));
 
-              populateCreditCoDropdowns();
-              populateCustomerDropdowns();
-              populateMonthDropdown();
-              populateEdMonthDropdown();
-              filterData();
-              filterEdData();
-              renderDailyReport();
-              renderUserAccountsTable();
-              renderCreditCoTable();
-              renderCustomerTable();
-              renderMpuLedger();
-            } else {
-              syncFullStateToCloud();
+              populateCreditCoDropdowns(); populateCustomerDropdowns(); populateMonthDropdown(); populateEdMonthDropdown();
+              filterData(); filterEdData(); renderDailyReport(); renderUserAccountsTable(); renderCreditCoTable(); renderCustomerTable(); renderMpuLedger();
             }
           });
         }
       } catch (err) { console.warn("Firebase Init fallback to LocalStorage:", err); }
-    }
-
-    function syncFullStateToCloud() {
-      if (!firebaseDb) return;
-      const payload = {
-        cargoData: getCargoData(),
-        edData: getEdData(),
-        userAccounts: getUserAccounts(),
-        creditCompanies: getCreditCompanies(),
-        customers: getCustomers(),
-        mpuTopups: getMpuTopups(),
-        lastUpdated: Date.now()
-      };
-      firebaseDb.ref("bk_operations_master").set(payload).catch(e => console.warn(e));
     }
 
     const INITIAL_USERS = [
@@ -1140,11 +964,11 @@
       const users = getUserAccounts(); const isValidAdmin = users.some(u => u.role === 'admin' && u.password === adminPasswordInput.trim());
       if (!isValidAdmin) return alert("Admin Password မှားယွင်းနေပါသည်။ Backup ဆွဲယူခွင့် မပြုပါ။");
 
-      const backupData = { version: "20.8", system: "BK Operations & Management System", exportDate: new Date().toISOString(), exportedBy: currentUser.username, cargoData: getCargoData(), edData: getEdData(), creditCompanies: getCreditCompanies(), customers: getCustomers(), userAccounts: getUserAccounts(), mpuTopups: getMpuTopups() };
+      const backupData = { version: "21.2", system: "BK Operations & Management System", exportDate: new Date().toISOString(), exportedBy: currentUser.username, cargoData: getCargoData(), edData: getEdData(), creditCompanies: getCreditCompanies(), customers: getCustomers(), userAccounts: getUserAccounts(), mpuTopups: getMpuTopups() };
       const jsonString = JSON.stringify(backupData); let encryptedPayload = "";
       if (window.CryptoJS && CryptoJS.AES) encryptedPayload = "BK_AES::" + CryptoJS.AES.encrypt(jsonString, adminPasswordInput.trim()).toString();
       else encryptedPayload = "BK_RAW::" + btoa(encodeURIComponent(jsonString));
-      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "20.8", timestamp: Date.now(), data: encryptedPayload };
+      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "21.2", timestamp: Date.now(), data: encryptedPayload };
       const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fileContainer, null, 2)); a.download = `BK_Operations_ProtectedBackup_${new Date().toISOString().split('T')[0]}.json`;
       document.body.appendChild(a); a.click(); a.remove(); alert("Admin Password ဖြင့် အောင်မြင်စွာ Encrypt ပြုလုပ်ထားသော Backup ဖိုင်ကို ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!");
     }
@@ -1169,7 +993,14 @@
             if (finalData.cargoData) saveCargoData(finalData.cargoData); if (finalData.edData) saveEdData(finalData.edData);
             if (finalData.creditCompanies) saveCreditCompanies(finalData.creditCompanies); if (finalData.customers) saveCustomers(finalData.customers);
             if (finalData.userAccounts) saveUserAccounts(finalData.userAccounts); if (finalData.mpuTopups) saveMpuTopups(finalData.mpuTopups);
-            syncFullStateToCloud(); populateMonthDropdown(); populateEdMonthDropdown(); filterData(); filterEdData(); renderMpuLedger(); alert("Data Restore လုပ်ခြင်း အောင်မြင်ပါသည်!");
+            
+            if (firebaseDb && isCloudConnected) {
+              firebaseDb.ref("bk_operations_master").set({
+                cargoData: finalData.cargoData || [], edData: finalData.edData || [], userAccounts: finalData.userAccounts || [],
+                creditCompanies: finalData.creditCompanies || [], customers: finalData.customers || {}, mpuTopups: finalData.mpuTopups || [], lastUpdated: Date.now()
+              });
+            }
+            populateMonthDropdown(); populateEdMonthDropdown(); filterData(); filterEdData(); renderMpuLedger(); alert("Data Restore လုပ်ခြင်း အောင်မြင်ပါသည်!");
           }
         } catch(err) { alert("Error: " + err.message); } finally { e.target.value = ''; }
       }; r.readAsText(file);
@@ -1195,7 +1026,8 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    let sortColumn = 'invNo'; let sortAsc = true; let currentFilteredList = [];
+    // ================= DATA FILTER & SORTING (DEFAULT: DATE DESC) =================
+    let sortColumn = 'date'; let sortAsc = false; let currentFilteredList = [];
     function populateMonthDropdown() {
       const all = getCargoData(); const s = document.getElementById('filterMonth'); if (!s) return; const cur = s.value || 'ALL';
       const mSet = new Set(all.map(i => (i.date || '').substring(0, 7)).filter(x => x.length === 7)); const sorted = Array.from(mSet).sort().reverse();
@@ -1218,10 +1050,18 @@
     function filterData() {
       const all = getCargoData(); const mVal = document.getElementById('filterMonth').value; const dVal = document.getElementById('filterDate').value; const cVal = document.getElementById('filterCreditCo').value; const rVal = document.getElementById('filterRemark').value; const search = document.getElementById('searchInput').value.trim().toLowerCase();
       let filtered = all.filter(item => { const itemMonth = (item.date || '').substring(0, 7); const matchesMonth = (mVal === 'ALL') || (itemMonth === mVal); const matchesDate = !dVal || (item.date === dVal); const itemCredit = (item.creditCo || 'SH').trim().toUpperCase(); const matchesCredit = (cVal === 'ALL') || (itemCredit === cVal); const itemRemark = (item.remark || '').trim().toUpperCase(); const matchesRemark = (rVal === 'ALL') || (itemRemark === rVal); const matchesSearch = !search || (item.boat && item.boat.toLowerCase().includes(search)) || (item.invNo && String(item.invNo).toLowerCase().includes(search)) || (item.edNo && String(item.edNo).toLowerCase().includes(search)); return matchesMonth && matchesDate && matchesCredit && matchesRemark && matchesSearch; });
-      filtered.sort((a, b) => { let valA = a[sortColumn], valB = b[sortColumn]; if (sortColumn === 'invNo') { const comp = String(valA || '').localeCompare(String(valB || ''), undefined, {numeric: true}); return sortAsc ? comp : -comp; } if (['kg', 'usd', 'rate', 'thb', 'pct', 'amount'].includes(sortColumn)) { valA = Number(valA || 0); valB = Number(valB || 0); } else { valA = String(valA || ''); valB = String(valB || ''); } if (valA < valB) return sortAsc ? -1 : 1; if (valA > valB) return sortAsc ? 1 : -1; return 0; });
+      filtered.sort((a, b) => { 
+        let valA = a[sortColumn], valB = b[sortColumn]; 
+        if (sortColumn === 'invNo') { const comp = String(valA || '').localeCompare(String(valB || ''), undefined, {numeric: true}); return sortAsc ? comp : -comp; } 
+        if (['kg', 'usd', 'rate', 'thb', 'pct', 'amount'].includes(sortColumn)) { valA = Number(valA || 0); valB = Number(valB || 0); } else { valA = String(valA || ''); valB = String(valB || ''); } 
+        if (valA < valB) return sortAsc ? -1 : 1; 
+        if (valA > valB) return sortAsc ? 1 : -1; 
+        return 0; 
+      });
       currentFilteredList = filtered; const countEl = document.getElementById('exportCount'); if (countEl) countEl.innerText = filtered.length; renderCargoTable(filtered); updateCargoSummaryCards(filtered);
     }
     function updateCargoSummaryCards(list) { document.getElementById('statTrips').innerText = list.length; document.getElementById('statKG').innerText = Math.round(list.reduce((a, b) => a + Number(b.kg || 0), 0)).toLocaleString(); document.getElementById('statUSD').innerText = '$' + formatNum(list.reduce((a, b) => a + Number(b.usd || 0), 0), 2); const totalTHB = Math.round(list.reduce((a, b) => a + Number(b.thb || 0), 0)); document.getElementById('statTHB').innerText = '฿' + formatNum(totalTHB, 0); const totalAmount = Math.round(list.reduce((a, b) => a + Number(b.amount || 0), 0)); const statAmtEl = document.getElementById('statAmount'); if (statAmtEl) statAmtEl.innerText = '฿' + formatNum(totalAmount, 0); }
+    
     function renderCargoTable(list) {
       const tbody = document.getElementById('cargoTableBody'); const noMsg = document.getElementById('noResultsMsg'); tbody.innerHTML = '';
       if (list.length === 0) { noMsg.classList.remove('hidden'); return; } noMsg.classList.add('hidden');
@@ -1236,6 +1076,7 @@
       ['creditCo','date','boat','invNo','edNo','kg','usd','rate','thb','pct','amount','remark'].forEach(col => { const span = document.getElementById('sort-' + col); if(span) span.innerText = (sortColumn === col) ? (sortAsc ? '▲' : '▼') : '↕'; });
     }
     function sortTable(col) { if (sortColumn === col) sortAsc = !sortAsc; else { sortColumn = col; sortAsc = true; } filterData(); }
+    
     function openNewCargoEntry() {
       if (currentUser && currentUser.role === 'viewer') return alert("Viewer အကောင့်အတွက် စာရင်းအသစ် ထည့်သွင်းခွင့် မရှိပါ။");
       document.getElementById('editCargoId').value = ''; document.getElementById('cargoModalTitle').innerText = "➕ Credit စာရင်းအသစ် ထည့်သွင်းခြင်း"; document.getElementById('cargoModalDate').value = new Date().toISOString().split('T')[0]; document.getElementById('cargoModalBoat').value = ''; document.getElementById('cargoModalRemark').value = ''; document.getElementById('cargoModalInvNo').value = ''; document.getElementById('cargoModalEdNo').value = ''; document.getElementById('cargoModalKG').value = ''; document.getElementById('cargoModalUSD').value = ''; document.getElementById('cargoModalRate').value = '34.7'; document.getElementById('cargoModalPct').value = '4.0'; document.getElementById('cargoModalLicense').checked = false; calculateCargoPreview(); document.getElementById('cargoEntryModal').classList.remove('hidden');
@@ -1252,7 +1093,7 @@
       const usd = parseFloat(document.getElementById('cargoModalUSD').value) || 0; const creditCo = document.getElementById('cargoModalCreditCo').value || 'SH'; const remark = document.getElementById('cargoModalRemark').value.trim().toUpperCase(); const custMap = getCustomers(); const companyName = custMap[remark] ? custMap[remark].name : remark; const hasLicense = document.getElementById('cargoModalLicense').checked;
       let rate = parseFloat(document.getElementById('cargoModalRate').value) || 34.7; let pct = parseFloat(document.getElementById('cargoModalPct').value) || 4.0; if (currentUser && currentUser.role === 'staff') { rate = 34.7; pct = custMap[remark] ? custMap[remark].defaultPct : 4.0; }
       const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); let all = getCargoData();
-      if (editId) { all = all.map(i => i.id === editId ? { ...i, creditCo, date: document.getElementById('cargoModalDate').value, boat: document.getElementById('cargoModalBoat').value, remark, companyName, invNo: document.getElementById('cargoModalInvNo').value, edNo: document.getElementById('cargoModalEdNo').value, kg: parseFloat(document.getElementById('cargoModalKG').value) || 0, usd, rate, thb, pct, amount, hasLicense } : i); alert("စာရင်းပြင်ဆင်မှု အောင်မြင်ပါသည်။"); } else { all.unshift({ id: generateId('bk'), no: all.length + 1, creditCo, date: document.getElementById('cargoModalDate').value, boat: document.getElementById('cargoModalBoat').value, remark, companyName, invNo: document.getElementById('cargoModalInvNo').value, edNo: document.getElementById('cargoModalEdNo').value, kg: parseFloat(document.getElementById('cargoModalKG').value) || 0, usd, rate, thb, pct, amount, hasLicense }); alert("Credit စာရင်းအသစ် Cloud သို့ သိမ်းဆည်းပြီးပါပြီ။"); }
+      if (editId) { all = all.map(i => i.id === editId ? { ...i, creditCo, date: document.getElementById('cargoModalDate').value, boat: document.getElementById('cargoModalBoat').value, remark, companyName, invNo: document.getElementById('cargoModalInvNo').value, edNo: document.getElementById('cargoModalEdNo').value, kg: parseFloat(document.getElementById('cargoModalKG').value) || 0, usd, rate, thb, pct, amount, hasLicense } : i); alert("စာရင်းပြင်ဆင်မှု အောင်မြင်ပါသည်။"); } else { all.unshift({ id: generateId('bk'), no: all.length + 1, creditCo, date: document.getElementById('cargoModalDate').value, boat: document.getElementById('cargoModalBoat').value, remark, companyName, invNo: document.getElementById('cargoModalInvNo').value, edNo: document.getElementById('cargoModalEdNo').value, kg: parseFloat(document.getElementById('cargoModalKG').value) || 0, usd, rate, thb, pct, amount, hasLicense }); alert("Credit စာရင်းအသစ် System သို့ သိမ်းဆည်းပြီးပါပြီ။"); }
       saveCargoData(all); populateMonthDropdown(); closeCargoEntryModal(); filterData(); renderMpuLedger();
     }
     function deleteCargoShipment(id) { if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် စာရင်းဖျက်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ဤစာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { saveCargoData(getCargoData().filter(i => i.id !== id)); populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); } }
@@ -1272,53 +1113,96 @@
     }
     function toggleCargoCards() {
       const c = document.getElementById('cargoMetricCardsContainer'); const icon = document.getElementById('cargoCardsToggleIcon'); const text = document.getElementById('cargoCardsToggleText');
-      c.classList.toggle('hidden'); icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
+      if (c) c.classList.toggle('hidden'); if (icon) icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; if (text) text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
     }
 
-    function handleExcelImport(e) {
-      const file = e.target.files[0]; if (!file) return; const r = new FileReader();
-      r.onload = function(evt) {
+    // ================= EXCEL IMPORT FIX (CREDIT) =================
+    function parseExactExcelDate(val) {
+      if (!val) return '';
+      if (typeof val === 'number') {
+        const d = new Date(Math.round((val - 25569) * 86400 * 1000));
+        return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+      }
+      if (val instanceof Date) { return `${val.getUTCFullYear()}-${String(val.getUTCMonth() + 1).padStart(2, '0')}-${String(val.getUTCDate()).padStart(2, '0')}`; }
+      const s = String(val).trim();
+      if (s.includes('.')) { const p = s.split('.'); if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`; }
+      if (s.includes('/')) { const p = s.split('/'); if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`; }
+      return s.split('T')[0];
+    }
+
+    function handleExcelImport(event) {
+      const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
+      reader.onload = function(e) {
         try {
-          const data = new Uint8Array(evt.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: false });
+          const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: false });
           let sheetName = workbook.SheetNames.find(s => ['SH', 'TW', 'TCS', 'UO', 'IMP'].includes(s.trim().toUpperCase())) || workbook.SheetNames[0];
           const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
-          let headerIdx = 0;
-          for (let i = 0; i < Math.min(rawRows.length, 10); i++) { const rowStr = (rawRows[i] || []).join(' ').toLowerCase(); if (rowStr.includes('လှေအမည်') || (rowStr.includes('inv') && rowStr.includes('kg'))) { headerIdx = i; break; } }
+          
+          if (!rawRows || rawRows.length === 0) { alert("Excel ဖိုင်ထဲတွင် ဒေတာ မတွေ့ရှိပါ။"); return; }
+          
+          let headerIdx = -1;
+          for (let i = 0; i < Math.min(rawRows.length, 15); i++) { 
+            const rowStr = (rawRows[i] || []).map(cell => String(cell || '')).join(' ').toLowerCase(); 
+            if (rowStr.includes('inv') || rowStr.includes('လှေ') || rowStr.includes('boat') || rowStr.includes('date') || rowStr.includes('kg')) { headerIdx = i; break; } 
+          }
+          if (headerIdx === -1) headerIdx = 0;
+
           const headers = (rawRows[headerIdx] || []).map(h => String(h || '').trim().toLowerCase());
-          const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat')); const colDate = headers.findIndex(h => h.includes('date') || h.includes('ရက်'));
-          const colInv = headers.findIndex(h => h.includes('inv') && !h.includes('usd') && !h.includes('thb')); const colEd = headers.findIndex(h => h.includes('ed'));
-          const colKg = headers.findIndex(h => h.includes('kg')); const colUsd = headers.findIndex(h => h.includes('usd'));
-          const colRate = headers.findIndex(h => h.includes('rate')); const colPct = headers.findIndex(h => h.includes('%') || h.includes('pct'));
-          const colRemark = headers.findIndex(h => h.includes('remark') || h.includes('mark')); const colCompany = headers.findIndex(h => h.includes('company') || h.includes('ကုမ္ပဏီ'));
+          const colDate = headers.findIndex(h => h.includes('date') || h.includes('ရက်'));
+          const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat') || h.includes('name'));
+          let colInv = headers.findIndex(h => h === 'inv no' || h === 'inv no.' || h === 'inv');
+          if (colInv === -1) colInv = headers.findIndex(h => h.includes('inv'));
+          const colEd = headers.findIndex(h => h.includes('ed'));
+          const colKg = headers.findIndex(h => h.includes('kg') || h.includes('qty') || h.includes('weight'));
+          const colUsd = headers.findIndex(h => h.includes('usd') || h.includes('vl') || h.includes('amount'));
+          const colRate = headers.findIndex(h => h.includes('rate'));
+          const colPct = headers.findIndex(h => h.includes('%') || h.includes('pct'));
+          const colRemark = headers.findIndex(h => h.includes('remark') || h.includes('mark') || h.includes('customer') || h.includes('cust'));
+          const colCompany = headers.findIndex(h => h.includes('company') || h.includes('ကုမ္ပဏီ'));
 
           const detectedCreditCo = sheetName.toUpperCase(); let parsedList = []; const currentCustomers = getCustomers();
           for (let rowIdx = headerIdx + 1; rowIdx < rawRows.length; rowIdx++) {
-            const row = rawRows[rowIdx]; if (!row || !row.length) continue; if (String(row[0] || '').trim().toLowerCase().includes('total')) continue;
-            const boat = (colBoat !== -1 && row[colBoat]) ? String(row[colBoat]).trim() : ''; const kg = (colKg !== -1 && row[colKg]) ? parseFloat(row[colKg]) || 0 : 0;
-            const usd = (colUsd !== -1 && row[colUsd]) ? parseFloat(row[colUsd]) || 0 : 0; if (!boat && !kg && !usd) continue;
+            const row = rawRows[rowIdx]; if (!row || !row.length) continue; 
+            const rowStr = row.map(c => String(c || '')).join(' ').toLowerCase();
+            if (rowStr.includes('total') || rowStr.includes('grand total') || rowStr.includes('စုစုပေါင်း')) continue;
+
             const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : ''); 
+            const boat = (colBoat !== -1 && row[colBoat] != null) ? String(row[colBoat]).trim() : ''; 
+            const kg = (colKg !== -1 && row[colKg] != null) ? parseFloat(row[colKg]) || 0 : 0;
+            const usd = (colUsd !== -1 && row[colUsd] != null) ? parseFloat(row[colUsd]) || 0 : 0; 
             
-            let invNo = (colInv !== -1 && row[colInv] !== undefined) ? String(row[colInv]).trim() : '';
+            let invNo = (colInv !== -1 && row[colInv] != null) ? String(row[colInv]).trim() : '';
+            if (!dateStr && !boat && !usd && !invNo) continue;
+            
             if (/^\d{1,2}$/.test(invNo)) { invNo = invNo.padStart(3, '0'); }
 
-            const edNo = (colEd !== -1 && row[colEd] !== undefined) ? String(row[colEd]).trim() : ''; const rate = (colRate !== -1 && row[colRate]) ? parseFloat(row[colRate]) || 34.7 : 34.7;
-            const pct = (colPct !== -1 && row[colPct] !== undefined) ? parseFloat(row[colPct]) || 4.0 : 4.0;
-            const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); const remark = (colRemark !== -1 && row[colRemark]) ? String(row[colRemark]).trim().toUpperCase() : 'OTHER';
+            const edNo = (colEd !== -1 && row[colEd] != null) ? String(row[colEd]).trim() : ''; 
+            const rate = (colRate !== -1 && row[colRate] != null) ? parseFloat(row[colRate]) || 34.7 : 34.7;
+            const pct = (colPct !== -1 && row[colPct] != null) ? parseFloat(row[colPct]) || 4.0 : 4.0;
+            const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); 
+            const remark = (colRemark !== -1 && row[colRemark]) ? String(row[colRemark]).trim().toUpperCase() : 'OTHER';
             let compName = (colCompany !== -1 && row[colCompany]) ? String(row[colCompany]).trim() : '';
             if (compName && remark !== 'OTHER' && !currentCustomers[remark]) { currentCustomers[remark] = { name: compName, defaultPct: pct }; } else { compName = currentCustomers[remark] ? currentCustomers[remark].name : remark; }
             parsedList.push({ id: generateId('bk'), no: parsedList.length + 1, creditCo: detectedCreditCo, date: dateStr, boat, invNo, edNo, kg, usd, rate, thb, pct, amount, remark, companyName: compName, hasLicense: false });
           }
-          if (!parsedList.length) return alert("Credit စာရင်းများ မတွေ့ရှိပါ။");
-          const applyLicense = confirm("Import လုပ်မည့် စာရင်းအားလုံးအတွက် န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) ကိုပါ တစ်ခါတည်း ဖြတ်တောက်မည်လား?\n\n(OK နှိပ်ပါက လှေစာရင်းအားလုံးတွင် လိုင်စင်ဖြတ်ပြီးကြောင်း အလိုအလျောက် မှတ်သားပေးမည်ဖြစ်ပါသည်။)");
+          
+          if (!parsedList.length) return alert("Credit စာရင်းများ မတွေ့ရှိပါ။ Excel ဖိုင်၏ Header များကို စစ်ဆေးပေးပါ။");
+          
+          const applyLicense = confirm("Import လုပ်မည့် စာရင်းအားလုံးအတွက် န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) ကိုပါ တစ်ခါတည်း ဖြတ်တောက်မည်လား?");
           if (applyLicense) { parsedList = parsedList.map(p => ({ ...p, hasLicense: true })); }
-          saveCustomers(currentCustomers); const isReplace = confirm(`Credit စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။ အစားထိုး သိမ်းမည်လား?`);
-          const existing = getCargoData(); saveCargoData(isReplace ? parsedList : [...existing, ...parsedList]);
-          populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); alert(`Credit စာရင်းပေါင်း (${parsedList.length}) ခု Cloud သို့ ထည့်သွင်းပြီးပါပြီ။`);
-        } catch(err) { alert("Error: " + err.message); } finally { e.target.value = ''; }
-      }; r.readAsArrayBuffer(file);
+          saveCustomers(currentCustomers); 
+          
+          const isAppend = confirm(`Credit စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။\n\n[OK] နှိပ်ပါက လက်ရှိစာရင်းများအောက်တွင် ဆက်ပေါင်းထည့်မည် (Append) ဖြစ်ပါသည်။\n\n[Cancel] နှိပ်ပါက မူလစာရင်းများကို အကုန်ဖျက်ပြီး အစားထိုး (Replace) ပါမည်။`);
+          const existing = getCargoData(); 
+          if (isAppend) { saveCargoData([...existing, ...parsedList]); } else { const sure = confirm("⚠️ သတိပေးချက် ⚠️\nမူလစာရင်းများ အကုန်ပျက်သွားပါမည်။ အစားထိုးမှာ သေချာပါသလား?"); if (sure) saveCargoData(parsedList); else return; }
+          
+          populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); 
+          alert(`Credit စာရင်းပေါင်း (${parsedList.length}) ခု System သို့ ထည့်သွင်းပြီးပါပြီ။`);
+        } catch(err) { alert("Error: " + err.message); } finally { event.target.value = ''; }
+      }; reader.readAsArrayBuffer(file);
     }
 
-    // ================= ED SERVICE LOGIC (TESTED & FIXED IMPORT) =================
+    // ================= ED SERVICE LOGIC =================
     let sortEdColumn = 'date'; let sortEdAsc = false; let currentEdFilteredList = [];
     function populateEdMonthDropdown() {
       const all = getEdData(); const s = document.getElementById('filterEdMonth'); if (!s) return; const cur = s.value || 'ALL';
@@ -1352,6 +1236,13 @@
       document.getElementById('edStatTrips').innerText = list.length; document.getElementById('edStatUSD').innerText = '$' + formatNum(list.reduce((a, b) => a + Number(b.invVl || 0), 0), 2);
       document.getElementById('edStat2Pct').innerText = Math.round(list.reduce((a, b) => a + Number(b.tax2Pct || 0), 0)).toLocaleString() + ' Ks'; document.getElementById('edStatMF').innerText = Math.round(list.reduce((a, b) => a + Number(b.mfService || 0), 0)).toLocaleString() + ' Ks'; document.getElementById('edStatTotal').innerText = Math.round(list.reduce((a, b) => a + Number(b.total || 0), 0)).toLocaleString() + ' Ks';
     }
+    
+    // ** ADDED ED SUMMARY CARDS TOGGLE FUNCTION **
+    function toggleEdCards() {
+      const c = document.getElementById('edMetricCardsContainer'); const icon = document.getElementById('edCardsToggleIcon'); const text = document.getElementById('edCardsToggleText');
+      if (c) c.classList.toggle('hidden'); if (icon) icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; if (text) text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
+    }
+
     function renderEdTable(list) {
       const tbody = document.getElementById('edTableBody'); const noMsg = document.getElementById('noEdResultsMsg'); tbody.innerHTML = '';
       if (list.length === 0) { noMsg.classList.remove('hidden'); return; } noMsg.classList.add('hidden');
@@ -1411,7 +1302,7 @@
       if (editId) {
         all = all.map(i => i.id === editId ? { ...i, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate } : i); alert("ED စာရင်းပြင်ဆင်မှု အောင်မြင်ပါသည်။");
       } else {
-        all.unshift({ id: generateId('ed'), no: all.length + 1, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate }); alert("ED စာရင်းအသစ် Cloud သို့ သိမ်းဆည်းပြီးပါပြီ။");
+        all.unshift({ id: generateId('ed'), no: all.length + 1, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate }); alert("ED စာရင်းအသစ် System သို့ သိမ်းဆည်းပြီးပါပြီ။");
       }
       saveEdData(all); populateEdMonthDropdown(); populateEdCustDropdown(); closeEdEntryModal(); filterEdData();
     }
@@ -1429,17 +1320,13 @@
           const sheetName = workbook.SheetNames[0];
           const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
           
-          if (!rawRows || rawRows.length === 0) {
-            alert("Excel ဖိုင်ထဲတွင် ဒေတာ မတွေ့ရှိပါ။");
-            return;
-          }
+          if (!rawRows || rawRows.length === 0) { alert("Excel ဖိုင်ထဲတွင် ဒေတာ မတွေ့ရှိပါ။"); return; }
 
           let headerIdx = -1;
           for (let i = 0; i < Math.min(rawRows.length, 15); i++) {
             const rowStr = (rawRows[i] || []).map(cell => String(cell || '')).join(' ').toLowerCase();
             if (rowStr.includes('inv') || rowStr.includes('လှေ') || rowStr.includes('boat') || rowStr.includes('2%') || rowStr.includes('vl') || rowStr.includes('service') || rowStr.includes('mf')) {
-              headerIdx = i;
-              break;
+              headerIdx = i; break;
             }
           }
           if (headerIdx === -1) headerIdx = 0;
@@ -1447,10 +1334,8 @@
           const headers = (rawRows[headerIdx] || []).map(h => String(h || '').trim().toLowerCase());
           const colDate = headers.findIndex(h => h.includes('date') && !h.includes('pay'));
           const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat') || h.includes('ship') || h.includes('name'));
-          
-          let colInv = headers.findIndex(h => h.includes('inv') && !h.includes('vl') && !h.includes('usd') && !h.includes('amt'));
-          if (colInv === -1) colInv = headers.findIndex(h => h === 'inv no' || h === 'inv no.' || h === 'inv: no');
-
+          let colInv = headers.findIndex(h => h === 'inv no' || h === 'inv no.' || h === 'inv');
+          if (colInv === -1) colInv = headers.findIndex(h => h.includes('inv'));
           const colVl = headers.findIndex(h => h.includes('vl') || h.includes('usd') || h.includes('val') || h.includes('amt'));
           const colCust = headers.findIndex(h => h.includes('co') || h.includes('ltd') || h.includes('cust') || h.includes('company'));
           const col2Pct = headers.findIndex(h => h.includes('2%') || h.includes('2 %') || (h.includes('2') && !h.includes('20')));
@@ -1462,52 +1347,37 @@
           for (let r = headerIdx + 1; r < rawRows.length; r++) {
             const row = rawRows[r];
             if (!row || !row.length) continue;
-            
             const rowStr = row.map(c => String(c || '')).join(' ').toLowerCase();
             if (rowStr.includes('total') || rowStr.includes('grand total') || rowStr.includes('စုစုပေါင်း')) continue;
 
             const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : '');
-            const boat = (colBoat !== -1 && row[colBoat] !== undefined && row[colBoat] !== null) ? String(row[colBoat]).trim() : '';
-            const invVl = (colVl !== -1 && row[colVl] !== undefined && row[colVl] !== null) ? parseFloat(row[colVl]) || 0 : 0;
-            let invNo = (colInv !== -1 && row[colInv] !== undefined && row[colInv] !== null) ? String(row[colInv]).trim() : '';
+            const boat = (colBoat !== -1 && row[colBoat] != null) ? String(row[colBoat]).trim() : '';
+            const invVl = (colVl !== -1 && row[colVl] != null) ? parseFloat(row[colVl]) || 0 : 0;
+            let invNo = (colInv !== -1 && row[colInv] != null) ? String(row[colInv]).trim() : '';
 
             if (!dateStr && !boat && !invVl && !invNo) continue;
-
-            if (/^\d{1,2}$/.test(invNo)) {
-              invNo = invNo.padStart(3, '0');
-            }
+            if (/^\d{1,2}$/.test(invNo)) invNo = invNo.padStart(3, '0');
 
             const customer = (colCust !== -1 && row[colCust]) ? String(row[colCust]).trim().toUpperCase() : 'OTHER';
-            const tax2Pct = Math.round((col2Pct !== -1 && row[col2Pct] !== undefined && row[col2Pct] !== null && row[col2Pct] !== '') ? parseFloat(row[col2Pct]) || (invVl * 42) : (invVl * 42));
-            const mfService = Math.round((colMF !== -1 && row[colMF] !== undefined && row[colMF] !== null && row[colMF] !== '') ? parseFloat(row[colMF]) || 60000 : 60000);
-            const total = Math.round((colTotal !== -1 && row[colTotal] !== undefined && row[colTotal] !== null && row[colTotal] !== '') ? parseFloat(row[colTotal]) || (tax2Pct + mfService) : (tax2Pct + mfService));
+            const tax2Pct = Math.round((col2Pct !== -1 && row[col2Pct] != null && row[col2Pct] !== '') ? parseFloat(row[col2Pct]) || (invVl * 42) : (invVl * 42));
+            const mfService = Math.round((colMF !== -1 && row[colMF] != null && row[colMF] !== '') ? parseFloat(row[colMF]) || 60000 : 60000);
+            const total = Math.round((colTotal !== -1 && row[colTotal] != null && row[colTotal] !== '') ? parseFloat(row[colTotal]) || (tax2Pct + mfService) : (tax2Pct + mfService));
             const payDate = (colPayDate !== -1 && row[colPayDate]) ? parseExactExcelDate(row[colPayDate]) : '';
 
             parsedList.push({ id: generateId('ed'), no: parsedList.length + 1, date: dateStr, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate });
           }
 
-          if (!parsedList.length) {
-            alert("ED စာရင်းများ မတွေ့ရှိပါ။ Excel ဖိုင်၏ Header များကို စစ်ဆေးပေးပါ။");
-            return;
-          }
+          if (!parsedList.length) { alert("ED စာရင်းများ မတွေ့ရှိပါ။ Excel ဖိုင်၏ Header များကို စစ်ဆေးပေးပါ။"); return; }
 
-          const isReplace = confirm(`ED စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။\n\n[OK] = လက်ရှိစာရင်းအားလုံးကို အစားထိုး သိမ်းဆည်းမည်\n[Cancel] = လက်ရှိစာရင်းများအောက်တွင် ဆက်ပေါင်းထည့်မည်`);
+          const isAppend = confirm(`ED စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။\n\n[OK] နှိပ်ပါက လက်ရှိစာရင်းများအောက်တွင် ဆက်ပေါင်းထည့်မည် (Append) ဖြစ်ပါသည်။\n\n[Cancel] နှိပ်ပါက မူလစာရင်းများကို အကုန်ဖျက်ပြီး အစားထိုး (Replace) ပါမည်။`);
           const existing = getEdData();
-          saveEdData(isReplace ? parsedList : [...existing, ...parsedList]);
-          populateEdMonthDropdown();
-          populateEdCustDropdown();
-          filterEdData();
+          if (isAppend) { saveEdData([...existing, ...parsedList]); } else { const sure = confirm("⚠️ သတိပေးချက် ⚠️\nမူလစာရင်းများ အကုန်ပျက်သွားပါမည်။ အစားထိုးမှာ သေချာပါသလား?"); if (sure) saveEdData(parsedList); else return; }
+          
+          populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData();
           alert(`ED စာရင်းပေါင်း (${parsedList.length}) ခု System သို့ အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။`);
-        } catch(err) {
-          alert("Error: " + err.message);
-        } finally {
-          event.target.value = '';
-        }
+        } catch(err) { alert("Error: " + err.message); } finally { event.target.value = ''; }
       };
-      reader.onerror = function() {
-        alert("Excel ဖိုင် ဖတ်ရှုရာတွင် အမှားဖြစ်ပေါ်ခဲ့ပါသည်။");
-        event.target.value = '';
-      };
+      reader.onerror = function() { alert("Excel ဖိုင် ဖတ်ရှုရာတွင် အမှားဖြစ်ပေါ်ခဲ့ပါသည်။"); event.target.value = ''; };
       reader.readAsArrayBuffer(file);
     }
 
@@ -1565,8 +1435,14 @@
       const selectedCreditCode = document.getElementById('reportCreditCoSelect').value || 'SH'; const creditCoObj = creditCompanies.find(c => c.code === selectedCreditCode) || creditCompanies[0];
       const onlyThisCreditCo = document.getElementById('filterOnlySelectedCreditCo').checked;
       const letterArea = document.getElementById('letterheadRenderArea');
-      if (creditCoObj.bannerImage && creditCoObj.bannerImage.trim() !== "") { letterArea.innerHTML = `<div class="w-full text-center"><img src="${creditCoObj.bannerImage}" alt="Letterhead" class="w-full object-contain max-h-44 mx-auto select-none"></div>`; }
-      else { letterArea.innerHTML = `<div class="flex items-start justify-between pb-3 border-b-2 border-slate-700"><div class="w-16 h-16 rounded-xl bg-blue-950 text-white font-bold flex items-center justify-center text-2xl">${creditCoObj.code}</div><div class="text-right flex-1 pl-4"><h2 class="text-lg font-extrabold text-blue-950 uppercase">${creditCoObj.name}</h2><p class="text-[11px] text-slate-600 font-medium mt-0.5">${creditCoObj.address || ''}</p><p class="text-[11px] text-slate-600 font-medium">${creditCoObj.phone || ''}</p><p class="text-[11px] text-slate-600 font-medium">${creditCoObj.email || ''}</p></div></div>`; }
+      
+      if (creditCoObj.bannerImage && creditCoObj.bannerImage.trim() !== "") { 
+        letterArea.innerHTML = `<div class="w-full text-center"><img src="${creditCoObj.bannerImage}" alt="Letterhead" class="w-full object-contain max-h-44 mx-auto select-none"></div>`; 
+      }
+      else { 
+        letterArea.innerHTML = `<div class="flex items-start justify-between pb-3 border-b-2 border-slate-700"><div class="w-16 h-16 rounded-xl bg-blue-950 text-white font-bold flex items-center justify-center text-2xl">${creditCoObj.code}</div><div class="text-right flex-1 pl-4"><h2 class="text-lg font-extrabold text-blue-950 uppercase">${creditCoObj.name}</h2><p class="text-[11px] text-slate-600 font-medium mt-0.5">${creditCoObj.address || ''}</p><p class="text-[11px] text-slate-600 font-medium">${creditCoObj.phone || ''}</p><p class="text-[11px] text-slate-600 font-medium">${creditCoObj.email || ''}</p></div></div>`; 
+      }
+      
       let dailyRows = all.filter(r => r.date === selectedDate);
       if (onlyThisCreditCo) dailyRows = dailyRows.filter(r => (r.creditCo || 'SH') === selectedCreditCode);
 
@@ -1593,10 +1469,56 @@
       else { btnSummary.className = "px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm transition"; btnDetail.className = "px-2 py-1 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 transition"; }
       renderDailyReport();
     }
+    
+    // ================= UNIFIED LETTERHEAD UPLOAD LOGIC =================
     function handleLetterheadImageUpload(e) {
-      const file = e.target.files[0]; if (!file) return; const r = new FileReader();
-      r.onload = function(evt) { const code = document.getElementById('reportCreditCoSelect').value || 'SH'; const list = getCreditCompanies(); const target = list.find(c => c.code === code); if (target) { target.bannerImage = evt.target.result; saveCreditCompanies(list); alert(`[${target.name}] Letterhead ပုံ တင်ပြီးပါပြီ!`); } }; r.readAsDataURL(file); e.target.value = '';
+      const file = e.target.files[0]; if (!file) return;
+      const code = document.getElementById('reportCreditCoSelect').value || 'SH';
+      const list = getCreditCompanies(); const target = list.find(c => c.code === code);
+      if (!target) return;
+      uploadLetterheadToCloud(file, target, list);
+      e.target.value = '';
     }
+
+    function triggerCreditBannerUpload(code) {
+      const input = document.createElement('input');
+      input.type = 'file'; input.accept = 'image/*';
+      input.onchange = function(e) {
+        const file = e.target.files[0]; if (!file) return;
+        const list = getCreditCompanies(); const target = list.find(c => c.code === code);
+        if (!target) return;
+        uploadLetterheadToCloud(file, target, list);
+      };
+      input.click();
+    }
+
+    function uploadLetterheadToCloud(file, target, list) {
+      if (window.firebase && firebase.storage) {
+        showSecurityToast("⏳ Cloud သို့ ပုံတင်နေပါသည်...");
+        const storageRef = firebase.storage().ref();
+        const bannerRef = storageRef.child(`letterheads/${target.code}_${Date.now()}_${file.name}`);
+        bannerRef.put(file).then((snapshot) => {
+          snapshot.ref.getDownloadURL().then((url) => {
+            target.bannerImage = url; saveCreditCompanies(list);
+            showSecurityToast("✅ Letterhead ပုံ Cloud သို့ တင်ပြီးပါပြီ!"); renderDailyReport();
+          });
+        }).catch(err => {
+          console.warn("Storage Error, falling back to Local", err);
+          fallbackBase64Upload(file, target, list);
+        });
+      } else {
+        fallbackBase64Upload(file, target, list);
+      }
+    }
+
+    function fallbackBase64Upload(file, target, list) {
+      const r = new FileReader();
+      r.onload = function(evt) {
+        target.bannerImage = evt.target.result; saveCreditCompanies(list);
+        showSecurityToast("✅ Letterhead ပုံ (Local) ဖြင့် တင်ပြီးပါပြီ!"); renderDailyReport();
+      }; r.readAsDataURL(file);
+    }
+
     function downloadReportJPG() {
       const card = document.getElementById('printableA4Card'); const dateVal = document.getElementById('reportDatePicker').value || 'daily'; const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH'; const filename = `${creditVal}_DailyReport_${dateVal}.jpg`;
       document.fonts.ready.then(() => { if (window.htmlToImage) { htmlToImage.toJpeg(card, { quality: 1.0, pixelRatio: 2.5, backgroundColor: '#ffffff', cacheBust: true, style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' }, width: 794 }).then(dataUrl => { const a = document.createElement('a'); a.download = filename; a.href = dataUrl; document.body.appendChild(a); a.click(); a.remove(); }).catch(err => { fallbackReportHtml2Canvas(card, filename); }); } else { fallbackReportHtml2Canvas(card, filename); } });
@@ -1607,27 +1529,6 @@
       document.fonts.ready.then(() => { if (window.htmlToImage) { htmlToImage.toPng(card, { pixelRatio: 2.5, backgroundColor: '#ffffff', cacheBust: true, style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' }, width: 794 }).then(dataUrl => { const a = document.createElement('a'); a.download = filename; a.href = dataUrl; document.body.appendChild(a); a.click(); a.remove(); }).catch(err => { fallbackReportPngHtml2Canvas(card, filename); }); } else { fallbackReportPngHtml2Canvas(card, filename); } });
     }
     function fallbackReportPngHtml2Canvas(card, filename) { html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => { const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/png'); document.body.appendChild(a); a.click(); a.remove(); }); }
-
-    function parseExactExcelDate(val) {
-      if (!val) return '';
-      if (typeof val === 'number') {
-        const d = new Date((Math.floor(val) - 25569) * 86400 * 1000);
-        return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
-      }
-      if (val instanceof Date) {
-        return `${val.getUTCFullYear()}-${String(val.getUTCMonth() + 1).padStart(2, '0')}-${String(val.getUTCDate()).padStart(2, '0')}`;
-      }
-      const s = String(val).trim();
-      if (s.includes('.')) {
-        const p = s.split('.');
-        if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
-      }
-      if (s.includes('/')) {
-        const p = s.split('/');
-        if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
-      }
-      return s.split('T')[0];
-    }
 
     // ================= VOUCHER PREVIEW =================
     let currentVoucherItem = null;
@@ -1654,7 +1555,7 @@
       if (!currentVoucherItem) return;
       const card = document.getElementById('voucherTargetCard');
       const filename = `Voucher_${currentVoucherItem.customer || 'ED'}_${currentVoucherItem.invNo}.jpg`;
-      const bgColor = '#fdfaf0'; 
+      const bgColor = '#fdfbf4'; 
       
       document.fonts.ready.then(() => {
         if (window.htmlToImage) {
@@ -1716,20 +1617,6 @@
     function renderCreditCoTable() {
       const list = getCreditCompanies(); const tbody = document.getElementById('creditCoTableBody'); if (!tbody) return;
       tbody.innerHTML = list.map(c => `<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800"><td class="p-2.5 font-mono font-bold text-blue-950 dark:text-blue-400">${c.code}</td><td class="p-2.5 font-semibold">${c.name}</td><td class="p-2.5">${c.bannerImage ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">🖼️ Custom Banner</span>' : '<span class="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600">Standard</span>'}</td><td class="p-2.5 text-center"><button onclick="triggerCreditBannerUpload('${c.code}')" class="text-blue-900 dark:text-blue-400 hover:underline font-semibold">📷 ပုံတင်မည်</button></td><td class="p-2.5 text-center">${c.code === 'SH' ? '<span class="text-slate-300">-</span>' : `<button onclick="deleteCreditCo('${c.code}')" class="text-rose-600">🗑️</button>`}</td></tr>`).join('');
-    }
-    let pendingUploadCode = null;
-    function triggerCreditBannerUpload(code) {
-      pendingUploadCode = code; const input = document.getElementById('letterheadImageInput');
-      input.onchange = function(e) {
-        const file = e.target.files[0]; if (!file) return; const r = new FileReader();
-        r.onload = function(evt) {
-          const list = getCreditCompanies(); const target = list.find(c => c.code === pendingUploadCode);
-          if (target) { target.bannerImage = evt.target.result; saveCreditCompanies(list); alert(`[${target.name}] Letterhead ပုံ တင်ပြီးပါပြီ!`); }
-          input.onchange = handleLetterheadImageUpload;
-        };
-        r.readAsDataURL(file); e.target.value = '';
-      };
-      input.click();
     }
     function handleAddNewCreditCo(e) {
       e.preventDefault(); const code = document.getElementById('newCreditCode').value.trim().toUpperCase(); const name = document.getElementById('newCreditName').value.trim().toUpperCase(); const addr = document.getElementById('newCreditAddress').value.trim(); const list = getCreditCompanies();
