@@ -117,7 +117,7 @@
           BK Operations & Management System မှ ကြိုဆိုပါသည်။ နယ်စပ်ရေကြောင်း ကုန်စည်ပို့ဆောင်ရေးနှင့် အကောက်ခွန် ဝန်ဆောင်မှု စီမံခန့်ခွဲရေး ပေါ်တယ်လ်။
         </p>
         <div class="pt-2 text-[11px] text-slate-300 hidden md:block">
-          ☁️ Powered by Google Firebase Cloud Real-Time Database (v20.5)
+          ☁️ Powered by Google Firebase Cloud Real-Time Database (v20.6)
         </div>
       </div>
 
@@ -157,7 +157,7 @@
               <input type="checkbox" id="rememberMeCheckbox" class="rounded text-blue-600">
               <span>Remember username</span>
             </label>
-            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 20.5</span>
+            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 20.6</span>
           </div>
 
           <div id="loginErrorBox" class="p-2.5 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 rounded-xl text-rose-600 dark:text-rose-300 text-xs font-semibold hidden text-center">
@@ -289,6 +289,7 @@
             <span class="font-semibold text-slate-500">လ:</span>
             <select id="filterMonth" onchange="filterData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none"></select>
           </div>
+          <!-- Date Filter -->
           <div class="flex items-center gap-1.5 text-xs">
             <span class="font-semibold text-slate-500">ရက်စွဲ:</span>
             <input id="filterDate" type="date" onchange="filterData()" class="border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold text-slate-800 dark:text-white outline-none">
@@ -846,7 +847,7 @@
       <div class="w-full flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <div class="flex items-center gap-2">
           <span class="text-xl">📸</span>
-          <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">ED Premium Voucher Export (V20.5)</h3>
+          <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">ED Premium Voucher Export (V20.6)</h3>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="downloadLiveVoucherJPG()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1.5">
@@ -903,7 +904,7 @@
                    <polygon points="45,8 955,8 992,45 992,155 955,192 45,192 8,155 8,45" fill="none" stroke="#e2b963" stroke-width="2" opacity="0.5"/>
                </svg>
                <div class="relative z-10 pt-2 px-6 w-full">
-                   <!-- Removed flex-wrap, changed leading to normal, added whitespace-nowrap to absolutely force 1 line -->
+                   <!-- Changed leading to normal, added whitespace-nowrap to absolutely force 1 line -->
                    <h1 class="text-[32px] font-extrabold tracking-wide text-white drop-shadow-sm uppercase leading-normal mm-text flex items-center justify-center gap-x-2 whitespace-nowrap">
                      <span id="vcCustomer" class="whitespace-nowrap" style="color: #ffffff;">KYAW SAN LIN-34</span> 
                      <span id="vcCode" class="whitespace-nowrap" style="color: #e29e39;">(AP-007)</span>
@@ -978,7 +979,7 @@
 
   <footer class="bg-white dark:bg-slate-900 border-t py-3 transition-colors mt-auto w-full">
     <div class="w-full max-w-[98%] mx-auto px-4 text-center">
-      <p class="text-xs text-slate-400">© 2026 BK Operations & Management System. Version 20.5.</p>
+      <p class="text-xs text-slate-400">© 2026 BK Operations & Management System. Version 20.6.</p>
     </div>
   </footer>
 
@@ -1304,11 +1305,11 @@
       const users = getUserAccounts(); const isValidAdmin = users.some(u => u.role === 'admin' && u.password === adminPasswordInput.trim());
       if (!isValidAdmin) return alert("Admin Password မှားယွင်းနေပါသည်။ Backup ဆွဲယူခွင့် မပြုပါ။");
 
-      const backupData = { version: "20.5", system: "BK Operations & Management System", exportDate: new Date().toISOString(), exportedBy: currentUser.username, cargoData: getCargoData(), edData: getEdData(), creditCompanies: getCreditCompanies(), customers: getCustomers(), userAccounts: getUserAccounts(), mpuTopups: getMpuTopups() };
+      const backupData = { version: "20.6", system: "BK Operations & Management System", exportDate: new Date().toISOString(), exportedBy: currentUser.username, cargoData: getCargoData(), edData: getEdData(), creditCompanies: getCreditCompanies(), customers: getCustomers(), userAccounts: getUserAccounts(), mpuTopups: getMpuTopups() };
       const jsonString = JSON.stringify(backupData); let encryptedPayload = "";
       if (window.CryptoJS && CryptoJS.AES) encryptedPayload = "BK_AES::" + CryptoJS.AES.encrypt(jsonString, adminPasswordInput.trim()).toString();
       else encryptedPayload = "BK_RAW::" + btoa(encodeURIComponent(jsonString));
-      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "20.5", timestamp: Date.now(), data: encryptedPayload };
+      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "20.6", timestamp: Date.now(), data: encryptedPayload };
       const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fileContainer, null, 2)); a.download = `BK_Operations_ProtectedBackup_${new Date().toISOString().split('T')[0]}.json`;
       document.body.appendChild(a); a.click(); a.remove(); alert("Admin Password ဖြင့် အောင်မြင်စွာ Encrypt ပြုလုပ်ထားသော Backup ဖိုင်ကို ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!");
     }
@@ -1434,12 +1435,10 @@
       const rows = list.map((r, i) => { const baseRow = { "No": i + 1, "Credit Co": r.creditCo || 'SH', "Date": r.date, "လှေအမည်": r.boat, "Inv: No.": r.invNo, "ED No.": String(r.edNo), "KG": Number(r.kg || 0), "Inv: (USD)": Number(r.usd || 0), "RATE": Number(r.rate || 34.7), "Inv: (THB)": Math.round(Number(r.thb || 0)) }; if (!isStaff) { baseRow["%"] = Number(r.pct || 4); baseRow["AMOUNT (THB)"] = Math.round(Number(r.amount || 0)); } baseRow["Remark"] = r.remark; baseRow["Company Name"] = r.companyName || (custMap[r.remark] ? custMap[r.remark].name : ''); return baseRow; });
       const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Credit_Report"); XLSX.writeFile(wb, "BK_Credit_Report.xlsx");
     }
-
     function toggleCargoCards() {
       const c = document.getElementById('cargoMetricCardsContainer'); const icon = document.getElementById('cargoCardsToggleIcon'); const text = document.getElementById('cargoCardsToggleText');
       c.classList.toggle('hidden'); icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
     }
-
     function handleExcelImport(e) {
       const file = e.target.files[0]; if (!file) return; const r = new FileReader();
       r.onload = function(evt) {
@@ -1578,30 +1577,21 @@
       const total = Math.round(tax2Pct + mfService); const payDate = document.getElementById('inEdPayDate').value;
       let all = getEdData();
       if (editId) {
-        all = all.map(i => i.id === editId ? { ...i, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate } : i);
-        alert("ED စာရင်းပြင်ဆင်မှု အောင်မြင်ပါသည်။");
+        all = all.map(i => i.id === editId ? { ...i, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate } : i); alert("ED စာရင်းပြင်ဆင်မှု အောင်မြင်ပါသည်။");
       } else {
-        all.unshift({ id: generateId('ed'), no: all.length + 1, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate });
-        alert("ED စာရင်းအသစ် Cloud သို့ သိမ်းဆည်းပြီးပါပြီ။");
+        all.unshift({ id: generateId('ed'), no: all.length + 1, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate }); alert("ED စာရင်းအသစ် Cloud သို့ သိမ်းဆည်းပြီးပါပြီ။");
       }
       saveEdData(all); populateEdMonthDropdown(); populateEdCustDropdown(); closeEdEntryModal(); filterEdData();
     }
-    function deleteEdShipment(id) {
-      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်း ဖျက်ပိုင်ခွင့် ရှိပါသည်။");
-      if (confirm("ဤ ED စာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { saveEdData(getEdData().filter(i => i.id !== id)); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); }
+    function deleteEdShipment(id) { if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်း ဖျက်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ဤ ED စာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { saveEdData(getEdData().filter(i => i.id !== id)); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); } }
+    function clearAllEdData() { if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်း ရှင်းထုတ်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) { saveEdData([]); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); } }
+    function toggleEdCards() {
+      const c = document.getElementById('edMetricCardsContainer'); const icon = document.getElementById('edCardsToggleIcon'); const text = document.getElementById('edCardsToggleText');
+      c.classList.toggle('hidden'); icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
     }
-    function clearAllEdData() {
-      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်း ရှင်းထုတ်ပိုင်ခွင့် ရှိပါသည်။");
-      if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) { saveEdData([]); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); }
-    }
-
     function exportEdToExcel() {
       const list = currentEdFilteredList; if (!list || !list.length) return alert("Export ထုတ်ရန် ED စာရင်းမရှိပါ။");
-      const rows = list.map((r, i) => ({
-        "No": i + 1, "Date": r.date, "လှေအမည်": r.boat, "Inv No.": r.invNo, "Invoice VL (USD)": Number(r.invVl || 0), "Co,.Ltd": r.customer,
-        "2% (MMK)": Math.round(Number(r.tax2Pct || 0)), "MF / Service": Math.round(Number(r.mfService || 0)),
-        "Total (MMK)": Math.round(Number(r.total || 0)), "Pay Date": r.payDate || 'Pending'
-      }));
+      const rows = list.map((r, i) => ({ "No": i + 1, "Date": r.date, "လှေအမည်": r.boat, "Inv No.": r.invNo, "Invoice VL (USD)": Number(r.invVl || 0), "Co,.Ltd": r.customer, "2% (MMK)": Math.round(Number(r.tax2Pct || 0)), "MF / Service": Math.round(Number(r.mfService || 0)), "Total (MMK)": Math.round(Number(r.total || 0)), "Pay Date": r.payDate || 'Pending' }));
       const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "ED_Report"); XLSX.writeFile(wb, "BK_ED_Report.xlsx");
     }
 
@@ -1612,10 +1602,7 @@
           const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: false });
           const sheetName = workbook.SheetNames[0]; const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
           let headerIdx = 0;
-          for (let i = 0; i < Math.min(rawRows.length, 10); i++) {
-            const rowStr = (rawRows[i] || []).join(' ').toLowerCase();
-            if (rowStr.includes('လှေ') || rowStr.includes('inv') || rowStr.includes('2%')) { headerIdx = i; break; }
-          }
+          for (let i = 0; i < Math.min(rawRows.length, 10); i++) { const rowStr = (rawRows[i] || []).join(' ').toLowerCase(); if (rowStr.includes('လှေ') || rowStr.includes('inv') || rowStr.includes('2%')) { headerIdx = i; break; } }
           const headers = rawRows[headerIdx].map(h => String(h || '').trim().toLowerCase());
           const colDate = headers.findIndex(h => h.includes('date') && !h.includes('pay')); const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat'));
           const colInv = headers.findIndex(h => h.includes('inv') && !h.includes('vl') && !h.includes('usd')); const colVl = headers.findIndex(h => h.includes('vl') || h.includes('usd'));
@@ -1629,7 +1616,7 @@
             if (!dateStr && !boat && !invVl) continue;
             
             let invNo = (colInv !== -1 && row[colInv] !== undefined) ? String(row[colInv]).trim() : '';
-            if (/^\d{1,2}$/.test(invNo)) { invNo = invNo.padStart(3, '0'); }
+            if (/^\d{1,2}$/.test(invNo)) { invNo = invNo.padStart(3, '0'); } // padding
 
             const customer = (colCust !== -1 && row[colCust]) ? String(row[colCust]).trim().toUpperCase() : 'OTHER';
             const tax2Pct = Math.round((col2Pct !== -1 && row[col2Pct]) ? parseFloat(row[col2Pct]) || (invVl * 42) : (invVl * 42));
@@ -1643,10 +1630,10 @@
           const existing = getEdData(); saveEdData(isReplace ? parsedList : [...existing, ...parsedList]);
           populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); alert(`ED စာရင်းပေါင်း (${parsedList.length}) ခု Cloud သို့ ထည့်သွင်းပြီးပါပြီ။`);
         } catch(err) { alert("Error: " + err.message); } finally { event.target.value = ''; }
-      };
-      reader.readAsArrayBuffer(file);
+      }; r.readAsArrayBuffer(file);
     }
 
+    // ================= BREAKDOWNS =================
     function renderBreakdown() {
       const all = getCargoData(); const custMap = getCustomers(); const map = {};
       all.forEach(item => {
@@ -1656,9 +1643,7 @@
         map[r].thb += Math.round(Number(item.thb || 0)); map[r].amount += Math.round(Number(item.amount || 0));
       });
       const list = Object.values(map).sort((a, b) => b.amount - a.amount);
-      const tbody = document.getElementById('breakdownTableBody');
-      const tfoot = document.getElementById('breakdownTableFoot');
-      
+      const tbody = document.getElementById('breakdownTableBody'); const tfoot = document.getElementById('breakdownTableFoot');
       tbody.innerHTML = list.map(b => `
         <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
           <td class="p-3 font-bold text-blue-950 dark:text-blue-400 font-mono">${b.remark}</td>
@@ -1670,13 +1655,8 @@
           <td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">฿${formatNum(b.amount, 0)}</td>
         </tr>
       `).join('');
-
-      const totalTrips = list.reduce((a, b) => a + b.trips, 0);
-      const totalKG = Math.round(list.reduce((a, b) => a + b.kg, 0));
-      const totalUSD = list.reduce((a, b) => a + b.usd, 0);
-      const totalTHB = Math.round(list.reduce((a, b) => a + b.thb, 0));
-      const totalAmt = Math.round(list.reduce((a, b) => a + b.amount, 0));
-
+      const totalTrips = list.reduce((a, b) => a + b.trips, 0); const totalKG = Math.round(list.reduce((a, b) => a + b.kg, 0));
+      const totalUSD = list.reduce((a, b) => a + b.usd, 0); const totalTHB = Math.round(list.reduce((a, b) => a + b.thb, 0)); const totalAmt = Math.round(list.reduce((a, b) => a + b.amount, 0));
       tfoot.innerHTML = `
         <tr class="text-slate-900 dark:text-white">
           <td colspan="2" class="p-3 font-extrabold uppercase tracking-wider text-center">GRAND TOTAL (စုစုပေါင်း)</td>
@@ -1699,9 +1679,7 @@
         if (i.payDate) map[c].paid += Math.round(Number(i.total || 0)); else map[c].pending += Math.round(Number(i.total || 0));
       });
       const list = Object.values(map).sort((a, b) => b.total - a.total);
-      const tbody = document.getElementById('edBreakdownTableBody');
-      const tfoot = document.getElementById('edBreakdownTableFoot');
-
+      const tbody = document.getElementById('edBreakdownTableBody'); const tfoot = document.getElementById('edBreakdownTableFoot');
       tbody.innerHTML = list.map(b => `
         <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
           <td class="p-3 font-bold font-mono text-indigo-950 dark:text-indigo-400">${b.cust}</td>
@@ -1714,15 +1692,10 @@
         </tr>
       `).join('');
 
-      const totalTrips = list.reduce((a, b) => a + b.trips, 0);
-      const totalUSD = list.reduce((a, b) => a + b.usd, 0);
-      const totalTax2 = Math.round(list.reduce((a, b) => a + b.tax2, 0));
-      const totalMF = Math.round(list.reduce((a, b) => a + b.mf, 0));
-      const grandTotal = Math.round(list.reduce((a, b) => a + b.total, 0));
+      const totalTrips = list.reduce((a, b) => a + b.trips, 0); const totalUSD = list.reduce((a, b) => a + b.usd, 0);
+      const totalTax2 = Math.round(list.reduce((a, b) => a + b.tax2, 0)); const totalMF = Math.round(list.reduce((a, b) => a + b.mf, 0)); const grandTotal = Math.round(list.reduce((a, b) => a + b.total, 0));
       const allPending = Math.round(list.reduce((a, b) => a + b.pending, 0));
-      const pendingStatusHtml = allPending > 0 
-        ? `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-800">ကျန်: ${allPending.toLocaleString()} K</span>` 
-        : `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-800">အကုန်ချေပြီး</span>`;
+      const pendingStatusHtml = allPending > 0 ? `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-800">ကျန်: ${allPending.toLocaleString()} K</span>` : `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-800">အကုန်ချေပြီး</span>`;
 
       tfoot.innerHTML = `
         <tr class="text-slate-900 dark:text-white">
@@ -1737,8 +1710,9 @@
       `;
     }
 
+    // ================= DAILY REPORT =================
+    let currentDailyReportType = 'detail';
     function onCreditCoChange() { renderDailyReport(); }
-
     function renderDailyReport() {
       const all = getCargoData(); const creditCompanies = getCreditCompanies(); const custMap = getCustomers();
       let selectedDate = document.getElementById('reportDatePicker').value;
@@ -1764,7 +1738,6 @@
       if (onlyThisCreditCo) dailyRows = dailyRows.filter(r => (r.creditCo || 'SH') === selectedCreditCode);
 
       dailyRows.sort((a,b) => String(a.invNo || '').localeCompare(String(b.invNo || ''), undefined, {numeric: true}));
-
       const contentDiv = document.getElementById('dailyReportContentArea'); const formattedDate = formatReportDate(selectedDate);
       const totalBoats = dailyRows.length; const totalUSD = dailyRows.reduce((acc, cur) => acc + Number(cur.usd || 0), 0);
 
@@ -1773,25 +1746,10 @@
           <div class="mt-8 flex flex-col items-center justify-center">
             <div class="w-full max-w-xl">
               <table class="w-full border-collapse border border-black text-slate-900">
-                <thead>
-                  <tr class="font-bold border border-black bg-slate-50">
-                    <th class="border border-black p-2.5 text-center w-16">No.</th>
-                    <th class="border border-black p-2.5 text-center w-36">Date</th>
-                    <th class="border border-black p-2.5 text-center w-32">စီးရေ</th>
-                    <th class="border border-black p-2.5 text-center">Inv,Amt: (USD)</th>
-                  </tr>
-                </thead>
+                <thead><tr class="font-bold border border-black bg-slate-50"><th class="border border-black p-2.5 text-center w-16">No.</th><th class="border border-black p-2.5 text-center w-36">Date</th><th class="border border-black p-2.5 text-center w-32">စီးရေ</th><th class="border border-black p-2.5 text-center">Inv,Amt: (USD)</th></tr></thead>
                 <tbody>
-                  <tr>
-                    <td class="border border-black p-3 text-center font-bold">1</td>
-                    <td class="border border-black p-3 text-center font-bold">${formattedDate}</td>
-                    <td class="border border-black p-3 text-center font-bold">${totalBoats}</td>
-                    <td class="border border-black p-3 text-right font-bold pr-4">${formatNum(totalUSD, 3)}</td>
-                  </tr>
-                  <tr class="font-bold border-t-2 border-black">
-                    <td colspan="3" class="border border-black p-3 text-center font-bold tracking-wider">TOTAL</td>
-                    <td class="border border-black p-3 text-right font-bold pr-4">${formatNum(totalUSD, 3)}</td>
-                  </tr>
+                  <tr><td class="border border-black p-3 text-center font-bold">1</td><td class="border border-black p-3 text-center font-bold">${formattedDate}</td><td class="border border-black p-3 text-center font-bold">${totalBoats}</td><td class="border border-black p-3 text-right font-bold pr-4">${formatNum(totalUSD, 3)}</td></tr>
+                  <tr class="font-bold border-t-2 border-black"><td colspan="3" class="border border-black p-3 text-center font-bold tracking-wider">TOTAL</td><td class="border border-black p-3 text-right font-bold pr-4">${formatNum(totalUSD, 3)}</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1801,17 +1759,7 @@
         let rowsHtml = '';
         dailyRows.forEach((r, idx) => {
           const compName = r.companyName || (custMap[r.remark] ? custMap[r.remark].name : r.remark) || '';
-          rowsHtml += `
-            <tr>
-              <td class="border border-black text-center font-bold">${idx + 1}</td>
-              <td class="border border-black text-left pl-3 font-bold mm-text">${r.boat}</td>
-              <td class="border border-black text-center font-bold">${r.invNo}</td>
-              <td class="border border-black text-right pr-3 font-bold">${Number(r.kg || 0).toLocaleString()}</td>
-              <td class="border border-black text-right font-bold pr-3">${formatNum(r.usd, 3)}</td>
-              <td class="border border-black text-center font-bold">${compName}</td>
-              <td class="border border-black text-center font-bold"></td>
-            </tr>
-          `;
+          rowsHtml += `<tr><td class="border border-black text-center font-bold">${idx + 1}</td><td class="border border-black text-left pl-3 font-bold mm-text">${r.boat}</td><td class="border border-black text-center font-bold">${r.invNo}</td><td class="border border-black text-right pr-3 font-bold">${Number(r.kg || 0).toLocaleString()}</td><td class="border border-black text-right font-bold pr-3">${formatNum(r.usd, 3)}</td><td class="border border-black text-center font-bold">${compName}</td><td class="border border-black text-center font-bold"></td></tr>`;
         });
         if (!dailyRows.length) rowsHtml = `<tr><td colspan="7" class="border border-black p-6 text-center text-slate-400 italic">ရွေးချယ်ထားသော ရက်စွဲတွင် စာရင်း မရှိသေးပါ။</td></tr>`;
 
@@ -1820,31 +1768,13 @@
             <h3 class="text-center font-bold text-lg text-slate-900 mb-2">Daily Report (Kawthaung Office)</h3>
             <div class="text-right font-bold text-slate-900 mb-2" style="font-size: 14px;">Date : ${formattedDate}</div>
             <table class="w-full border-collapse border border-black text-slate-900">
-              <thead>
-                <tr class="font-bold border border-black bg-slate-50">
-                  <th class="border border-black text-center w-12">No.</th>
-                  <th class="border border-black text-center w-40">Ship Name</th>
-                  <th class="border border-black text-center w-16">Inv: No</th>
-                  <th class="border border-black text-center w-28">Quantity (Kg)</th>
-                  <th class="border border-black text-center w-36">Inv,Amt: (USD)</th>
-                  <th class="border border-black text-center w-40">Company Name</th>
-                  <th class="border border-black text-center w-20">Ramark</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${rowsHtml}
-                <tr class="font-bold border-t-2 border-black">
-                  <td colspan="4" class="border border-black text-center font-bold tracking-widest uppercase">TOTAL</td>
-                  <td class="border border-black text-right font-bold pr-3">${formatNum(totalUSD, 3)}</td>
-                  <td class="border border-black"></td><td class="border border-black"></td>
-                </tr>
-              </tbody>
+              <thead><tr class="font-bold border border-black bg-slate-50"><th class="border border-black text-center w-12">No.</th><th class="border border-black text-center w-40">Ship Name</th><th class="border border-black text-center w-16">Inv: No</th><th class="border border-black text-center w-28">Quantity (Kg)</th><th class="border border-black text-center w-36">Inv,Amt: (USD)</th><th class="border border-black text-center w-40">Company Name</th><th class="border border-black text-center w-20">Ramark</th></tr></thead>
+              <tbody>${rowsHtml}<tr class="font-bold border-t-2 border-black"><td colspan="4" class="border border-black text-center font-bold tracking-widest uppercase">TOTAL</td><td class="border border-black text-right font-bold pr-3">${formatNum(totalUSD, 3)}</td><td class="border border-black"></td><td class="border border-black"></td></tr></tbody>
             </table>
           </div>
         `;
       }
     }
-
     function setDailyReportType(type) {
       currentDailyReportType = type;
       const btnDetail = document.getElementById('btn-report-type-detail'); const btnSummary = document.getElementById('btn-report-type-summary');
@@ -1852,85 +1782,32 @@
       else { btnSummary.className = "px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm transition"; btnDetail.className = "px-2 py-1 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 transition"; }
       renderDailyReport();
     }
-
     function handleLetterheadImageUpload(e) {
       const file = e.target.files[0]; if (!file) return; const r = new FileReader();
-      r.onload = function(evt) {
-        const code = document.getElementById('reportCreditCoSelect').value || 'SH'; const list = getCreditCompanies(); const target = list.find(c => c.code === code);
-        if (target) { target.bannerImage = evt.target.result; saveCreditCompanies(list); alert(`[${target.name}] Letterhead ပုံ တင်ပြီးပါပြီ!`); }
-      }; r.readAsDataURL(file); e.target.value = '';
+      r.onload = function(evt) { const code = document.getElementById('reportCreditCoSelect').value || 'SH'; const list = getCreditCompanies(); const target = list.find(c => c.code === code); if (target) { target.bannerImage = evt.target.result; saveCreditCompanies(list); alert(`[${target.name}] Letterhead ပုံ တင်ပြီးပါပြီ!`); } }; r.readAsDataURL(file); e.target.value = '';
     }
-
     function downloadReportJPG() {
-      const card = document.getElementById('printableA4Card');
-      const dateVal = document.getElementById('reportDatePicker').value || 'daily';
-      const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH';
-      const filename = `${creditVal}_DailyReport_${dateVal}.jpg`;
-      
+      const card = document.getElementById('printableA4Card'); const dateVal = document.getElementById('reportDatePicker').value || 'daily'; const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH'; const filename = `${creditVal}_DailyReport_${dateVal}.jpg`;
       document.fonts.ready.then(() => {
         if (window.htmlToImage) {
-          htmlToImage.toJpeg(card, { 
-            quality: 1.0, 
-            pixelRatio: 2.5, 
-            backgroundColor: '#ffffff',
-            cacheBust: true,
-            style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' },
-            width: 794
-          }).then(dataUrl => {
-            const a = document.createElement('a'); 
-            a.download = filename; 
-            a.href = dataUrl;
-            document.body.appendChild(a); 
-            a.click(); 
-            a.remove();
-          }).catch(err => { fallbackReportHtml2Canvas(card, filename); });
+          htmlToImage.toJpeg(card, { quality: 1.0, pixelRatio: 2.5, backgroundColor: '#ffffff', cacheBust: true, style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' }, width: 794 })
+          .then(dataUrl => { const a = document.createElement('a'); a.download = filename; a.href = dataUrl; document.body.appendChild(a); a.click(); a.remove(); }).catch(err => { fallbackReportHtml2Canvas(card, filename); });
         } else { fallbackReportHtml2Canvas(card, filename); }
       });
     }
-
-    function fallbackReportHtml2Canvas(card, filename) {
-      html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => {
-        const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/jpeg', 1.0);
-        document.body.appendChild(a); a.click(); a.remove();
-      });
-    }
-
+    function fallbackReportHtml2Canvas(card, filename) { html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => { const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/jpeg', 1.0); document.body.appendChild(a); a.click(); a.remove(); }); }
     function downloadReportPNG() {
-      const card = document.getElementById('printableA4Card');
-      const dateVal = document.getElementById('reportDatePicker').value || 'daily';
-      const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH';
-      const filename = `${creditVal}_DailyReport_${dateVal}.png`;
-
+      const card = document.getElementById('printableA4Card'); const dateVal = document.getElementById('reportDatePicker').value || 'daily'; const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH'; const filename = `${creditVal}_DailyReport_${dateVal}.png`;
       document.fonts.ready.then(() => {
         if (window.htmlToImage) {
-          htmlToImage.toPng(card, { 
-            pixelRatio: 2.5, 
-            backgroundColor: '#ffffff',
-            cacheBust: true,
-            style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' },
-            width: 794
-          }).then(dataUrl => {
-            const a = document.createElement('a'); 
-            a.download = filename; 
-            a.href = dataUrl;
-            document.body.appendChild(a); 
-            a.click(); 
-            a.remove();
-          }).catch(err => { fallbackReportPngHtml2Canvas(card, filename); });
+          htmlToImage.toPng(card, { pixelRatio: 2.5, backgroundColor: '#ffffff', cacheBust: true, style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' }, width: 794 })
+          .then(dataUrl => { const a = document.createElement('a'); a.download = filename; a.href = dataUrl; document.body.appendChild(a); a.click(); a.remove(); }).catch(err => { fallbackReportPngHtml2Canvas(card, filename); });
         } else { fallbackReportPngHtml2Canvas(card, filename); }
       });
     }
-
-    function fallbackReportPngHtml2Canvas(card, filename) {
-      html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => {
-        const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/png');
-        document.body.appendChild(a); a.click(); a.remove();
-      });
-    }
-
+    function fallbackReportPngHtml2Canvas(card, filename) { html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => { const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/png'); document.body.appendChild(a); a.click(); a.remove(); }); }
     function parseExactExcelDate(val) {
-      if (!val) return '';
-      if (typeof val === 'number') { const d = new Date((Math.floor(val) - 25569) * 86400 * 1000); return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`; }
+      if (!val) return ''; if (typeof val === 'number') { const d = new Date((Math.floor(val) - 25569) * 86400 * 1000); return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`; }
       if (val instanceof Date) { return `${val.getUTCFullYear()}-${String(val.getUTCMonth() + 1).padStart(2, '0')}-${String(val.getUTCDate()).padStart(2, '0')}`; }
       const s = String(val).trim();
       if (s.includes('.')) { const p = s.split('.'); if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`; }
@@ -1938,173 +1815,97 @@
       return s.split('T')[0];
     }
 
-    // ================= HIGH-FIDELITY ED VOUCHER ENGINE (PREMIUM CERTIFICATE DESIGN) =================
+    // ================= VOUCHER PREVIEW =================
     let currentVoucherItem = null;
-
     function openVoucherModal(id) {
-      const item = getEdData().find(x => x.id === id); if (!item) return;
-      currentVoucherItem = item;
-      const isPaid = !!item.payDate;
-      const stamp = document.getElementById('vcPaidStamp');
+      const item = getEdData().find(x => x.id === id); if (!item) return; currentVoucherItem = item;
+      const isPaid = !!item.payDate; const stamp = document.getElementById('vcPaidStamp');
+      if (isPaid) { stamp.classList.remove('hidden'); } else { stamp.classList.add('hidden'); }
 
-      // Toggle Authentic PAID Stamp visibility
-      if (isPaid) {
-        stamp.classList.remove('hidden');
-      } else {
-        stamp.classList.add('hidden');
-      }
-
-      // Customer Name / Boat + Invoice Number Format
-      const nameVal = (item.boat || item.customer || 'CUSTOMER').toUpperCase();
-      const codeVal = item.invNo ? `(${item.invNo})` : '';
-      document.getElementById('vcCustomer').innerText = nameVal;
-      document.getElementById('vcCode').innerText = codeVal;
-      
+      const nameVal = (item.boat || item.customer || 'CUSTOMER').toUpperCase(); const codeVal = item.invNo ? `(${item.invNo})` : '';
+      document.getElementById('vcCustomer').innerText = nameVal; document.getElementById('vcCode').innerText = codeVal;
       document.getElementById('vcDate').innerText = formatReportDate(item.date);
       document.getElementById('vc2Pct').innerText = Math.round(item.tax2Pct || 0).toLocaleString();
       const mf = Math.round(item.mfService || 60000);
       document.getElementById('vcMass').innerText = (mf / 2).toLocaleString();
       document.getElementById('vcService').innerText = (mf / 2).toLocaleString();
       document.getElementById('vcTotal').innerText = Math.round(item.total || 0).toLocaleString();
-
       document.getElementById('voucherPreviewModal').classList.remove('hidden');
     }
-
-    function closeVoucherPreviewModal() {
-      document.getElementById('voucherPreviewModal').classList.add('hidden');
-      currentVoucherItem = null;
-    }
-
-    // Capture High Res Image exactly matching the HTML structure
+    function closeVoucherPreviewModal() { document.getElementById('voucherPreviewModal').classList.add('hidden'); currentVoucherItem = null; }
+    
     function downloadLiveVoucherJPG() {
       if (!currentVoucherItem) return;
       const card = document.getElementById('voucherTargetCard');
       const filename = `Voucher_${currentVoucherItem.customer || 'ED'}_${currentVoucherItem.invNo}.jpg`;
-      const bgColor = '#fdfaf0'; // Match the exact inner CSS background to ensure proper corner clipping
+      const bgColor = '#fdfaf0'; 
       
       document.fonts.ready.then(() => {
         if (window.htmlToImage) {
-          htmlToImage.toJpeg(card, {
-            quality: 1.0,
-            pixelRatio: 3.5, // High resolution
-            backgroundColor: bgColor,
-            cacheBust: true,
-            width: 680,
-            style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' }
-          }).then(dataUrl => {
-            const a = document.createElement('a');
-            a.download = filename;
-            a.href = dataUrl;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-          }).catch(err => {
-            console.warn("htmlToImage error, falling back to html2canvas:", err);
-            fallbackVoucherHtml2Canvas(card, filename, bgColor);
-          });
-        } else {
-          fallbackVoucherHtml2Canvas(card, filename, bgColor);
-        }
+          htmlToImage.toJpeg(card, { quality: 1.0, pixelRatio: 3.5, backgroundColor: bgColor, cacheBust: true, width: 680, style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' } })
+          .then(dataUrl => { const a = document.createElement('a'); a.download = filename; a.href = dataUrl; document.body.appendChild(a); a.click(); a.remove(); }).catch(err => { fallbackVoucherHtml2Canvas(card, filename, bgColor); });
+        } else { fallbackVoucherHtml2Canvas(card, filename, bgColor); }
       });
     }
+    function fallbackVoucherHtml2Canvas(card, filename, bgColor) { html2canvas(card, { scale: 3.5, useCORS: true, allowTaint: true, backgroundColor: bgColor }).then(canvas => { const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/jpeg', 1.0); document.body.appendChild(a); a.click(); a.remove(); }); }
 
-    function fallbackVoucherHtml2Canvas(card, filename, bgColor) {
-      html2canvas(card, { scale: 3.5, useCORS: true, allowTaint: true, backgroundColor: bgColor }).then(canvas => {
-        const a = document.createElement('a');
-        a.download = filename;
-        a.href = canvas.toDataURL('image/jpeg', 1.0);
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      });
-    }
-
-    // ================= MPU LEDGER LOGIC =================
-    function openMpuTopupModal() {
-      if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ငွေသွင်းခွင့် ရှိပါသည်။");
-      document.getElementById('inMpuDate').value = new Date().toISOString().split('T')[0];
-      document.getElementById('inMpuBank').value = 'AYA Bank';
-      document.getElementById('inMpuAmount').value = '';
-      document.getElementById('inMpuRemark').value = 'MPU သို့ ငွေသွင်းခြင်း';
-      document.getElementById('mpuTopupModal').classList.remove('hidden');
-    }
+    // ================= MPU LEDGER =================
+    function openMpuTopupModal() { if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ငွေသွင်းခွင့် ရှိပါသည်။"); document.getElementById('inMpuDate').value = new Date().toISOString().split('T')[0]; document.getElementById('inMpuBank').value = 'AYA Bank'; document.getElementById('inMpuAmount').value = ''; document.getElementById('inMpuRemark').value = 'MPU သို့ ငွေသွင်းခြင်း'; document.getElementById('mpuTopupModal').classList.remove('hidden'); }
     function closeMpuTopupModal() { document.getElementById('mpuTopupModal').classList.add('hidden'); }
-
-    function handleMpuTopupSubmit(e) {
-      e.preventDefault();
-      if (currentUser && currentUser.role !== 'admin') return;
-      const date = document.getElementById('inMpuDate').value;
-      const bank = document.getElementById('inMpuBank').value;
-      const amount = parseFloat(document.getElementById('inMpuAmount').value) || 0;
-      const remark = document.getElementById('inMpuRemark').value.trim();
-      let topups = getMpuTopups();
-      topups.push({ id: generateId('mpu'), date, bank, amount, remark });
-      saveMpuTopups(topups);
-      closeMpuTopupModal();
-      renderMpuLedger();
-      alert("MPU သို့ ငွေသွင်းခြင်း မှတ်တမ်းတင်ပြီးပါပြီ။");
-    }
-
-    function deleteMpuTopup(id) {
-      if (currentUser && currentUser.role !== 'admin') return;
-      if (confirm("ဤ ငွေသွင်းမှတ်တမ်းကို ဖျက်မှာ သေချာပါသလား?")) {
-        let topups = getMpuTopups();
-        saveMpuTopups(topups.filter(t => t.id !== id));
-        renderMpuLedger();
-      }
-    }
-
+    function handleMpuTopupSubmit(e) { e.preventDefault(); if (currentUser && currentUser.role !== 'admin') return; const date = document.getElementById('inMpuDate').value; const bank = document.getElementById('inMpuBank').value; const amount = parseFloat(document.getElementById('inMpuAmount').value) || 0; const remark = document.getElementById('inMpuRemark').value.trim(); let topups = getMpuTopups(); topups.push({ id: generateId('mpu'), date, bank, amount, remark }); saveMpuTopups(topups); closeMpuTopupModal(); renderMpuLedger(); alert("MPU သို့ ငွေသွင်းခြင်း မှတ်တမ်းတင်ပြီးပါပြီ။"); }
+    function deleteMpuTopup(id) { if (currentUser && currentUser.role !== 'admin') return; if (confirm("ဤ ငွေသွင်းမှတ်တမ်းကို ဖျက်မှာ သေချာပါသလား?")) { let topups = getMpuTopups(); saveMpuTopups(topups.filter(t => t.id !== id)); renderMpuLedger(); } }
     function renderMpuLedger() {
-      const topups = getMpuTopups();
-      const creditData = getCargoData().filter(c => c.hasLicense);
-      let ledger = [];
-      
-      topups.forEach(t => {
-        ledger.push({
-          date: t.date, desc: t.remark || 'ငွေသွင်း (Top-up)', bank: t.bank,
-          inAmt: Number(t.amount), outAmt: 0, id: t.id, isTopup: true
-        });
-      });
-      creditData.forEach(c => {
-        ledger.push({
-          date: c.date, desc: `လိုင်စင်ဖြတ် (လှေ: ${c.boat} | Inv: ${c.invNo})`, bank: 'MPU',
-          inAmt: 0, outAmt: 15000, id: c.id, isTopup: false
-        });
-      });
-
-      ledger.sort((a,b) => {
-        const comp = a.date.localeCompare(b.date);
-        return comp !== 0 ? comp : (a.isTopup ? -1 : 1);
-      });
-
-      let balance = 0; let totalIn = 0; let totalOut = 0;
-      const tbody = document.getElementById('mpuLedgerTableBody');
-      tbody.innerHTML = '';
-      
+      const topups = getMpuTopups(); const creditData = getCargoData().filter(c => c.hasLicense); let ledger = [];
+      topups.forEach(t => { ledger.push({ date: t.date, desc: t.remark || 'ငွေသွင်း (Top-up)', bank: t.bank, inAmt: Number(t.amount), outAmt: 0, id: t.id, isTopup: true }); });
+      creditData.forEach(c => { ledger.push({ date: c.date, desc: `လိုင်စင်ဖြတ် (လှေ: ${c.boat} | Inv: ${c.invNo})`, bank: 'MPU', inAmt: 0, outAmt: 15000, id: c.id, isTopup: false }); });
+      ledger.sort((a,b) => { const comp = a.date.localeCompare(b.date); return comp !== 0 ? comp : (a.isTopup ? -1 : 1); });
+      let balance = 0; let totalIn = 0; let totalOut = 0; const tbody = document.getElementById('mpuLedgerTableBody'); tbody.innerHTML = '';
       ledger.forEach((row, i) => {
-        balance += row.inAmt - row.outAmt;
-        totalIn += row.inAmt; totalOut += row.outAmt;
-        const actionBtn = (row.isTopup && currentUser && currentUser.role === 'admin') 
-          ? `<button onclick="deleteMpuTopup('${row.id}')" class="text-rose-600 hover:bg-rose-100 p-1 rounded">🗑️</button>` 
-          : `<span class="text-slate-400 text-[9px] bg-slate-100 px-1 py-0.5 rounded">Auto</span>`;
-        tbody.innerHTML += `
-          <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
-            <td class="p-3 text-center text-slate-500 font-bold">${i+1}</td>
-            <td class="p-3 font-medium">${row.date}</td>
-            <td class="p-3 mm-text">${row.desc}</td>
-            <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${row.bank.includes('AYA') ? 'bg-blue-50 text-blue-800' : (row.bank.includes('uab') ? 'bg-indigo-50 text-indigo-800' : 'bg-slate-100 text-slate-600')}">${row.bank}</span></td>
-            <td class="p-3 text-right font-semibold text-emerald-600 dark:text-emerald-400">${row.inAmt > 0 ? row.inAmt.toLocaleString() : '-'}</td>
-            <td class="p-3 text-right font-semibold text-rose-600 dark:text-rose-400">${row.outAmt > 0 ? row.outAmt.toLocaleString() : '-'}</td>
-            <td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">${balance.toLocaleString()}</td>
-            <td class="p-3 text-center">${actionBtn}</td>
-          </tr>
-        `;
+        balance += row.inAmt - row.outAmt; totalIn += row.inAmt; totalOut += row.outAmt;
+        const actionBtn = (row.isTopup && currentUser && currentUser.role === 'admin') ? `<button onclick="deleteMpuTopup('${row.id}')" class="text-rose-600 hover:bg-rose-100 p-1 rounded">🗑️</button>` : `<span class="text-slate-400 text-[9px] bg-slate-100 px-1 py-0.5 rounded">Auto</span>`;
+        tbody.innerHTML += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800"><td class="p-3 text-center text-slate-500 font-bold">${i+1}</td><td class="p-3 font-medium">${row.date}</td><td class="p-3 mm-text">${row.desc}</td><td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${row.bank.includes('AYA') ? 'bg-blue-50 text-blue-800' : (row.bank.includes('uab') ? 'bg-indigo-50 text-indigo-800' : 'bg-slate-100 text-slate-600')}">${row.bank}</span></td><td class="p-3 text-right font-semibold text-emerald-600 dark:text-emerald-400">${row.inAmt > 0 ? row.inAmt.toLocaleString() : '-'}</td><td class="p-3 text-right font-semibold text-rose-600 dark:text-rose-400">${row.outAmt > 0 ? row.outAmt.toLocaleString() : '-'}</td><td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">${balance.toLocaleString()}</td><td class="p-3 text-center">${actionBtn}</td></tr>`;
       });
-      
-      document.getElementById('mpuStatTopup').innerText = totalIn.toLocaleString() + ' Ks';
-      document.getElementById('mpuStatExpense').innerText = totalOut.toLocaleString() + ' Ks';
-      document.getElementById('mpuStatBalance').innerText = balance.toLocaleString() + ' Ks';
+      document.getElementById('mpuStatTopup').innerText = totalIn.toLocaleString() + ' Ks'; document.getElementById('mpuStatExpense').innerText = totalOut.toLocaleString() + ' Ks'; document.getElementById('mpuStatBalance').innerText = balance.toLocaleString() + ' Ks';
     }
+
+    // ================= SETTINGS LOGIC =================
+    function renderCreditCoTable() {
+      const list = getCreditCompanies(); const tbody = document.getElementById('creditCoTableBody'); if (!tbody) return;
+      tbody.innerHTML = list.map(c => `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
+          <td class="p-2.5 font-mono font-bold text-blue-950 dark:text-blue-400">${c.code}</td>
+          <td class="p-2.5 font-semibold">${c.name}</td>
+          <td class="p-2.5">${c.bannerImage ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">🖼️ Custom Banner</span>' : '<span class="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600">Standard</span>'}</td>
+          <td class="p-2.5 text-center"><button onclick="triggerCreditBannerUpload('${c.code}')" class="text-blue-900 dark:text-blue-400 hover:underline font-semibold">📷 ပုံတင်မည်</button></td>
+          <td class="p-2.5 text-center">${c.code === 'SH' ? '<span class="text-slate-300">-</span>' : `<button onclick="deleteCreditCo('${c.code}')" class="text-rose-600">🗑️</button>`}</td>
+        </tr>
+      `).join('');
+    }
+    let pendingUploadCode = null;
+    function triggerCreditBannerUpload(code) { pendingUploadCode = code; const input = document.getElementById('letterheadImageInput'); input.onchange = function(e) { const file = e.target.files[0]; if (!file) return; const r = new FileReader(); r.onload = function(evt) { const list = getCreditCompanies(); const target = list.find(c => c.code === pendingUploadCode); if (target) { target.bannerImage = evt.target.result; saveCreditCompanies(list); alert(`[${target.name}] Letterhead ပုံ တင်ပြီးပါပြီ!`); } input.onchange = handleLetterheadImageUpload; }; r.readAsDataURL(file); e.target.value = ''; }; input.click(); }
+    function handleAddNewCreditCo(e) { e.preventDefault(); const code = document.getElementById('newCreditCode').value.trim().toUpperCase(); const name = document.getElementById('newCreditName').value.trim().toUpperCase(); const addr = document.getElementById('newCreditAddress').value.trim(); const list = getCreditCompanies(); if (list.some(c => c.code === code)) return alert("Code ရှိပြီးသားပါ။"); list.push({ code, name, bannerImage: "", address: addr, phone: "", email: "" }); saveCreditCompanies(list); e.target.reset(); alert("Credit ကုမ္ပဏီ အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ!"); }
+    function deleteCreditCo(code) { if (confirm(`ဖျက်မှာ သေချာပါသလား?`)) saveCreditCompanies(getCreditCompanies().filter(c => c.code !== code)); }
+    function resetDefaultCreditCompanies() { if (confirm("မူလသို့ ပြန်ချမလား?")) saveCreditCompanies(DEFAULT_CREDIT_COMPANIES); }
+
+    function renderCustomerTable() {
+      const map = getCustomers(); const keys = Object.keys(map).sort(); const tbody = document.getElementById('customerTableBody'); if (!tbody) return;
+      tbody.innerHTML = keys.map((code, idx) => `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800">
+          <td class="p-2.5 text-slate-400 text-center">${idx + 1}</td>
+          <td class="p-2.5 font-mono font-bold text-blue-950 dark:text-blue-400">${code}</td>
+          <td class="p-2.5 font-medium">${map[code].name}</td>
+          <td class="p-2.5 text-center font-bold text-indigo-700 dark:text-indigo-400">${map[code].defaultPct}%</td>
+          <td class="p-2.5 text-center space-x-2 whitespace-nowrap">
+            <button onclick="editCustomer('${code}')" class="text-amber-600 hover:text-amber-800 font-semibold inline-flex items-center gap-0.5" title="ပြင်ဆင်မည်"><span>✏️</span> <span>ပြင်</span></button>
+            <button onclick="deleteCustomer('${code}')" class="text-rose-600 hover:text-rose-800" title="ဖျက်မည်">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+    function editCustomer(code) { const map = getCustomers(); const cust = map[code]; if (!cust) return; document.getElementById('editingCustomerOriginalCode').value = code; document.getElementById('newCustCode').value = code; document.getElementById('newCustName').value = cust.name; document.getElementById('newCustPct').value = cust.defaultPct; document.getElementById('btnSaveCustomer').innerText = "✏️ ပြင်ဆင်မှု သိမ်းမည်"; document.getElementById('btnCancelEditCustomer').classList.remove('hidden'); window.scrollTo({ top: document.getElementById('newCustCode').offsetTop - 120, behavior: 'smooth' }); }
+    function resetCustomerForm() { document.getElementById('editingCustomerOriginalCode').value = ''; document.getElementById('newCustCode').value = ''; document.getElementById('newCustName').value = ''; document.getElementById('newCustPct').value = '4.0'; document.getElementById('btnSaveCustomer').innerText = "➕ ထည့်မည်"; document.getElementById('btnCancelEditCustomer').classList.add('hidden'); }
+    function handleCustomerFormSubmit(e) { e.preventDefault(); const origCode = document.getElementById('editingCustomerOriginalCode').value.trim().toUpperCase(); const code = document.getElementById('newCustCode').value.trim().toUpperCase(); const name = document.getElementById('newCustName').value.trim(); const pct = parseFloat(document.getElementById('newCustPct').value) || 4.0; if (!code || !name) return; const map = getCustomers(); if (origCode) { if (origCode !== code) delete map[origCode]; map[code] = { name, defaultPct: pct }; saveCustomers(map); alert(`Customer [${code} - ${name}] ကို အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!`); } else { if (map[code]) return alert("ဤ Customer Code ရှိပြီးသား ဖြစ်ပါသည်။"); map[code] = { name, defaultPct: pct }; saveCustomers(map); alert(`Customer [${code} - ${name}] ကို ထည့်သွင်းပြီးပါပြီ!`); } resetCustomerForm(); }
+    function deleteCustomer(code) { if (confirm(`Customer [${code}] ကို ဖျက်မှာ သေချာပါသလား?`)) { const map = getCustomers(); delete map[code]; saveCustomers(map); } }
 
     // ================= INITIALIZATION =================
     document.addEventListener("DOMContentLoaded", () => {
