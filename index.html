@@ -882,9 +882,12 @@
       if (val === null || val === undefined || val === '') return '';
       if (val instanceof Date) {
         if (isNaN(val.getTime())) return '';
-        const y = val.getFullYear();
-        const m = String(val.getMonth() + 1).padStart(2, '0');
-        const d = String(val.getDate()).padStart(2, '0');
+        // SheetJS can create Excel dates at either UTC or local midnight.
+        // Select the matching calendar components without shifting the day by timezone.
+        const isUtcMidnight = val.getUTCHours() === 0 && val.getUTCMinutes() === 0 && val.getUTCSeconds() === 0;
+        const y = isUtcMidnight ? val.getUTCFullYear() : val.getFullYear();
+        const m = String((isUtcMidnight ? val.getUTCMonth() : val.getMonth()) + 1).padStart(2, '0');
+        const d = String(isUtcMidnight ? val.getUTCDate() : val.getDate()).padStart(2, '0');
         return `${y}-${m}-${d}`;
       }
       const num = Number(val);
@@ -1011,7 +1014,8 @@
       const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
       reader.onload = function(e) {
         try {
-          const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: true });
+          // Keep Excel dates as serial numbers; parseExactExcelDate converts them without timezone drift.
+          const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: false });
           let sheetName = workbook.SheetNames.find(s => ['SH', 'TW', 'TCS', 'UO', 'IMP'].includes(s.trim().toUpperCase())) || workbook.SheetNames[0];
           const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
           if (!rawRows || rawRows.length === 0) { alert("Excel ဖိုင်ထဲတွင် ဒေတာ မတွေ့ရှိပါ။"); return; }
@@ -1211,7 +1215,8 @@
       const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
       reader.onload = function(e) {
         try {
-          const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: true });
+          // Keep Excel dates as serial numbers; parseExactExcelDate converts them without timezone drift.
+          const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: false });
           const sheetName = workbook.SheetNames[0]; const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
           if (!rawRows || rawRows.length === 0) { alert("Excel ဖိုင်ထဲတွင် ဒေတာ မတွေ့ရှိပါ။"); return; }
 
