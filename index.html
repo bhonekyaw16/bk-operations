@@ -108,7 +108,7 @@
         <p class="text-xs sm:text-sm text-slate-200 leading-relaxed drop-shadow">
           BK Operations & Management System မှ ကြိုဆိုပါသည်။ နယ်စပ်ရေကြောင်း ကုန်စည်ပို့ဆောင်ရေးနှင့် အကောက်ခွန် ဝန်ဆောင်မှု စီမံခန့်ခွဲရေး ပေါ်တယ်လ်။
         </p>
-        <div class="pt-2 text-[11px] text-slate-300 hidden md:block">☁️ Powered by Google Firebase Cloud Real-Time Database (v21.2)</div>
+        <div class="pt-2 text-[11px] text-slate-300 hidden md:block">☁️ Powered by Google Firebase Cloud Real-Time Database (v21.4)</div>
       </div>
 
       <div class="glass-card rounded-3xl p-6 sm:p-9 w-full max-w-md shadow-2xl space-y-5 transition-all">
@@ -137,14 +137,13 @@
 
           <div class="flex items-center justify-between text-[11px]">
             <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 dark:text-slate-400"><input type="checkbox" id="rememberMeCheckbox" class="rounded text-blue-600"><span>Remember username</span></label>
-            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 21.2</span>
+            <span class="text-blue-600 dark:text-blue-400 font-semibold">Version 21.4</span>
           </div>
 
           <div id="loginErrorBox" class="p-2.5 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 rounded-xl text-rose-600 dark:text-rose-300 text-xs font-semibold hidden text-center">Username သို့မဟုတ် Password မှားယွင်းနေပါသည်။</div>
 
           <button type="submit" class="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs tracking-wide transition duration-150 shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2"><span>Log In</span><span>→</span></button>
         </form>
-        <div class="pt-2 text-center text-[11px] text-slate-400">Authorized personnel only. Real-Time Synchronized.</div>
       </div>
     </div>
   </div>
@@ -164,7 +163,6 @@
         </div>
       </div>
       
-      <!-- NAV BUTTONS -->
       <div class="flex items-center flex-wrap gap-1 sm:gap-1.5 text-xs font-semibold">
         <button id="btn-dashboard" onclick="switchTab('dashboard')" class="nav-btn px-2.5 py-1.5 rounded-lg bg-blue-950 text-white shadow-sm transition text-xs">📊 Credit</button>
         <button id="btn-daily" onclick="switchTab('daily')" class="nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-xs">📄 Daily</button>
@@ -174,7 +172,6 @@
         <button id="btn-mpu" onclick="switchTab('mpu')" class="admin-only-item nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-amber-900 dark:bg-slate-800 dark:text-amber-300 dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-slate-700 transition border border-amber-200 text-xs">💳 MPU လိုင်စင်</button>
         <button id="btn-companies" onclick="switchTab('companies')" class="admin-only-item nav-btn px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-xs">👥 Users & Settings</button>
 
-        <!-- UTILITY TOOLS -->
         <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700 select-none">
           <button onclick="changeFontSize('sm')" id="btnFontSm" class="px-1.5 py-1 rounded text-[10px] font-bold text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 transition">A-</button>
           <button onclick="changeFontSize('md')" id="btnFontMd" class="px-1.5 py-1 rounded text-[10px] font-bold text-blue-950 dark:text-white bg-white dark:bg-slate-700 shadow-sm transition">A</button>
@@ -190,7 +187,7 @@
   <!-- ================= MAIN CONTENT ================= -->
   <main class="w-full max-w-[98%] mx-auto px-2 sm:px-4 py-3 sm:py-4 flex-1">
 
-    <!-- ================= TAB 1: CREDIT DASHBOARD ================= -->
+    <!-- TAB 1: CREDIT DASHBOARD -->
     <div id="tab-dashboard" class="tab-content active">
       <div class="flex items-center justify-between mb-2">
         <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Credit Summary Statistics</span>
@@ -218,8 +215,8 @@
           <input type="file" id="excelFileInput" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleExcelImport(event)">
           <button onclick="document.getElementById('excelFileInput').click()" class="admin-only-item text-xs bg-emerald-700 text-white font-semibold px-2.5 py-1.5 rounded-lg hover:bg-emerald-800 transition shadow-sm"><span>📥 Import</span></button>
           <button onclick="exportToExcel()" class="text-xs bg-blue-950 dark:bg-blue-900 text-white font-semibold px-2.5 py-1.5 rounded-lg hover:bg-blue-900 transition shadow-sm"><span>📊 Export (<span id="exportCount">0</span>)</span></button>
-          <button id="btnToggleBatchTool" onclick="toggleBatchTool()" class="admin-only-item text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-2.5 py-1.5 rounded-lg transition shadow-sm"><span>⚡ % / Rate ပြောင်းရန်</span></button>
-          <button id="btnNewCargoEntry" onclick="openNewCargoEntry()" class="can-add-entry text-xs bg-blue-900 hover:bg-blue-800 text-white font-bold px-3 py-1.5 rounded-lg transition shadow-sm"><span>➕ Credit စာရင်းအသစ်</span></button>
+          <button onclick="toggleBatchTool()" class="admin-only-item text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-2.5 py-1.5 rounded-lg transition shadow-sm"><span>⚡ % / Rate ပြောင်းရန်</span></button>
+          <button onclick="openNewCargoEntry()" class="can-add-entry text-xs bg-blue-900 hover:bg-blue-800 text-white font-bold px-3 py-1.5 rounded-lg transition shadow-sm"><span>➕ Credit စာရင်းအသစ်</span></button>
           <button onclick="clearAllData()" class="admin-only-item text-xs text-rose-600 font-semibold px-2 py-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition">🗑️ ရှင်းမည်</button>
         </div>
       </div>
@@ -260,14 +257,14 @@
                 <th class="p-3 text-center">ပြင်/ဖျက်</th>
               </tr>
             </thead>
-            <tbody id="cargoTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300"></tbody>
+            <tbody id="cargoTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
           </table>
         </div>
         <div id="noResultsMsg" class="p-8 text-center text-slate-400 text-xs hidden">ရှာဖွေထားသော စာရင်း မတွေ့ရှိပါ။</div>
       </div>
     </div>
 
-    <!-- ================= TAB 2: DAILY REPORT ================= -->
+    <!-- TAB 2: DAILY REPORT -->
     <div id="tab-daily" class="tab-content">
       <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm mb-4 flex flex-wrap items-center justify-between gap-2.5">
         <div class="flex flex-wrap items-center gap-2.5">
@@ -279,42 +276,27 @@
             <button id="btn-report-type-summary" onclick="setDailyReportType('summary')" class="px-2 py-1 rounded text-slate-600 dark:text-slate-400">ပုံ ၁: စီးရေ & USD</button>
           </div>
         </div>
-
         <div class="flex items-center flex-wrap gap-2">
-          <input type="file" id="letterheadImageInput" accept="image/*" class="hidden" onchange="handleLetterheadImageUpload(event)">
-          <button onclick="document.getElementById('letterheadImageInput').click()" class="admin-only-item text-xs bg-slate-100 dark:bg-slate-800 border px-2.5 py-1.5 rounded-lg">📷 Letterhead ချိန်းမည်</button>
+          <button onclick="triggerCreditBannerUpload()" class="admin-only-item text-xs bg-slate-100 dark:bg-slate-800 border px-2.5 py-1.5 rounded-lg">📷 Letterhead ချိန်းမည်</button>
           <button onclick="downloadReportJPG()" class="text-xs bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg shadow-sm">📸 Download JPG</button>
           <button onclick="downloadReportPNG()" class="text-xs bg-teal-700 hover:bg-teal-800 text-white font-bold px-2.5 py-1.5 rounded-lg shadow-sm">PNG</button>
           <button onclick="window.print()" class="text-xs bg-blue-950 dark:bg-blue-900 text-white font-bold px-3 py-1.5 rounded-lg">🖨️ Print / PDF</button>
         </div>
       </div>
-
-      <div class="overflow-x-auto pb-10 flex justify-center">
-        <div id="printableA4Card" class="shadow-2xl border border-slate-200 p-8 sm:p-12">
-          <div id="letterheadRenderArea" class="mb-5"></div>
-          <div id="dailyReportContentArea"></div>
-        </div>
-      </div>
+      <div class="overflow-x-auto pb-10 flex justify-center"><div id="printableA4Card" class="shadow-2xl border border-slate-200 p-8 sm:p-12"><div id="letterheadRenderArea" class="mb-5"></div><div id="dailyReportContentArea"></div></div></div>
     </div>
 
-    <!-- ================= TAB 3: CREDIT BREAKDOWN ================= -->
+    <!-- TAB 3: CREDIT BREAKDOWN -->
     <div id="tab-breakdown" class="tab-content">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4 border-b pb-3">
-          <div>
-            <h2 class="text-base font-bold text-slate-900 dark:text-white">Credit - Customer အလိုက် လချုပ်စာရင်း</h2>
-            <p class="text-xs text-slate-500">Customer တစ်ခုချင်းစီ၏ စုစုပေါင်း ကုန်ချိန်နှင့် ဝန်ဆောင်ခများ (ကိန်းပြည့် ဘတ်ငွေ)</p>
-          </div>
+          <div><h2 class="text-base font-bold text-slate-900 dark:text-white">Credit - Customer အလိုက် လချုပ်စာရင်း</h2><p class="text-xs text-slate-500">Customer တစ်ခုချင်းစီ၏ စုစုပေါင်း ကုန်ချိန်နှင့် ဝန်ဆောင်ခများ (ကိန်းပြည့် ဘတ်ငွေ)</p></div>
           <button onclick="switchTab('dashboard')" class="text-xs text-blue-900 dark:text-blue-400 font-semibold hover:underline">← Credit သို့</button>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
             <thead class="bg-slate-50 dark:bg-slate-800 border-b font-bold uppercase">
-              <tr>
-                <th class="p-3">Customer Code</th><th class="p-3">Company Full Name</th><th class="p-3 text-center">လှေအကြိမ်ရေ</th>
-                <th class="p-3 text-right">စုစုပေါင်း KG</th><th class="p-3 text-right">Total Inv: (USD)</th><th class="p-3 text-right">Total Inv: (THB)</th>
-                <th class="p-3 text-right">ရရှိသည့် ဝန်ဆောင်ခ (THB)</th>
-              </tr>
+              <tr><th class="p-3">Customer Code</th><th class="p-3">Company Full Name</th><th class="p-3 text-center">လှေအကြိမ်ရေ</th><th class="p-3 text-right">စုစုပေါင်း KG</th><th class="p-3 text-right">Total Inv: (USD)</th><th class="p-3 text-right">Total Inv: (THB)</th><th class="p-3 text-right">ရရှိသည့် ဝန်ဆောင်ခ (THB)</th></tr>
             </thead>
             <tbody id="breakdownTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
             <tfoot id="breakdownTableFoot" class="bg-slate-100 dark:bg-slate-800 font-bold border-t-2 border-slate-300 dark:border-slate-700"></tfoot>
@@ -323,7 +305,7 @@
       </div>
     </div>
 
-    <!-- ================= TAB 4: ED SERVICE DASHBOARD ================= -->
+    <!-- TAB 4: ED SERVICE DASHBOARD -->
     <div id="tab-ed-dashboard" class="tab-content">
       <div class="flex items-center justify-between mb-2">
         <span class="text-xs font-bold text-indigo-950 dark:text-indigo-300 uppercase tracking-wider">ED Service Summary Statistics</span>
@@ -345,7 +327,6 @@
           <div class="flex items-center gap-1.5 text-xs"><span class="font-semibold text-slate-500">Customer:</span><select id="filterEdCust" onchange="filterEdData()" class="border rounded-lg px-2 py-1.5 bg-slate-50 dark:bg-slate-800 font-semibold"></select></div>
           <input id="searchEdInput" onkeyup="filterEdData()" type="text" placeholder="လှေအမည် / Inv ရှာရန်..." class="text-xs border rounded-lg px-2.5 py-1.5 w-32 sm:w-36">
         </div>
-
         <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <input type="file" id="edExcelFileInput" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleEdExcelImport(event)">
           <button onclick="document.getElementById('edExcelFileInput').click()" class="admin-only-item text-xs bg-emerald-700 text-white font-semibold px-2.5 py-1.5 rounded-lg">📥 Import ED</button>
@@ -380,23 +361,17 @@
       </div>
     </div>
 
-    <!-- ================= TAB 5: ED BREAKDOWN ================= -->
+    <!-- TAB 5: ED BREAKDOWN -->
     <div id="tab-ed-breakdown" class="tab-content">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4 border-b pb-3">
-          <div>
-            <h2 class="text-base font-bold">ED Service - Customer အလိုက် လချုပ်စာရင်း</h2>
-            <p class="text-xs text-slate-500">Customer တစ်ခုချင်းစီ၏ ED အကြိမ်ရေ၊ ဒေါ်လာတန်ဖိုးနှင့် ကျသင့်ငွေ (ကိန်းပြည့် မြန်မာကျပ်ငွေ)</p>
-          </div>
+          <div><h2 class="text-base font-bold">ED Service - Customer အလိုက် လချုပ်စာရင်း</h2><p class="text-xs text-slate-500">Customer တစ်ခုချင်းစီ၏ ED အကြိမ်ရေ၊ ဒေါ်လာတန်ဖိုးနှင့် ကျသင့်ငွေ (ကိန်းပြည့် မြန်မာကျပ်ငွေ)</p></div>
           <button onclick="switchTab('ed-dashboard')" class="text-xs text-indigo-900 dark:text-indigo-400 font-semibold hover:underline">← ED သို့</button>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
             <thead class="bg-slate-50 dark:bg-slate-800 border-b font-bold uppercase">
-              <tr>
-                <th class="p-3">Customer (Co,.Ltd)</th><th class="p-3 text-center">ED အကြိမ်ရေ</th><th class="p-3 text-right">Total Invoice (USD)</th>
-                <th class="p-3 text-right">စုစုပေါင်း 2% (MMK)</th><th class="p-3 text-right">MF / Service (MMK)</th><th class="p-3 text-right font-bold">Grand Total (MMK)</th><th class="p-3 text-center">အခြေအနေ</th>
-              </tr>
+              <tr><th class="p-3">Customer (Co,.Ltd)</th><th class="p-3 text-center">ED အကြိမ်ရေ</th><th class="p-3 text-right">Total Invoice (USD)</th><th class="p-3 text-right">စုစုပေါင်း 2% (MMK)</th><th class="p-3 text-right">MF / Service (MMK)</th><th class="p-3 text-right font-bold">Grand Total (MMK)</th><th class="p-3 text-center">အခြေအနေ</th></tr>
             </thead>
             <tbody id="edBreakdownTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
             <tfoot id="edBreakdownTableFoot" class="bg-slate-100 dark:bg-slate-800 font-bold border-t-2 border-slate-300 dark:border-slate-700"></tfoot>
@@ -405,32 +380,22 @@
       </div>
     </div>
 
-    <!-- ================= TAB 6: MPU LEDGER ================= -->
+    <!-- TAB 6: MPU LEDGER -->
     <div id="tab-mpu" class="tab-content">
       <div class="flex items-center justify-between mb-4">
-        <div>
-          <h2 class="text-base font-bold text-amber-900 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
-            <span>💳</span> MPU လိုင်စင်စာရင်း (Ledger & Wallet)
-          </h2>
-          <p class="text-xs text-slate-500 mt-0.5">န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) ဖြတ်တောက်မှုများနှင့် ငွေကြိုသွင်းမှု မှတ်တမ်း (AYA & uab)</p>
-        </div>
+        <div><h2 class="text-base font-bold text-amber-900 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2"><span>💳</span> MPU လိုင်စင်စာရင်း (Ledger & Wallet)</h2><p class="text-xs text-slate-500 mt-0.5">န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) ဖြတ်တောက်မှုများနှင့် ငွေကြိုသွင်းမှု မှတ်တမ်း (AYA & uab)</p></div>
         <button onclick="openMpuTopupModal()" class="admin-only-item bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5"><span>➕</span> <span>ငွေသွင်းမည် (Top-up)</span></button>
       </div>
-
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         <div class="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 p-4 rounded-xl shadow-sm"><p class="text-xs font-bold text-emerald-700 dark:text-emerald-400">Total Top-ups (IN)</p><h3 id="mpuStatTopup" class="text-xl sm:text-2xl font-bold text-emerald-900 dark:text-emerald-300 mt-1">0 Ks</h3></div>
         <div class="bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 p-4 rounded-xl shadow-sm"><p class="text-xs font-bold text-rose-700 dark:text-rose-400">Total Licenses (OUT)</p><h3 id="mpuStatExpense" class="text-xl sm:text-2xl font-bold text-rose-900 dark:text-rose-300 mt-1">0 Ks</h3></div>
         <div class="bg-gradient-to-r from-amber-600 to-amber-500 text-white p-4 rounded-xl shadow-md"><p class="text-xs font-bold text-amber-100">MPU Balance (AYA & uab)</p><h3 id="mpuStatBalance" class="text-xl sm:text-2xl font-bold mt-1">0 Ks</h3></div>
       </div>
-
       <div class="bg-white dark:bg-slate-900 rounded-xl border overflow-hidden shadow-sm w-full">
         <div class="overflow-x-auto max-h-[580px]">
           <table class="w-full text-left border-collapse text-xs">
             <thead class="bg-slate-50 dark:bg-slate-800/80 border-b font-bold sticky top-0 z-10">
-              <tr>
-                <th class="p-3 w-12 text-center">No</th><th class="p-3 w-28">Date</th><th class="p-3">Description</th><th class="p-3 w-28 text-center">Bank/Type</th>
-                <th class="p-3 w-32 text-right text-emerald-600">IN (Ks)</th><th class="p-3 w-32 text-right text-rose-600">OUT (Ks)</th><th class="p-3 w-36 text-right font-bold">Balance</th><th class="p-3 w-16 text-center">ဖျက်</th>
-              </tr>
+              <tr><th class="p-3 w-12 text-center">No</th><th class="p-3 w-28">Date</th><th class="p-3">Description</th><th class="p-3 w-28 text-center">Bank/Type</th><th class="p-3 w-32 text-right text-emerald-600">IN (Ks)</th><th class="p-3 w-32 text-right text-rose-600">OUT (Ks)</th><th class="p-3 w-36 text-right font-bold">Balance</th><th class="p-3 w-16 text-center">ဖျက်</th></tr>
             </thead>
             <tbody id="mpuLedgerTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
           </table>
@@ -438,19 +403,14 @@
       </div>
     </div>
 
-    <!-- ================= TAB 7: USERS & SETTINGS ================= -->
+    <!-- TAB 7: USERS & SETTINGS -->
     <div id="tab-companies" class="tab-content">
       <div class="max-w-5xl mx-auto space-y-6">
-        <!-- USER MANAGEMENT -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 sm:p-6 shadow-sm space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
-            <div>
-              <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"><span class="text-lg">👥</span> Server & User Management</h2>
-              <p class="text-xs text-slate-500 mt-0.5">Super Admin အနေဖြင့် ဝန်ထမ်းအကောင့်များ၊ Password များကို စီမံနိုင်ပါသည်</p>
-            </div>
+            <div><h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"><span class="text-lg">👥</span> Server & User Management</h2><p class="text-xs text-slate-500 mt-0.5">Super Admin အနေဖြင့် ဝန်ထမ်းအကောင့်များ၊ Password များကို စီမံနိုင်ပါသည်</p></div>
             <button onclick="toggleUserManagementSection()" id="btnToggleUserMgr" class="text-xs font-bold bg-indigo-50 dark:bg-slate-800 border px-3 py-1 rounded-lg"><span id="userMgrToggleIcon">🙈</span> <span id="userMgrToggleText">အကောင့်များ စီမံခန့်ခွဲမှု ပိတ်မည်</span></button>
           </div>
-
           <div id="userManagementCollapsibleBody" class="space-y-4 pt-1">
             <form onsubmit="handleUserFormSubmit(event)" class="space-y-4">
               <input type="hidden" id="editingUserId" value="">
@@ -458,39 +418,25 @@
                 <div class="sm:col-span-3"><label class="block font-bold mb-1">Username</label><input id="inUserUsername" type="text" placeholder="e.g. staff2" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold"></div>
                 <div class="sm:col-span-3"><label class="block font-bold mb-1">Password</label><input id="inUserPassword" type="text" placeholder="Password" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-mono"></div>
                 <div class="sm:col-span-3"><label class="block font-bold mb-1">အမည် (Display Name)</label><input id="inUserDisplayName" type="text" placeholder="Operations Officer" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800"></div>
-                <div class="sm:col-span-3">
-                  <label class="block font-bold mb-1">Role / Permission</label>
-                  <select id="inUserRole" class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold">
-                    <option value="staff">Staff (Daily Entry Only)</option>
-                    <option value="viewer">Viewer (Read-Only)</option>
-                    <option value="admin">Admin (Full Access)</option>
-                  </select>
-                </div>
+                <div class="sm:col-span-3"><label class="block font-bold mb-1">Role / Permission</label><select id="inUserRole" class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold"><option value="staff">Staff (Daily Entry Only)</option><option value="viewer">Viewer (Read-Only)</option><option value="admin">Admin (Full Access)</option></select></div>
               </div>
               <div class="flex justify-end gap-2 text-xs">
                 <button type="button" onclick="resetUserForm()" class="px-4 py-2 border rounded-lg">Cancel</button>
                 <button type="submit" id="btnSaveUser" class="px-5 py-2 bg-indigo-950 text-white font-bold rounded-lg">💾 အကောင့် သိမ်းဆည်းမည်</button>
               </div>
             </form>
-
             <div class="overflow-x-auto border rounded-xl">
               <table class="w-full text-left border-collapse text-xs">
-                <thead class="bg-slate-50 dark:bg-slate-800/80 border-b font-bold uppercase select-none">
-                  <tr><th class="p-3 w-12 text-center">NO</th><th class="p-3 w-36">USERNAME</th><th class="p-3 w-36">PASSWORD</th><th class="p-3">DISPLAY NAME</th><th class="p-3 w-28 text-center">ROLE</th><th class="p-3 w-24 text-center">ပြင်/ဖျက်</th></tr>
-                </thead>
+                <thead class="bg-slate-50 dark:bg-slate-800/80 border-b font-bold uppercase select-none"><tr><th class="p-3 w-12 text-center">NO</th><th class="p-3 w-36">USERNAME</th><th class="p-3 w-36">PASSWORD</th><th class="p-3">DISPLAY NAME</th><th class="p-3 w-28 text-center">ROLE</th><th class="p-3 w-24 text-center">ပြင်/ဖျက်</th></tr></thead>
                 <tbody id="userAccountsTableBody" class="divide-y text-slate-700 dark:text-slate-300 font-medium"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- BACKUP & RESTORE -->
         <div class="bg-gradient-to-r from-blue-950 via-slate-900 to-blue-900 text-white rounded-2xl p-5 sm:p-6 shadow-md space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-blue-900/60 pb-3">
-            <div>
-              <h2 class="text-sm sm:text-base font-bold">💾 Data Backup & Restore (AES-256 Protected)</h2>
-              <p class="text-xs text-slate-300 mt-0.5">Admin Password မသိပါက မည်သည့်စက်တွင်မှ Restore ပြုလုပ်၍ မရနိုင်ပါ</p>
-            </div>
+            <div><h2 class="text-sm sm:text-base font-bold">💾 Data Backup & Restore (AES-256 Protected)</h2><p class="text-xs text-slate-300 mt-0.5">Admin Password မသိပါက မည်သည့်စက်တွင်မှ Restore ပြုလုပ်၍ မရနိုင်ပါ</p></div>
             <div class="flex items-center gap-2">
               <input type="file" id="backupFileInput" accept=".json" class="hidden" onchange="handleRestoreFileSelected(event)">
               <button onclick="triggerEncryptedBackup()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl transition">📤 Backup ထုတ်ယူမည်</button>
@@ -499,13 +445,9 @@
           </div>
         </div>
 
-        <!-- CREDIT CO -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 shadow-sm">
           <div class="flex items-center justify-between mb-3 border-b pb-2.5">
-            <div>
-              <h2 class="text-sm font-bold">🏛️ Credit Co.,Ltd (လိုင်စင်ရ ကုမ္ပဏီများနှင့် Letterhead)</h2>
-              <p class="text-xs text-slate-500">Stable Hope, Tide Wave စသည့် ကုမ္ပဏီများ စီမံခြင်း</p>
-            </div>
+            <div><h2 class="text-sm font-bold">🏛️ Credit Co.,Ltd (လိုင်စင်ရ ကုမ္ပဏီများနှင့် Letterhead)</h2><p class="text-xs text-slate-500">Stable Hope, Tide Wave စသည့် ကုမ္ပဏီများ စီမံခြင်း</p></div>
             <button onclick="resetDefaultCreditCompanies()" class="text-xs text-blue-900 font-semibold hover:underline">🔄 မူလ Credit Co ပြန်ယူမည်</button>
           </div>
           <form onsubmit="handleAddNewCreditCo(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 text-xs mb-4 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border">
@@ -516,21 +458,15 @@
           </form>
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-xs">
-              <thead class="bg-slate-50 dark:bg-slate-800 border-b font-bold uppercase">
-                <tr><th class="p-2.5 w-16">Code</th><th class="p-2.5">Credit Company Name</th><th class="p-2.5">Letterhead</th><th class="p-2.5 text-center">ပြင်ရန်</th><th class="p-2.5 text-center w-16">ဖျက်ရန်</th></tr>
-              </thead>
+              <thead class="bg-slate-50 dark:bg-slate-800 border-b font-bold uppercase"><tr><th class="p-2.5 w-16">Code</th><th class="p-2.5">Credit Company Name</th><th class="p-2.5">Letterhead</th><th class="p-2.5 text-center">ပြင်ရန်</th><th class="p-2.5 text-center w-16">ဖျက်ရန်</th></tr></thead>
               <tbody id="creditCoTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
             </table>
           </div>
         </div>
 
-        <!-- CUSTOMERS -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 shadow-sm">
           <div class="flex items-center justify-between mb-3 border-b pb-2.5">
-            <div>
-              <h2 class="text-sm font-bold">👥 Customers / Shippers (ကာစတန်မာ ကုမ္ပဏီများနှင့် ပုံသေ %)</h2>
-              <p class="text-xs text-slate-500">ကုမ္ပဏီအမည်နှင့် ပုံသေ % များကို အချိန်မရွေး ပြန်လည်ပြင်ဆင်နိုင်ပါသည်</p>
-            </div>
+            <div><h2 class="text-sm font-bold">👥 Customers / Shippers (ကာစတန်မာ ကုမ္ပဏီများနှင့် ပုံသေ %)</h2><p class="text-xs text-slate-500">ကုမ္ပဏီအမည်နှင့် ပုံသေ % များကို အချိန်မရွေး ပြန်လည်ပြင်ဆင်နိုင်ပါသည်</p></div>
           </div>
           <form onsubmit="handleCustomerFormSubmit(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 text-xs mb-3">
             <input type="hidden" id="editingCustomerOriginalCode" value="">
@@ -544,27 +480,119 @@
           </form>
           <div class="overflow-x-auto max-h-[380px]">
             <table class="w-full text-left border-collapse text-xs">
-              <thead class="bg-slate-50 dark:bg-slate-800 border-b font-bold uppercase sticky top-0">
-                <tr><th class="p-2.5 w-14">No</th><th class="p-2.5 w-24">Code</th><th class="p-2.5">Customer Full Name</th><th class="p-2.5 text-center w-20">ပုံသေ %</th><th class="p-2.5 text-center w-24">ပြင်/ဖျက်</th></tr>
-              </thead>
+              <thead class="bg-slate-50 dark:bg-slate-800 border-b font-bold uppercase sticky top-0"><tr><th class="p-2.5 w-14">No</th><th class="p-2.5 w-24">Code</th><th class="p-2.5">Customer Full Name</th><th class="p-2.5 text-center w-20">ပုံသေ %</th><th class="p-2.5 text-center w-24">ပြင်/ဖျက်</th></tr></thead>
               <tbody id="customerTableBody" class="divide-y text-slate-700 dark:text-slate-300"></tbody>
             </table>
           </div>
         </div>
-
       </div>
     </div>
-
   </main>
 
-  <!-- ================= MODAL: VOUCHER PREVIEW (V21.2 FIXED STRICT TABLE DESIGN) ================= -->
+  <!-- ================= MODALS ================= -->
+  
+  <!-- MODAL: CREDIT ENTRY -->
+  <div id="cargoEntryModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div class="flex items-center justify-between mb-3 border-b pb-2">
+        <h3 id="cargoModalTitle" class="text-sm font-bold">➕ Credit စာရင်းအသစ် ထည့်သွင်းခြင်း</h3>
+        <button onclick="closeCargoEntryModal()" class="text-slate-400">✕</button>
+      </div>
+      <form onsubmit="handleCargoSubmit(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="editCargoId" value="">
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block font-semibold mb-1">Credit Co.,Ltd</label><select id="cargoModalCreditCo" class="w-full border rounded-lg p-2 dark:bg-slate-800"></select></div>
+          <div><label class="block font-semibold mb-1">Customer (Remark)</label><input id="cargoModalRemark" list="remarkDataList" oninput="onCustomerInput(this.value)" type="text" placeholder="AG" required class="w-full border rounded-lg p-2 dark:bg-slate-800 uppercase"><datalist id="remarkDataList"></datalist></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block font-semibold mb-1">ရက်စွဲ (Date)</label><input id="cargoModalDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+          <div><label class="block font-semibold mb-1">လှေအမည်</label><input id="cargoModalBoat" type="text" placeholder="ရတနာတိုး-၉၇" required class="w-full border rounded-lg p-2 dark:bg-slate-800 mm-text"></div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div><label class="block font-semibold mb-1">Inv: No.</label><input id="cargoModalInvNo" type="text" placeholder="323" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+          <div><label class="block font-semibold mb-1">ED No.</label><input id="cargoModalEdNo" type="text" placeholder="20016781234" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+          <div><label class="block font-semibold mb-1">အလေးချိန် (KG)</label><input id="cargoModalKG" type="number" step="any" placeholder="28430" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+        </div>
+        <div>
+          <label class="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 p-2.5 rounded-lg border border-amber-200 dark:border-amber-800 cursor-pointer select-none">
+            <input type="checkbox" id="cargoModalLicense" class="w-4 h-4 rounded text-amber-600"><span>န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) တင်မည် (MPU Wallet မှ အလိုအလျောက် ဖြတ်တောက်မည်)</span>
+          </label>
+        </div>
+        <div class="grid grid-cols-3 gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border">
+          <div><label class="block font-semibold mb-1">Inv: (USD)</label><input id="cargoModalUSD" oninput="calculateCargoPreview()" type="number" step="0.01" placeholder="28979.70" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
+          <div id="modalSecRate" class="not-for-staff"><label class="block font-semibold mb-1">RATE</label><input id="cargoModalRate" oninput="calculateCargoPreview()" type="number" step="0.01" value="34.7" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
+          <div id="modalSecPct" class="not-for-staff"><label class="block font-semibold mb-1">%</label><input id="cargoModalPct" oninput="calculateCargoPreview()" type="number" step="0.1" value="4.0" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
+        </div>
+        <div id="modalSecPreviews" class="not-for-staff grid grid-cols-2 gap-3 text-center">
+          <div class="p-2 border rounded-lg bg-slate-50 dark:bg-slate-800"><span class="text-[10px] text-slate-400 block">Inv: (THB - ကိန်းပြည့်)</span><span id="cargoPreviewTHB" class="font-bold text-indigo-700">0 THB</span></div>
+          <div class="p-2 border rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200"><span class="text-[10px] text-emerald-600 block">AMOUNT (THB - ကိန်းပြည့်)</span><span id="cargoPreviewAmount" class="font-bold text-emerald-700">0 THB</span></div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeCargoEntryModal()" class="px-3.5 py-1.5 border rounded-lg">ပိတ်မည်</button>
+          <button type="submit" class="px-4 py-1.5 bg-blue-950 text-white font-bold rounded-lg">💾 သိမ်းဆည်းမည်</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ED ENTRY -->
+  <div id="edEntryModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div class="flex items-center justify-between mb-3 border-b pb-2">
+        <h3 id="edModalTitle" class="text-sm font-bold text-indigo-950 dark:text-indigo-300">➕ ED Service စာရင်းအသစ် ထည့်သွင်းခြင်း</h3>
+        <button onclick="closeEdEntryModal()" class="text-slate-400">✕</button>
+      </div>
+      <form onsubmit="handleEdSubmit(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="editEdId" value="">
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block font-semibold mb-1">ရက်စွဲ (Date)</label><input id="inEdDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+          <div><label class="block font-semibold mb-1">လှေအမည်</label><input id="inEdBoat" type="text" placeholder="အောင်မြင့်နိုင်" required class="w-full border rounded-lg p-2 dark:bg-slate-800 mm-text"></div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div><label class="block font-semibold mb-1">Inv No.</label><input id="inEdInvNo" type="text" placeholder="286" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+          <div><label class="block font-semibold mb-1">Customer (Co,.Ltd)</label><input id="inEdCustomer" list="remarkDataList" type="text" placeholder="SPSS" required class="w-full border rounded-lg p-2 dark:bg-slate-800 uppercase"></div>
+          <div><label class="block font-semibold mb-1">Invoice VL (USD)</label><input id="inEdUSD" oninput="calculateEdPreview()" type="number" step="0.01" placeholder="10879.60" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold"></div>
+        </div>
+        <div class="grid grid-cols-3 gap-3 p-3 bg-indigo-50/50 dark:bg-slate-800/60 rounded-xl border">
+          <div><label class="block font-semibold text-slate-500 mb-1">2% (USD × 42 - ကိန်းပြည့်)</label><input id="inEd2Pct" type="number" step="1" readonly class="w-full border rounded-lg p-2 bg-slate-100 dark:bg-slate-800 font-bold text-indigo-900"></div>
+          <div><label class="block font-semibold text-slate-500 mb-1">MF / Service</label><input id="inEdMF" oninput="calculateEdPreview()" type="number" value="60000" required class="w-full border rounded-lg p-2 bg-white dark:bg-slate-800 font-bold text-blue-900"></div>
+          <div><label class="block font-semibold text-slate-500 mb-1">Total (MMK - ကိန်းပြည့်)</label><input id="inEdTotal" type="number" step="1" readonly class="w-full border rounded-lg p-2 bg-slate-100 dark:bg-slate-800 font-bold text-emerald-700"></div>
+        </div>
+        <div><label class="block font-semibold mb-1">Pay Date (ငွေချေသည့်ရက်စွဲ)</label><input id="inEdPayDate" type="date" class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeEdEntryModal()" class="px-3.5 py-1.5 border rounded-lg">ပိတ်မည်</button>
+          <button type="submit" class="px-4 py-1.5 bg-indigo-950 text-white font-bold rounded-lg">💾 သိမ်းဆည်းမည်</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: MPU TOP-UP -->
+  <div id="mpuTopupModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 max-w-sm w-full shadow-2xl">
+      <div class="flex items-center justify-between mb-4 border-b pb-2">
+        <h3 class="text-sm font-bold text-amber-900 dark:text-amber-400">➕ MPU ငွေကြိုသွင်းခြင်း (Top-up)</h3>
+        <button onclick="closeMpuTopupModal()" class="text-slate-400">✕</button>
+      </div>
+      <form onsubmit="handleMpuTopupSubmit(event)" class="space-y-4 text-xs">
+        <div><label class="block font-semibold mb-1">ရက်စွဲ (Date)</label><input id="inMpuDate" type="date" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+        <div><label class="block font-semibold mb-1">ဘဏ်အကောင့် (Bank)</label><select id="inMpuBank" class="w-full border rounded-lg p-2 dark:bg-slate-800 font-semibold"><option value="AYA Bank">AYA Bank</option><option value="uab Bank">uab Bank</option></select></div>
+        <div><label class="block font-semibold mb-1">ငွေပမာဏ (Amount - Ks)</label><input id="inMpuAmount" type="number" step="1" placeholder="1000000" required class="w-full border rounded-lg p-2 dark:bg-slate-800 font-bold text-emerald-600"></div>
+        <div><label class="block font-semibold mb-1">မှတ်ချက် (Remark)</label><input id="inMpuRemark" type="text" value="MPU သို့ ငွေသွင်းခြင်း" required class="w-full border rounded-lg p-2 dark:bg-slate-800"></div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeMpuTopupModal()" class="px-3.5 py-1.5 border rounded-lg">ပိတ်မည်</button>
+          <button type="submit" class="px-4 py-1.5 bg-amber-600 text-white font-bold rounded-lg">💾 သိမ်းဆည်းမည်</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: VOUCHER PREVIEW -->
   <div id="voucherPreviewModal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
     <div class="bg-white dark:bg-slate-900 rounded-3xl border shadow-2xl max-w-[760px] w-full p-4 sm:p-6 flex flex-col items-center gap-4 my-auto">
-      
       <div class="w-full flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <div class="flex items-center gap-2">
-          <span class="text-xl">📸</span>
-          <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">ED Official Voucher Preview (v21.2)</h3>
+          <span class="text-xl">📸</span><h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">ED Official Voucher Preview (v21.4)</h3>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="downloadLiveVoucherJPG()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1.5">
@@ -576,150 +604,82 @@
 
       <div class="overflow-x-auto w-full flex justify-start sm:justify-center py-4">
         <div id="voucherTargetCard" class="shrink-0 bg-[#fdfbf4] p-4 shadow-2xl relative select-none mx-auto" style="width: 680px !important; min-width: 680px !important; max-width: 680px !important; font-family: 'Times New Roman', 'Padauk', 'Pyidaungsu', serif; border: 1px solid #e0d8c3; box-sizing: border-box;">
-          
           <div class="relative w-full h-full border-[3px] border-[#c59e47] p-8 pb-10" style="box-shadow: inset 0 0 30px rgba(197,158,71,0.1);">
-            
             <!-- Corner Accents -->
-            <svg class="absolute -top-[3px] -left-[3px] w-[85px] h-[85px] pointer-events-none z-20" viewBox="0 0 100 100">
-              <polygon points="0,0 100,0 0,100" fill="#071324" />
-              <polygon points="0,0 80,0 0,80" fill="#c09745" />
-              <polygon points="0,0 60,0 0,60" fill="#071324" />
-              <polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/>
-            </svg>
-            <svg class="absolute -top-[3px] -right-[3px] w-[85px] h-[85px] pointer-events-none z-20 transform rotate-90" viewBox="0 0 100 100">
-              <polygon points="0,0 100,0 0,100" fill="#071324" />
-              <polygon points="0,0 80,0 0,80" fill="#c09745" />
-              <polygon points="0,0 60,0 0,60" fill="#071324" />
-              <polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/>
-            </svg>
-            <svg class="absolute -bottom-[3px] -right-[3px] w-[85px] h-[85px] pointer-events-none z-20 transform rotate-180" viewBox="0 0 100 100">
-              <polygon points="0,0 100,0 0,100" fill="#071324" />
-              <polygon points="0,0 80,0 0,80" fill="#c09745" />
-              <polygon points="0,0 60,0 0,60" fill="#071324" />
-              <polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/>
-            </svg>
-            <svg class="absolute -bottom-[3px] -left-[3px] w-[85px] h-[85px] pointer-events-none z-20 transform -rotate-90" viewBox="0 0 100 100">
-              <polygon points="0,0 100,0 0,100" fill="#071324" />
-              <polygon points="0,0 80,0 0,80" fill="#c09745" />
-              <polygon points="0,0 60,0 0,60" fill="#071324" />
-              <polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/>
-            </svg>
-
-            <!-- Chamfered Header Bar -->
+            <svg class="absolute -top-[3px] -left-[3px] w-[85px] h-[85px] pointer-events-none z-20" viewBox="0 0 100 100"><polygon points="0,0 100,0 0,100" fill="#071324" /><polygon points="0,0 80,0 0,80" fill="#c09745" /><polygon points="0,0 60,0 0,60" fill="#071324" /><polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/></svg>
+            <svg class="absolute -top-[3px] -right-[3px] w-[85px] h-[85px] pointer-events-none z-20 transform rotate-90" viewBox="0 0 100 100"><polygon points="0,0 100,0 0,100" fill="#071324" /><polygon points="0,0 80,0 0,80" fill="#c09745" /><polygon points="0,0 60,0 0,60" fill="#071324" /><polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/></svg>
+            <svg class="absolute -bottom-[3px] -right-[3px] w-[85px] h-[85px] pointer-events-none z-20 transform rotate-180" viewBox="0 0 100 100"><polygon points="0,0 100,0 0,100" fill="#071324" /><polygon points="0,0 80,0 0,80" fill="#c09745" /><polygon points="0,0 60,0 0,60" fill="#071324" /><polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/></svg>
+            <svg class="absolute -bottom-[3px] -left-[3px] w-[85px] h-[85px] pointer-events-none z-20 transform -rotate-90" viewBox="0 0 100 100"><polygon points="0,0 100,0 0,100" fill="#071324" /><polygon points="0,0 80,0 0,80" fill="#c09745" /><polygon points="0,0 60,0 0,60" fill="#071324" /><polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/></svg>
+            <!-- Header Bar -->
             <div class="relative w-[96%] mx-auto h-[125px] flex flex-col items-center justify-center text-center z-10 mb-8 mt-2" style="filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));">
-               <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 200">
-                   <polygon points="40,0 960,0 1000,40 1000,160 960,200 40,200 0,160 0,40" fill="#071324" stroke="#c09745" stroke-width="8"/>
-                   <polygon points="45,8 955,8 992,45 992,155 955,192 45,192 8,155 8,45" fill="none" stroke="#e2b963" stroke-width="2" opacity="0.5"/>
-               </svg>
+               <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 200"><polygon points="40,0 960,0 1000,40 1000,160 960,200 40,200 0,160 0,40" fill="#071324" stroke="#c09745" stroke-width="8"/><polygon points="45,8 955,8 992,45 992,155 955,192 45,192 8,155 8,45" fill="none" stroke="#e2b963" stroke-width="2" opacity="0.5"/></svg>
                <div class="relative z-10 px-6 w-full text-center">
                    <h1 class="text-[28px] font-extrabold tracking-wide text-white drop-shadow-sm uppercase leading-tight mm-text flex items-center justify-center gap-2" style="white-space: nowrap !important;">
                      <span id="vcCustomer" style="color: #ffffff; white-space: nowrap !important;">KYAW SAN LIN-34</span> 
                      <span id="vcCode" style="color: #e29e39; white-space: nowrap !important;">(AP-007)</span>
                    </h1>
-                   <p class="text-[19px] font-bold text-white mt-1.5 tracking-widest" style="white-space: nowrap !important;">
-                     Date : <span id="vcDate">12.09.2026</span>
-                   </p>
+                   <p class="text-[19px] font-bold text-white mt-1.5 tracking-widest" style="white-space: nowrap !important;">Date : <span id="vcDate">12.09.2026</span></p>
                </div>
             </div>
-
-            <!-- Inner HTML Table -->
+            <!-- Table -->
             <div class="px-6 relative z-10">
               <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
-                <thead>
-                  <tr style="border-bottom: 3px solid #c09745;">
-                    <th style="width: 50%; padding-bottom: 16px; text-align: left; font-size: 28px; font-weight: 800; color: #071324; white-space: nowrap !important;">Description</th>
-                    <th style="width: 50%; padding-bottom: 16px; text-align: right; font-size: 28px; font-weight: 800; color: #071324; white-space: nowrap !important;">Amount (Ks)</th>
-                  </tr>
-                </thead>
+                <thead><tr style="border-bottom: 3px solid #c09745;"><th style="width: 50%; padding-bottom: 16px; text-align: left; font-size: 28px; font-weight: 800; color: #071324; white-space: nowrap !important;">Description</th><th style="width: 50%; padding-bottom: 16px; text-align: right; font-size: 28px; font-weight: 800; color: #071324; white-space: nowrap !important;">Amount (Ks)</th></tr></thead>
                 <tbody>
-                  <tr style="border-bottom: 1px solid rgba(197, 158, 71, 0.4);">
-                    <td style="padding: 18px 0; text-align: left; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;">2%</td>
-                    <td style="padding: 18px 0; text-align: right; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;"><span id="vc2Pct">2,726,545</span> Ks</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid rgba(197, 158, 71, 0.4);">
-                    <td style="padding: 18px 0; text-align: left; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;">Mass Feed</td>
-                    <td style="padding: 18px 0; text-align: right; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;"><span id="vcMass">30,000</span> Ks</td>
-                  </tr>
-                  <tr style="border-bottom: 4px double #c09745;">
-                    <td style="padding: 18px 0; text-align: left; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;">Service</td>
-                    <td style="padding: 18px 0; text-align: right; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;"><span id="vcService">30,000</span> Ks</td>
-                  </tr>
-                  <tr>
-                    <td style="padding-top: 24px; padding-bottom: 10px; text-align: left; font-size: 38px; font-weight: 800; color: #071324; white-space: nowrap !important;">Total</td>
-                    <td style="padding-top: 24px; padding-bottom: 10px; text-align: right; font-size: 38px; font-weight: 800; color: #b31b20; white-space: nowrap !important;"><span id="vcTotal">2,786,545</span> Ks</td>
-                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(197, 158, 71, 0.4);"><td style="padding: 18px 0; text-align: left; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;">2%</td><td style="padding: 18px 0; text-align: right; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;"><span id="vc2Pct">2,726,545</span> Ks</td></tr>
+                  <tr style="border-bottom: 1px solid rgba(197, 158, 71, 0.4);"><td style="padding: 18px 0; text-align: left; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;">Mass Feed</td><td style="padding: 18px 0; text-align: right; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;"><span id="vcMass">30,000</span> Ks</td></tr>
+                  <tr style="border-bottom: 4px double #c09745;"><td style="padding: 18px 0; text-align: left; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;">Service</td><td style="padding: 18px 0; text-align: right; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;"><span id="vcService">30,000</span> Ks</td></tr>
+                  <tr><td style="padding-top: 24px; padding-bottom: 10px; text-align: left; font-size: 38px; font-weight: 800; color: #071324; white-space: nowrap !important;">Total</td><td style="padding-top: 24px; padding-bottom: 10px; text-align: right; font-size: 38px; font-weight: 800; color: #b31b20; white-space: nowrap !important;"><span id="vcTotal">2,786,545</span> Ks</td></tr>
                 </tbody>
               </table>
             </div>
-
-            <!-- Authentic Paid Stamp -->
+            <!-- Paid Stamp -->
             <div id="vcPaidStamp" class="hidden absolute inset-0 flex items-center justify-center pointer-events-none select-none z-30 mt-16">
               <div class="transform -rotate-[18deg] opacity-[0.92]" style="filter: drop-shadow(0 15px 15px rgba(0,0,0,0.2));">
-                <svg width="340" height="340" viewBox="0 0 300 300">
-                  <circle cx="150" cy="150" r="142" fill="none" stroke="#1f5a2c" stroke-width="6" stroke-dasharray="12 4" />
-                  <circle cx="150" cy="150" r="132" fill="none" stroke="#1f5a2c" stroke-width="4" />
-                  <circle cx="150" cy="150" r="88" fill="none" stroke="#1f5a2c" stroke-width="2" />
-                  <path id="curveTop" d="M 40,150 A 110,110 0 0,1 260,150" fill="none" />
-                  <text fill="#1f5a2c" font-size="16.5" font-weight="900" letter-spacing="3.5" text-anchor="middle" font-family="Arial, sans-serif">
-                    <textPath href="#curveTop" startOffset="50%">TRANSACTION COMPLETE</textPath>
-                  </text>
-                  <path id="curveBottom" d="M 260,150 A 110,110 0 0,1 40,150" fill="none" />
-                  <text fill="#1f5a2c" font-size="16.5" font-weight="900" letter-spacing="3.5" text-anchor="middle" font-family="Arial, sans-serif">
-                    <textPath href="#curveBottom" startOffset="50%">TRANSACTION COMPLETE</textPath>
-                  </text>
-                  <rect x="25" y="110" width="250" height="80" fill="#1f5a2c" rx="6" />
-                  <text x="150" y="168" fill="#ffffff" font-size="64" font-weight="900" letter-spacing="8" text-anchor="middle" font-family="'Times New Roman', serif">PAID</text>
-                  <path d="M 115,218 L 138,238 L 185,198" fill="none" stroke="#1f5a2c" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
+                <svg width="340" height="340" viewBox="0 0 300 300"><circle cx="150" cy="150" r="142" fill="none" stroke="#1f5a2c" stroke-width="6" stroke-dasharray="12 4" /><circle cx="150" cy="150" r="132" fill="none" stroke="#1f5a2c" stroke-width="4" /><circle cx="150" cy="150" r="88" fill="none" stroke="#1f5a2c" stroke-width="2" /><path id="curveTop" d="M 40,150 A 110,110 0 0,1 260,150" fill="none" /><text fill="#1f5a2c" font-size="16.5" font-weight="900" letter-spacing="3.5" text-anchor="middle" font-family="Arial, sans-serif"><textPath href="#curveTop" startOffset="50%">TRANSACTION COMPLETE</textPath></text><path id="curveBottom" d="M 260,150 A 110,110 0 0,1 40,150" fill="none" /><text fill="#1f5a2c" font-size="16.5" font-weight="900" letter-spacing="3.5" text-anchor="middle" font-family="Arial, sans-serif"><textPath href="#curveBottom" startOffset="50%">TRANSACTION COMPLETE</textPath></text><rect x="25" y="110" width="250" height="80" fill="#1f5a2c" rx="6" /><text x="150" y="168" fill="#ffffff" font-size="64" font-weight="900" letter-spacing="8" text-anchor="middle" font-family="'Times New Roman', serif">PAID</text><path d="M 115,218 L 138,238 L 185,198" fill="none" stroke="#1f5a2c" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" /></svg>
               </div>
             </div>
-
             <!-- Bottom Accents -->
             <div class="flex items-center justify-center gap-4 mt-6">
               <div class="w-[70px] h-[6px] rounded-sm" style="background: linear-gradient(90deg, #b58b38, #e2b963, #b58b38);"></div>
               <div class="w-[70px] h-[6px] rounded-sm" style="background: linear-gradient(90deg, #b58b38, #e2b963, #b58b38);"></div>
               <div class="w-[70px] h-[6px] rounded-sm" style="background: linear-gradient(90deg, #b58b38, #e2b963, #b58b38);"></div>
             </div>
-
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
+  <footer class="bg-white dark:bg-slate-900 border-t py-3 transition-colors mt-auto w-full">
+    <div class="w-full max-w-[98%] mx-auto px-4 text-center">
+      <p class="text-xs text-slate-400">© 2026 BK Operations & Management System. Version 21.4.</p>
+    </div>
+  </footer>
+
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    // Developer tools / Right click unblocked for debug purposes as requested
+    // 1. Utilities
     function showSecurityToast(msg) {
       let toast = document.getElementById('securityToast');
       if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'securityToast';
+        toast = document.createElement('div'); toast.id = 'securityToast';
         toast.className = 'fixed bottom-5 right-5 z-[9999] bg-slate-900 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-2xl border border-slate-700 transition-all duration-300 opacity-0 pointer-events-none transform translate-y-2';
         document.body.appendChild(toast);
       }
-      toast.innerText = msg;
-      toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
-      toast.classList.add('opacity-100', 'translate-y-0');
+      toast.innerText = msg; toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2'); toast.classList.add('opacity-100', 'translate-y-0');
       clearTimeout(window.__toastTimeout);
-      window.__toastTimeout = setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
-      }, 2500);
+      window.__toastTimeout = setTimeout(() => { toast.classList.remove('opacity-100', 'translate-y-0'); toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2'); }, 2500);
     }
-
     function toggleFullScreen() {
       if (!document.fullscreenElement) { document.documentElement.requestFullscreen().catch(err => console.warn(err)); document.getElementById('fullscreenIcon').innerText = '🗗'; }
       else { if (document.exitFullscreen) document.exitFullscreen(); document.getElementById('fullscreenIcon').innerText = '⛶'; }
     }
     document.addEventListener('fullscreenchange', () => { const icon = document.getElementById('fullscreenIcon'); if (icon) icon.innerText = document.fullscreenElement ? '🗗' : '⛶'; });
-
     function initTheme() { if (localStorage.getItem('theme') === 'dark') { document.documentElement.classList.add('dark'); document.getElementById('themeIcon').innerText = '☀️'; } }
     function toggleDarkMode() { const isDark = document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', isDark ? 'dark' : 'light'); document.getElementById('themeIcon').innerText = isDark ? '☀️' : '🌙'; }
     function changeFontSize(size) {
-      document.documentElement.classList.remove('font-sm', 'font-md', 'font-lg'); document.documentElement.classList.add('font-' + size);
-      localStorage.setItem('bk_FontSize', size);
+      document.documentElement.classList.remove('font-sm', 'font-md', 'font-lg'); document.documentElement.classList.add('font-' + size); localStorage.setItem('bk_FontSize', size);
       ['sm', 'md', 'lg'].forEach(s => {
         const btn = document.getElementById('btnFont' + s.charAt(0).toUpperCase() + s.slice(1));
         if (s === size) btn.className = "px-1.5 py-1 rounded text-[10px] font-bold text-blue-950 dark:text-white bg-white dark:bg-slate-700 shadow-sm transition";
@@ -729,38 +689,24 @@
     function initFontSize() { const saved = localStorage.getItem('bk_FontSize') || 'md'; changeFontSize(saved); }
     function formatNum(n, decimals = 2) { return Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }); }
     function formatReportDate(iso) { if (!iso) return ""; const p = iso.split('-'); return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : iso; }
-    
-    // Crypto UUID to prevent duplicate IDs on simultaneous inserts
-    function generateId(prefix = 'bk') { 
-      try { return prefix + '_' + crypto.randomUUID(); } 
-      catch(e) { return prefix + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
-    }
+    function generateId(prefix = 'bk') { try { return prefix + '_' + crypto.randomUUID(); } catch(e) { return prefix + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6); } }
 
+    // 2. Encryption
     const SECURITY_SALT = "BK_Operations_Internal_Salt_2026";
     function getEncryptionKey() { return "BK_MASTER_KEY_" + SECURITY_SALT; }
     function encryptPayload(dataObj) {
-      const jsonStr = JSON.stringify(dataObj);
-      const key = getEncryptionKey();
+      const jsonStr = JSON.stringify(dataObj); const key = getEncryptionKey();
       if (window.CryptoJS && CryptoJS.AES) { try { return "AES::" + CryptoJS.AES.encrypt(jsonStr, key).toString(); } catch(e) {} }
-      try {
-        const encoded = encodeURIComponent(jsonStr);
-        let out = '';
-        for (let i = 0; i < encoded.length; i++) out += String.fromCharCode(encoded.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-        return "XOR::" + btoa(out);
-      } catch(err) { return jsonStr; }
+      try { const encoded = encodeURIComponent(jsonStr); let out = ''; for (let i = 0; i < encoded.length; i++) out += String.fromCharCode(encoded.charCodeAt(i) ^ key.charCodeAt(i % key.length)); return "XOR::" + btoa(out); } catch(err) { return jsonStr; }
     }
     function decryptPayload(storedRaw) {
-      if (!storedRaw) return null;
-      const key = getEncryptionKey();
-      if (storedRaw.startsWith("AES::") && window.CryptoJS && CryptoJS.AES) {
-        try { const cipherText = storedRaw.substring(5); const bytes = CryptoJS.AES.decrypt(cipherText, key); const decryptedStr = bytes.toString(CryptoJS.enc.Utf8); if (decryptedStr) return JSON.parse(decryptedStr); } catch(e) {}
-      }
-      if (storedRaw.startsWith("XOR::")) {
-        try { const decodedRaw = atob(storedRaw.substring(5)); let out = ''; for (let i = 0; i < decodedRaw.length; i++) out += String.fromCharCode(decodedRaw.charCodeAt(i) ^ key.charCodeAt(i % key.length)); return JSON.parse(decodeURIComponent(out)); } catch(e) {}
-      }
+      if (!storedRaw) return null; const key = getEncryptionKey();
+      if (storedRaw.startsWith("AES::") && window.CryptoJS && CryptoJS.AES) { try { const cipherText = storedRaw.substring(5); const bytes = CryptoJS.AES.decrypt(cipherText, key); const decryptedStr = bytes.toString(CryptoJS.enc.Utf8); if (decryptedStr) return JSON.parse(decryptedStr); } catch(e) {} }
+      if (storedRaw.startsWith("XOR::")) { try { const decodedRaw = atob(storedRaw.substring(5)); let out = ''; for (let i = 0; i < decodedRaw.length; i++) out += String.fromCharCode(decodedRaw.charCodeAt(i) ^ key.charCodeAt(i % key.length)); return JSON.parse(decodeURIComponent(out)); } catch(e) {} }
       try { return JSON.parse(storedRaw); } catch(e) { return null; }
     }
 
+    // 3. Constants & Storage Accessors
     const DEFAULT_CREDIT_COMPANIES = [
       { code: "SH", name: "STABLE HOPE COMPANY LIMITED", bannerImage: "", address: "No. 73, Padauk Pin Street, Kyi Myin Daing Township, Yangon, Myanmar.", phone: "Ph: 09 762675854, 09 677353152", email: "Email: stablehope@rgp.com.mm" },
       { code: "TW", name: "TIDE WAVE CO.,LTD", bannerImage: "", address: "Yangon, Myanmar.", phone: "", email: "" },
@@ -768,17 +714,21 @@
       { code: "UO", name: "UNIVERSAL OXEN LIMITED", bannerImage: "", address: "Yangon, Myanmar.", phone: "", email: "" },
       { code: "IMP", name: "IMPORIA CO.,LTD", bannerImage: "", address: "Yangon, Myanmar.", phone: "", email: "" }
     ];
-
     const DEFAULT_CUSTOMERS = {
       'AG': { name: 'Andaman Gull', defaultPct: 4.0 }, 'APPT': { name: 'Aung Pyae Phyo Tun', defaultPct: 4.0 }, 'DI': { name: 'Double Island', defaultPct: 4.0 }, 'DNAM': { name: 'DANA ARMAN', defaultPct: 4.0 },
       'HPYDN': { name: 'Hein Pyae Yadanar', defaultPct: 4.0 }, 'HSY': { name: 'Htay Shwe Yaung', defaultPct: 4.0 }, 'KANW': { name: 'Kyaw Annawar', defaultPct: 4.0 }, 'KSZ': { name: 'Kaung Su Zaw', defaultPct: 4.0 },
       'OG': { name: 'Ocean Gull', defaultPct: 4.0 }, 'RM': { name: 'Rainbow Moetain', defaultPct: 4.0 }, 'SB': { name: 'Sein Bhone', defaultPct: 4.0 }, 'SNJP': { name: 'Shwe Ngar Japan', defaultPct: 4.0 },
       'SPSS': { name: 'Shwe Pyi Soe San', defaultPct: 4.0 }, 'TI': { name: 'Towel Island', defaultPct: 4.0 }, 'WHM': { name: 'Waihin Moe', defaultPct: 4.0 }
     };
+    const INITIAL_USERS = [
+      { id: 'usr_1', username: 'Bhonekyaw', password: '1672000', displayName: 'BK Server', role: 'admin', isOwner: true },
+      { id: 'usr_2', username: 'Paingsoe', password: 'paingsoe2026', displayName: 'Operations Staff', role: 'staff', isOwner: false },
+      { id: 'usr_3', username: 'Thiha', password: 'thiha2026', displayName: 'Admin', role: 'viewer', isOwner: false },
+      { id: 'usr_4', username: 'Zawlin', password: 'zawlin2026', displayName: 'Admin', role: 'viewer', isOwner: false }
+    ];
 
     function getCreditCompanies() { const enc = localStorage.getItem('bk_CreditCompanies_enc'); const list = enc ? decryptPayload(enc) : null; if (Array.isArray(list) && list.length > 0) return list; return DEFAULT_CREDIT_COMPANIES; }
-    function saveCreditCompanies(l) { localStorage.setItem('bk_CreditCompanies_enc', encryptPayload(l)); populateCreditCoDropdowns(); renderCreditCoTable(); renderDailyReport(); if (firebaseDb) firebaseDb.ref("bk_operations_master/creditCompanies").set(l); }
-
+    function saveCreditCompanies(l) { localStorage.setItem('bk_CreditCompanies_enc', encryptPayload(l)); populateCreditCoDropdowns(); renderCreditCoTable(); renderDailyReport(); syncFullStateToCloud(); }
     function getCustomers() {
       const enc = localStorage.getItem('bk_CompanyMap_enc'); let m = enc ? decryptPayload(enc) : null;
       if (!m || typeof m !== 'object' || Array.isArray(m) || Object.keys(m).length === 0) m = DEFAULT_CUSTOMERS;
@@ -790,54 +740,29 @@
       }
       return Object.keys(norm).length > 0 ? norm : DEFAULT_CUSTOMERS;
     }
-    function saveCustomers(m) { localStorage.setItem('bk_CompanyMap_enc', encryptPayload(m)); populateCustomerDropdowns(); renderCustomerTable(); if (firebaseDb) firebaseDb.ref("bk_operations_master/customers").set(m); }
-
+    function saveCustomers(m) { localStorage.setItem('bk_CompanyMap_enc', encryptPayload(m)); populateCustomerDropdowns(); renderCustomerTable(); syncFullStateToCloud(); }
     function getCargoData() { const enc = localStorage.getItem('bk_CargoData_enc'); return enc ? decryptPayload(enc) || [] : []; }
-    function saveCargoData(d) { localStorage.setItem('bk_CargoData_enc', encryptPayload(d)); if (firebaseDb) firebaseDb.ref("bk_operations_master/cargoData").set(d); }
-
+    function saveCargoData(d) { localStorage.setItem('bk_CargoData_enc', encryptPayload(d)); syncFullStateToCloud(); }
     function getEdData() { const enc = localStorage.getItem('bk_EdServiceData_enc'); return enc ? decryptPayload(enc) || [] : []; }
-    function saveEdData(d) { localStorage.setItem('bk_EdServiceData_enc', encryptPayload(d)); if (firebaseDb) firebaseDb.ref("bk_operations_master/edData").set(d); }
-
+    function saveEdData(d) { localStorage.setItem('bk_EdServiceData_enc', encryptPayload(d)); syncFullStateToCloud(); }
     function getMpuTopups() { const enc = localStorage.getItem('bk_MPUTopups_enc'); return enc ? decryptPayload(enc) || [] : []; }
-    function saveMpuTopups(l) { localStorage.setItem('bk_MPUTopups_enc', encryptPayload(l)); if (firebaseDb) firebaseDb.ref("bk_operations_master/mpuTopups").set(l); }
+    function saveMpuTopups(l) { localStorage.setItem('bk_MPUTopups_enc', encryptPayload(l)); syncFullStateToCloud(); }
+    function getUserAccounts() { const s = localStorage.getItem('bk_user_accounts_enc'); if (s) { const parsed = decryptPayload(s); if (parsed && Array.isArray(parsed) && parsed.length > 0) return parsed; } return INITIAL_USERS; }
+    function saveUserAccounts(list) { localStorage.setItem('bk_user_accounts_enc', encryptPayload(list)); renderUserAccountsTable(); syncFullStateToCloud(); }
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyA9bHT8REIxVN4yZ60e7BjfEC9oHU1t8zc",
-      authDomain: "bhone-kyaw.firebaseapp.com",
-      databaseURL: "https://bhone-kyaw-default-rtdb.firebaseio.com",
-      projectId: "bhone-kyaw",
-      storageBucket: "bhone-kyaw.firebasestorage.app",
-      messagingSenderId: "334844664096",
-      appId: "1:334844664096:web:944f71d067c9dc788ddf45"
-    };
-
-    let firebaseDb = null;
-    let isCloudConnected = false;
-
+    // 4. Firebase Auth & Sync
+    const firebaseConfig = { apiKey: "AIzaSyA9bHT8REIxVN4yZ60e7BjfEC9oHU1t8zc", authDomain: "bhone-kyaw.firebaseapp.com", databaseURL: "https://bhone-kyaw-default-rtdb.firebaseio.com", projectId: "bhone-kyaw", storageBucket: "bhone-kyaw.firebasestorage.app", messagingSenderId: "334844664096", appId: "1:334844664096:web:944f71d067c9dc788ddf45" };
+    let firebaseDb = null; let isCloudConnected = false;
     function initFirebaseCloudSync() {
       try {
         if (window.firebase) {
           if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
           firebaseDb = firebase.database();
-          
-          const connectedRef = firebaseDb.ref(".info/connected");
-          connectedRef.on("value", (snap) => {
+          firebaseDb.ref(".info/connected").on("value", (snap) => {
             const statusBadge = document.getElementById('cloudStatusBadge');
-            if (snap.val() === true) {
-              isCloudConnected = true;
-              if (statusBadge) {
-                statusBadge.className = "inline-flex items-center gap-1 text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-300 px-2 py-0.5 rounded-full";
-                statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> <span>Cloud Live</span>`;
-              }
-            } else {
-              isCloudConnected = false;
-              if (statusBadge) {
-                statusBadge.className = "inline-flex items-center gap-1 text-[9px] font-bold bg-amber-50 text-amber-700 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-300 px-2 py-0.5 rounded-full";
-                statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <span>Connecting...</span>`;
-              }
-            }
+            if (snap.val() === true) { isCloudConnected = true; if (statusBadge) { statusBadge.className = "inline-flex items-center gap-1 text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-300 px-2 py-0.5 rounded-full"; statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> <span>Cloud Live</span>`; } } 
+            else { isCloudConnected = false; if (statusBadge) { statusBadge.className = "inline-flex items-center gap-1 text-[9px] font-bold bg-amber-50 text-amber-700 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-300 px-2 py-0.5 rounded-full"; statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <span>Connecting...</span>`; } }
           });
-
           firebaseDb.ref("bk_operations_master").on("value", (snapshot) => {
             const val = snapshot.val();
             if (val) {
@@ -847,7 +772,6 @@
               if (val.creditCompanies) localStorage.setItem('bk_CreditCompanies_enc', encryptPayload(val.creditCompanies));
               if (val.customers) localStorage.setItem('bk_CompanyMap_enc', encryptPayload(val.customers));
               if (val.mpuTopups) localStorage.setItem('bk_MPUTopups_enc', encryptPayload(val.mpuTopups));
-
               populateCreditCoDropdowns(); populateCustomerDropdowns(); populateMonthDropdown(); populateEdMonthDropdown();
               filterData(); filterEdData(); renderDailyReport(); renderUserAccountsTable(); renderCreditCoTable(); renderCustomerTable(); renderMpuLedger();
             }
@@ -855,78 +779,106 @@
         }
       } catch (err) { console.warn("Firebase Init fallback to LocalStorage:", err); }
     }
-
-    const INITIAL_USERS = [
-      { id: 'usr_1', username: 'Bhonekyaw', password: '1672000', displayName: 'BK Server', role: 'admin', isOwner: true },
-      { id: 'usr_2', username: 'Paingsoe', password: 'paingsoe2026', displayName: 'Operations Staff', role: 'staff', isOwner: false },
-      { id: 'usr_3', username: 'Thiha', password: 'thiha2026', displayName: 'Admin', role: 'viewer', isOwner: false },
-      { id: 'usr_4', username: 'Zawlin', password: 'zawlin2026', displayName: 'Admin', role: 'viewer', isOwner: false }
-    ];
-
-    function getUserAccounts() {
-      const s = localStorage.getItem('bk_user_accounts_enc');
-      if (s) { const parsed = decryptPayload(s); if (parsed && Array.isArray(parsed) && parsed.length > 0) return parsed; }
-      return INITIAL_USERS;
+    function syncFullStateToCloud() {
+      if (!firebaseDb || !isCloudConnected) return;
+      const payload = { cargoData: getCargoData(), edData: getEdData(), userAccounts: getUserAccounts(), creditCompanies: getCreditCompanies(), customers: getCustomers(), mpuTopups: getMpuTopups(), lastUpdated: Date.now() };
+      firebaseDb.ref("bk_operations_master").set(payload).catch(e => console.warn("Sync error:", e));
     }
-    function saveUserAccounts(list) { localStorage.setItem('bk_user_accounts_enc', encryptPayload(list)); renderUserAccountsTable(); if (firebaseDb) firebaseDb.ref("bk_operations_master/userAccounts").set(list); }
 
+    // 5. Backup & User Session
+    function triggerEncryptedBackup() {
+      if (currentUser && currentUser.role !== 'admin') return alert("Admin အကောင့်သာ Backup ပြုလုပ်ခွင့် ရှိပါသည်။");
+      const adminPasswordInput = prompt("Backup ဖိုင်ကို လုံခြုံစွာ Encrypt ပြုလုပ်ရန် Admin Password ကို အတည်ပြု ရိုက်ထည့်ပါ:"); if (!adminPasswordInput) return;
+      const users = getUserAccounts(); const isValidAdmin = users.some(u => u.role === 'admin' && u.password === adminPasswordInput.trim());
+      if (!isValidAdmin) return alert("Admin Password မှားယွင်းနေပါသည်။ Backup ဆွဲယူခွင့် မပြုပါ။");
+      const backupData = { version: "21.4", system: "BK Operations & Management System", exportDate: new Date().toISOString(), exportedBy: currentUser.username, cargoData: getCargoData(), edData: getEdData(), creditCompanies: getCreditCompanies(), customers: getCustomers(), userAccounts: getUserAccounts(), mpuTopups: getMpuTopups() };
+      const jsonString = JSON.stringify(backupData); let encryptedPayload = "";
+      if (window.CryptoJS && CryptoJS.AES) encryptedPayload = "BK_AES::" + CryptoJS.AES.encrypt(jsonString, adminPasswordInput.trim()).toString(); else encryptedPayload = "BK_RAW::" + btoa(encodeURIComponent(jsonString));
+      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "21.4", timestamp: Date.now(), data: encryptedPayload };
+      const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fileContainer, null, 2)); a.download = `BK_Operations_ProtectedBackup_${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a); a.click(); a.remove(); alert("Admin Password ဖြင့် အောင်မြင်စွာ Encrypt ပြုလုပ်ထားသော Backup ဖိုင်ကို ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!");
+    }
+    function handleRestoreFileSelected(e) {
+      const file = e.target.files[0]; if (!file) return; const r = new FileReader();
+      r.onload = function(evt) {
+        try {
+          const rawObj = JSON.parse(evt.target.result); let finalData = null;
+          if (rawObj.meta === "BK_ENCRYPTED_BACKUP" && rawObj.data) {
+            const pwd = prompt("ဤ Backup ဖိုင်ကို ပြန်လည်ဖွင့်ဖော်ရန် မူလ Admin Password ကို ရိုက်ထည့်ပါ:"); if (!pwd) { e.target.value = ''; return; }
+            if (rawObj.data.startsWith("BK_AES::") && window.CryptoJS && CryptoJS.AES) {
+              try { const cipher = rawObj.data.substring(8); const decryptedBytes = CryptoJS.AES.decrypt(cipher, pwd.trim()); const decStr = decryptedBytes.toString(CryptoJS.enc.Utf8); if (!decStr) throw new Error("Incorrect Password"); finalData = JSON.parse(decStr); } catch(err) { alert("❌ Password မှားယွင်းနေပါသည်။ Backup ဖိုင်ထဲမှ ဒေတာများကို ဖွင့်၍မရပါ!"); e.target.value = ''; return; }
+            } else if (rawObj.data.startsWith("BK_RAW::")) { finalData = JSON.parse(decodeURIComponent(atob(rawObj.data.substring(8)))); }
+          } else { finalData = rawObj; }
+          if (!finalData || !finalData.creditCompanies || !finalData.customers) throw new Error("ဖိုင်ပုံစံ မှားယွင်းနေပါသည်။");
+          if (confirm(`Backup ဖိုင်မှ ဒေတာများကို Cloud နှင့် စနစ်ထဲသို့ Restore အစားထိုး သိမ်းဆည်းမှာ သေချာပါသလား?`)) {
+            if (finalData.cargoData) saveCargoData(finalData.cargoData); if (finalData.edData) saveEdData(finalData.edData);
+            if (finalData.creditCompanies) saveCreditCompanies(finalData.creditCompanies); if (finalData.customers) saveCustomers(finalData.customers);
+            if (finalData.userAccounts) saveUserAccounts(finalData.userAccounts); if (finalData.mpuTopups) saveMpuTopups(finalData.mpuTopups);
+            populateMonthDropdown(); populateEdMonthDropdown(); filterData(); filterEdData(); renderMpuLedger(); alert("Data Restore လုပ်ခြင်း အောင်မြင်ပါသည်!");
+          }
+        } catch(err) { alert("Error: " + err.message); } finally { e.target.value = ''; }
+      }; r.readAsText(file);
+    }
     let currentUser = null;
     function checkAuthSession() {
-      const saved = sessionStorage.getItem('bk_current_user');
-      const authScreen = document.getElementById('authScreen');
-      const remUser = localStorage.getItem('bk_remembered_username');
-
+      const saved = sessionStorage.getItem('bk_current_user'); const authScreen = document.getElementById('authScreen'); const remUser = localStorage.getItem('bk_remembered_username');
       if (remUser) { document.getElementById('loginUsername').value = remUser; document.getElementById('rememberMeCheckbox').checked = true; }
-      if (saved) { currentUser = JSON.parse(saved); authScreen.classList.add('hidden'); applyRolePermissions(); } 
-      else { authScreen.classList.remove('hidden'); }
+      if (saved) { currentUser = JSON.parse(saved); authScreen.classList.add('hidden'); applyRolePermissions(); } else { authScreen.classList.remove('hidden'); }
     }
-
     function handleLoginSubmit(e) {
-      e.preventDefault();
-      const u = document.getElementById('loginUsername').value.trim().toLowerCase(); const p = document.getElementById('loginPassword').value.trim();
+      e.preventDefault(); const u = document.getElementById('loginUsername').value.trim().toLowerCase(); const p = document.getElementById('loginPassword').value.trim();
       const errBox = document.getElementById('loginErrorBox'); const remCheck = document.getElementById('rememberMeCheckbox').checked;
       const users = getUserAccounts(); const match = users.find(x => x.username.trim().toLowerCase() === u && x.password === p);
-
       if (match) {
-        currentUser = { id: match.id, username: match.username, displayName: match.displayName, role: match.role, isOwner: match.isOwner };
-        sessionStorage.setItem('bk_current_user', JSON.stringify(currentUser));
+        currentUser = { id: match.id, username: match.username, displayName: match.displayName, role: match.role, isOwner: match.isOwner }; sessionStorage.setItem('bk_current_user', JSON.stringify(currentUser));
         if (remCheck) localStorage.setItem('bk_remembered_username', match.username); else localStorage.removeItem('bk_remembered_username');
         errBox.classList.add('hidden'); document.getElementById('authScreen').classList.add('hidden'); document.getElementById('loginPassword').value = '';
-        applyRolePermissions(); filterData();
+        applyRolePermissions(); filterData(); filterEdData(); renderMpuLedger();
       } else { errBox.classList.remove('hidden'); document.getElementById('loginPassword').select(); }
     }
-
     function handleLogout() { sessionStorage.removeItem('bk_current_user'); currentUser = null; document.getElementById('authScreen').classList.remove('hidden'); document.getElementById('loginPassword').value = ''; }
     function togglePasswordVisibility() { const pwd = document.getElementById('loginPassword'); const eye = document.getElementById('eyeIcon'); if (pwd.type === 'password') { pwd.type = 'text'; eye.innerText = '🙈'; } else { pwd.type = 'password'; eye.innerText = '👁️'; } }
-
     function applyRolePermissions() {
       if (!currentUser) return;
       const role = currentUser.role; const isStaff = role === 'staff'; const isViewer = role === 'viewer'; const isAdmin = role === 'admin';
       const badge = document.getElementById('headerRoleBadge'); const userLabel = document.getElementById('headerUserDisplayName');
-
       if (isAdmin) { badge.className = "inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 border border-blue-300 dark:bg-blue-950 dark:text-blue-300"; badge.innerText = "👑 Admin"; } 
       else if (isStaff) { badge.className = "inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950 dark:text-amber-300"; badge.innerText = "👤 Staff (Entry Only)"; } 
       else if (isViewer) { badge.className = "inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-900 border border-purple-300 dark:bg-purple-950 dark:text-purple-300"; badge.innerText = "👁️ Viewer (Read Only)"; }
-
       userLabel.innerText = `• ${currentUser.displayName || currentUser.username}`;
-
       document.querySelectorAll('.admin-only-item').forEach(el => { if (isAdmin) el.classList.remove('hidden'); else el.classList.add('hidden'); });
       document.querySelectorAll('.not-for-staff').forEach(el => { if (isStaff) el.classList.add('hidden'); else el.classList.remove('hidden'); });
       document.querySelectorAll('.can-add-entry').forEach(el => { if (isViewer) el.classList.add('hidden'); else el.classList.remove('hidden'); });
-
       const batchPanel = document.getElementById('batchUpdatePanel'); if (batchPanel) batchPanel.classList.add('hidden');
       const activeTabId = document.querySelector('.tab-content.active')?.id;
       if (isStaff && ['tab-breakdown', 'tab-ed-dashboard', 'tab-ed-breakdown', 'tab-companies', 'tab-mpu'].includes(activeTabId)) switchTab('dashboard');
       if (isViewer && ['tab-companies', 'tab-mpu'].includes(activeTabId)) switchTab('dashboard');
     }
+    function switchTab(tabName) {
+      const role = currentUser ? currentUser.role : 'staff';
+      if (role === 'staff' && ['breakdown', 'ed-dashboard', 'ed-breakdown', 'companies', 'mpu'].includes(tabName)) { showSecurityToast("⚠️ ဝန်ထမ်းအကောင့်အတွက် ဤကဏ္ဍ ဖွင့်ခွင့်မရှိပါ"); return; }
+      if (role === 'viewer' && ['companies', 'mpu'].includes(tabName)) { showSecurityToast("⚠️ Viewer အကောင့်အတွက် ဤကဏ္ဍ ဖွင့်ခွင့်မရှိပါ"); return; }
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.getElementById('tab-' + tabName).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(btn => { btn.classList.remove('bg-blue-950', 'text-white', 'shadow-sm', 'dark:bg-blue-900'); btn.classList.add('bg-slate-100', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300'); });
+      const activeBtn = document.getElementById('btn-' + tabName);
+      if (activeBtn) { activeBtn.classList.remove('bg-slate-100', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300'); activeBtn.classList.add('bg-blue-950', 'text-white', 'shadow-sm', 'dark:bg-blue-900'); }
+      if (tabName === 'dashboard') filterData();
+      if (tabName === 'daily') renderDailyReport();
+      if (tabName === 'breakdown') renderBreakdown();
+      if (tabName === 'ed-dashboard') filterEdData();
+      if (tabName === 'ed-breakdown') renderEdBreakdown();
+      if (tabName === 'mpu') renderMpuLedger();
+      if (tabName === 'companies') { renderUserAccountsTable(); renderCreditCoTable(); renderCustomerTable(); }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
+    // 6. User Management
     function toggleUserManagementSection() {
       const body = document.getElementById('userManagementCollapsibleBody'); const icon = document.getElementById('userMgrToggleIcon'); const text = document.getElementById('userMgrToggleText');
       const isHidden = body.classList.contains('hidden');
       if (isHidden) { body.classList.remove('hidden'); icon.innerText = '🙈'; text.innerText = 'အကောင့်များ စီမံခန့်ခွဲမှု ပိတ်မည်'; }
       else { body.classList.add('hidden'); icon.innerText = '👁️'; text.innerText = 'အကောင့်များ စီမံခန့်ခွဲရန် ဖွင့်မည်'; }
     }
-
     function renderUserAccountsTable() {
       const list = getUserAccounts(); const tbody = document.getElementById('userAccountsTableBody'); if (!tbody) return;
       tbody.innerHTML = list.map((u, idx) => {
@@ -938,7 +890,6 @@
         return `<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition border-b border-slate-100 dark:border-slate-800"><td class="p-3 text-center text-slate-400 font-mono">${idx + 1}</td><td class="p-3 font-bold font-mono text-slate-900 dark:text-white">${escapeHtml(u.username)}</td><td class="p-3 font-mono text-slate-600 dark:text-slate-400">${escapeHtml(u.password)}</td><td class="p-3 font-medium text-slate-800 dark:text-slate-200">${escapeHtml(u.displayName || u.username)}</td><td class="p-3 text-center">${roleBadge}</td><td class="p-3 text-center space-x-1.5 whitespace-nowrap"><button onclick="editUserAccount('${u.id}')" class="text-amber-600 hover:text-amber-800 font-semibold inline-flex items-center gap-0.5" title="ပြင်မည်"><span>✏️</span> <span>ပြင်</span></button>${deleteBtn}</td></tr>`;
       }).join('');
     }
-
     function handleUserFormSubmit(e) {
       e.preventDefault(); const editId = document.getElementById('editingUserId').value; const username = document.getElementById('inUserUsername').value.trim();
       const password = document.getElementById('inUserPassword').value.trim(); const displayName = document.getElementById('inUserDisplayName').value.trim(); const role = document.getElementById('inUserRole').value;
@@ -947,86 +898,16 @@
       else { if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) return alert("ဤ Username ဖြင့် အကောင့်ရှိပြီးသား ဖြစ်ပါသည်။"); users.push({ id: generateId('usr'), username, password, displayName, role, isOwner: false }); alert(`အကောင့်အသစ် [${username}] အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ!`); }
       saveUserAccounts(users); resetUserForm();
     }
-
     function editUserAccount(id) {
       const users = getUserAccounts(); const target = users.find(u => u.id === id); if (!target) return;
       document.getElementById('editingUserId').value = target.id; document.getElementById('inUserUsername').value = target.username; document.getElementById('inUserPassword').value = target.password;
       document.getElementById('inUserDisplayName').value = target.displayName || ''; document.getElementById('inUserRole').value = target.role; document.getElementById('btnSaveUser').innerHTML = `<span>✏️</span> <span>ပြင်ဆင်မှု သိမ်းမည်</span>`; window.scrollTo({ top: document.getElementById('inUserUsername').offsetTop - 120, behavior: 'smooth' });
     }
-
     function deleteUserAccount(id) { const users = getUserAccounts(); const target = users.find(u => u.id === id); if (!target) return; if (target.isOwner) return alert("Super Admin (Owner) အကောင့်ကို ဖျက်၍မရပါ။"); if (confirm(`အကောင့် [${target.username} (${target.displayName})] ကို ဖျက်ရန် သေချာပါသလား?`)) saveUserAccounts(users.filter(u => u.id !== id)); }
     function resetUserForm() { document.getElementById('editingUserId').value = ''; document.getElementById('inUserUsername').value = ''; document.getElementById('inUserPassword').value = ''; document.getElementById('inUserDisplayName').value = ''; document.getElementById('inUserRole').value = 'staff'; document.getElementById('btnSaveUser').innerHTML = `<span>💾</span> <span>အကောင့် သိမ်းဆည်းမည်</span>`; }
     function escapeHtml(str) { return String(str || '').replace(/[&<>"']/g, function(m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]; }); }
 
-    function triggerEncryptedBackup() {
-      if (currentUser && currentUser.role !== 'admin') return alert("Admin အကောင့်သာ Backup ပြုလုပ်ခွင့် ရှိပါသည်။");
-      const adminPasswordInput = prompt("Backup ဖိုင်ကို လုံခြုံစွာ Encrypt ပြုလုပ်ရန် Admin Password ကို အတည်ပြု ရိုက်ထည့်ပါ:"); if (!adminPasswordInput) return;
-      const users = getUserAccounts(); const isValidAdmin = users.some(u => u.role === 'admin' && u.password === adminPasswordInput.trim());
-      if (!isValidAdmin) return alert("Admin Password မှားယွင်းနေပါသည်။ Backup ဆွဲယူခွင့် မပြုပါ။");
-
-      const backupData = { version: "21.2", system: "BK Operations & Management System", exportDate: new Date().toISOString(), exportedBy: currentUser.username, cargoData: getCargoData(), edData: getEdData(), creditCompanies: getCreditCompanies(), customers: getCustomers(), userAccounts: getUserAccounts(), mpuTopups: getMpuTopups() };
-      const jsonString = JSON.stringify(backupData); let encryptedPayload = "";
-      if (window.CryptoJS && CryptoJS.AES) encryptedPayload = "BK_AES::" + CryptoJS.AES.encrypt(jsonString, adminPasswordInput.trim()).toString();
-      else encryptedPayload = "BK_RAW::" + btoa(encodeURIComponent(jsonString));
-      const fileContainer = { meta: "BK_ENCRYPTED_BACKUP", version: "21.2", timestamp: Date.now(), data: encryptedPayload };
-      const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fileContainer, null, 2)); a.download = `BK_Operations_ProtectedBackup_${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(a); a.click(); a.remove(); alert("Admin Password ဖြင့် အောင်မြင်စွာ Encrypt ပြုလုပ်ထားသော Backup ဖိုင်ကို ဒေါင်းလုဒ်ဆွဲပြီးပါပြီ!");
-    }
-
-    function handleRestoreFileSelected(e) {
-      const file = e.target.files[0]; if (!file) return; const r = new FileReader();
-      r.onload = function(evt) {
-        try {
-          const rawObj = JSON.parse(evt.target.result); let finalData = null;
-          if (rawObj.meta === "BK_ENCRYPTED_BACKUP" && rawObj.data) {
-            const pwd = prompt("ဤ Backup ဖိုင်ကို ပြန်လည်ဖွင့်ဖော်ရန် မူလ Admin Password ကို ရိုက်ထည့်ပါ:"); if (!pwd) { e.target.value = ''; return; }
-            if (rawObj.data.startsWith("BK_AES::") && window.CryptoJS && CryptoJS.AES) {
-              try {
-                const cipher = rawObj.data.substring(8); const decryptedBytes = CryptoJS.AES.decrypt(cipher, pwd.trim()); const decStr = decryptedBytes.toString(CryptoJS.enc.Utf8);
-                if (!decStr) throw new Error("Incorrect Password"); finalData = JSON.parse(decStr);
-              } catch(err) { alert("❌ Password မှားယွင်းနေပါသည်။ Backup ဖိုင်ထဲမှ ဒေတာများကို ဖွင့်၍မရပါ!"); e.target.value = ''; return; }
-            } else if (rawObj.data.startsWith("BK_RAW::")) { finalData = JSON.parse(decodeURIComponent(atob(rawObj.data.substring(8)))); }
-          } else { finalData = rawObj; }
-
-          if (!finalData || !finalData.creditCompanies || !finalData.customers) throw new Error("ဖိုင်ပုံစံ မှားယွင်းနေပါသည်။");
-          if (confirm(`Backup ဖိုင်မှ ဒေတာများကို Cloud နှင့် စနစ်ထဲသို့ Restore အစားထိုး သိမ်းဆည်းမှာ သေချာပါသလား?`)) {
-            if (finalData.cargoData) saveCargoData(finalData.cargoData); if (finalData.edData) saveEdData(finalData.edData);
-            if (finalData.creditCompanies) saveCreditCompanies(finalData.creditCompanies); if (finalData.customers) saveCustomers(finalData.customers);
-            if (finalData.userAccounts) saveUserAccounts(finalData.userAccounts); if (finalData.mpuTopups) saveMpuTopups(finalData.mpuTopups);
-            
-            if (firebaseDb && isCloudConnected) {
-              firebaseDb.ref("bk_operations_master").set({
-                cargoData: finalData.cargoData || [], edData: finalData.edData || [], userAccounts: finalData.userAccounts || [],
-                creditCompanies: finalData.creditCompanies || [], customers: finalData.customers || {}, mpuTopups: finalData.mpuTopups || [], lastUpdated: Date.now()
-              });
-            }
-            populateMonthDropdown(); populateEdMonthDropdown(); filterData(); filterEdData(); renderMpuLedger(); alert("Data Restore လုပ်ခြင်း အောင်မြင်ပါသည်!");
-          }
-        } catch(err) { alert("Error: " + err.message); } finally { e.target.value = ''; }
-      }; r.readAsText(file);
-    }
-
-    function switchTab(tabName) {
-      const role = currentUser ? currentUser.role : 'staff';
-      if (role === 'staff' && ['breakdown', 'ed-dashboard', 'ed-breakdown', 'companies', 'mpu'].includes(tabName)) { showSecurityToast("⚠️ ဝန်ထမ်းအကောင့်အတွက် ဤကဏ္ဍ ဖွင့်ခွင့်မရှိပါ"); return; }
-      if (role === 'viewer' && ['companies', 'mpu'].includes(tabName)) { showSecurityToast("⚠️ Viewer အကောင့်အတွက် ဤကဏ္ဍ ဖွင့်ခွင့်မရှိပါ"); return; }
-
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.getElementById('tab-' + tabName).classList.add('active');
-      document.querySelectorAll('.nav-btn').forEach(btn => { btn.classList.remove('bg-blue-950', 'text-white', 'shadow-sm', 'dark:bg-blue-900'); btn.classList.add('bg-slate-100', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300'); });
-      const activeBtn = document.getElementById('btn-' + tabName);
-      if (activeBtn) { activeBtn.classList.remove('bg-slate-100', 'text-slate-700', 'dark:bg-slate-800', 'dark:text-slate-300'); activeBtn.classList.add('bg-blue-950', 'text-white', 'shadow-sm', 'dark:bg-blue-900'); }
-
-      if (tabName === 'dashboard') filterData();
-      if (tabName === 'daily') renderDailyReport();
-      if (tabName === 'breakdown') renderBreakdown();
-      if (tabName === 'ed-dashboard') filterEdData();
-      if (tabName === 'ed-breakdown') renderEdBreakdown();
-      if (tabName === 'mpu') renderMpuLedger();
-      if (tabName === 'companies') { renderUserAccountsTable(); renderCreditCoTable(); renderCustomerTable(); }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // ================= DATA FILTER & SORTING (DEFAULT: DATE DESC) =================
+    // 7. Credit Dashboard Variables & UI Helpers
     let sortColumn = 'date'; let sortAsc = false; let currentFilteredList = [];
     function populateMonthDropdown() {
       const all = getCargoData(); const s = document.getElementById('filterMonth'); if (!s) return; const cur = s.value || 'ALL';
@@ -1046,7 +927,15 @@
       populateEdCustDropdown();
     }
     function onCustomerInput(code) { const cCode = (code || '').trim().toUpperCase(); const customers = getCustomers(); if (customers[cCode] && customers[cCode].defaultPct) { const pctInput = document.getElementById('cargoModalPct'); if (pctInput) { pctInput.value = customers[cCode].defaultPct; calculateCargoPreview(); } } }
+    function toggleCargoCards() {
+      const c = document.getElementById('cargoMetricCardsContainer'); const icon = document.getElementById('cargoCardsToggleIcon'); const text = document.getElementById('cargoCardsToggleText');
+      if (c) c.classList.toggle('hidden'); if (icon) icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; if (text) text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
+    }
+    function updateCargoSummaryCards(list) {
+      document.getElementById('statTrips').innerText = list.length; document.getElementById('statKG').innerText = Math.round(list.reduce((a, b) => a + Number(b.kg || 0), 0)).toLocaleString(); document.getElementById('statUSD').innerText = '$' + formatNum(list.reduce((a, b) => a + Number(b.usd || 0), 0), 2); const totalTHB = Math.round(list.reduce((a, b) => a + Number(b.thb || 0), 0)); document.getElementById('statTHB').innerText = '฿' + formatNum(totalTHB, 0); const totalAmount = Math.round(list.reduce((a, b) => a + Number(b.amount || 0), 0)); const statAmtEl = document.getElementById('statAmount'); if (statAmtEl) statAmtEl.innerText = '฿' + formatNum(totalAmount, 0); 
+    }
 
+    // 8. Credit Logic
     function filterData() {
       const all = getCargoData(); const mVal = document.getElementById('filterMonth').value; const dVal = document.getElementById('filterDate').value; const cVal = document.getElementById('filterCreditCo').value; const rVal = document.getElementById('filterRemark').value; const search = document.getElementById('searchInput').value.trim().toLowerCase();
       let filtered = all.filter(item => { const itemMonth = (item.date || '').substring(0, 7); const matchesMonth = (mVal === 'ALL') || (itemMonth === mVal); const matchesDate = !dVal || (item.date === dVal); const itemCredit = (item.creditCo || 'SH').trim().toUpperCase(); const matchesCredit = (cVal === 'ALL') || (itemCredit === cVal); const itemRemark = (item.remark || '').trim().toUpperCase(); const matchesRemark = (rVal === 'ALL') || (itemRemark === rVal); const matchesSearch = !search || (item.boat && item.boat.toLowerCase().includes(search)) || (item.invNo && String(item.invNo).toLowerCase().includes(search)) || (item.edNo && String(item.edNo).toLowerCase().includes(search)); return matchesMonth && matchesDate && matchesCredit && matchesRemark && matchesSearch; });
@@ -1054,14 +943,10 @@
         let valA = a[sortColumn], valB = b[sortColumn]; 
         if (sortColumn === 'invNo') { const comp = String(valA || '').localeCompare(String(valB || ''), undefined, {numeric: true}); return sortAsc ? comp : -comp; } 
         if (['kg', 'usd', 'rate', 'thb', 'pct', 'amount'].includes(sortColumn)) { valA = Number(valA || 0); valB = Number(valB || 0); } else { valA = String(valA || ''); valB = String(valB || ''); } 
-        if (valA < valB) return sortAsc ? -1 : 1; 
-        if (valA > valB) return sortAsc ? 1 : -1; 
-        return 0; 
+        if (valA < valB) return sortAsc ? -1 : 1; if (valA > valB) return sortAsc ? 1 : -1; return 0; 
       });
       currentFilteredList = filtered; const countEl = document.getElementById('exportCount'); if (countEl) countEl.innerText = filtered.length; renderCargoTable(filtered); updateCargoSummaryCards(filtered);
     }
-    function updateCargoSummaryCards(list) { document.getElementById('statTrips').innerText = list.length; document.getElementById('statKG').innerText = Math.round(list.reduce((a, b) => a + Number(b.kg || 0), 0)).toLocaleString(); document.getElementById('statUSD').innerText = '$' + formatNum(list.reduce((a, b) => a + Number(b.usd || 0), 0), 2); const totalTHB = Math.round(list.reduce((a, b) => a + Number(b.thb || 0), 0)); document.getElementById('statTHB').innerText = '฿' + formatNum(totalTHB, 0); const totalAmount = Math.round(list.reduce((a, b) => a + Number(b.amount || 0), 0)); const statAmtEl = document.getElementById('statAmount'); if (statAmtEl) statAmtEl.innerText = '฿' + formatNum(totalAmount, 0); }
-    
     function renderCargoTable(list) {
       const tbody = document.getElementById('cargoTableBody'); const noMsg = document.getElementById('noResultsMsg'); tbody.innerHTML = '';
       if (list.length === 0) { noMsg.classList.remove('hidden'); return; } noMsg.classList.add('hidden');
@@ -1076,7 +961,6 @@
       ['creditCo','date','boat','invNo','edNo','kg','usd','rate','thb','pct','amount','remark'].forEach(col => { const span = document.getElementById('sort-' + col); if(span) span.innerText = (sortColumn === col) ? (sortAsc ? '▲' : '▼') : '↕'; });
     }
     function sortTable(col) { if (sortColumn === col) sortAsc = !sortAsc; else { sortColumn = col; sortAsc = true; } filterData(); }
-    
     function openNewCargoEntry() {
       if (currentUser && currentUser.role === 'viewer') return alert("Viewer အကောင့်အတွက် စာရင်းအသစ် ထည့်သွင်းခွင့် မရှိပါ။");
       document.getElementById('editCargoId').value = ''; document.getElementById('cargoModalTitle').innerText = "➕ Credit စာရင်းအသစ် ထည့်သွင်းခြင်း"; document.getElementById('cargoModalDate').value = new Date().toISOString().split('T')[0]; document.getElementById('cargoModalBoat').value = ''; document.getElementById('cargoModalRemark').value = ''; document.getElementById('cargoModalInvNo').value = ''; document.getElementById('cargoModalEdNo').value = ''; document.getElementById('cargoModalKG').value = ''; document.getElementById('cargoModalUSD').value = ''; document.getElementById('cargoModalRate').value = '34.7'; document.getElementById('cargoModalPct').value = '4.0'; document.getElementById('cargoModalLicense').checked = false; calculateCargoPreview(); document.getElementById('cargoEntryModal').classList.remove('hidden');
@@ -1111,25 +995,17 @@
       const rows = list.map((r, i) => { const baseRow = { "No": i + 1, "Credit Co": r.creditCo || 'SH', "Date": r.date, "လှေအမည်": r.boat, "Inv: No.": r.invNo, "ED No.": String(r.edNo), "KG": Number(r.kg || 0), "Inv: (USD)": Number(r.usd || 0), "RATE": Number(r.rate || 34.7), "Inv: (THB)": Math.round(Number(r.thb || 0)) }; if (!isStaff) { baseRow["%"] = Number(r.pct || 4); baseRow["AMOUNT (THB)"] = Math.round(Number(r.amount || 0)); } baseRow["Remark"] = r.remark; baseRow["Company Name"] = r.companyName || (custMap[r.remark] ? custMap[r.remark].name : ''); return baseRow; });
       const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Credit_Report"); XLSX.writeFile(wb, "BK_Credit_Report.xlsx");
     }
-    function toggleCargoCards() {
-      const c = document.getElementById('cargoMetricCardsContainer'); const icon = document.getElementById('cargoCardsToggleIcon'); const text = document.getElementById('cargoCardsToggleText');
-      if (c) c.classList.toggle('hidden'); if (icon) icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; if (text) text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
-    }
 
-    // ================= EXCEL IMPORT FIX (CREDIT) =================
+    // 9. Excel Importer & Date Parser (Credit)
     function parseExactExcelDate(val) {
       if (!val) return '';
-      if (typeof val === 'number') {
-        const d = new Date(Math.round((val - 25569) * 86400 * 1000));
-        return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
-      }
+      if (typeof val === 'number') { const d = new Date(Date.UTC(1899, 11, Math.round(val - 1))); return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`; }
       if (val instanceof Date) { return `${val.getUTCFullYear()}-${String(val.getUTCMonth() + 1).padStart(2, '0')}-${String(val.getUTCDate()).padStart(2, '0')}`; }
       const s = String(val).trim();
       if (s.includes('.')) { const p = s.split('.'); if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`; }
       if (s.includes('/')) { const p = s.split('/'); if (p.length === 3) return `${p[2].length === 2 ? '20' + p[2] : p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`; }
       return s.split('T')[0];
     }
-
     function handleExcelImport(event) {
       const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
       reader.onload = function(e) {
@@ -1137,21 +1013,14 @@
           const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: false });
           let sheetName = workbook.SheetNames.find(s => ['SH', 'TW', 'TCS', 'UO', 'IMP'].includes(s.trim().toUpperCase())) || workbook.SheetNames[0];
           const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
-          
           if (!rawRows || rawRows.length === 0) { alert("Excel ဖိုင်ထဲတွင် ဒေတာ မတွေ့ရှိပါ။"); return; }
-          
           let headerIdx = -1;
-          for (let i = 0; i < Math.min(rawRows.length, 15); i++) { 
-            const rowStr = (rawRows[i] || []).map(cell => String(cell || '')).join(' ').toLowerCase(); 
-            if (rowStr.includes('inv') || rowStr.includes('လှေ') || rowStr.includes('boat') || rowStr.includes('date') || rowStr.includes('kg')) { headerIdx = i; break; } 
-          }
+          for (let i = 0; i < Math.min(rawRows.length, 15); i++) { const rowStr = (rawRows[i] || []).map(cell => String(cell || '')).join(' ').toLowerCase(); if (rowStr.includes('inv') || rowStr.includes('လှေ') || rowStr.includes('boat') || rowStr.includes('date') || rowStr.includes('kg')) { headerIdx = i; break; } }
           if (headerIdx === -1) headerIdx = 0;
-
           const headers = (rawRows[headerIdx] || []).map(h => String(h || '').trim().toLowerCase());
           const colDate = headers.findIndex(h => h.includes('date') || h.includes('ရက်'));
           const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat') || h.includes('name'));
-          let colInv = headers.findIndex(h => h === 'inv no' || h === 'inv no.' || h === 'inv');
-          if (colInv === -1) colInv = headers.findIndex(h => h.includes('inv'));
+          let colInv = headers.findIndex(h => h === 'inv no' || h === 'inv no.' || h === 'inv'); if (colInv === -1) colInv = headers.findIndex(h => h.includes('inv'));
           const colEd = headers.findIndex(h => h.includes('ed'));
           const colKg = headers.findIndex(h => h.includes('kg') || h.includes('qty') || h.includes('weight'));
           const colUsd = headers.findIndex(h => h.includes('usd') || h.includes('vl') || h.includes('amount'));
@@ -1159,23 +1028,17 @@
           const colPct = headers.findIndex(h => h.includes('%') || h.includes('pct'));
           const colRemark = headers.findIndex(h => h.includes('remark') || h.includes('mark') || h.includes('customer') || h.includes('cust'));
           const colCompany = headers.findIndex(h => h.includes('company') || h.includes('ကုမ္ပဏီ'));
-
           const detectedCreditCo = sheetName.toUpperCase(); let parsedList = []; const currentCustomers = getCustomers();
           for (let rowIdx = headerIdx + 1; rowIdx < rawRows.length; rowIdx++) {
             const row = rawRows[rowIdx]; if (!row || !row.length) continue; 
-            const rowStr = row.map(c => String(c || '')).join(' ').toLowerCase();
-            if (rowStr.includes('total') || rowStr.includes('grand total') || rowStr.includes('စုစုပေါင်း')) continue;
-
+            const rowStr = row.map(c => String(c || '')).join(' ').toLowerCase(); if (rowStr.includes('total') || rowStr.includes('grand total') || rowStr.includes('စုစုပေါင်း')) continue;
             const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : ''); 
             const boat = (colBoat !== -1 && row[colBoat] != null) ? String(row[colBoat]).trim() : ''; 
             const kg = (colKg !== -1 && row[colKg] != null) ? parseFloat(row[colKg]) || 0 : 0;
             const usd = (colUsd !== -1 && row[colUsd] != null) ? parseFloat(row[colUsd]) || 0 : 0; 
-            
             let invNo = (colInv !== -1 && row[colInv] != null) ? String(row[colInv]).trim() : '';
             if (!dateStr && !boat && !usd && !invNo) continue;
-            
             if (/^\d{1,2}$/.test(invNo)) { invNo = invNo.padStart(3, '0'); }
-
             const edNo = (colEd !== -1 && row[colEd] != null) ? String(row[colEd]).trim() : ''; 
             const rate = (colRate !== -1 && row[colRate] != null) ? parseFloat(row[colRate]) || 34.7 : 34.7;
             const pct = (colPct !== -1 && row[colPct] != null) ? parseFloat(row[colPct]) || 4.0 : 4.0;
@@ -1185,24 +1048,20 @@
             if (compName && remark !== 'OTHER' && !currentCustomers[remark]) { currentCustomers[remark] = { name: compName, defaultPct: pct }; } else { compName = currentCustomers[remark] ? currentCustomers[remark].name : remark; }
             parsedList.push({ id: generateId('bk'), no: parsedList.length + 1, creditCo: detectedCreditCo, date: dateStr, boat, invNo, edNo, kg, usd, rate, thb, pct, amount, remark, companyName: compName, hasLicense: false });
           }
-          
           if (!parsedList.length) return alert("Credit စာရင်းများ မတွေ့ရှိပါ။ Excel ဖိုင်၏ Header များကို စစ်ဆေးပေးပါ။");
-          
           const applyLicense = confirm("Import လုပ်မည့် စာရင်းအားလုံးအတွက် န.က.သ လိုင်စင် (၁၅,၀၀၀ ကျပ်) ကိုပါ တစ်ခါတည်း ဖြတ်တောက်မည်လား?");
           if (applyLicense) { parsedList = parsedList.map(p => ({ ...p, hasLicense: true })); }
           saveCustomers(currentCustomers); 
-          
           const isAppend = confirm(`Credit စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။\n\n[OK] နှိပ်ပါက လက်ရှိစာရင်းများအောက်တွင် ဆက်ပေါင်းထည့်မည် (Append) ဖြစ်ပါသည်။\n\n[Cancel] နှိပ်ပါက မူလစာရင်းများကို အကုန်ဖျက်ပြီး အစားထိုး (Replace) ပါမည်။`);
           const existing = getCargoData(); 
           if (isAppend) { saveCargoData([...existing, ...parsedList]); } else { const sure = confirm("⚠️ သတိပေးချက် ⚠️\nမူလစာရင်းများ အကုန်ပျက်သွားပါမည်။ အစားထိုးမှာ သေချာပါသလား?"); if (sure) saveCargoData(parsedList); else return; }
-          
           populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); 
           alert(`Credit စာရင်းပေါင်း (${parsedList.length}) ခု System သို့ ထည့်သွင်းပြီးပါပြီ။`);
         } catch(err) { alert("Error: " + err.message); } finally { event.target.value = ''; }
       }; reader.readAsArrayBuffer(file);
     }
 
-    // ================= ED SERVICE LOGIC =================
+    // 10. ED Service Dashboard
     let sortEdColumn = 'date'; let sortEdAsc = false; let currentEdFilteredList = [];
     function populateEdMonthDropdown() {
       const all = getEdData(); const s = document.getElementById('filterEdMonth'); if (!s) return; const cur = s.value || 'ALL';
@@ -1236,13 +1095,10 @@
       document.getElementById('edStatTrips').innerText = list.length; document.getElementById('edStatUSD').innerText = '$' + formatNum(list.reduce((a, b) => a + Number(b.invVl || 0), 0), 2);
       document.getElementById('edStat2Pct').innerText = Math.round(list.reduce((a, b) => a + Number(b.tax2Pct || 0), 0)).toLocaleString() + ' Ks'; document.getElementById('edStatMF').innerText = Math.round(list.reduce((a, b) => a + Number(b.mfService || 0), 0)).toLocaleString() + ' Ks'; document.getElementById('edStatTotal').innerText = Math.round(list.reduce((a, b) => a + Number(b.total || 0), 0)).toLocaleString() + ' Ks';
     }
-    
-    // ** ADDED ED SUMMARY CARDS TOGGLE FUNCTION **
     function toggleEdCards() {
       const c = document.getElementById('edMetricCardsContainer'); const icon = document.getElementById('edCardsToggleIcon'); const text = document.getElementById('edCardsToggleText');
       if (c) c.classList.toggle('hidden'); if (icon) icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; if (text) text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
     }
-
     function renderEdTable(list) {
       const tbody = document.getElementById('edTableBody'); const noMsg = document.getElementById('noEdResultsMsg'); tbody.innerHTML = '';
       if (list.length === 0) { noMsg.classList.remove('hidden'); return; } noMsg.classList.add('hidden');
@@ -1251,24 +1107,11 @@
         const tr = document.createElement('tr'); tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 transition";
         let actionCell = `<button onclick="openVoucherModal('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher ကြည့်ရှု/ထုတ်မည်">📸 VC</button>`;
         if (isAdmin) { actionCell = `<button onclick="openVoucherModal('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher ကြည့်ရှု/ထုတ်မည်">📸 VC</button><button onclick="editEdShipment('${item.id}')" class="text-indigo-600 hover:text-indigo-800 p-1" title="ပြင်မည်">✏️</button><button onclick="deleteEdShipment('${item.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>`; }
-        tr.innerHTML = `
-          <td class="p-3 font-bold text-slate-500 text-center">${index + 1}</td>
-          <td class="p-3 whitespace-nowrap font-medium">${item.date || '-'}</td>
-          <td class="p-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap mm-text">${item.boat || '-'}</td>
-          <td class="p-3 font-mono font-bold">${item.invNo || '-'}</td>
-          <td class="p-3 text-right font-semibold text-emerald-700 dark:text-emerald-400">$${formatNum(item.invVl, 2)}</td>
-          <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-900 border border-indigo-200">${item.customer || '-'}</span></td>
-          <td class="p-3 text-right font-medium text-slate-700 dark:text-slate-300">${formatNum(Math.round(item.tax2Pct || 0), 0)} K</td>
-          <td class="p-3 text-right font-medium text-blue-900 dark:text-blue-300">${formatNum(Math.round(item.mfService || 0), 0)} K</td>
-          <td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">${formatNum(Math.round(item.total || 0), 0)} K</td>
-          <td class="p-3 text-center whitespace-nowrap">${item.payDate ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">${item.payDate}</span>` : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Pending</span>`}</td>
-          <td class="p-3 text-center space-x-1 whitespace-nowrap">${actionCell}</td>
-        `;
+        tr.innerHTML = `<td class="p-3 font-bold text-slate-500 text-center">${index + 1}</td><td class="p-3 whitespace-nowrap font-medium">${item.date || '-'}</td><td class="p-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap mm-text">${item.boat || '-'}</td><td class="p-3 font-mono font-bold">${item.invNo || '-'}</td><td class="p-3 text-right font-semibold text-emerald-700 dark:text-emerald-400">$${formatNum(item.invVl, 2)}</td><td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-900 border border-indigo-200">${item.customer || '-'}</span></td><td class="p-3 text-right font-medium text-slate-700 dark:text-slate-300">${formatNum(Math.round(item.tax2Pct || 0), 0)} K</td><td class="p-3 text-right font-medium text-blue-900 dark:text-blue-300">${formatNum(Math.round(item.mfService || 0), 0)} K</td><td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">${formatNum(Math.round(item.total || 0), 0)} K</td><td class="p-3 text-center whitespace-nowrap">${item.payDate ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">${item.payDate}</span>` : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Pending</span>`}</td><td class="p-3 text-center space-x-1 whitespace-nowrap">${actionCell}</td>`;
         tbody.appendChild(tr);
       });
       ['date','boat','invNo','invVl','customer','tax2Pct','mfService','total','payDate'].forEach(col => { const span = document.getElementById('sort-ed-' + col); if(span) span.innerText = (sortEdColumn === col) ? (sortEdAsc ? '▲' : '▼') : '↕'; });
     }
-
     function openNewEdEntryModal() {
       if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်းအသစ် ထည့်သွင်းခွင့် ရှိပါသည်။");
       document.getElementById('editEdId').value = ''; document.getElementById('edModalTitle').innerText = "➕ ED Service စာရင်းအသစ် ထည့်သွင်းခြင်း";
@@ -1299,43 +1142,30 @@
       const mfService = Math.round(parseFloat(document.getElementById('inEdMF').value) || 60000); const tax2Pct = Math.round(invVl * 42);
       const total = Math.round(tax2Pct + mfService); const payDate = document.getElementById('inEdPayDate').value;
       let all = getEdData();
-      if (editId) {
-        all = all.map(i => i.id === editId ? { ...i, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate } : i); alert("ED စာရင်းပြင်ဆင်မှု အောင်မြင်ပါသည်။");
-      } else {
-        all.unshift({ id: generateId('ed'), no: all.length + 1, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate }); alert("ED စာရင်းအသစ် System သို့ သိမ်းဆည်းပြီးပါပြီ။");
-      }
+      if (editId) { all = all.map(i => i.id === editId ? { ...i, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate } : i); alert("ED စာရင်းပြင်ဆင်မှု အောင်မြင်ပါသည်။"); } 
+      else { all.unshift({ id: generateId('ed'), no: all.length + 1, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate }); alert("ED စာရင်းအသစ် System သို့ သိမ်းဆည်းပြီးပါပြီ။"); }
       saveEdData(all); populateEdMonthDropdown(); populateEdCustDropdown(); closeEdEntryModal(); filterEdData();
     }
     function deleteEdShipment(id) { if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်း ဖျက်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ဤ ED စာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { saveEdData(getEdData().filter(i => i.id !== id)); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); } }
     function clearAllEdData() { if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ED စာရင်း ရှင်းထုတ်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) { saveEdData([]); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); } }
-
+    
     function handleEdExcelImport(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
+      const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
       reader.onload = function(e) {
         try {
-          const data = new Uint8Array(e.target.result);
-          const workbook = XLSX.read(data, { type: 'array', cellDates: false });
-          const sheetName = workbook.SheetNames[0];
-          const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
-          
+          const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: false });
+          const sheetName = workbook.SheetNames[0]; const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
           if (!rawRows || rawRows.length === 0) { alert("Excel ဖိုင်ထဲတွင် ဒေတာ မတွေ့ရှိပါ။"); return; }
-
           let headerIdx = -1;
           for (let i = 0; i < Math.min(rawRows.length, 15); i++) {
             const rowStr = (rawRows[i] || []).map(cell => String(cell || '')).join(' ').toLowerCase();
-            if (rowStr.includes('inv') || rowStr.includes('လှေ') || rowStr.includes('boat') || rowStr.includes('2%') || rowStr.includes('vl') || rowStr.includes('service') || rowStr.includes('mf')) {
-              headerIdx = i; break;
-            }
+            if (rowStr.includes('inv') || rowStr.includes('လှေ') || rowStr.includes('boat') || rowStr.includes('2%') || rowStr.includes('vl') || rowStr.includes('service') || rowStr.includes('mf')) { headerIdx = i; break; }
           }
           if (headerIdx === -1) headerIdx = 0;
-
           const headers = (rawRows[headerIdx] || []).map(h => String(h || '').trim().toLowerCase());
           const colDate = headers.findIndex(h => h.includes('date') && !h.includes('pay'));
           const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat') || h.includes('ship') || h.includes('name'));
-          let colInv = headers.findIndex(h => h === 'inv no' || h === 'inv no.' || h === 'inv');
-          if (colInv === -1) colInv = headers.findIndex(h => h.includes('inv'));
+          let colInv = headers.findIndex(h => h === 'inv no' || h === 'inv no.' || h === 'inv'); if (colInv === -1) colInv = headers.findIndex(h => h.includes('inv'));
           const colVl = headers.findIndex(h => h.includes('vl') || h.includes('usd') || h.includes('val') || h.includes('amt'));
           const colCust = headers.findIndex(h => h.includes('co') || h.includes('ltd') || h.includes('cust') || h.includes('company'));
           const col2Pct = headers.findIndex(h => h.includes('2%') || h.includes('2 %') || (h.includes('2') && !h.includes('20')));
@@ -1345,87 +1175,66 @@
 
           const parsedList = [];
           for (let r = headerIdx + 1; r < rawRows.length; r++) {
-            const row = rawRows[r];
-            if (!row || !row.length) continue;
-            const rowStr = row.map(c => String(c || '')).join(' ').toLowerCase();
-            if (rowStr.includes('total') || rowStr.includes('grand total') || rowStr.includes('စုစုပေါင်း')) continue;
-
+            const row = rawRows[r]; if (!row || !row.length) continue;
+            const rowStr = row.map(c => String(c || '')).join(' ').toLowerCase(); if (rowStr.includes('total') || rowStr.includes('grand total') || rowStr.includes('စုစုပေါင်း')) continue;
             const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : '');
             const boat = (colBoat !== -1 && row[colBoat] != null) ? String(row[colBoat]).trim() : '';
             const invVl = (colVl !== -1 && row[colVl] != null) ? parseFloat(row[colVl]) || 0 : 0;
             let invNo = (colInv !== -1 && row[colInv] != null) ? String(row[colInv]).trim() : '';
-
             if (!dateStr && !boat && !invVl && !invNo) continue;
             if (/^\d{1,2}$/.test(invNo)) invNo = invNo.padStart(3, '0');
-
             const customer = (colCust !== -1 && row[colCust]) ? String(row[colCust]).trim().toUpperCase() : 'OTHER';
             const tax2Pct = Math.round((col2Pct !== -1 && row[col2Pct] != null && row[col2Pct] !== '') ? parseFloat(row[col2Pct]) || (invVl * 42) : (invVl * 42));
             const mfService = Math.round((colMF !== -1 && row[colMF] != null && row[colMF] !== '') ? parseFloat(row[colMF]) || 60000 : 60000);
             const total = Math.round((colTotal !== -1 && row[colTotal] != null && row[colTotal] !== '') ? parseFloat(row[colTotal]) || (tax2Pct + mfService) : (tax2Pct + mfService));
             const payDate = (colPayDate !== -1 && row[colPayDate]) ? parseExactExcelDate(row[colPayDate]) : '';
-
             parsedList.push({ id: generateId('ed'), no: parsedList.length + 1, date: dateStr, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate });
           }
-
           if (!parsedList.length) { alert("ED စာရင်းများ မတွေ့ရှိပါ။ Excel ဖိုင်၏ Header များကို စစ်ဆေးပေးပါ။"); return; }
-
           const isAppend = confirm(`ED စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။\n\n[OK] နှိပ်ပါက လက်ရှိစာရင်းများအောက်တွင် ဆက်ပေါင်းထည့်မည် (Append) ဖြစ်ပါသည်။\n\n[Cancel] နှိပ်ပါက မူလစာရင်းများကို အကုန်ဖျက်ပြီး အစားထိုး (Replace) ပါမည်။`);
           const existing = getEdData();
           if (isAppend) { saveEdData([...existing, ...parsedList]); } else { const sure = confirm("⚠️ သတိပေးချက် ⚠️\nမူလစာရင်းများ အကုန်ပျက်သွားပါမည်။ အစားထိုးမှာ သေချာပါသလား?"); if (sure) saveEdData(parsedList); else return; }
-          
-          populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData();
-          alert(`ED စာရင်းပေါင်း (${parsedList.length}) ခု System သို့ အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။`);
+          populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); alert(`ED စာရင်းပေါင်း (${parsedList.length}) ခု System သို့ အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။`);
         } catch(err) { alert("Error: " + err.message); } finally { event.target.value = ''; }
-      };
-      reader.onerror = function() { alert("Excel ဖိုင် ဖတ်ရှုရာတွင် အမှားဖြစ်ပေါ်ခဲ့ပါသည်။"); event.target.value = ''; };
-      reader.readAsArrayBuffer(file);
+      }; reader.onerror = function() { alert("Excel ဖိုင် ဖတ်ရှုရာတွင် အမှားဖြစ်ပေါ်ခဲ့ပါသည်။"); event.target.value = ''; }; reader.readAsArrayBuffer(file);
     }
-
     function exportEdToExcel() {
       const list = currentEdFilteredList; if (!list || !list.length) return alert("Export ထုတ်ရန် ED စာရင်းမရှိပါ။");
       const rows = list.map((r, i) => ({ "No": i + 1, "Date": r.date, "လှေအမည်": r.boat, "Inv No.": r.invNo, "Invoice VL (USD)": Number(r.invVl || 0), "Co,.Ltd": r.customer, "2% (MMK)": Math.round(Number(r.tax2Pct || 0)), "MF / Service": Math.round(Number(r.mfService || 0)), "Total (MMK)": Math.round(Number(r.total || 0)), "Pay Date": r.payDate || 'Pending' }));
       const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "ED_Report"); XLSX.writeFile(wb, "BK_ED_Report.xlsx");
     }
 
-    // ================= BREAKDOWNS =================
+    // 11. Breakdowns
     function renderBreakdown() {
       const all = getCargoData(); const custMap = getCustomers(); const map = {};
       all.forEach(item => {
         const r = (item.remark || 'N/A').trim().toUpperCase(); const fullName = custMap[r] ? custMap[r].name : r;
         if (!map[r]) map[r] = { remark: r, name: fullName, trips: 0, kg: 0, usd: 0, thb: 0, amount: 0 };
-        map[r].trips += 1; map[r].kg += Number(item.kg || 0); map[r].usd += Number(item.usd || 0);
-        map[r].thb += Math.round(Number(item.thb || 0)); map[r].amount += Math.round(Number(item.amount || 0));
+        map[r].trips += 1; map[r].kg += Number(item.kg || 0); map[r].usd += Number(item.usd || 0); map[r].thb += Math.round(Number(item.thb || 0)); map[r].amount += Math.round(Number(item.amount || 0));
       });
       const list = Object.values(map).sort((a, b) => b.amount - a.amount);
       const tbody = document.getElementById('breakdownTableBody'); const tfoot = document.getElementById('breakdownTableFoot');
       tbody.innerHTML = list.map(b => `<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800"><td class="p-3 font-bold text-blue-950 dark:text-blue-400 font-mono">${b.remark}</td><td class="p-3 font-medium">${b.name}</td><td class="p-3 text-center font-semibold">${b.trips} ကြိမ်</td><td class="p-3 text-right font-medium">${Math.round(b.kg).toLocaleString()} KG</td><td class="p-3 text-right font-semibold text-emerald-700 dark:text-emerald-400">$${formatNum(b.usd, 2)}</td><td class="p-3 text-right font-semibold text-indigo-700 dark:text-indigo-400">฿${formatNum(b.thb, 0)}</td><td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">฿${formatNum(b.amount, 0)}</td></tr>`).join('');
-      const totalTrips = list.reduce((a, b) => a + b.trips, 0); const totalKG = Math.round(list.reduce((a, b) => a + b.kg, 0));
-      const totalUSD = list.reduce((a, b) => a + b.usd, 0); const totalTHB = Math.round(list.reduce((a, b) => a + b.thb, 0)); const totalAmt = Math.round(list.reduce((a, b) => a + b.amount, 0));
+      const totalTrips = list.reduce((a, b) => a + b.trips, 0); const totalKG = Math.round(list.reduce((a, b) => a + b.kg, 0)); const totalUSD = list.reduce((a, b) => a + b.usd, 0); const totalTHB = Math.round(list.reduce((a, b) => a + b.thb, 0)); const totalAmt = Math.round(list.reduce((a, b) => a + b.amount, 0));
       tfoot.innerHTML = `<tr class="text-slate-900 dark:text-white"><td colspan="2" class="p-3 font-extrabold uppercase tracking-wider text-center">GRAND TOTAL (စုစုပေါင်း)</td><td class="p-3 text-center font-extrabold">${totalTrips} ကြိမ်</td><td class="p-3 text-right font-extrabold text-blue-900 dark:text-blue-300">${totalKG.toLocaleString()} KG</td><td class="p-3 text-right font-extrabold text-emerald-700 dark:text-emerald-400">$${formatNum(totalUSD, 2)}</td><td class="p-3 text-right font-extrabold text-indigo-700 dark:text-indigo-400">฿${formatNum(totalTHB, 0)}</td><td class="p-3 text-right font-extrabold text-emerald-600 bg-emerald-50/60 dark:bg-emerald-950/30">฿${formatNum(totalAmt, 0)}</td></tr>`;
     }
-
     function renderEdBreakdown() {
       const all = getEdData(); const map = {};
       all.forEach(i => {
         const c = (i.customer || 'OTHER').trim().toUpperCase();
         if (!map[c]) map[c] = { cust: c, trips: 0, usd: 0, tax2: 0, mf: 0, total: 0, paid: 0, pending: 0 };
-        map[c].trips += 1; map[c].usd += Number(i.invVl || 0); map[c].tax2 += Math.round(Number(i.tax2Pct || 0));
-        map[c].mf += Math.round(Number(i.mfService || 0)); map[c].total += Math.round(Number(i.total || 0));
+        map[c].trips += 1; map[c].usd += Number(i.invVl || 0); map[c].tax2 += Math.round(Number(i.tax2Pct || 0)); map[c].mf += Math.round(Number(i.mfService || 0)); map[c].total += Math.round(Number(i.total || 0));
         if (i.payDate) map[c].paid += Math.round(Number(i.total || 0)); else map[c].pending += Math.round(Number(i.total || 0));
       });
       const list = Object.values(map).sort((a, b) => b.total - a.total);
       const tbody = document.getElementById('edBreakdownTableBody'); const tfoot = document.getElementById('edBreakdownTableFoot');
       tbody.innerHTML = list.map(b => `<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800"><td class="p-3 font-bold font-mono text-indigo-950 dark:text-indigo-400">${b.cust}</td><td class="p-3 text-center font-semibold">${b.trips} ကြိမ်</td><td class="p-3 text-right font-semibold text-emerald-700 dark:text-emerald-400">$${formatNum(b.usd, 2)}</td><td class="p-3 text-right font-medium">${b.tax2.toLocaleString()} K</td><td class="p-3 text-right font-medium text-blue-900 dark:text-blue-300">${b.mf.toLocaleString()} K</td><td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">${b.total.toLocaleString()} K</td><td class="p-3 text-center">${b.pending > 0 ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700">ကျန်: ${b.pending.toLocaleString()} K</span>` : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">အကုန်ချေပြီး</span>`}</td></tr>`).join('');
-
-      const totalTrips = list.reduce((a, b) => a + b.trips, 0); const totalUSD = list.reduce((a, b) => a + b.usd, 0);
-      const totalTax2 = Math.round(list.reduce((a, b) => a + b.tax2, 0)); const totalMF = Math.round(list.reduce((a, b) => a + b.mf, 0)); const grandTotal = Math.round(list.reduce((a, b) => a + b.total, 0));
-      const allPending = Math.round(list.reduce((a, b) => a + b.pending, 0));
+      const totalTrips = list.reduce((a, b) => a + b.trips, 0); const totalUSD = list.reduce((a, b) => a + b.usd, 0); const totalTax2 = Math.round(list.reduce((a, b) => a + b.tax2, 0)); const totalMF = Math.round(list.reduce((a, b) => a + b.mf, 0)); const grandTotal = Math.round(list.reduce((a, b) => a + b.total, 0)); const allPending = Math.round(list.reduce((a, b) => a + b.pending, 0));
       const pendingStatusHtml = allPending > 0 ? `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-800">ကျန်: ${allPending.toLocaleString()} K</span>` : `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-800">အကုန်ချေပြီး</span>`;
-
       tfoot.innerHTML = `<tr class="text-slate-900 dark:text-white"><td class="p-3 font-extrabold uppercase tracking-wider text-center">GRAND TOTAL</td><td class="p-3 text-center font-extrabold">${totalTrips} ကြိမ်</td><td class="p-3 text-right font-extrabold text-emerald-700 dark:text-emerald-400">$${formatNum(totalUSD, 2)}</td><td class="p-3 text-right font-extrabold">${totalTax2.toLocaleString()} K</td><td class="p-3 text-right font-extrabold text-blue-900 dark:text-blue-300">${totalMF.toLocaleString()} K</td><td class="p-3 text-right font-extrabold text-indigo-900 dark:text-indigo-300 bg-indigo-50/60 dark:bg-indigo-950/30">${grandTotal.toLocaleString()} K</td><td class="p-3 text-center font-extrabold">${pendingStatusHtml}</td></tr>`;
     }
 
-    // ================= DAILY REPORT =================
+    // 12. Daily Report
     let currentDailyReportType = 'detail';
     function onCreditCoChange() { renderDailyReport(); }
     function renderDailyReport() {
@@ -1438,8 +1247,7 @@
       
       if (creditCoObj.bannerImage && creditCoObj.bannerImage.trim() !== "") { 
         letterArea.innerHTML = `<div class="w-full text-center"><img src="${creditCoObj.bannerImage}" alt="Letterhead" class="w-full object-contain max-h-44 mx-auto select-none"></div>`; 
-      }
-      else { 
+      } else { 
         letterArea.innerHTML = `<div class="flex items-start justify-between pb-3 border-b-2 border-slate-700"><div class="w-16 h-16 rounded-xl bg-blue-950 text-white font-bold flex items-center justify-center text-2xl">${creditCoObj.code}</div><div class="text-right flex-1 pl-4"><h2 class="text-lg font-extrabold text-blue-950 uppercase">${creditCoObj.name}</h2><p class="text-[11px] text-slate-600 font-medium mt-0.5">${creditCoObj.address || ''}</p><p class="text-[11px] text-slate-600 font-medium">${creditCoObj.phone || ''}</p><p class="text-[11px] text-slate-600 font-medium">${creditCoObj.email || ''}</p></div></div>`; 
       }
       
@@ -1469,56 +1277,25 @@
       else { btnSummary.className = "px-2 py-1 rounded bg-white dark:bg-slate-700 text-blue-950 dark:text-white shadow-sm transition"; btnDetail.className = "px-2 py-1 rounded text-slate-600 dark:text-slate-400 hover:text-slate-900 transition"; }
       renderDailyReport();
     }
-    
-    // ================= UNIFIED LETTERHEAD UPLOAD LOGIC =================
     function handleLetterheadImageUpload(e) {
       const file = e.target.files[0]; if (!file) return;
       const code = document.getElementById('reportCreditCoSelect').value || 'SH';
-      const list = getCreditCompanies(); const target = list.find(c => c.code === code);
-      if (!target) return;
-      uploadLetterheadToCloud(file, target, list);
-      e.target.value = '';
+      const list = getCreditCompanies(); const target = list.find(c => c.code === code); if (!target) return;
+      uploadLetterheadToCloud(file, target, list); e.target.value = '';
     }
-
     function triggerCreditBannerUpload(code) {
-      const input = document.createElement('input');
-      input.type = 'file'; input.accept = 'image/*';
-      input.onchange = function(e) {
-        const file = e.target.files[0]; if (!file) return;
-        const list = getCreditCompanies(); const target = list.find(c => c.code === code);
-        if (!target) return;
-        uploadLetterheadToCloud(file, target, list);
-      };
+      const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
+      input.onchange = function(e) { const file = e.target.files[0]; if (!file) return; const list = getCreditCompanies(); const target = list.find(c => c.code === code); if (!target) return; uploadLetterheadToCloud(file, target, list); };
       input.click();
     }
-
     function uploadLetterheadToCloud(file, target, list) {
       if (window.firebase && firebase.storage) {
         showSecurityToast("⏳ Cloud သို့ ပုံတင်နေပါသည်...");
-        const storageRef = firebase.storage().ref();
-        const bannerRef = storageRef.child(`letterheads/${target.code}_${Date.now()}_${file.name}`);
-        bannerRef.put(file).then((snapshot) => {
-          snapshot.ref.getDownloadURL().then((url) => {
-            target.bannerImage = url; saveCreditCompanies(list);
-            showSecurityToast("✅ Letterhead ပုံ Cloud သို့ တင်ပြီးပါပြီ!"); renderDailyReport();
-          });
-        }).catch(err => {
-          console.warn("Storage Error, falling back to Local", err);
-          fallbackBase64Upload(file, target, list);
-        });
-      } else {
-        fallbackBase64Upload(file, target, list);
-      }
+        const storageRef = firebase.storage().ref(); const bannerRef = storageRef.child(`letterheads/${target.code}_${Date.now()}_${file.name}`);
+        bannerRef.put(file).then((snapshot) => { snapshot.ref.getDownloadURL().then((url) => { target.bannerImage = url; saveCreditCompanies(list); showSecurityToast("✅ Letterhead ပုံ Cloud သို့ တင်ပြီးပါပြီ!"); renderDailyReport(); }); }).catch(err => { console.warn("Storage Error, falling back to Local", err); fallbackBase64Upload(file, target, list); });
+      } else { fallbackBase64Upload(file, target, list); }
     }
-
-    function fallbackBase64Upload(file, target, list) {
-      const r = new FileReader();
-      r.onload = function(evt) {
-        target.bannerImage = evt.target.result; saveCreditCompanies(list);
-        showSecurityToast("✅ Letterhead ပုံ (Local) ဖြင့် တင်ပြီးပါပြီ!"); renderDailyReport();
-      }; r.readAsDataURL(file);
-    }
-
+    function fallbackBase64Upload(file, target, list) { const r = new FileReader(); r.onload = function(evt) { target.bannerImage = evt.target.result; saveCreditCompanies(list); showSecurityToast("✅ Letterhead ပုံ (Local) ဖြင့် တင်ပြီးပါပြီ!"); renderDailyReport(); }; r.readAsDataURL(file); }
     function downloadReportJPG() {
       const card = document.getElementById('printableA4Card'); const dateVal = document.getElementById('reportDatePicker').value || 'daily'; const creditVal = document.getElementById('reportCreditCoSelect').value || 'SH'; const filename = `${creditVal}_DailyReport_${dateVal}.jpg`;
       document.fonts.ready.then(() => { if (window.htmlToImage) { htmlToImage.toJpeg(card, { quality: 1.0, pixelRatio: 2.5, backgroundColor: '#ffffff', cacheBust: true, style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' }, width: 794 }).then(dataUrl => { const a = document.createElement('a'); a.download = filename; a.href = dataUrl; document.body.appendChild(a); a.click(); a.remove(); }).catch(err => { fallbackReportHtml2Canvas(card, filename); }); } else { fallbackReportHtml2Canvas(card, filename); } });
@@ -1530,71 +1307,33 @@
     }
     function fallbackReportPngHtml2Canvas(card, filename) { html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => { const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/png'); document.body.appendChild(a); a.click(); a.remove(); }); }
 
-    // ================= VOUCHER PREVIEW =================
+    // 13. Voucher Preview
     let currentVoucherItem = null;
     function openVoucherModal(id) {
       const item = getEdData().find(x => x.id === id); if (!item) return; currentVoucherItem = item;
       const isPaid = !!item.payDate; const stamp = document.getElementById('vcPaidStamp');
       if (isPaid) { stamp.classList.remove('hidden'); } else { stamp.classList.add('hidden'); }
-
-      const nameVal = (item.boat || item.customer || 'CUSTOMER').toUpperCase();
-      const codeVal = item.invNo ? `(${item.invNo})` : '';
-      document.getElementById('vcCustomer').innerText = nameVal;
-      document.getElementById('vcCode').innerText = codeVal;
+      const nameVal = (item.boat || item.customer || 'CUSTOMER').toUpperCase(); const codeVal = item.invNo ? `(${item.invNo})` : '';
+      document.getElementById('vcCustomer').innerText = nameVal; document.getElementById('vcCode').innerText = codeVal;
       document.getElementById('vcDate').innerText = formatReportDate(item.date);
       document.getElementById('vc2Pct').innerText = Math.round(item.tax2Pct || 0).toLocaleString();
       const mf = Math.round(item.mfService || 60000);
-      document.getElementById('vcMass').innerText = (mf / 2).toLocaleString();
-      document.getElementById('vcService').innerText = (mf / 2).toLocaleString();
+      document.getElementById('vcMass').innerText = (mf / 2).toLocaleString(); document.getElementById('vcService').innerText = (mf / 2).toLocaleString();
       document.getElementById('vcTotal').innerText = Math.round(item.total || 0).toLocaleString();
       document.getElementById('voucherPreviewModal').classList.remove('hidden');
     }
     function closeVoucherPreviewModal() { document.getElementById('voucherPreviewModal').classList.add('hidden'); currentVoucherItem = null; }
-    
     function downloadLiveVoucherJPG() {
       if (!currentVoucherItem) return;
-      const card = document.getElementById('voucherTargetCard');
-      const filename = `Voucher_${currentVoucherItem.customer || 'ED'}_${currentVoucherItem.invNo}.jpg`;
-      const bgColor = '#fdfbf4'; 
-      
+      const card = document.getElementById('voucherTargetCard'); const filename = `Voucher_${currentVoucherItem.customer || 'ED'}_${currentVoucherItem.invNo}.jpg`; const bgColor = '#fdfbf4'; 
       document.fonts.ready.then(() => {
-        if (window.htmlToImage) {
-          htmlToImage.toJpeg(card, {
-            quality: 1.0,
-            pixelRatio: 3.5,
-            backgroundColor: bgColor,
-            cacheBust: true,
-            width: 680,
-            style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' }
-          })
-          .then(dataUrl => {
-            const a = document.createElement('a');
-            a.download = filename;
-            a.href = dataUrl;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-          })
-          .catch(err => {
-            fallbackVoucherHtml2Canvas(card, filename, bgColor);
-          });
-        } else {
-          fallbackVoucherHtml2Canvas(card, filename, bgColor);
-        }
+        if (window.htmlToImage) { htmlToImage.toJpeg(card, { quality: 1.0, pixelRatio: 3.5, backgroundColor: bgColor, cacheBust: true, width: 680, style: { margin: '0', left: '0', top: '0', transform: 'none', position: 'static' } }).then(dataUrl => { const a = document.createElement('a'); a.download = filename; a.href = dataUrl; document.body.appendChild(a); a.click(); a.remove(); }).catch(err => { fallbackVoucherHtml2Canvas(card, filename, bgColor); }); } 
+        else { fallbackVoucherHtml2Canvas(card, filename, bgColor); }
       });
     }
-    function fallbackVoucherHtml2Canvas(card, filename, bgColor) {
-      html2canvas(card, { scale: 3.5, useCORS: true, allowTaint: true, backgroundColor: bgColor }).then(canvas => {
-        const a = document.createElement('a');
-        a.download = filename;
-        a.href = canvas.toDataURL('image/jpeg', 1.0);
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      });
-    }
+    function fallbackVoucherHtml2Canvas(card, filename, bgColor) { html2canvas(card, { scale: 3.5, useCORS: true, allowTaint: true, backgroundColor: bgColor }).then(canvas => { const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/jpeg', 1.0); document.body.appendChild(a); a.click(); a.remove(); }); }
 
-    // ================= MPU LEDGER =================
+    // 14. MPU Ledger
     function openMpuTopupModal() { if (currentUser && currentUser.role !== 'admin') return alert("Admin သာလျှင် ငွေသွင်းခွင့် ရှိပါသည်။"); document.getElementById('inMpuDate').value = new Date().toISOString().split('T')[0]; document.getElementById('inMpuBank').value = 'AYA Bank'; document.getElementById('inMpuAmount').value = ''; document.getElementById('inMpuRemark').value = 'MPU သို့ ငွေသွင်းခြင်း'; document.getElementById('mpuTopupModal').classList.remove('hidden'); }
     function closeMpuTopupModal() { document.getElementById('mpuTopupModal').classList.add('hidden'); }
     function handleMpuTopupSubmit(e) { e.preventDefault(); if (currentUser && currentUser.role !== 'admin') return; const date = document.getElementById('inMpuDate').value; const bank = document.getElementById('inMpuBank').value; const amount = parseFloat(document.getElementById('inMpuAmount').value) || 0; const remark = document.getElementById('inMpuRemark').value.trim(); let topups = getMpuTopups(); topups.push({ id: generateId('mpu'), date, bank, amount, remark }); saveMpuTopups(topups); closeMpuTopupModal(); renderMpuLedger(); alert("MPU သို့ ငွေသွင်းခြင်း မှတ်တမ်းတင်ပြီးပါပြီ။"); }
@@ -1613,7 +1352,7 @@
       document.getElementById('mpuStatTopup').innerText = totalIn.toLocaleString() + ' Ks'; document.getElementById('mpuStatExpense').innerText = totalOut.toLocaleString() + ' Ks'; document.getElementById('mpuStatBalance').innerText = balance.toLocaleString() + ' Ks';
     }
 
-    // ================= SETTINGS =================
+    // 15. Settings Panel
     function renderCreditCoTable() {
       const list = getCreditCompanies(); const tbody = document.getElementById('creditCoTableBody'); if (!tbody) return;
       tbody.innerHTML = list.map(c => `<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800"><td class="p-2.5 font-mono font-bold text-blue-950 dark:text-blue-400">${c.code}</td><td class="p-2.5 font-semibold">${c.name}</td><td class="p-2.5">${c.bannerImage ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">🖼️ Custom Banner</span>' : '<span class="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600">Standard</span>'}</td><td class="p-2.5 text-center"><button onclick="triggerCreditBannerUpload('${c.code}')" class="text-blue-900 dark:text-blue-400 hover:underline font-semibold">📷 ပုံတင်မည်</button></td><td class="p-2.5 text-center">${c.code === 'SH' ? '<span class="text-slate-300">-</span>' : `<button onclick="deleteCreditCo('${c.code}')" class="text-rose-600">🗑️</button>`}</td></tr>`).join('');
@@ -1621,12 +1360,10 @@
     function handleAddNewCreditCo(e) {
       e.preventDefault(); const code = document.getElementById('newCreditCode').value.trim().toUpperCase(); const name = document.getElementById('newCreditName').value.trim().toUpperCase(); const addr = document.getElementById('newCreditAddress').value.trim(); const list = getCreditCompanies();
       if (list.some(c => c.code === code)) return alert("Code ရှိပြီးသားပါ။");
-      list.push({ code, name, bannerImage: "", address: addr, phone: "", email: "" });
-      saveCreditCompanies(list); e.target.reset(); alert("Credit ကုမ္ပဏီ အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ!");
+      list.push({ code, name, bannerImage: "", address: addr, phone: "", email: "" }); saveCreditCompanies(list); e.target.reset(); alert("Credit ကုမ္ပဏီ အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ!");
     }
     function deleteCreditCo(code) { if (confirm(`ဖျက်မှာ သေချာပါသလား?`)) saveCreditCompanies(getCreditCompanies().filter(c => c.code !== code)); }
     function resetDefaultCreditCompanies() { if (confirm("မူလသို့ ပြန်ချမလား?")) saveCreditCompanies(DEFAULT_CREDIT_COMPANIES); }
-
     function renderCustomerTable() {
       const map = getCustomers(); const keys = Object.keys(map).sort(); const tbody = document.getElementById('customerTableBody'); if (!tbody) return;
       tbody.innerHTML = keys.map((code, idx) => `<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800"><td class="p-2.5 text-slate-400 text-center">${idx + 1}</td><td class="p-2.5 font-mono font-bold text-blue-950 dark:text-blue-400">${code}</td><td class="p-2.5 font-medium">${map[code].name}</td><td class="p-2.5 text-center font-bold text-indigo-700 dark:text-indigo-400">${map[code].defaultPct}%</td><td class="p-2.5 text-center space-x-2 whitespace-nowrap"><button onclick="editCustomer('${code}')" class="text-amber-600 hover:text-amber-800 font-semibold inline-flex items-center gap-0.5" title="ပြင်ဆင်မည်"><span>✏️</span> <span>ပြင်</span></button><button onclick="deleteCustomer('${code}')" class="text-rose-600 hover:text-rose-800" title="ဖျက်မည်">🗑️</button></td></tr>`).join('');
@@ -1634,8 +1371,7 @@
     function editCustomer(code) {
       const map = getCustomers(); const cust = map[code]; if (!cust) return;
       document.getElementById('editingCustomerOriginalCode').value = code; document.getElementById('newCustCode').value = code; document.getElementById('newCustName').value = cust.name; document.getElementById('newCustPct').value = cust.defaultPct;
-      document.getElementById('btnSaveCustomer').innerText = "✏️ ပြင်ဆင်မှု သိမ်းမည်"; document.getElementById('btnCancelEditCustomer').classList.remove('hidden');
-      window.scrollTo({ top: document.getElementById('newCustCode').offsetTop - 120, behavior: 'smooth' });
+      document.getElementById('btnSaveCustomer').innerText = "✏️ ပြင်ဆင်မှု သိမ်းမည်"; document.getElementById('btnCancelEditCustomer').classList.remove('hidden'); window.scrollTo({ top: document.getElementById('newCustCode').offsetTop - 120, behavior: 'smooth' });
     }
     function resetCustomerForm() {
       document.getElementById('editingCustomerOriginalCode').value = ''; document.getElementById('newCustCode').value = ''; document.getElementById('newCustName').value = ''; document.getElementById('newCustPct').value = '4.0';
@@ -1644,18 +1380,13 @@
     function handleCustomerFormSubmit(e) {
       e.preventDefault(); const origCode = document.getElementById('editingCustomerOriginalCode').value.trim().toUpperCase(); const code = document.getElementById('newCustCode').value.trim().toUpperCase(); const name = document.getElementById('newCustName').value.trim(); const pct = parseFloat(document.getElementById('newCustPct').value) || 4.0;
       if (!code || !name) return; const map = getCustomers();
-      if (origCode) {
-        if (origCode !== code) delete map[origCode];
-        map[code] = { name, defaultPct: pct }; saveCustomers(map); alert(`Customer [${code} - ${name}] ကို အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!`);
-      } else {
-        if (map[code]) return alert("ဤ Customer Code ရှိပြီးသား ဖြစ်ပါသည်။");
-        map[code] = { name, defaultPct: pct }; saveCustomers(map); alert(`Customer [${code} - ${name}] ကို ထည့်သွင်းပြီးပါပြီ!`);
-      }
+      if (origCode) { if (origCode !== code) delete map[origCode]; map[code] = { name, defaultPct: pct }; saveCustomers(map); alert(`Customer [${code} - ${name}] ကို အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!`); } 
+      else { if (map[code]) return alert("ဤ Customer Code ရှိပြီးသား ဖြစ်ပါသည်။"); map[code] = { name, defaultPct: pct }; saveCustomers(map); alert(`Customer [${code} - ${name}] ကို ထည့်သွင်းပြီးပါပြီ!`); }
       resetCustomerForm();
     }
     function deleteCustomer(code) { if (confirm(`Customer [${code}] ကို ဖျက်မှာ သေချာပါသလား?`)) { const map = getCustomers(); delete map[code]; saveCustomers(map); } }
 
-    // ================= INIT =================
+    // 16. INIT
     document.addEventListener("DOMContentLoaded", () => {
       initTheme(); initFontSize(); checkAuthSession();
       populateCreditCoDropdowns(); populateCustomerDropdowns(); populateMonthDropdown(); populateEdMonthDropdown();
