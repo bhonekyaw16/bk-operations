@@ -473,44 +473,39 @@
 
   <div id="voucherPreviewModal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
     <div class="bg-white dark:bg-slate-900 rounded-3xl border shadow-2xl max-w-[760px] w-full p-4 sm:p-6 flex flex-col items-center gap-4 my-auto">
-      <div class="w-full flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-        <div class="flex items-center gap-2"><span class="text-xl">📸</span><h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">ED Official Voucher Preview (v23.0)</h3></div>
+      <div class="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
+        <div><h3 class="font-bold text-base text-slate-900 dark:text-white">ED Voucher Preview</h3><p class="text-[11px] text-slate-500 mt-0.5">ဘောက်ချာပေါ်တွင်သာ ထည့်မည့် အပိုဝန်ဆောင်ခကို ရွေးနိုင်ပါသည်။</p></div>
         <div class="flex items-center gap-2">
-          <button onclick="downloadLiveVoucherJPG()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1.5"><span>📸</span> <span>Download High-Res JPG</span></button>
+          <button onclick="downloadLiveVoucherJPG()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm">📥 Download JPG</button>
           <button onclick="closeVoucherPreviewModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white text-xl p-1 px-2">✕</button>
         </div>
       </div>
+      <label class="w-full flex items-center justify-between gap-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 cursor-pointer">
+        <span><b class="block text-sm text-amber-950">န.က.သ လိုင်စင် ထည့်မည်</b><small class="text-amber-700">Voucher Total တွင်သာ 15,000 Ks ပေါင်းမည်။ ED စာရင်းထဲ မပေါင်းပါ။</small></span>
+        <input id="voucherIncludeLicense" type="checkbox" onchange="updateVoucherLicenseOption()" class="w-5 h-5 accent-amber-600 shrink-0">
+      </label>
       <div class="overflow-x-auto w-full flex justify-start sm:justify-center py-4">
-        <div id="voucherTargetCard" class="shrink-0 bg-[#fdfbf4] p-4 shadow-2xl relative select-none mx-auto" style="width: 680px !important; min-width: 680px !important; max-width: 680px !important; font-family: 'Times New Roman', 'Padauk', 'Pyidaungsu', serif; border: 1px solid #e0d8c3; box-sizing: border-box;">
-          <div class="relative w-full h-full border-[3px] border-[#c59e47] p-8 pb-10" style="box-shadow: inset 0 0 30px rgba(197,158,71,0.1);">
-            <svg class="absolute -top-[3px] -left-[3px] w-[85px] h-[85px] pointer-events-none z-20" viewBox="0 0 100 100"><polygon points="0,0 100,0 0,100" fill="#071324" /><polygon points="0,0 80,0 0,80" fill="#c09745" /><polygon points="0,0 60,0 0,60" fill="#071324" /><polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/></svg>
-            <svg class="absolute -top-[3px] -right-[3px] w-[85px] h-[85px] pointer-events-none z-20 transform rotate-90" viewBox="0 0 100 100"><polygon points="0,0 100,0 0,100" fill="#071324" /><polygon points="0,0 80,0 0,80" fill="#c09745" /><polygon points="0,0 60,0 0,60" fill="#071324" /><polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/></svg>
-            <svg class="absolute -bottom-[3px] -right-[3px] w-[85px] h-[85px] pointer-events-none z-20 transform rotate-180" viewBox="0 0 100 100"><polygon points="0,0 100,0 0,100" fill="#071324" /><polygon points="0,0 80,0 0,80" fill="#c09745" /><polygon points="0,0 60,0 0,60" fill="#071324" /><polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/></svg>
-            <svg class="absolute -bottom-[3px] -left-[3px] w-[85px] h-[85px] pointer-events-none z-20 transform -rotate-90" viewBox="0 0 100 100"><polygon points="0,0 100,0 0,100" fill="#071324" /><polygon points="0,0 80,0 0,80" fill="#c09745" /><polygon points="0,0 60,0 0,60" fill="#071324" /><polygon points="0,0 100,0 100,6 6,100 0,100" fill="#e2b963" opacity="0.8"/></svg>
-            <div class="relative w-[96%] mx-auto h-[125px] flex flex-col items-center justify-center text-center z-10 mb-8 mt-2" style="filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));">
-               <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 200"><polygon points="40,0 960,0 1000,40 1000,160 960,200 40,200 0,160 0,40" fill="#071324" stroke="#c09745" stroke-width="8"/><polygon points="45,8 955,8 992,45 992,155 955,192 45,192 8,155 8,45" fill="none" stroke="#e2b963" stroke-width="2" opacity="0.5"/></svg>
-               <div class="relative z-10 px-6 w-full text-center">
-                   <h1 class="text-[28px] font-extrabold tracking-wide text-white drop-shadow-sm uppercase leading-tight mm-text flex items-center justify-center gap-2" style="white-space: nowrap !important;"><span id="vcCustomer" style="color: #ffffff; white-space: nowrap !important;"></span> <span id="vcCode" style="color: #e29e39; white-space: nowrap !important;"></span></h1>
-                   <p class="text-[19px] font-bold text-white mt-1.5 tracking-widest" style="white-space: nowrap !important;">Date : <span id="vcDate"></span></p>
-               </div>
+        <div id="voucherTargetCard" class="shrink-0 bg-white shadow-2xl relative select-none mx-auto overflow-hidden" style="width:680px!important;min-width:680px!important;max-width:680px!important;font-family:'Plus Jakarta Sans','Padauk','Pyidaungsu','Segoe UI',sans-serif;border:1px solid #dfe5ed;border-radius:24px;box-sizing:border-box;color:#10213d;">
+          <div style="height:9px;background:linear-gradient(90deg,#163a6b,#367bf5,#22a6b3);"></div>
+          <div style="padding:34px 40px 36px;position:relative;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding-bottom:24px;border-bottom:1px solid #e7ebf1;">
+              <div><div style="font-size:12px;font-weight:900;letter-spacing:2.4px;color:#367bf5;">ED SERVICE</div><h1 style="font-size:28px;line-height:1.2;margin:7px 0 0;font-weight:800;color:#10213d;">Payment Receipt</h1></div>
+              <div style="text-align:right;"><span id="vcStatusChip" style="display:inline-flex;align-items:center;border-radius:999px;padding:9px 14px;font-size:12px;font-weight:900;letter-spacing:.8px;"></span><div id="vcStatusMyanmar" style="font-size:11px;color:#7b8799;margin-top:7px;"></div></div>
             </div>
-            <div class="px-6 relative z-10">
-              <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
-                <thead><tr style="border-bottom: 3px solid #c09745;"><th style="width: 50%; padding-bottom: 16px; text-align: left; font-size: 28px; font-weight: 800; color: #071324; white-space: nowrap !important;">Description</th><th style="width: 50%; padding-bottom: 16px; text-align: right; font-size: 28px; font-weight: 800; color: #071324; white-space: nowrap !important;">Amount (Ks)</th></tr></thead>
-                <tbody>
-                  <tr style="border-bottom: 1px solid rgba(197, 158, 71, 0.4);"><td style="padding: 18px 0; text-align: left; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;">2%</td><td style="padding: 18px 0; text-align: right; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;"><span id="vc2Pct"></span> Ks</td></tr>
-                  <tr style="border-bottom: 1px solid rgba(197, 158, 71, 0.4);"><td style="padding: 18px 0; text-align: left; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;">Mass Feed</td><td style="padding: 18px 0; text-align: right; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;"><span id="vcMass"></span> Ks</td></tr>
-                  <tr style="border-bottom: 4px double #c09745;"><td style="padding: 18px 0; text-align: left; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;">Service</td><td style="padding: 18px 0; text-align: right; font-size: 26px; font-weight: 700; color: #1e293b; white-space: nowrap !important;"><span id="vcService"></span> Ks</td></tr>
-                  <tr><td style="padding-top: 24px; padding-bottom: 10px; text-align: left; font-size: 38px; font-weight: 800; color: #071324; white-space: nowrap !important;">Total</td><td style="padding-top: 24px; padding-bottom: 10px; text-align: right; font-size: 38px; font-weight: 800; color: #b31b20; white-space: nowrap !important;"><span id="vcTotal"></span> Ks</td></tr>
-                </tbody>
-              </table>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:24px 0;">
+              <div style="background:#f5f7fa;border:1px solid #e8ecf2;border-radius:13px;padding:12px 14px;"><small style="display:block;color:#8a96a8;font-size:10px;font-weight:800;letter-spacing:1px;margin-bottom:6px;">INVOICE NO.</small><b id="vcCode" style="font-size:14px;"></b></div>
+              <div style="background:#f5f7fa;border:1px solid #e8ecf2;border-radius:13px;padding:12px 14px;"><small style="display:block;color:#8a96a8;font-size:10px;font-weight:800;letter-spacing:1px;margin-bottom:6px;">ISSUE DATE</small><b id="vcDate" style="font-size:14px;"></b></div>
+              <div style="background:#f5f7fa;border:1px solid #e8ecf2;border-radius:13px;padding:12px 14px;"><small id="vcPaymentDateLabel" style="display:block;color:#8a96a8;font-size:10px;font-weight:800;letter-spacing:1px;margin-bottom:6px;">PAYMENT</small><b id="vcPaymentDate" style="font-size:14px;"></b></div>
             </div>
-            <div id="vcPaidStamp" class="hidden absolute inset-0 flex items-center justify-center pointer-events-none select-none z-30 mt-16">
-              <div class="transform -rotate-[18deg] opacity-[0.92]" style="filter: drop-shadow(0 15px 15px rgba(0,0,0,0.2));">
-                <svg width="340" height="340" viewBox="0 0 300 300"><circle cx="150" cy="150" r="142" fill="none" stroke="#1f5a2c" stroke-width="6" stroke-dasharray="12 4" /><circle cx="150" cy="150" r="132" fill="none" stroke="#1f5a2c" stroke-width="4" /><circle cx="150" cy="150" r="88" fill="none" stroke="#1f5a2c" stroke-width="2" /><path id="curveTop" d="M 40,150 A 110,110 0 0,1 260,150" fill="none" /><text fill="#1f5a2c" font-size="16.5" font-weight="900" letter-spacing="3.5" text-anchor="middle" font-family="Arial, sans-serif"><textPath href="#curveTop" startOffset="50%">TRANSACTION COMPLETE</textPath></text><path id="curveBottom" d="M 260,150 A 110,110 0 0,1 40,150" fill="none" /><text fill="#1f5a2c" font-size="16.5" font-weight="900" letter-spacing="3.5" text-anchor="middle" font-family="Arial, sans-serif"><textPath href="#curveBottom" startOffset="50%">TRANSACTION COMPLETE</textPath></text><rect x="25" y="110" width="250" height="80" fill="#1f5a2c" rx="6" /><text x="150" y="168" fill="#ffffff" font-size="64" font-weight="900" letter-spacing="8" text-anchor="middle" font-family="'Times New Roman', serif">PAID</text><path d="M 115,218 L 138,238 L 185,198" fill="none" stroke="#1f5a2c" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </div>
+            <div style="margin-bottom:23px;"><small style="display:block;color:#7e8a9d;font-size:10px;font-weight:800;letter-spacing:1.3px;margin-bottom:8px;">CUSTOMER / VESSEL</small><div style="display:flex;align-items:center;justify-content:space-between;gap:20px;"><h2 id="vcCustomer" style="font-size:27px;line-height:1.35;margin:0;font-weight:800;color:#10213d;"></h2><span id="vcCustomerCode" style="color:#367bf5;font-size:12px;font-weight:900;background:#edf3ff;padding:7px 10px;border-radius:9px;"></span></div></div>
+            <div style="border-top:1px solid #dfe5ed;">
+              <div style="display:flex;justify-content:space-between;padding:14px 3px;border-bottom:1px solid #edf0f4;font-size:15px;"><span style="color:#65748b;">2% Tax</span><b><span id="vc2Pct"></span> Ks</b></div>
+              <div style="display:flex;justify-content:space-between;padding:14px 3px;border-bottom:1px solid #edf0f4;font-size:15px;"><span style="color:#65748b;">Mass Feed</span><b><span id="vcMass"></span> Ks</b></div>
+              <div style="display:flex;justify-content:space-between;padding:14px 3px;border-bottom:1px solid #edf0f4;font-size:15px;"><span style="color:#65748b;">Service Fee</span><b><span id="vcService"></span> Ks</b></div>
+              <div id="vcLicenseRow" style="display:none;justify-content:space-between;padding:14px 3px;border-bottom:1px solid #edf0f4;font-size:15px;color:#9a5b00;background:#fffaf0;"><span style="font-weight:700;">န.က.သ လိုင်စင်</span><b>15,000 Ks</b></div>
             </div>
-            <div class="flex items-center justify-center gap-4 mt-6"><div class="w-[70px] h-[6px] rounded-sm" style="background: linear-gradient(90deg, #b58b38, #e2b963, #b58b38);"></div><div class="w-[70px] h-[6px] rounded-sm" style="background: linear-gradient(90deg, #b58b38, #e2b963, #b58b38);"></div><div class="w-[70px] h-[6px] rounded-sm" style="background: linear-gradient(90deg, #b58b38, #e2b963, #b58b38);"></div></div>
+            <div id="vcTotalBox" style="margin-top:18px;border-radius:16px;padding:19px 21px;background:#163a6b;color:white;display:flex;justify-content:space-between;align-items:center;"><span id="vcTotalLabel" style="font-size:12px;font-weight:900;letter-spacing:1.2px;">TOTAL</span><strong style="font-size:30px;"><span id="vcTotal"></span> Ks</strong></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:23px;"><p id="vcFooterNote" style="margin:0;color:#7b8799;font-size:10px;line-height:1.7;"></p><div id="vcPaidMark" style="font-size:13px;font-weight:900;text-align:right;"></div></div>
           </div>
         </div>
       </div>
@@ -1435,21 +1430,47 @@
     function fallbackReportPngHtml2Canvas(card, filename) { html2canvas(card, { scale: 2.5, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => { const a = document.createElement('a'); a.download = filename; a.href = canvas.toDataURL('image/png'); document.body.appendChild(a); a.click(); a.remove(); }); }
 
     // 14. Voucher Preview (state declared once above)
+    function updateVoucherLicenseOption() {
+      if (!currentVoucherItem) return;
+      const includeLicense = document.getElementById('voucherIncludeLicense').checked;
+      document.getElementById('vcLicenseRow').style.display = includeLicense ? 'flex' : 'none';
+      // Voucher-only option: never write this amount back to ED data or Firebase.
+      const voucherTotal = Math.round(Number(currentVoucherItem.total || 0)) + (includeLicense ? 15000 : 0);
+      document.getElementById('vcTotal').innerText = voucherTotal.toLocaleString();
+    }
     function openVoucherModal(id) {
       const item = getEdData().find(x => x.id === id); if (!item) return; currentVoucherItem = item;
-      const isPaid = !!(item.payDate && item.payDate.trim() !== '' && item.payDate !== '-'); const stamp = document.getElementById('vcPaidStamp');
-      if (isPaid) { stamp.classList.remove('hidden'); } else { stamp.classList.add('hidden'); }
+      const payDate = String(item.payDate || '').trim();
+      const isPaid = !!(payDate && payDate !== '-');
+      const statusChip = document.getElementById('vcStatusChip');
+      const totalBox = document.getElementById('vcTotalBox');
+      statusChip.innerText = isPaid ? '●  PAID' : '●  PENDING';
+      statusChip.style.background = isPaid ? '#e6f8ef' : '#fff4d9';
+      statusChip.style.color = isPaid ? '#087a48' : '#9a5b00';
+      document.getElementById('vcStatusMyanmar').innerText = isPaid ? 'ငွေပေးချေပြီး' : 'ငွေပေးချေရန်ကျန်';
+      document.getElementById('vcPaymentDateLabel').innerText = isPaid ? 'PAID DATE' : 'PAYMENT';
+      document.getElementById('vcPaymentDate').innerText = isPaid ? formatReportDate(payDate) : 'Not received';
+      document.getElementById('vcTotalLabel').innerText = isPaid ? 'TOTAL RECEIVED' : 'AMOUNT DUE';
+      totalBox.style.background = isPaid ? '#163a6b' : '#fff8e8';
+      totalBox.style.color = isPaid ? '#ffffff' : '#604100';
+      totalBox.style.border = isPaid ? 'none' : '1px solid #f4d38a';
+      document.getElementById('vcFooterNote').innerText = isPaid
+        ? 'စနစ်မှ အလိုအလျောက်ထုတ်ပေးထားသော ငွေလက်ခံဘောက်ချာဖြစ်ပါသည်။\nThank you for your payment.'
+        : 'ငွေပေးချေပြီးပါက PAID ဘောက်ချာကို ပြန်လည်ထုတ်ယူနိုင်ပါသည်။\nPlease retain this voucher for your records.';
+      document.getElementById('vcPaidMark').innerHTML = isPaid
+        ? '<span style="color:#087a48;font-size:20px;">✓</span><br>Payment confirmed'
+        : '<span style="color:#9a5b00;font-size:20px;">!</span><br>Payment pending';
 
-      const nameVal = (item.boat || item.customer || 'CUSTOMER').toUpperCase();
-      const codeVal = item.invNo ? `(${item.invNo})` : '';
-      document.getElementById('vcCustomer').innerText = nameVal;
-      document.getElementById('vcCode').innerText = codeVal;
+      document.getElementById('vcCustomer').innerText = item.boat || item.customer || 'CUSTOMER';
+      document.getElementById('vcCustomerCode').innerText = item.customer || '';
+      document.getElementById('vcCode').innerText = item.invNo || '-';
       document.getElementById('vcDate').innerText = formatReportDate(item.date);
       document.getElementById('vc2Pct').innerText = Math.round(item.tax2Pct || 0).toLocaleString();
       const mf = Math.round(item.mfService ?? 60000);
-      document.getElementById('vcMass').innerText = (mf / 2).toLocaleString();
-      document.getElementById('vcService').innerText = (mf / 2).toLocaleString();
-      document.getElementById('vcTotal').innerText = Math.round(item.total || 0).toLocaleString();
+      document.getElementById('vcMass').innerText = Math.round(mf / 2).toLocaleString();
+      document.getElementById('vcService').innerText = Math.round(mf / 2).toLocaleString();
+      document.getElementById('voucherIncludeLicense').checked = false;
+      updateVoucherLicenseOption();
       document.getElementById('voucherPreviewModal').classList.remove('hidden');
     }
     function closeVoucherPreviewModal() { document.getElementById('voucherPreviewModal').classList.add('hidden'); currentVoucherItem = null; }
@@ -1458,7 +1479,7 @@
       if (!currentVoucherItem) return;
       const card = document.getElementById('voucherTargetCard');
       const filename = `Voucher_${currentVoucherItem.customer || 'ED'}_${currentVoucherItem.invNo}.jpg`;
-      const bgColor = '#fdfbf4'; 
+      const bgColor = '#ffffff'; 
       
       document.fonts.ready.then(() => {
         if (window.htmlToImage) {
