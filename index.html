@@ -619,16 +619,42 @@
     }
     function saveUserAccounts(list) { localStorage.setItem('bk_user_accounts_enc', encryptPayload(list)); renderUserAccountsTable(); syncFullStateToCloud(); }
 
-    function saveCargoNode(item) { let all = getCargoData(); let idx = all.findIndex(x => x.id === item.id); if (idx > -1) all[idx] = item; else all.unshift(item); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); if (firebaseDb && isCloudConnected) firebaseDb.ref(`bk_operations_master/cargoData/${item.id}`).set(item); }
-    function deleteCargoNode(id) { let all = getCargoData().filter(x => x.id !== id); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); if (firebaseDb && isCloudConnected) firebaseDb.ref(`bk_operations_master/cargoData/${id}`).remove(); }
-    function saveEdNode(item) { let all = getEdData(); let idx = all.findIndex(x => x.id === item.id); if (idx > -1) all[idx] = item; else all.unshift(item); localStorage.setItem('bk_EdServiceData_enc', encryptPayload(all)); if (firebaseDb && isCloudConnected) firebaseDb.ref(`bk_operations_master/edData/${item.id}`).set(item); }
-    function deleteEdNode(id) { let all = getEdData().filter(x => x.id !== id); localStorage.setItem('bk_EdServiceData_enc', encryptPayload(all)); if (firebaseDb && isCloudConnected) firebaseDb.ref(`bk_operations_master/edData/${id}`).remove(); }
-    function saveMpuNode(item) { let all = getMpuTopups(); let idx = all.findIndex(x => x.id === item.id); if (idx > -1) all[idx] = item; else all.push(item); localStorage.setItem('bk_MPUTopups_enc', encryptPayload(all)); if (firebaseDb && isCloudConnected) firebaseDb.ref(`bk_operations_master/mpuTopups/${item.id}`).set(item); }
-    function deleteMpuNode(id) { let all = getMpuTopups().filter(x => x.id !== id); localStorage.setItem('bk_MPUTopups_enc', encryptPayload(all)); if (firebaseDb && isCloudConnected) firebaseDb.ref(`bk_operations_master/mpuTopups/${id}`).remove(); }
+    function saveCloudRecord(collection, item) {
+      if (!firebaseDb) return;
+      firebaseDb.ref(`bk_operations_master/${collection}/${item.id}`).set(item).catch(e => {
+        console.warn('Cloud save failed:', e);
+        alert('Cloud မှာ သိမ်းဆည်းမရပါ။ Internet နှင့် Firebase Rules ကို စစ်ဆေးပါ။');
+      });
+    }
+    function deleteCloudRecord(collection, id) {
+      if (!firebaseDb) {
+        alert('Cloud မချိတ်ဆက်ရသေးပါ။ ခဏစောင့်ပြီး ထပ်ဖျက်ပါ။');
+        return;
+      }
+      // Older backups may be stored with numeric Firebase keys instead of item IDs.
+      // A transaction removes every matching key atomically, so deleted rows stay deleted after reload.
+      firebaseDb.ref(`bk_operations_master/${collection}`).transaction(current => {
+        if (!current || typeof current !== 'object') return current;
+        Object.keys(current).forEach(key => {
+          const row = current[key];
+          if (key === String(id) || (row && String(row.id) === String(id))) delete current[key];
+        });
+        return current;
+      }).catch(e => {
+        console.warn('Cloud delete failed:', e);
+        alert('Cloud မှာ ဖျက်မရပါ။ Internet နှင့် Firebase Rules ကို စစ်ဆေးပါ။');
+      });
+    }
+    function saveCargoNode(item) { let all = getCargoData(); let idx = all.findIndex(x => x.id === item.id); if (idx > -1) all[idx] = item; else all.unshift(item); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); saveCloudRecord('cargoData', item); }
+    function deleteCargoNode(id) { let all = getCargoData().filter(x => x.id !== id); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); deleteCloudRecord('cargoData', id); }
+    function saveEdNode(item) { let all = getEdData(); let idx = all.findIndex(x => x.id === item.id); if (idx > -1) all[idx] = item; else all.unshift(item); localStorage.setItem('bk_EdServiceData_enc', encryptPayload(all)); saveCloudRecord('edData', item); }
+    function deleteEdNode(id) { let all = getEdData().filter(x => x.id !== id); localStorage.setItem('bk_EdServiceData_enc', encryptPayload(all)); deleteCloudRecord('edData', id); }
+    function saveMpuNode(item) { let all = getMpuTopups(); let idx = all.findIndex(x => x.id === item.id); if (idx > -1) all[idx] = item; else all.push(item); localStorage.setItem('bk_MPUTopups_enc', encryptPayload(all)); saveCloudRecord('mpuTopups', item); }
+    function deleteMpuNode(id) { let all = getMpuTopups().filter(x => x.id !== id); localStorage.setItem('bk_MPUTopups_enc', encryptPayload(all)); deleteCloudRecord('mpuTopups', id); }
 
     // 6. Firebase Cloud Sync
     function syncFullStateToCloud() {
-      if (!firebaseDb || !isCloudConnected) return;
+      if (!firebaseDb) return;
       const cObj = {}; getCargoData().forEach(i => cObj[i.id] = i);
       const eObj = {}; getEdData().forEach(i => eObj[i.id] = i);
       const mObj = {}; getMpuTopups().forEach(i => mObj[i.id] = i);
@@ -965,14 +991,14 @@
       saveCargoNode(newItem); populateMonthDropdown(); closeCargoEntryModal(); filterData(); renderMpuLedger(); alert(editId ? "ပြင်ဆင်မှု အောင်မြင်ပါသည်" : "စာရင်းအသစ် သိမ်းဆည်းပြီးပါပြီ");
     }
     function deleteCargoShipment(id) { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် စာရင်းဖျက်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ဤစာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { deleteCargoNode(id); populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); } }
-    function clearAllData() { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ဒေတာရှင်းထုတ်ခွင့် ရှိပါသည်။"); if (confirm("Credit စာရင်းအားလုံးကို ရှင်းထုတ်မှာ သေချာပါသလား?")) { localStorage.setItem('bk_CargoData_enc', encryptPayload([])); if (firebaseDb && isCloudConnected) firebaseDb.ref("bk_operations_master/cargoData").remove(); populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); } }
+    function clearAllData() { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ဒေတာရှင်းထုတ်ခွင့် ရှိပါသည်။"); if (confirm("Credit စာရင်းအားလုံးကို ရှင်းထုတ်မှာ သေချာပါသလား?")) { localStorage.setItem('bk_CargoData_enc', encryptPayload([])); if (firebaseDb) firebaseDb.ref("bk_operations_master/cargoData").remove(); populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); } }
     function toggleBatchTool() { const p = document.getElementById('batchUpdatePanel'); p.classList.toggle('hidden'); if (!p.classList.contains('hidden')) { const today = localToday(); document.getElementById('batchStartDate').value = today.substring(0, 8) + '01'; document.getElementById('batchEndDate').value = today; } }
     function handleBatchUpdateSubmit(e) {
       e.preventDefault(); const cust = document.getElementById('batchCustomer').value; const start = document.getElementById('batchStartDate').value; const end = document.getElementById('batchEndDate').value; const newRateInput = document.getElementById('batchNewRate').value.trim(); const newPctInput = document.getElementById('batchNewPct').value.trim();
       if (!newRateInput && !newPctInput) return alert("RATE သို့မဟုတ် % အနက် အနည်းဆုံး တစ်ခုကို ထည့်သွင်းပေးရပါမည်။"); const newRate = newRateInput ? parseFloat(newRateInput) : null; const newPct = newPctInput ? parseFloat(newPctInput) : null;
       let all = getCargoData(); let count = 0; let updates = {};
       all = all.map(i => { if ((cust === 'ALL' || String(i.remark || '').trim().toUpperCase() === cust) && (i.date >= start && i.date <= end)) { count++; const usd = Number(i.usd || 0); const rate = newRate !== null ? newRate : Number(i.rate ?? 34.7); const pct = newPct !== null ? newPct : Number(i.pct ?? 4.0); const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); const updatedItem = { ...i, rate, pct, thb, amount }; updates[i.id] = updatedItem; return updatedItem; } return i; });
-      if (!count) return alert("ရွေးချယ်ထားသော ရက်စွဲအတွင်း သက်ဆိုင်ရာ စာရင်းမရှိပါ။"); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); if (firebaseDb && isCloudConnected && Object.keys(updates).length > 0) firebaseDb.ref("bk_operations_master/cargoData").update(updates);
+      if (!count) return alert("ရွေးချယ်ထားသော ရက်စွဲအတွင်း သက်ဆိုင်ရာ စာရင်းမရှိပါ။"); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); if (firebaseDb && Object.keys(updates).length > 0) firebaseDb.ref("bk_operations_master/cargoData").update(updates);
       filterData(); renderDailyReport(); renderBreakdown(); toggleBatchTool(); alert(`စာရင်းပေါင်း (${count}) ခု၏ Data ကို အောင်မြင်စွာ Update ပြုလုပ်ပြီးပါပြီ။`);
     }
     function exportToExcel() {
@@ -1048,11 +1074,11 @@
           const existing = getCargoData(); 
           if (isAppend) {
             const all = [...existing, ...parsedList]; localStorage.setItem('bk_CargoData_enc', encryptPayload(all));
-            if (firebaseDb && isCloudConnected) { const updates = {}; parsedList.forEach(i => updates[i.id]=i); firebaseDb.ref("bk_operations_master/cargoData").update(updates); }
+            if (firebaseDb) { const updates = {}; parsedList.forEach(i => updates[i.id]=i); firebaseDb.ref("bk_operations_master/cargoData").update(updates); }
           } else {
             const sure = confirm("⚠️ သတိပေးချက် ⚠️\nမူလစာရင်းများ အကုန်ပျက်သွားပါမည်။ အစားထိုးမှာ သေချာပါသလား?"); if (!sure) return;
             localStorage.setItem('bk_CargoData_enc', encryptPayload(parsedList));
-            if (firebaseDb && isCloudConnected) { const obj = {}; parsedList.forEach(i => obj[i.id]=i); firebaseDb.ref("bk_operations_master/cargoData").set(obj); }
+            if (firebaseDb) { const obj = {}; parsedList.forEach(i => obj[i.id]=i); firebaseDb.ref("bk_operations_master/cargoData").set(obj); }
           }
           populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); 
           alert(`Credit စာရင်းပေါင်း (${parsedList.length}) ခု System သို့ ထည့်သွင်းပြီးပါပြီ။`);
@@ -1179,7 +1205,7 @@
       saveEdNode(newItem); populateEdMonthDropdown(); populateEdCustDropdown(); closeEdEntryModal(); filterEdData(); alert(editId ? "ပြင်ဆင်မှု အောင်မြင်ပါသည်" : "စာရင်းအသစ် သိမ်းဆည်းပြီးပါပြီ");
     }
     function deleteEdShipment(id) { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ED စာရင်း ဖျက်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ဤ ED စာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { deleteEdNode(id); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); } }
-    function clearAllEdData() { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ED စာရင်း ရှင်းထုတ်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) { localStorage.setItem('bk_EdServiceData_enc', encryptPayload([])); if(firebaseDb && isCloudConnected) firebaseDb.ref("bk_operations_master/edData").remove(); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); } }
+    function clearAllEdData() { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ED စာရင်း ရှင်းထုတ်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) { localStorage.setItem('bk_EdServiceData_enc', encryptPayload([])); if(firebaseDb) firebaseDb.ref("bk_operations_master/edData").remove(); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); } }
     
     function handleEdExcelImport(event) {
       const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
@@ -1239,11 +1265,11 @@
           const existing = getEdData();
           if (isAppend) {
             const all = [...existing, ...parsedList]; localStorage.setItem('bk_EdServiceData_enc', encryptPayload(all));
-            if (firebaseDb && isCloudConnected) { const updates = {}; parsedList.forEach(i => updates[i.id]=i); firebaseDb.ref("bk_operations_master/edData").update(updates); }
+            if (firebaseDb) { const updates = {}; parsedList.forEach(i => updates[i.id]=i); firebaseDb.ref("bk_operations_master/edData").update(updates); }
           } else {
             const sure = confirm("⚠️ သတိပေးချက် ⚠️\nမူလစာရင်းများ အကုန်ပျက်သွားပါမည်။ အစားထိုးမှာ သေချာပါသလား?"); if (!sure) return;
             localStorage.setItem('bk_EdServiceData_enc', encryptPayload(parsedList));
-            if (firebaseDb && isCloudConnected) { const obj = {}; parsedList.forEach(i => obj[i.id]=i); firebaseDb.ref("bk_operations_master/edData").set(obj); }
+            if (firebaseDb) { const obj = {}; parsedList.forEach(i => obj[i.id]=i); firebaseDb.ref("bk_operations_master/edData").set(obj); }
           }
           populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); alert(`ED စာရင်းပေါင်း (${parsedList.length}) ခု System သို့ အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။`);
         } catch(err) { alert("Error: " + err.message); } finally { event.target.value = ''; }
