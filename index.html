@@ -101,6 +101,15 @@
         <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Credit Summary Statistics</span>
         <button onclick="toggleCargoCards()" class="text-xs text-blue-900 dark:text-blue-400 hover:underline flex items-center gap-1 font-semibold"><span id="cargoCardsToggleIcon">👁️</span> <span id="cargoCardsToggleText">Summary Cards ပိတ်မည်</span></button>
       </div>
+      
+      <div id="operationsOverview" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-3.5">
+        <div class="rounded-xl border bg-blue-50 dark:bg-blue-950/30 p-3"><p class="text-[10px] font-bold text-blue-700">TODAY CREDIT</p><b id="opsTodayCredit" class="block text-base mt-1">฿0</b><small id="opsTodayTrips" class="text-[10px] text-slate-500">0 trips</small></div>
+        <div class="rounded-xl border bg-indigo-50 dark:bg-indigo-950/30 p-3"><p class="text-[10px] font-bold text-indigo-700">MONTH CREDIT</p><b id="opsMonthCredit" class="block text-base mt-1">฿0</b><small class="text-[10px] text-slate-500">ဝန်ဆောင်ခ</small></div>
+        <div class="rounded-xl border bg-amber-50 dark:bg-amber-950/30 p-3"><p class="text-[10px] font-bold text-amber-700">ED UNPAID</p><b id="opsEdPending" class="block text-base mt-1">0 Ks</b><small id="opsEdPendingCount" class="text-[10px] text-slate-500">0 vouchers</small></div>
+        <div class="rounded-xl border bg-emerald-50 dark:bg-emerald-950/30 p-3"><p class="text-[10px] font-bold text-emerald-700">ED PAID THIS MONTH</p><b id="opsEdPaid" class="block text-base mt-1">0 Ks</b><small class="text-[10px] text-slate-500">လက်ခံပြီး</small></div>
+        <div class="rounded-xl border bg-purple-50 dark:bg-purple-950/30 p-3"><p class="text-[10px] font-bold text-purple-700">MPU BALANCE</p><b id="opsMpuBalance" class="block text-base mt-1">0 Ks</b><small class="text-[10px] text-slate-500">လက်ကျန်</small></div>
+        <div class="rounded-xl border bg-slate-50 dark:bg-slate-800/60 p-3"><p class="text-[10px] font-bold text-slate-600">DATA SAFETY</p><b id="opsRecycleCount" class="block text-base mt-1">0 deleted</b><small id="opsLastSync" class="text-[10px] text-slate-500">Local ready</small></div>
+      </div>
       <div id="cargoMetricCardsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 mb-3.5 transition-all duration-200">
         <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"><p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Trips</p><h3 id="statTrips" class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">0</h3><p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">လှေအကြိမ်ရေ</p></div>
         <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"><p class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-400">Total Credit (KG)</p><h3 id="statKG" class="text-lg sm:text-2xl font-bold text-blue-950 dark:text-blue-400 mt-0.5">0</h3><p class="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">စုစုပေါင်း ကုန်ချိန် (ကီလို)</p></div>
@@ -322,7 +331,12 @@
                 <div class="sm:col-span-3"><label class="block font-bold mb-1">Username</label><input id="inUserUsername" type="text" autocomplete="off" placeholder="e.g. staff2" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold"></div>
                 <div class="sm:col-span-3"><label class="block font-bold mb-1">Password</label><div class="relative"><input id="inUserPassword" type="password" autocomplete="new-password" placeholder="အနည်းဆုံး 6 လုံး" class="w-full border rounded-lg p-2.5 pr-10 dark:bg-slate-800 font-mono"><button type="button" onclick="toggleManagedPasswordVisibility()" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 p-1" title="Password ပြ/ဖျောက်">👁️</button></div></div>
                 <div class="sm:col-span-3"><label class="block font-bold mb-1">အမည် (Display Name)</label><input id="inUserDisplayName" type="text" placeholder="Operations Officer" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800"></div>
-                <div class="sm:col-span-3"><label class="block font-bold mb-1">Role / Permission</label><select id="inUserRole" class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold"><option value="staff">Staff — စာရင်းထည့်ရန်</option><option value="viewer">Viewer — ကြည့်ရန်သာ</option><option value="admin">Admin — အပြည့်အဝ</option></select></div>
+                <div class="sm:col-span-3"><label class="block font-bold mb-1">Role / Permission</label><select id="inUserRole" onchange="onUserRoleChange()" class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold"><option value="staff">Staff — စာရင်းထည့်ရန်</option><option value="viewer">Viewer — ကြည့်ရန်သာ</option><option value="admin">Admin — အပြည့်အဝ</option></select></div>
+              </div>
+
+              <div id="permissionEditor" class="rounded-xl border border-indigo-100 dark:border-slate-700 bg-white/80 dark:bg-slate-900/50 p-3">
+                <div class="flex items-center justify-between mb-2"><div><b class="text-xs">Staff Permission Control</b><p class="text-[10px] text-slate-500">အကောင့်တစ်ခုချင်းအလိုက် ခွင့်ပြုချက်ကို ပိတ်/ဖွင့်နိုင်ပါသည်</p></div><button type="button" onclick="setAllPermissionChecks(true)" class="text-[10px] text-blue-700 font-bold">အားလုံးဖွင့်</button></div>
+                <div id="userPermissionGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 text-[11px]"></div>
               </div>
               <label class="inline-flex items-center gap-2 text-xs font-semibold"><input id="inUserActive" type="checkbox" checked class="w-4 h-4 accent-emerald-600"><span>Account Active — Login ဝင်ခွင့်ပြုမည်</span></label>
               <div class="flex justify-end gap-2 text-xs"><button type="button" onclick="resetUserForm()" class="px-4 py-2 border rounded-lg">Cancel</button><button type="submit" id="btnSaveUser" class="px-5 py-2 bg-indigo-950 text-white font-bold rounded-lg">💾 အကောင့် သိမ်းဆည်းမည်</button></div>
@@ -336,6 +350,15 @@
           </div>
         </div>
 
+
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border p-5 sm:p-6 shadow-sm space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-3"><div><h2 class="text-base font-bold">🛡️ Data Safety Center</h2><p class="text-xs text-slate-500">Duplicate စစ်ဆေးခြင်း၊ ဖျက်ထားသောစာရင်းနှင့် ပြောင်းလဲမှုမှတ်တမ်း</p></div><button onclick="refreshSafetyCenter()" class="text-xs font-bold text-blue-800">🔄 Refresh</button></div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <button onclick="openDuplicateManager()" class="text-left rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-950/30 p-4"><b class="block text-amber-900 dark:text-amber-200">🔎 Duplicate Cleaner</b><small id="duplicateSummary" class="text-amber-700">စစ်ဆေးရန်နှိပ်ပါ</small></button>
+            <button onclick="showRecycleBin()" class="text-left rounded-xl border border-rose-200 bg-rose-50 dark:bg-rose-950/30 p-4"><b class="block text-rose-900 dark:text-rose-200">♻️ Recycle Bin</b><small id="recycleSummary" class="text-rose-700">0 deleted records</small></button>
+            <button onclick="showAuditLog()" class="text-left rounded-xl border border-blue-200 bg-blue-50 dark:bg-blue-950/30 p-4"><b class="block text-blue-900 dark:text-blue-200">🧾 Activity Log</b><small id="auditSummary" class="text-blue-700">0 recent activities</small></button>
+          </div>
+        </div>
         <div class="bg-gradient-to-r from-blue-950 via-slate-900 to-blue-900 text-white rounded-2xl p-5 sm:p-6 shadow-md space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-blue-900/60 pb-3">
             <div><h2 class="text-sm sm:text-base font-bold">💾 Data Backup & Restore (AES-256 Protected)</h2><p class="text-xs text-slate-300 mt-0.5">Admin Password မသိပါက မည်သည့်စက်တွင်မှ Restore ပြုလုပ်၍ မရနိုင်ပါ</p></div>
@@ -390,6 +413,21 @@
       </div>
     </div>
   </main>
+
+
+  <div id="safetyCenterModal" class="hidden fixed inset-0 z-[70] bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border shadow-2xl max-w-5xl w-full max-h-[88vh] flex flex-col">
+      <div class="p-4 border-b flex items-center justify-between"><div><h3 id="safetyModalTitle" class="font-bold text-base">Data Safety</h3><p id="safetyModalHint" class="text-xs text-slate-500"></p></div><button onclick="closeSafetyCenterModal()" class="text-xl text-slate-400">✕</button></div>
+      <div id="safetyModalBody" class="p-4 overflow-auto text-xs"></div>
+    </div>
+  </div>
+  <div id="importPreviewModal" class="hidden fixed inset-0 z-[75] bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border shadow-2xl max-w-6xl w-full max-h-[90vh] flex flex-col">
+      <div class="p-4 border-b flex items-center justify-between"><div><h3 id="importPreviewTitle" class="font-bold text-base">Excel Import Preview</h3><p id="importPreviewSummary" class="text-xs text-slate-500"></p></div><button onclick="closeImportPreview()" class="text-xl text-slate-400">✕</button></div>
+      <div class="p-4 overflow-auto"><div id="importPreviewWarnings" class="mb-3"></div><div id="importPreviewTable" class="overflow-x-auto text-xs"></div></div>
+      <div class="p-4 border-t flex flex-wrap justify-end gap-2"><button onclick="closeImportPreview()" class="px-4 py-2 border rounded-lg text-xs">Cancel</button><button id="btnImportReplace" onclick="commitImportPreview('replace')" class="px-4 py-2 bg-amber-600 text-white rounded-lg text-xs font-bold">မူလစာရင်းအစားထိုးမည်</button><button id="btnImportAppend" onclick="commitImportPreview('append')" class="px-4 py-2 bg-emerald-700 text-white rounded-lg text-xs font-bold">မှန်ကန်သည့်စာရင်းများ ပေါင်းထည့်မည်</button></div>
+    </div>
+  </div>
 
   <!-- ================= ALL MODALS SECTION ================= -->
   <div id="cargoEntryModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
@@ -494,23 +532,23 @@
           <div style="height:9px;background:linear-gradient(90deg,#163a6b,#367bf5,#22a6b3);"></div>
           <div style="padding:34px 40px 36px;position:relative;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding-bottom:24px;border-bottom:1px solid #e7ebf1;">
-              <div><div style="font-size:12px;font-weight:900;letter-spacing:2.4px;color:#367bf5;">ED SERVICE</div><h1 style="font-size:28px;line-height:1.2;margin:7px 0 0;font-weight:800;color:#10213d;">Payment Receipt</h1></div>
-              <div style="text-align:right;"><span id="vcStatusChip" style="display:inline-flex;align-items:center;border-radius:999px;padding:9px 14px;font-size:12px;font-weight:900;letter-spacing:.8px;"></span><div id="vcStatusMyanmar" style="font-size:11px;color:#7b8799;margin-top:7px;"></div></div>
+              <div><div style="font-size:14px;font-weight:900;letter-spacing:2.4px;color:#367bf5;">ED SERVICE</div><h1 style="font-size:32px;line-height:1.2;margin:7px 0 0;font-weight:800;color:#10213d;">Payment Receipt</h1></div>
+              <div style="text-align:right;"><span id="vcStatusChip" style="display:inline-flex;align-items:center;border-radius:999px;padding:12px 18px;font-size:16px;font-weight:900;letter-spacing:.5px;"></span><div id="vcStatusMyanmar" style="font-size:14px;font-weight:800;color:#526177;margin-top:9px;"></div></div>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:24px 0;">
-              <div style="background:#f5f7fa;border:1px solid #e8ecf2;border-radius:13px;padding:12px 14px;"><small style="display:block;color:#8a96a8;font-size:10px;font-weight:800;letter-spacing:1px;margin-bottom:6px;">INVOICE NO.</small><b id="vcCode" style="font-size:14px;"></b></div>
-              <div style="background:#f5f7fa;border:1px solid #e8ecf2;border-radius:13px;padding:12px 14px;"><small style="display:block;color:#8a96a8;font-size:10px;font-weight:800;letter-spacing:1px;margin-bottom:6px;">ISSUE DATE</small><b id="vcDate" style="font-size:14px;"></b></div>
-              <div style="background:#f5f7fa;border:1px solid #e8ecf2;border-radius:13px;padding:12px 14px;"><small id="vcPaymentDateLabel" style="display:block;color:#8a96a8;font-size:10px;font-weight:800;letter-spacing:1px;margin-bottom:6px;">PAYMENT</small><b id="vcPaymentDate" style="font-size:14px;"></b></div>
+              <div style="background:#f5f7fa;border:1px solid #e8ecf2;border-radius:13px;padding:12px 14px;"><small style="display:block;color:#66758a;font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:6px;">INVOICE NO.</small><b id="vcCode" style="font-size:17px;"></b></div>
+              <div style="background:#f5f7fa;border:1px solid #e8ecf2;border-radius:13px;padding:12px 14px;"><small style="display:block;color:#66758a;font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:6px;">ISSUE DATE</small><b id="vcDate" style="font-size:17px;"></b></div>
+              <div style="background:#f5f7fa;border:1px solid #e8ecf2;border-radius:13px;padding:12px 14px;"><small id="vcPaymentDateLabel" style="display:block;color:#66758a;font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:6px;">PAYMENT</small><b id="vcPaymentDate" style="font-size:17px;"></b></div>
             </div>
-            <div style="margin-bottom:23px;"><small style="display:block;color:#7e8a9d;font-size:10px;font-weight:800;letter-spacing:1.3px;margin-bottom:8px;">CUSTOMER / VESSEL</small><div style="display:flex;align-items:center;justify-content:space-between;gap:20px;"><h2 id="vcCustomer" style="font-size:27px;line-height:1.35;margin:0;font-weight:800;color:#10213d;"></h2><span id="vcCustomerCode" style="color:#367bf5;font-size:12px;font-weight:900;background:#edf3ff;padding:7px 10px;border-radius:9px;"></span></div></div>
+              <div style="margin-bottom:23px;"><small style="display:block;color:#66758a;font-size:12px;font-weight:900;letter-spacing:1.3px;margin-bottom:8px;">CUSTOMER / VESSEL</small><div style="display:flex;align-items:center;justify-content:space-between;gap:20px;"><h2 id="vcCustomer" style="font-size:29px;line-height:1.35;margin:0;font-weight:800;color:#10213d;"></h2><span id="vcCustomerCode" style="color:#245fc4;font-size:14px;font-weight:900;background:#edf3ff;padding:8px 11px;border-radius:9px;"></span></div></div>
             <div style="border-top:1px solid #dfe5ed;">
-              <div style="display:flex;justify-content:space-between;padding:14px 3px;border-bottom:1px solid #edf0f4;font-size:15px;"><span style="color:#65748b;">2% Tax</span><b><span id="vc2Pct"></span> Ks</b></div>
-              <div style="display:flex;justify-content:space-between;padding:14px 3px;border-bottom:1px solid #edf0f4;font-size:15px;"><span style="color:#65748b;">Mass Feed</span><b><span id="vcMass"></span> Ks</b></div>
-              <div style="display:flex;justify-content:space-between;padding:14px 3px;border-bottom:1px solid #edf0f4;font-size:15px;"><span style="color:#65748b;">Service Fee</span><b><span id="vcService"></span> Ks</b></div>
-              <div id="vcLicenseRow" style="display:none;justify-content:space-between;padding:14px 3px;border-bottom:1px solid #edf0f4;font-size:15px;color:#9a5b00;background:#fffaf0;"><span style="font-weight:700;">န.က.သ လိုင်စင်</span><b>15,000 Ks</b></div>
+              <div style="display:flex;justify-content:space-between;padding:15px 3px;border-bottom:1px solid #edf0f4;font-size:17px;"><span style="color:#526177;font-weight:600;">2% Tax</span><b><span id="vc2Pct"></span> Ks</b></div>
+              <div style="display:flex;justify-content:space-between;padding:15px 3px;border-bottom:1px solid #edf0f4;font-size:17px;"><span style="color:#526177;font-weight:600;">Mass Feed</span><b><span id="vcMass"></span> Ks</b></div>
+              <div style="display:flex;justify-content:space-between;padding:15px 3px;border-bottom:1px solid #edf0f4;font-size:17px;"><span style="color:#526177;font-weight:600;">Service Fee</span><b><span id="vcService"></span> Ks</b></div>
+              <div id="vcLicenseRow" style="display:none;justify-content:space-between;padding:15px 3px;border-bottom:1px solid #edf0f4;font-size:17px;color:#8a4f00;background:#fffaf0;"><span style="font-weight:800;">န.က.သ လိုင်စင်</span><b>15,000 Ks</b></div>
             </div>
-            <div id="vcTotalBox" style="margin-top:18px;border-radius:16px;padding:19px 21px;background:#163a6b;color:white;display:flex;justify-content:space-between;align-items:center;"><span id="vcTotalLabel" style="font-size:12px;font-weight:900;letter-spacing:1.2px;">TOTAL</span><strong style="font-size:30px;"><span id="vcTotal"></span> Ks</strong></div>
-            <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:23px;"><p id="vcFooterNote" style="margin:0;color:#7b8799;font-size:10px;line-height:1.7;"></p><div id="vcPaidMark" style="font-size:13px;font-weight:900;text-align:right;"></div></div>
+            <div id="vcTotalBox" style="margin-top:18px;border-radius:16px;padding:21px 23px;background:#163a6b;color:white;display:flex;justify-content:space-between;align-items:center;"><span id="vcTotalLabel" style="font-size:15px;font-weight:900;letter-spacing:1.2px;">TOTAL</span><strong style="font-size:36px;"><span id="vcTotal"></span> Ks</strong></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:23px;"><p id="vcFooterNote" style="margin:0;color:#526177;font-size:13px;font-weight:600;line-height:1.65;"></p><div id="vcPaidMark" style="font-size:15px;font-weight:900;text-align:right;"></div></div>
           </div>
         </div>
       </div>
@@ -628,19 +666,21 @@
     function saveUserAccounts(list) { localStorage.setItem('bk_user_accounts_enc', encryptPayload(list)); renderUserAccountsTable(); syncFullStateToCloud(); }
 
     function saveCloudRecord(collection, item) {
-      if (!firebaseDb) return;
+      if (!firebaseDb) { if (typeof setSyncVisual === 'function') setSyncVisual('offline'); return; }
+      if (typeof setSyncVisual === 'function') setSyncVisual('saving');
       const id = String(item.id); const normalizedItem = { ...item, id };
       // Remove legacy numeric keys and any duplicate keys for this ID, then write one canonical record.
       firebaseDb.ref(`bk_operations_master/${collection}`).transaction(current => {
         const next = current && typeof current === 'object' ? { ...current } : {};
         Object.keys(next).forEach(key => { const row = next[key]; if (key === id || (row && String(row.id) === id)) delete next[key]; });
         next[id] = normalizedItem; return next;
-      }).catch(e => { console.warn('Cloud save failed:', e); alert('Cloud မှာ သိမ်းဆည်းမရပါ။ Internet နှင့် Firebase Rules ကို စစ်ဆေးပါ။'); });
+      }).then(() => { if (typeof setSyncVisual === 'function') setSyncVisual('saved'); }).catch(e => { if (typeof setSyncVisual === 'function') setSyncVisual('error'); console.warn('Cloud save failed:', e); alert('Cloud မှာ သိမ်းဆည်းမရပါ။ Internet နှင့် Firebase Rules ကို စစ်ဆေးပါ။'); });
     }
     function saveCloudCollection(collection, list) {
-      if (!firebaseDb) return;
+      if (!firebaseDb) { if (typeof setSyncVisual === 'function') setSyncVisual('offline'); return; }
+      if (typeof setSyncVisual === 'function') setSyncVisual('saving');
       const normalized = {}; normalizeRecordList(list).forEach(row => normalized[row.id] = row);
-      firebaseDb.ref(`bk_operations_master/${collection}`).set(normalized).catch(e => { console.warn('Cloud collection update failed:', e); alert('Cloud မှာ Update မရပါ။ Internet နှင့် Firebase Rules ကို စစ်ဆေးပါ။'); });
+      firebaseDb.ref(`bk_operations_master/${collection}`).set(normalized).then(() => { if (typeof setSyncVisual === 'function') setSyncVisual('saved'); }).catch(e => { if (typeof setSyncVisual === 'function') setSyncVisual('error'); console.warn('Cloud collection update failed:', e); alert('Cloud မှာ Update မရပါ။ Internet နှင့် Firebase Rules ကို စစ်ဆေးပါ။'); });
     }
     function deleteCloudRecord(collection, id) {
       if (!firebaseDb) {
@@ -674,8 +714,8 @@
       const cObj = {}; getCargoData().forEach(i => cObj[i.id] = i);
       const eObj = {}; getEdData().forEach(i => eObj[i.id] = i);
       const mObj = {}; getMpuTopups().forEach(i => mObj[i.id] = i);
-      const uObj = {}; getUserAccounts().forEach(i => uObj[i.id] = i);
-      const payload = { cargoData: cObj, edData: eObj, userAccounts: uObj, creditCompanies: getCreditCompanies(), customers: getCustomers(), mpuTopups: mObj, lastUpdated: Date.now() };
+      const uObj = {}; getUserAccounts().forEach(i => uObj[i.id] = i); const rObj = {}; getRecycleBin().forEach(i => rObj[i.id] = i); const aObj = {}; getAuditLog().forEach(i => aObj[i.id] = i);
+      const payload = { cargoData: cObj, edData: eObj, userAccounts: uObj, creditCompanies: getCreditCompanies(), customers: getCustomers(), mpuTopups: mObj, recycleBin: rObj, auditLog: aObj, lastUpdated: Date.now() };
       firebaseDb.ref("bk_operations_master").set(payload).catch(e => console.warn(e));
     }
 
@@ -688,7 +728,7 @@
           firebaseDb.ref(".info/connected").on("value", (snap) => {
             const statusBadge = document.getElementById('cloudStatusBadge');
             if (snap.val() === true) { isCloudConnected = true; if (statusBadge) { statusBadge.className = "inline-flex items-center gap-1 text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-300 px-2 py-0.5 rounded-full"; statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> <span>Cloud Live</span>`; } } 
-            else { isCloudConnected = false; if (statusBadge) { statusBadge.className = "inline-flex items-center gap-1 text-[9px] font-bold bg-amber-50 text-amber-700 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-300 px-2 py-0.5 rounded-full"; statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <span>Connecting...</span>`; } }
+            else { isCloudConnected = false; if (typeof setSyncVisual === 'function') setSyncVisual('offline'); if (statusBadge) { statusBadge.className = "inline-flex items-center gap-1 text-[9px] font-bold bg-amber-50 text-amber-700 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-300 px-2 py-0.5 rounded-full"; statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <span>Connecting...</span>`; } }
           });
           firebaseDb.ref("bk_operations_master").on("value", (snapshot) => {
             try {
@@ -700,6 +740,7 @@
                 let usersArr = normalizeRecordList(safeParse(val.userAccounts)).filter(x => x.username).map(u => ({ ...u, isActive: u.isActive !== false }));
                 const coArr = safeParse(val.creditCompanies).filter(x => x && typeof x === 'object');
                 const mpuArr = normalizeRecordList(safeParse(val.mpuTopups));
+                const recycleArr = normalizeRecordList(safeParse(val.recycleBin)); const auditArr = normalizeRecordList(safeParse(val.auditLog));
                 const custMap = (val.customers && typeof val.customers === 'object' && !Array.isArray(val.customers)) ? val.customers : {};
 
                 localStorage.setItem('bk_CargoData_enc', encryptPayload(cargoArr));
@@ -707,9 +748,9 @@
                 localStorage.setItem('bk_user_accounts_enc', encryptPayload(usersArr));
                 localStorage.setItem('bk_CreditCompanies_enc', encryptPayload(coArr));
                 localStorage.setItem('bk_CompanyMap_enc', encryptPayload(custMap));
-                localStorage.setItem('bk_MPUTopups_enc', encryptPayload(mpuArr));
+                localStorage.setItem('bk_MPUTopups_enc', encryptPayload(mpuArr)); localStorage.setItem('bk_RecycleBin_enc', encryptPayload(recycleArr)); localStorage.setItem('bk_AuditLog_enc', encryptPayload(auditArr)); if (typeof refreshSafetyCenter === 'function') refreshSafetyCenter(); if (typeof refreshOperationsOverview === 'function') refreshOperationsOverview();
 
-                populateCreditCoDropdowns(); populateCustomerDropdowns(); populateMonthDropdown(); populateEdMonthDropdown(); filterData(); filterEdData(); renderDailyReport(); renderUserAccountsTable(); renderCreditCoTable(); renderCustomerTable(); renderMpuLedger();
+                populateCreditCoDropdowns(); populateCustomerDropdowns(); populateMonthDropdown(); populateEdMonthDropdown(); filterData(); filterEdData(); renderDailyReport(); renderUserAccountsTable(); renderCreditCoTable(); renderCustomerTable(); renderMpuLedger(); renderPermissionEditor(null, 'staff'); refreshSafetyCenter(); refreshOperationsOverview();
               }
             } catch (innerErr) { console.warn("Firebase Sync Parse Error:", innerErr); }
           });
@@ -721,10 +762,10 @@
     function triggerEncryptedBackup() {
       if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin အကောင့်သာ Backup ပြုလုပ်ခွင့် ရှိပါသည်။");
       const adminPasswordInput = prompt("Backup ဖိုင်ကို လုံခြုံစွာ Encrypt ပြုလုပ်ရန် Admin Password ကို အတည်ပြုပါ:"); if (!adminPasswordInput) return;
-      const users = getUserAccounts(); const isValidAdmin = users.some(u => u.role === 'admin' && u.isActive !== false && u.password === adminPasswordInput.trim());
+      const users = getUserAccounts(); const isValidAdmin = users.some(u => u.role === 'admin' && u.isActive !== false && verifyUserPassword(u, adminPasswordInput.trim()));
       if (!isValidAdmin) return alert("Admin Password မှားယွင်းနေပါသည်။ Backup ဆွဲယူခွင့် မပြုပါ။");
 
-      const backupData = { version: "23.0", exportDate: new Date().toISOString(), cargoData: getCargoData(), edData: getEdData(), creditCompanies: getCreditCompanies(), customers: getCustomers(), userAccounts: getUserAccounts(), mpuTopups: getMpuTopups() };
+      const backupData = { version: "23.0", exportDate: new Date().toISOString(), cargoData: getCargoData(), edData: getEdData(), creditCompanies: getCreditCompanies(), customers: getCustomers(), userAccounts: getUserAccounts(), mpuTopups: getMpuTopups(), recycleBin: getRecycleBin(), auditLog: getAuditLog() };
       const jsonString = JSON.stringify(backupData); let encryptedPayload = "";
       if (window.CryptoJS && CryptoJS.AES) encryptedPayload = "BK_AES::" + CryptoJS.AES.encrypt(jsonString, adminPasswordInput.trim()).toString();
       else encryptedPayload = "BK_RAW::" + btoa(encodeURIComponent(jsonString));
@@ -754,7 +795,7 @@
             if (finalData.creditCompanies) saveCreditCompanies(finalData.creditCompanies); 
             if (finalData.customers) saveCustomers(finalData.customers); 
             if (finalData.userAccounts) saveUserAccounts(finalData.userAccounts); 
-            if (finalData.mpuTopups) localStorage.setItem('bk_MPUTopups_enc', encryptPayload(finalData.mpuTopups));
+            if (finalData.mpuTopups) localStorage.setItem('bk_MPUTopups_enc', encryptPayload(finalData.mpuTopups)); if (finalData.recycleBin) localStorage.setItem('bk_RecycleBin_enc', encryptPayload(finalData.recycleBin)); if (finalData.auditLog) localStorage.setItem('bk_AuditLog_enc', encryptPayload(finalData.auditLog));
             syncFullStateToCloud();
             populateMonthDropdown(); populateEdMonthDropdown(); filterData(); filterEdData(); renderMpuLedger(); alert("Data Restore လုပ်ခြင်း အောင်မြင်ပါသည်!");
           }
@@ -792,7 +833,7 @@
         
         let users = getUserAccounts();
         
-        const match = users.find(x => x && x.isActive !== false && typeof x.username === 'string' && x.username.trim().toLowerCase() === u && x.password === p);
+        let match = users.find(x => x && x.isActive !== false && typeof x.username === 'string' && x.username.trim().toLowerCase() === u && verifyUserPassword(x, p)); if (match) match = migrateLegacyPassword(match, p);
         
         if (match) {
           currentUser = { id: match.id, username: match.username, displayName: match.displayName, role: match.role, isOwner: match.isOwner }; 
@@ -864,10 +905,10 @@
     function renderUserAccountsTable() {
       const list = getUserAccounts(); const tbody = document.getElementById('userAccountsTableBody'); if (!tbody) return;
       const active = list.filter(u => u.isActive !== false);
-      document.getElementById('userStatTotal').innerText = active.length;
-      document.getElementById('userStatAdmin').innerText = active.filter(u => u.role === 'admin').length;
-      document.getElementById('userStatStaff').innerText = active.filter(u => u.role === 'staff').length;
-      document.getElementById('userStatViewer').innerText = active.filter(u => u.role === 'viewer').length;
+      document.getElementById('userStatTotal').innerText = list.length;
+      document.getElementById('userStatAdmin').innerText = list.filter(u => u.role === 'admin').length;
+      document.getElementById('userStatStaff').innerText = list.filter(u => u.role === 'staff').length;
+      document.getElementById('userStatViewer').innerText = list.filter(u => u.role === 'viewer').length;
       tbody.innerHTML = list.map((u, idx) => {
         const isOwner = !!u.isOwner; const isActive = u.isActive !== false; let roleBadge = '';
         if (u.role === 'admin') roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-800 border border-blue-200">👑 Admin</span>`;
@@ -882,7 +923,7 @@
 
     function handleUserFormSubmit(e) {
       e.preventDefault(); const editId = String(document.getElementById('editingUserId').value || ''); const username = document.getElementById('inUserUsername').value.trim();
-      const password = document.getElementById('inUserPassword').value.trim(); const displayName = document.getElementById('inUserDisplayName').value.trim(); const role = document.getElementById('inUserRole').value; const isActive = document.getElementById('inUserActive').checked;
+      const password = document.getElementById('inUserPassword').value.trim(); const permissions = readPermissionForm(); const displayName = document.getElementById('inUserDisplayName').value.trim(); const role = document.getElementById('inUserRole').value; const isActive = document.getElementById('inUserActive').checked;
       if (!username || !displayName) return alert('Username နှင့် Display Name မဖြစ်မနေ ထည့်ရပါမည်။');
       if (!editId && password.length < 6) return alert('Password ကို အနည်းဆုံး 6 လုံး ထည့်ပါ။');
       if (password && password.length < 6) return alert('Password ကို အနည်းဆုံး 6 လုံး ထည့်ပါ။');
@@ -892,20 +933,20 @@
         const oldUser = users.find(u => String(u.id) === editId); if (!oldUser) return alert('ပြင်မည့်အကောင့်ကို မတွေ့ပါ။');
         if (oldUser.isOwner && (role !== 'admin' || !isActive)) return alert('Owner account ကို Admin/Active အဖြစ်သာထားနိုင်ပါသည်။');
         if (oldUser.role === 'admin' && oldUser.isActive !== false && (role !== 'admin' || !isActive) && users.filter(u => u.role === 'admin' && u.isActive !== false).length <= 1) return alert('နောက်ဆုံး Active Admin account ကို ပိတ်၍မရပါ။');
-        users = users.map(u => String(u.id) === editId ? { ...u, username, ...(password ? { password } : {}), displayName, role, isActive } : u);
+        users = users.map(u => String(u.id) === editId ? (() => { const changed={ ...u, username, ...(password ? passwordFields(password) : {}), displayName, role, isActive, permissions }; if(password) delete changed.password; return changed; })() : u);
         if (currentUser && String(currentUser.id) === editId) { const changed = users.find(u => String(u.id) === editId); currentUser = { id: changed.id, username: changed.username, displayName: changed.displayName, role: changed.role, isOwner: changed.isOwner }; sessionStorage.setItem('bk_current_user', JSON.stringify(currentUser)); }
         alert(`အကောင့် [${username}] ကို ပြင်ဆင်ပြီးပါပြီ။`);
       } else {
-        users.push({ id: generateId('usr'), username, password, displayName, role, isActive, isOwner: false });
+        users.push({ id: generateId('usr'), username, ...passwordFields(password), displayName, role, isActive, permissions, isOwner: false });
         alert(`အကောင့်အသစ် [${username}] ထည့်သွင်းပြီးပါပြီ။`);
       }
-      saveUserAccounts(users); resetUserForm(); applyRolePermissions();
+      saveUserAccounts(users); recordAudit(editId ? 'UPDATE' : 'CREATE', 'Account', editId || username, `Account ${username} • ${role}`); resetUserForm(); applyRolePermissions();
     }
 
     function editUserAccount(id) {
       const target = getUserAccounts().find(u => String(u.id) === String(id)); if (!target) return;
       document.getElementById('editingUserId').value = String(target.id); document.getElementById('inUserUsername').value = target.username; document.getElementById('inUserPassword').value = '';
-      document.getElementById('inUserPassword').placeholder = 'မပြောင်းလိုပါက အလွတ်ထားပါ'; document.getElementById('inUserDisplayName').value = target.displayName || ''; document.getElementById('inUserRole').value = target.role; document.getElementById('inUserActive').checked = target.isActive !== false;
+      document.getElementById('inUserPassword').placeholder = 'မပြောင်းလိုပါက အလွတ်ထားပါ'; document.getElementById('inUserDisplayName').value = target.displayName || ''; document.getElementById('inUserRole').value = target.role; document.getElementById('inUserActive').checked = target.isActive !== false; renderPermissionEditor(target.permissions, target.role);
       document.getElementById('userFormTitle').innerText = `အကောင့်ပြင်ဆင်ခြင်း — ${target.username}`; document.getElementById('userFormHint').innerText = 'Password မပြောင်းလိုပါက အလွတ်ထားနိုင်ပါသည်'; document.getElementById('editingUserBadge').classList.remove('hidden'); document.getElementById('btnSaveUser').innerHTML = '✏️ ပြင်ဆင်မှု သိမ်းမည်';
       window.scrollTo({ top: document.getElementById('inUserUsername').offsetTop - 120, behavior: 'smooth' });
     }
@@ -914,16 +955,16 @@
       let users = getUserAccounts(); const target = users.find(u => String(u.id) === String(id)); if (!target || target.isOwner) return;
       if (currentUser && String(currentUser.id) === String(id)) return alert('လက်ရှိအသုံးပြုနေသော ကိုယ့်အကောင့်ကို ပိတ်၍မရပါ။');
       if (target.role === 'admin' && target.isActive !== false && users.filter(u => u.role === 'admin' && u.isActive !== false).length <= 1) return alert('နောက်ဆုံး Active Admin account ကို ပိတ်၍မရပါ။');
-      users = users.map(u => String(u.id) === String(id) ? { ...u, isActive: u.isActive === false } : u); saveUserAccounts(users);
+      users = users.map(u => String(u.id) === String(id) ? { ...u, isActive: u.isActive === false } : u); saveUserAccounts(users); recordAudit('STATUS', 'Account', id, `${target.username} account status changed`);
     }
     function deleteUserAccount(id) {
       const users = getUserAccounts(); const target = users.find(u => String(u.id) === String(id)); if (!target || target.isOwner) return;
       if (currentUser && String(currentUser.id) === String(id)) return alert('လက်ရှိအသုံးပြုနေသော ကိုယ့်အကောင့်ကို ဖျက်၍မရပါ။');
       if (target.role === 'admin' && target.isActive !== false && users.filter(u => u.role === 'admin' && u.isActive !== false).length <= 1) return alert('နောက်ဆုံး Active Admin account ကို ဖျက်၍မရပါ။');
-      if (confirm(`အကောင့် [${target.username} (${target.displayName})] ကို ဖျက်ရန် သေချာပါသလား?`)) saveUserAccounts(users.filter(u => String(u.id) !== String(id)));
+      if (confirm(`အကောင့် [${target.username} (${target.displayName})] ကို ဖျက်ရန် သေချာပါသလား?`)) { saveUserAccounts(users.filter(u => String(u.id) !== String(id))); recordAudit('DELETE', 'Account', id, target.username); }
     }
     function toggleManagedPasswordVisibility() { const input = document.getElementById('inUserPassword'); input.type = input.type === 'password' ? 'text' : 'password'; }
-    function resetUserForm() { document.getElementById('editingUserId').value = ''; document.getElementById('inUserUsername').value = ''; document.getElementById('inUserPassword').value = ''; document.getElementById('inUserPassword').type = 'password'; document.getElementById('inUserPassword').placeholder = 'အနည်းဆုံး 6 လုံး'; document.getElementById('inUserDisplayName').value = ''; document.getElementById('inUserRole').value = 'staff'; document.getElementById('inUserActive').checked = true; document.getElementById('userFormTitle').innerText = 'အကောင့်အသစ်'; document.getElementById('userFormHint').innerText = 'Username၊ Password နဲ့ လုပ်ပိုင်ခွင့်ကို သတ်မှတ်ပါ'; document.getElementById('editingUserBadge').classList.add('hidden'); document.getElementById('btnSaveUser').innerHTML = '💾 အကောင့် သိမ်းဆည်းမည်'; }
+    function resetUserForm() { document.getElementById('editingUserId').value = ''; document.getElementById('inUserUsername').value = ''; document.getElementById('inUserPassword').value = ''; document.getElementById('inUserPassword').type = 'password'; document.getElementById('inUserPassword').placeholder = 'အနည်းဆုံး 6 လုံး'; document.getElementById('inUserDisplayName').value = ''; document.getElementById('inUserRole').value = 'staff'; document.getElementById('inUserActive').checked = true; document.getElementById('userFormTitle').innerText = 'အကောင့်အသစ်'; document.getElementById('userFormHint').innerText = 'Username၊ Password နဲ့ လုပ်ပိုင်ခွင့်ကို သတ်မှတ်ပါ'; document.getElementById('editingUserBadge').classList.add('hidden'); document.getElementById('btnSaveUser').innerHTML = '💾 အကောင့် သိမ်းဆည်းမည်'; renderPermissionEditor(null, 'staff'); }
     function escapeHtml(str) { return String(str || '').replace(/[&<>"']/g, function(m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]; }); }
 
     // 10. ROBUST BULLETPROOF DATE PARSER
@@ -1009,11 +1050,11 @@
     function renderCargoTable(list) {
       const tbody = document.getElementById('cargoTableBody'); const noMsg = document.getElementById('noResultsMsg'); tbody.innerHTML = '';
       if (list.length === 0) { noMsg.classList.remove('hidden'); return; } noMsg.classList.add('hidden');
-      const isStaff = currentUser && currentUser.role === 'staff'; const isAdmin = currentUser && currentUser.role === 'admin';
+      const isStaff = !hasPermission('creditFinancials');
       list.forEach((item, index) => {
         const tr = document.createElement('tr'); tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 transition";
         let pctCell = isStaff ? '' : `<td class="p-3 text-center font-bold text-indigo-700 dark:text-indigo-300">${item.pct ?? 4}%</td>`; let amtCell = isStaff ? '' : `<td class="p-3 text-right font-bold text-slate-900 dark:text-white bg-slate-50/50 dark:bg-slate-800/30">฿${formatNum(Math.round(item.amount || 0), 0)}</td>`;
-        let actionCell = `<span class="text-slate-300 dark:text-slate-600">-</span>`; if (isAdmin) { actionCell = `<button onclick="editCargoShipment('${item.id}')" class="text-blue-600 hover:text-blue-800 p-1" title="ပြင်မည်">✏️</button><button onclick="deleteCargoShipment('${item.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>`; }
+        let actionCell = `${hasPermission('creditEdit') ? `<button onclick="editCargoShipment('${item.id}')" class="text-blue-600 hover:text-blue-800 p-1" title="ပြင်မည်">✏️</button>` : ''}${hasPermission('creditDelete') ? `<button onclick="deleteCargoShipment('${item.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>` : ''}` || `<span class="text-slate-300">-</span>`;
         tr.innerHTML = `<td class="p-3 font-bold text-slate-500 text-center">${index + 1}</td><td class="p-3"><span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">${item.creditCo || 'SH'}</span></td><td class="p-3 whitespace-nowrap font-medium">${item.date || '-'}</td><td class="p-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap mm-text">${item.boat || '-'}</td><td class="p-3 font-mono font-bold">${item.invNo || '-'}</td><td class="p-3 font-mono text-[11px] text-slate-500">${item.edNo || '-'}</td><td class="p-3 text-right font-medium">${Number(item.kg || 0).toLocaleString()}</td><td class="p-3 text-right font-semibold text-emerald-700 dark:text-emerald-400">$${formatNum(item.usd, 2)}</td><td class="p-3 text-center text-slate-500">${item.rate ?? 34.7}</td><td class="p-3 text-right font-semibold text-indigo-700 dark:text-indigo-400">฿${formatNum(Math.round(item.thb || 0), 0)}</td>${pctCell}${amtCell}<td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-900 border border-blue-200">${item.remark || '-'}</span></td><td class="p-3 text-center space-x-1 whitespace-nowrap">${actionCell}</td>`;
         tbody.appendChild(tr);
       });
@@ -1023,43 +1064,45 @@
     
     function toggleCargoCards() { const c = document.getElementById('cargoMetricCardsContainer'); const icon = document.getElementById('cargoCardsToggleIcon'); const text = document.getElementById('cargoCardsToggleText'); if (c) c.classList.toggle('hidden'); if (icon) icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; if (text) text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်'; }
     function openNewCargoEntry() {
-      if (currentUser && currentUser.role === 'viewer') return alert("Viewer အကောင့်အတွက် စာရင်းအသစ် ထည့်သွင်းခွင့် မရှိပါ။");
+      if (!requirePermission('creditAdd')) return;
       document.getElementById('editCargoId').value = ''; document.getElementById('cargoModalTitle').innerText = "➕ Credit စာရင်းအသစ် ထည့်သွင်းခြင်း"; document.getElementById('cargoModalDate').value = localToday(); document.getElementById('cargoModalBoat').value = ''; document.getElementById('cargoModalRemark').value = ''; document.getElementById('cargoModalInvNo').value = ''; document.getElementById('cargoModalEdNo').value = ''; document.getElementById('cargoModalKG').value = ''; document.getElementById('cargoModalUSD').value = ''; document.getElementById('cargoModalRate').value = '34.7'; document.getElementById('cargoModalPct').value = '4.0'; document.getElementById('cargoModalLicense').checked = false; calculateCargoPreview(); document.getElementById('cargoEntryModal').classList.remove('hidden');
     }
     function closeCargoEntryModal() { document.getElementById('cargoEntryModal').classList.add('hidden'); }
     function editCargoShipment(id) {
-      if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် စာရင်းပြင်ဆင်ခွင့် ရှိပါသည်။");
+      if (!requirePermission('creditEdit')) return;
       const all = getCargoData(); const item = all.find(x => String(x.id) === String(id)); if (!item) return;
       document.getElementById('editCargoId').value = item.id; document.getElementById('cargoModalTitle').innerText = "✏️ Credit စာရင်း ပြင်ဆင်ခြင်း"; document.getElementById('cargoModalCreditCo').value = item.creditCo || 'SH'; document.getElementById('cargoModalRemark').value = item.remark || ''; document.getElementById('cargoModalDate').value = item.date || ''; document.getElementById('cargoModalBoat').value = item.boat || ''; document.getElementById('cargoModalInvNo').value = item.invNo || ''; document.getElementById('cargoModalEdNo').value = item.edNo || ''; document.getElementById('cargoModalKG').value = item.kg || ''; document.getElementById('cargoModalUSD').value = item.usd || ''; document.getElementById('cargoModalRate').value = item.rate ?? 34.7; document.getElementById('cargoModalPct').value = item.pct ?? 4.0; document.getElementById('cargoModalLicense').checked = item.hasLicense || false; calculateCargoPreview(); document.getElementById('cargoEntryModal').classList.remove('hidden');
     }
     function calculateCargoPreview() { const usd = parseFloat(document.getElementById('cargoModalUSD').value) || 0; const rate = numberOr(document.getElementById('cargoModalRate').value, 34.7); const pct = numberOr(document.getElementById('cargoModalPct').value, 4.0); const thb = Math.round(usd * rate); const amt = Math.round(thb * (pct / 100)); document.getElementById('cargoPreviewTHB').innerText = '฿' + formatNum(thb, 0); document.getElementById('cargoPreviewAmount').innerText = '฿' + formatNum(amt, 0); }
     
     function handleCargoSubmit(e) {
-      e.preventDefault(); const editId = document.getElementById('editCargoId').value; if (currentUser && currentUser.role === 'viewer') return alert("Viewer အကောင့်အတွက် စာရင်းသိမ်းဆည်းခွင့် မရှိပါ။"); if (editId && currentUser && currentUser.role === 'staff') return alert("Staff အကောင့်အတွက် စာရင်းပြင်ဆင်ခွင့် ပိတ်ထားပါသည်။");
+      e.preventDefault(); const editId = document.getElementById('editCargoId').value; if (!requirePermission(editId ? 'creditEdit' : 'creditAdd')) return;
       const usd = parseFloat(document.getElementById('cargoModalUSD').value) || 0; const creditCo = document.getElementById('cargoModalCreditCo').value || 'SH'; const entryDate = document.getElementById('cargoModalDate').value; const entryInvNo = document.getElementById('cargoModalInvNo').value.trim(); const remark = document.getElementById('cargoModalRemark').value.trim().toUpperCase(); const duplicate = getCargoData().find(x => String(x.id) !== String(editId) && String(x.creditCo || 'SH').trim().toUpperCase() === String(creditCo).trim().toUpperCase() && String(x.date || '') === entryDate && String(x.invNo || '').trim().toUpperCase() === entryInvNo.toUpperCase()); if (duplicate) return alert(`Credit Co., Date နှင့် Invoice No တူသော စာရင်းရှိပြီးသား ဖြစ်ပါသည်။ (${entryInvNo})`); const custMap = getCustomers(); const companyName = custMap[remark] ? custMap[remark].name : remark; const hasLicense = document.getElementById('cargoModalLicense').checked;
       let rate = numberOr(document.getElementById('cargoModalRate').value, 34.7); let pct = numberOr(document.getElementById('cargoModalPct').value, 4.0); if (currentUser && currentUser.role === 'staff') { rate = 34.7; pct = custMap[remark] ? custMap[remark].defaultPct : 4.0; }
       const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); 
       const newItem = { id: editId || generateId('bk'), no: 0, creditCo, date: entryDate, boat: document.getElementById('cargoModalBoat').value, remark, companyName, invNo: entryInvNo, edNo: document.getElementById('cargoModalEdNo').value, kg: parseFloat(document.getElementById('cargoModalKG').value) || 0, usd, rate, thb, pct, amount, hasLicense };
       saveCargoNode(newItem); populateMonthDropdown(); closeCargoEntryModal(); filterData(); renderMpuLedger(); alert(editId ? "ပြင်ဆင်မှု အောင်မြင်ပါသည်" : "စာရင်းအသစ် သိမ်းဆည်းပြီးပါပြီ");
     }
-    function deleteCargoShipment(id) { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် စာရင်းဖျက်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ဤစာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { deleteCargoNode(id); populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); } }
+    function deleteCargoShipment(id) { if (!hasPermission('creditDelete')) return alert("Admin သာလျှင် စာရင်းဖျက်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ဤစာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { deleteCargoNode(id); populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); } }
     function clearAllData() { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ဒေတာရှင်းထုတ်ခွင့် ရှိပါသည်။"); if (confirm("Credit စာရင်းအားလုံးကို ရှင်းထုတ်မှာ သေချာပါသလား?")) { localStorage.setItem('bk_CargoData_enc', encryptPayload([])); if (firebaseDb) firebaseDb.ref("bk_operations_master/cargoData").remove(); populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); } }
     function toggleBatchTool() { const p = document.getElementById('batchUpdatePanel'); p.classList.toggle('hidden'); if (!p.classList.contains('hidden')) { const today = localToday(); document.getElementById('batchStartDate').value = today.substring(0, 8) + '01'; document.getElementById('batchEndDate').value = today; } }
     function handleBatchUpdateSubmit(e) {
-      e.preventDefault(); const cust = document.getElementById('batchCustomer').value; const start = document.getElementById('batchStartDate').value; const end = document.getElementById('batchEndDate').value; const newRateInput = document.getElementById('batchNewRate').value.trim(); const newPctInput = document.getElementById('batchNewPct').value.trim();
+      e.preventDefault(); if (!requirePermission('creditEdit')) return; const cust = document.getElementById('batchCustomer').value; const start = document.getElementById('batchStartDate').value; const end = document.getElementById('batchEndDate').value; const newRateInput = document.getElementById('batchNewRate').value.trim(); const newPctInput = document.getElementById('batchNewPct').value.trim();
       if (!newRateInput && !newPctInput) return alert("RATE သို့မဟုတ် % အနက် အနည်းဆုံး တစ်ခုကို ထည့်သွင်းပေးရပါမည်။"); const newRate = newRateInput ? parseFloat(newRateInput) : null; const newPct = newPctInput ? parseFloat(newPctInput) : null;
       let all = getCargoData(); let count = 0; let updates = {};
       all = all.map(i => { if ((cust === 'ALL' || String(i.remark || '').trim().toUpperCase() === cust) && (i.date >= start && i.date <= end)) { count++; const usd = Number(i.usd || 0); const rate = newRate !== null ? newRate : Number(i.rate ?? 34.7); const pct = newPct !== null ? newPct : Number(i.pct ?? 4.0); const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); const updatedItem = { ...i, rate, pct, thb, amount }; updates[i.id] = updatedItem; return updatedItem; } return i; });
       if (!count) return alert("ရွေးချယ်ထားသော ရက်စွဲအတွင်း သက်ဆိုင်ရာ စာရင်းမရှိပါ။"); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); if (firebaseDb && Object.keys(updates).length > 0) saveCloudCollection('cargoData', all);
-      filterData(); renderDailyReport(); renderBreakdown(); toggleBatchTool(); alert(`စာရင်းပေါင်း (${count}) ခု၏ Data ကို အောင်မြင်စွာ Update ပြုလုပ်ပြီးပါပြီ။`);
+      filterData(); renderDailyReport(); renderBreakdown(); toggleBatchTool(); recordAudit('BATCH UPDATE','Credit','',`${count} records`); alert(`စာရင်းပေါင်း (${count}) ခု၏ Data ကို အောင်မြင်စွာ Update ပြုလုပ်ပြီးပါပြီ။`);
     }
     function exportToExcel() {
-      const list = currentFilteredList; if (!list || !list.length) return alert("Export ထုတ်ရန် စာရင်းမရှိပါ။"); const custMap = getCustomers(); const isStaff = currentUser && currentUser.role === 'staff';
+      if (!requirePermission('creditExport')) return;
+      const list = currentFilteredList; if (!list || !list.length) return alert("Export ထုတ်ရန် စာရင်းမရှိပါ။"); const custMap = getCustomers(); const isStaff = !hasPermission('creditFinancials');
       const rows = list.map((r, i) => { const baseRow = { "No": i + 1, "Credit Co": r.creditCo || 'SH', "Date": r.date, "လှေအမည်": r.boat, "Inv: No.": r.invNo, "ED No.": String(r.edNo), "KG": Number(r.kg || 0), "Inv: (USD)": Number(r.usd || 0), "RATE": Number(r.rate ?? 34.7), "Inv: (THB)": Math.round(Number(r.thb || 0)) }; if (!isStaff) { baseRow["%"] = Number(r.pct ?? 4); baseRow["AMOUNT (THB)"] = Math.round(Number(r.amount || 0)); } baseRow["Remark"] = r.remark; baseRow["Company Name"] = r.companyName || (custMap[r.remark] ? custMap[r.remark].name : ''); return baseRow; });
       const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Credit_Report"); XLSX.writeFile(wb, "BK_Credit_Report.xlsx");
     }
 
     function handleExcelImport(event) {
+      if (!requirePermission('creditImport')) { event.target.value=''; return; }
       const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
       reader.onload = function(e) {
         try {
@@ -1123,18 +1166,7 @@
           if (applyLicense) { parsedList = parsedList.map(p => ({ ...p, hasLicense: true })); }
           saveCustomers(currentCustomers); 
 
-          const isAppend = confirm(`Credit စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။\n\n[OK] နှိပ်ပါက လက်ရှိစာရင်းများအောက်တွင် ဆက်ပေါင်းထည့်မည် (Append) ဖြစ်ပါသည်။\n\n[Cancel] နှိပ်ပါက မူလစာရင်းများကို အကုန်ဖျက်ပြီး အစားထိုး (Replace) ပါမည်။`);
-          const existing = getCargoData(); 
-          if (isAppend) {
-            const all = [...existing, ...parsedList]; localStorage.setItem('bk_CargoData_enc', encryptPayload(all));
-            if (firebaseDb) { const updates = {}; parsedList.forEach(i => updates[i.id]=i); firebaseDb.ref("bk_operations_master/cargoData").update(updates); }
-          } else {
-            const sure = confirm("⚠️ သတိပေးချက် ⚠️\nမူလစာရင်းများ အကုန်ပျက်သွားပါမည်။ အစားထိုးမှာ သေချာပါသလား?"); if (!sure) return;
-            localStorage.setItem('bk_CargoData_enc', encryptPayload(parsedList));
-            if (firebaseDb) { const obj = {}; parsedList.forEach(i => obj[i.id]=i); firebaseDb.ref("bk_operations_master/cargoData").set(obj); }
-          }
-          populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); 
-          alert(`Credit စာရင်းပေါင်း (${parsedList.length}) ခု System သို့ ထည့်သွင်းပြီးပါပြီ။`);
+          showImportPreview('credit', parsedList);
         } catch(err) { alert("Error: " + err.message); } finally { event.target.value = ''; }
       }; 
       reader.readAsArrayBuffer(file);
@@ -1182,13 +1214,13 @@
       if (c) c.classList.toggle('hidden'); if (icon) icon.innerText = c.classList.contains('hidden') ? '🙈' : '👁️'; if (text) text.innerText = c.classList.contains('hidden') ? 'Summary Cards ဖွင့်မည်' : 'Summary Cards ပိတ်မည်';
     }
     function renderEdTable(list) {
+      const canEditEd = hasPermission('edEdit'); const canDeleteEd = hasPermission('edDelete'); const canVoucher = hasPermission('voucher');
       const tbody = document.getElementById('edTableBody'); const noMsg = document.getElementById('noEdResultsMsg'); tbody.innerHTML = '';
       if (list.length === 0) { noMsg.classList.remove('hidden'); return; } noMsg.classList.add('hidden');
       const isAdmin = currentUser && currentUser.role === 'admin';
       list.forEach((item, index) => {
         const tr = document.createElement('tr'); tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 transition";
-        let actionCell = `<button onclick="openVoucherModal('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher ကြည့်ရှု/ထုတ်မည်">📸 VC</button>`;
-        if (isAdmin) { actionCell = `<button onclick="openVoucherModal('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher ကြည့်ရှု/ထုတ်မည်">📸 VC</button><button onclick="editEdShipment('${item.id}')" class="text-indigo-600 hover:text-indigo-800 p-1" title="ပြင်မည်">✏️</button><button onclick="deleteEdShipment('${item.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>`; }
+        let actionCell = `${canVoucher ? `<button onclick="openVoucherModal('${item.id}')" class="text-emerald-600 font-bold hover:text-emerald-800 p-1 bg-emerald-50 rounded" title="Voucher ကြည့်ရှု/ထုတ်မည်">📸 VC</button>` : ''}${canEditEd ? `<button onclick="editEdShipment('${item.id}')" class="text-indigo-600 p-1">✏️</button>` : ''}${canDeleteEd ? `<button onclick="deleteEdShipment('${item.id}')" class="text-rose-600 p-1">🗑️</button>` : ''}` || '-';
         
         const hasPaid = item.payDate && item.payDate.trim() !== '' && item.payDate !== '-';
         const payDateBadge = hasPaid 
@@ -1213,7 +1245,7 @@
       ['date','boat','invNo','invVl','customer','tax2Pct','mfService','total','payDate'].forEach(col => { const span = document.getElementById('sort-ed-' + col); if(span) span.innerText = (sortEdColumn === col) ? (sortEdAsc ? '▲' : '▼') : '↕'; });
     }
     function openNewEdEntryModal() {
-      if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ED စာရင်းအသစ် ထည့်သွင်းခွင့် ရှိပါသည်။");
+      if (!requirePermission('edAdd')) return;
       document.getElementById('editEdId').value = ''; 
       document.getElementById('edModalTitle').innerText = "➕ ED Service စာရင်းအသစ် ထည့်သွင်းခြင်း"; 
       document.getElementById('inEdDate').value = localToday(); 
@@ -1228,7 +1260,7 @@
     }
     function closeEdEntryModal() { document.getElementById('edEntryModal').classList.add('hidden'); }
     function editEdShipment(id) {
-      if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ED စာရင်း ပြင်ဆင်ခွင့် ရှိပါသည်။");
+      if (!requirePermission('edEdit')) return;
       const all = getEdData(); const item = all.find(x => String(x.id) === String(id)); if (!item) return;
       document.getElementById('editEdId').value = item.id; 
       document.getElementById('edModalTitle').innerText = "✏️ ED Service စာရင်း ပြင်ဆင်ခြင်း"; 
@@ -1248,7 +1280,7 @@
       document.getElementById('inEd2Pct').value = tax2; document.getElementById('inEdTotal').value = total;
     }
     function handleEdSubmit(e) {
-      e.preventDefault(); if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ED စာရင်း သိမ်းဆည်းခွင့် ရှိပါသည်။");
+      e.preventDefault(); const permissionForEd = document.getElementById('editEdId').value ? 'edEdit' : 'edAdd'; if (!requirePermission(permissionForEd)) return;
       const editId = document.getElementById('editEdId').value; const date = document.getElementById('inEdDate').value;
       const boat = document.getElementById('inEdBoat').value.trim(); const invNo = document.getElementById('inEdInvNo').value.trim();
       const customer = document.getElementById('inEdCustomer').value.trim().toUpperCase(); const invVl = parseFloat(document.getElementById('inEdUSD').value) || 0;
@@ -1257,10 +1289,11 @@
       const newItem = { id: editId || generateId('ed'), no: 0, date, boat, invNo, customer, invVl, tax2Pct, mfService, total, payDate };
       saveEdNode(newItem); populateEdMonthDropdown(); populateEdCustDropdown(); closeEdEntryModal(); filterEdData(); alert(editId ? "ပြင်ဆင်မှု အောင်မြင်ပါသည်" : "စာရင်းအသစ် သိမ်းဆည်းပြီးပါပြီ");
     }
-    function deleteEdShipment(id) { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ED စာရင်း ဖျက်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ဤ ED စာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { deleteEdNode(id); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); } }
+    function deleteEdShipment(id) { if (!hasPermission('edDelete')) return alert("Admin သာလျှင် ED စာရင်း ဖျက်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ဤ ED စာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { deleteEdNode(id); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); } }
     function clearAllEdData() { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ED စာရင်း ရှင်းထုတ်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ED စာရင်းအားလုံးကို ရှင်းထုတ်ပစ်မှာ သေချာပါသလား?")) { localStorage.setItem('bk_EdServiceData_enc', encryptPayload([])); if(firebaseDb) firebaseDb.ref("bk_operations_master/edData").remove(); populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); } }
     
     function handleEdExcelImport(event) {
+      if (!requirePermission('edImport')) { event.target.value=''; return; }
       const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
       reader.onload = function(e) {
         try {
@@ -1315,22 +1348,13 @@
           }
 
           if (!parsedList.length) { alert("ED စာရင်းများ မတွေ့ရှိပါ။ Excel ဖိုင်၏ Header များကို စစ်ဆေးပေးပါ။"); return; }
-          const isAppend = confirm(`ED စာရင်း (${parsedList.length}) ခု တွေ့ရှိပါသည်။\n\n[OK] နှိပ်ပါက လက်ရှိစာရင်းများအောက်တွင် ဆက်ပေါင်းထည့်မည် (Append) ဖြစ်ပါသည်။\n\n[Cancel] နှိပ်ပါက မူလစာရင်းများကို အကုန်ဖျက်ပြီး အစားထိုး (Replace) ပါမည်။`);
-          const existing = getEdData();
-          if (isAppend) {
-            const all = [...existing, ...parsedList]; localStorage.setItem('bk_EdServiceData_enc', encryptPayload(all));
-            if (firebaseDb) { const updates = {}; parsedList.forEach(i => updates[i.id]=i); firebaseDb.ref("bk_operations_master/edData").update(updates); }
-          } else {
-            const sure = confirm("⚠️ သတိပေးချက် ⚠️\nမူလစာရင်းများ အကုန်ပျက်သွားပါမည်။ အစားထိုးမှာ သေချာပါသလား?"); if (!sure) return;
-            localStorage.setItem('bk_EdServiceData_enc', encryptPayload(parsedList));
-            if (firebaseDb) { const obj = {}; parsedList.forEach(i => obj[i.id]=i); firebaseDb.ref("bk_operations_master/edData").set(obj); }
-          }
-          populateEdMonthDropdown(); populateEdCustDropdown(); filterEdData(); alert(`ED စာရင်းပေါင်း (${parsedList.length}) ခု System သို့ အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။`);
+          showImportPreview('ed', parsedList);
         } catch(err) { alert("Error: " + err.message); } finally { event.target.value = ''; }
       }; 
       reader.readAsArrayBuffer(file);
     }
     function exportEdToExcel() {
+      if (!requirePermission('edExport')) return;
       const list = currentEdFilteredList; if (!list || !list.length) return alert("Export ထုတ်ရန် ED စာရင်းမရှိပါ။");
       const rows = list.map((r, i) => ({ "No": i + 1, "Date": r.date, "လှေအမည်": r.boat, "Inv No.": r.invNo, "Invoice VL (USD)": Number(r.invVl || 0), "Co,.Ltd": r.customer, "2% (MMK)": Math.round(Number(r.tax2Pct || 0)), "MF / Service": Math.round(Number(r.mfService || 0)), "Total (MMK)": Math.round(Number(r.total || 0)), "Pay Date": r.payDate || 'Pending' }));
       const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "ED_Report"); XLSX.writeFile(wb, "BK_ED_Report.xlsx");
@@ -1493,12 +1517,13 @@
       document.getElementById('vcTotal').innerText = voucherTotal.toLocaleString();
     }
     function openVoucherModal(id) {
-      const item = getEdData().find(x => x.id === id); if (!item) return; currentVoucherItem = item;
+      if (!requirePermission('voucher')) return;
+      const item = getEdData().find(x => String(x.id) === String(id)); if (!item) return; currentVoucherItem = item;
       const payDate = String(item.payDate || '').trim();
       const isPaid = !!(payDate && payDate !== '-');
       const statusChip = document.getElementById('vcStatusChip');
       const totalBox = document.getElementById('vcTotalBox');
-      statusChip.innerText = isPaid ? '●  PAID' : '●  PENDING';
+      statusChip.innerText = isPaid ? '✓  PAID • ငွေပေးချေပြီး' : '!  UNPAID • ငွေပေးချေရန်ကျန်';
       statusChip.style.background = isPaid ? '#e6f8ef' : '#fff4d9';
       statusChip.style.color = isPaid ? '#087a48' : '#9a5b00';
       document.getElementById('vcStatusMyanmar').innerText = isPaid ? 'ငွေပေးချေပြီး' : 'ငွေပေးချေရန်ကျန်';
@@ -1573,14 +1598,14 @@
     }
 
     // 15. MPU Ledger
-    function openMpuTopupModal() { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ငွေသွင်းခွင့် ရှိပါသည်။"); document.getElementById('inMpuDate').value = localToday(); document.getElementById('inMpuBank').value = 'AYA Bank'; document.getElementById('inMpuAmount').value = ''; document.getElementById('inMpuRemark').value = 'MPU သို့ ငွေသွင်းခြင်း'; document.getElementById('mpuTopupModal').classList.remove('hidden'); }
+    function openMpuTopupModal() { if (!hasPermission('mpuManage')) return alert("Admin သာလျှင် ငွေသွင်းခွင့် ရှိပါသည်။"); document.getElementById('inMpuDate').value = localToday(); document.getElementById('inMpuBank').value = 'AYA Bank'; document.getElementById('inMpuAmount').value = ''; document.getElementById('inMpuRemark').value = 'MPU သို့ ငွေသွင်းခြင်း'; document.getElementById('mpuTopupModal').classList.remove('hidden'); }
     function closeMpuTopupModal() { document.getElementById('mpuTopupModal').classList.add('hidden'); }
     function handleMpuTopupSubmit(e) { 
-      e.preventDefault(); if ((!currentUser || currentUser.role !== 'admin')) return; 
+      e.preventDefault(); if (!hasPermission('mpuManage')) return; 
       const date = document.getElementById('inMpuDate').value; const bank = document.getElementById('inMpuBank').value; const amount = parseFloat(document.getElementById('inMpuAmount').value) || 0; const remark = document.getElementById('inMpuRemark').value.trim(); 
       const newItem = { id: generateId('mpu'), date, bank, amount, remark }; saveMpuNode(newItem); closeMpuTopupModal(); renderMpuLedger(); alert("MPU သို့ ငွေသွင်းခြင်း မှတ်တမ်းတင်ပြီးပါပြီ။"); 
     }
-    function deleteMpuTopup(id) { if ((!currentUser || currentUser.role !== 'admin')) return; if (confirm("ဤ ငွေသွင်းမှတ်တမ်းကို ဖျက်မှာ သေချာပါသလား?")) { deleteMpuNode(id); renderMpuLedger(); } }
+    function deleteMpuTopup(id) { if (!hasPermission('mpuManage')) return; if (confirm("ဤ ငွေသွင်းမှတ်တမ်းကို ဖျက်မှာ သေချာပါသလား?")) { deleteMpuNode(id); renderMpuLedger(); } }
     function renderMpuLedger() {
       const topups = getMpuTopups(); const creditData = getCargoData().filter(c => c.hasLicense); let ledger = [];
       topups.forEach(t => { ledger.push({ date: t.date, desc: t.remark || 'ငွေသွင်း (Top-up)', bank: t.bank, inAmt: Number(t.amount), outAmt: 0, id: t.id, isTopup: true }); });
@@ -1629,6 +1654,84 @@
       resetCustomerForm();
     }
     function deleteCustomer(code) { if (confirm(`Customer [${code}] ကို ဖျက်မှာ သေချာပါသလား?`)) { const map = getCustomers(); delete map[code]; saveCustomers(map); } }
+
+
+    // 16B. Operations safety, permissions and workflow controls
+    const PERMISSION_DEFINITIONS = [
+      ['creditView','Credit ကြည့်'],['creditAdd','Credit ထည့်'],['creditEdit','Credit ပြင်'],['creditDelete','Credit ဖျက်'],['creditImport','Credit Import'],['creditExport','Credit Export'],['creditFinancials','Credit %/Amount ကြည့်'],['dailyView','Daily Report'],['creditReport','Credit လချုပ်'],
+      ['edView','ED ကြည့်'],['edAdd','ED ထည့်'],['edEdit','ED ပြင်'],['edDelete','ED ဖျက်'],['edImport','ED Import'],['edExport','ED Export'],['voucher','Voucher ထုတ်'],['edReport','ED လချုပ်'],['mpuView','MPU ကြည့်'],['mpuManage','MPU စီမံ']
+    ];
+    const STAFF_PERMISSION_DEFAULTS = { creditView:true, creditAdd:true, creditEdit:false, creditDelete:false, creditImport:false, creditExport:false, creditFinancials:false, dailyView:true, creditReport:false, edView:false, edAdd:false, edEdit:false, edDelete:false, edImport:false, edExport:false, voucher:false, edReport:false, mpuView:false, mpuManage:false };
+    const VIEWER_PERMISSION_DEFAULTS = { creditView:true, creditExport:false, dailyView:true, creditReport:true, edView:true, edExport:false, voucher:true, edReport:true, mpuView:false };
+    let pendingImport = null;
+
+    function invoiceNaturalValue(value) { const m = String(value == null ? '' : value).match(/\d+(?:\.\d+)?/); return m ? Number(m[0]) : -1; }
+    function setSyncVisual(state) { const badge=document.getElementById('cloudStatusBadge'); if(!badge)return; const config={saving:['bg-blue-50 text-blue-700 border-blue-300','🔄 Saving...'],saved:['bg-emerald-50 text-emerald-700 border-emerald-300','● Saved'],error:['bg-rose-50 text-rose-700 border-rose-300','⚠ Sync Error'],offline:['bg-amber-50 text-amber-700 border-amber-300','○ Offline']}; const c=config[state]||config.offline; badge.className=`inline-flex items-center gap-1 text-[9px] font-bold border px-2 py-0.5 rounded-full ${c[0]}`; badge.innerText=c[1]; const label=document.getElementById('opsLastSync');if(label)label.innerText=state==='saved'?`Saved ${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`:c[1]; }
+    function compareDateInvoiceDesc(a, b) { const d = String(b.date || '').localeCompare(String(a.date || '')); if (d) return d; const n = invoiceNaturalValue(b.invNo) - invoiceNaturalValue(a.invNo); if (n) return n; return String(b.invNo || '').localeCompare(String(a.invNo || ''), undefined, { numeric:true, sensitivity:'base' }); }
+    function sortOperationalRecords(list) { return normalizeRecordList(list).sort(compareDateInvoiceDesc); }
+    function getCargoData() { return sortOperationalRecords(getSafeArray('bk_CargoData_enc')); }
+    function getEdData() { return sortOperationalRecords(getSafeArray('bk_EdServiceData_enc')); }
+
+    function getRecycleBin() { return normalizeRecordList(getSafeArray('bk_RecycleBin_enc')).sort((a,b) => String(b.deletedAt || '').localeCompare(String(a.deletedAt || ''))); }
+    function getAuditLog() { return normalizeRecordList(getSafeArray('bk_AuditLog_enc')).sort((a,b) => String(b.at || '').localeCompare(String(a.at || ''))).slice(0,500); }
+    function saveRecycleBin(list) { const clean = normalizeRecordList(list).slice(0,1000); localStorage.setItem('bk_RecycleBin_enc', encryptPayload(clean)); saveCloudCollection('recycleBin', clean); refreshSafetyCenter(); refreshOperationsOverview(); }
+    function recordAudit(action, area, recordId, detail) { const item = { id:generateId('log'), at:new Date().toISOString(), userId:currentUser?.id || 'system', username:currentUser?.username || 'System', action, area, recordId:String(recordId || ''), detail:String(detail || '') }; const logs=[item,...getAuditLog()].slice(0,500); localStorage.setItem('bk_AuditLog_enc', encryptPayload(logs)); saveCloudRecord('auditLog', item); refreshSafetyCenter(); }
+    function moveToRecycle(collection, item, reason) { if (!item) return; const deleted={ id:generateId('trash'), sourceId:String(item.id), collection, deletedAt:new Date().toISOString(), deletedBy:currentUser?.username || 'System', reason:reason || 'Deleted', data:item }; saveRecycleBin([deleted,...getRecycleBin()]); recordAudit('DELETE', collection, item.id, reason || 'Moved to Recycle Bin'); }
+
+    function permissionDefaults(role) { if (role === 'admin') return Object.fromEntries(PERMISSION_DEFINITIONS.map(([k])=>[k,true])); if (role === 'viewer') return {...VIEWER_PERMISSION_DEFAULTS}; return {...STAFF_PERMISSION_DEFAULTS}; }
+    function effectivePermissions(user) { return user?.role === 'admin' ? permissionDefaults('admin') : {...permissionDefaults(user?.role), ...(user?.permissions || {})}; }
+    function activeAccount() { if (!currentUser) return null; return getUserAccounts().find(u => String(u.id) === String(currentUser.id)) || currentUser; }
+    function hasPermission(key) { const user=activeAccount(); return !!user && user.isActive !== false && (user.role === 'admin' || effectivePermissions(user)[key] === true); }
+    function requirePermission(key, message) { if (hasPermission(key)) return true; showSecurityToast(message || '⚠️ ဤလုပ်ဆောင်ချက်အတွက် ခွင့်ပြုချက်မရှိပါ'); return false; }
+    function renderPermissionEditor(values, role) { const grid=document.getElementById('userPermissionGrid'); if(!grid) return; const perms={...permissionDefaults(role || document.getElementById('inUserRole')?.value), ...(values || {})}; grid.innerHTML=PERMISSION_DEFINITIONS.map(([key,label])=>`<label class="flex items-center gap-2 rounded-lg border px-2 py-2 bg-slate-50 dark:bg-slate-800"><input type="checkbox" data-permission="${key}" ${perms[key]?'checked':''} class="accent-indigo-700"><span>${label}</span></label>`).join(''); const disabled=role==='admin'; grid.querySelectorAll('input').forEach(i=>i.disabled=disabled); }
+    function readPermissionForm() { const out={}; document.querySelectorAll('#userPermissionGrid [data-permission]').forEach(i=>out[i.dataset.permission]=i.checked); return out; }
+    function onUserRoleChange() { renderPermissionEditor(null, document.getElementById('inUserRole').value); }
+    function setAllPermissionChecks(value) { document.querySelectorAll('#userPermissionGrid [data-permission]').forEach(i=>{if(!i.disabled)i.checked=value}); }
+
+    function strongPasswordHash(password, salt) { const raw=`${salt}:${password}`; if(window.CryptoJS && CryptoJS.SHA256) return CryptoJS.SHA256(raw).toString(); let h=2166136261; for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i);h=Math.imul(h,16777619)} return `fallback-${(h>>>0).toString(16)}`; }
+    function passwordFields(password) { const passwordSalt=generateId('salt'); return { passwordSalt, passwordHash:strongPasswordHash(password,passwordSalt) }; }
+    function verifyUserPassword(user,password) { if(user.passwordHash && user.passwordSalt) return user.passwordHash===strongPasswordHash(password,user.passwordSalt); return typeof user.password==='string' && user.password===password; }
+    function migrateLegacyPassword(user,password) { if(!user || user.passwordHash || !user.password) return user; const secured={...user,...passwordFields(password)}; delete secured.password; const users=getUserAccounts().map(u=>String(u.id)===String(user.id)?secured:u); localStorage.setItem('bk_user_accounts_enc',encryptPayload(users)); syncFullStateToCloud(); return secured; }
+
+    function applyRolePermissions() {
+      if(!currentUser) return; const user=activeAccount(); if(!user || user.isActive===false){handleLogout();return}
+      currentUser={id:user.id,username:user.username,displayName:user.displayName,role:user.role,isOwner:user.isOwner}; sessionStorage.setItem('bk_current_user',JSON.stringify(currentUser));
+      const badge=document.getElementById('headerRoleBadge'); const label=document.getElementById('headerUserDisplayName'); const styles={admin:['👑 Admin','bg-blue-100 text-blue-900 border border-blue-300'],staff:['👤 Staff','bg-amber-100 text-amber-900 border border-amber-300'],viewer:['👁️ Viewer','bg-purple-100 text-purple-900 border border-purple-300']}; const st=styles[user.role]||styles.viewer; badge.className=`inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full ${st[1]}`; badge.innerText=st[0]; label.innerText=`• ${user.displayName||user.username}`;
+      const nav={dashboard:'creditView',daily:'dailyView',breakdown:'creditReport','ed-dashboard':'edView','ed-breakdown':'edReport',mpu:'mpuView'}; Object.entries(nav).forEach(([id,p])=>document.getElementById('btn-'+id)?.classList.toggle('hidden',!hasPermission(p))); document.getElementById('btn-companies')?.classList.toggle('hidden',user.role!=='admin');
+      document.querySelectorAll('.admin-only-item').forEach(el=>el.classList.toggle('hidden',user.role!=='admin'));
+      const controls=[['button[onclick*="openNewCargoEntry"]','creditAdd'],['button[onclick*="excelFileInput"]','creditImport'],['button[onclick="exportToExcel()"]','creditExport'],['button[onclick="toggleBatchTool()"]','creditEdit'],['button[onclick="clearAllData()"]','creditDelete'],['button[onclick*="openNewEdEntryModal"]','edAdd'],['button[onclick*="edExcelFileInput"]','edImport'],['button[onclick="exportEdToExcel()"]','edExport'],['button[onclick="clearAllEdData()"]','edDelete'],['button[onclick="openMpuTopupModal()"]','mpuManage']]; controls.forEach(([s,p])=>document.querySelectorAll(s).forEach(el=>el.classList.toggle('hidden',!hasPermission(p))));
+      const overviewRules=[['opsTodayCredit','creditFinancials'],['opsMonthCredit','creditFinancials'],['opsEdPending','edView'],['opsEdPaid','edView'],['opsMpuBalance','mpuView']]; overviewRules.forEach(([id,p])=>document.getElementById(id)?.parentElement?.classList.toggle('hidden',!hasPermission(p)));
+      document.getElementById('batchUpdatePanel')?.classList.add('hidden'); const active=document.querySelector('.tab-content.active')?.id?.replace('tab-',''); if(active && active!=='companies' && nav[active] && !hasPermission(nav[active])) switchTab(Object.entries(nav).find(([,p])=>hasPermission(p))?.[0] || 'dashboard');
+      filterData(); filterEdData(); refreshOperationsOverview();
+    }
+    function switchTab(tabName) { if(!currentUser)return; const map={dashboard:'creditView',daily:'dailyView',breakdown:'creditReport','ed-dashboard':'edView','ed-breakdown':'edReport',mpu:'mpuView'}; if(tabName==='companies' && activeAccount()?.role!=='admin') return showSecurityToast('⚠️ Admin သာ ဝင်ရောက်နိုင်ပါသည်'); if(map[tabName]&&!requirePermission(map[tabName]))return; document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); document.getElementById('tab-'+tabName)?.classList.add('active'); document.querySelectorAll('.nav-btn').forEach(btn=>{btn.classList.remove('bg-blue-950','text-white','shadow-sm','dark:bg-blue-900');btn.classList.add('bg-slate-100','text-slate-700','dark:bg-slate-800','dark:text-slate-300')}); const btn=document.getElementById('btn-'+tabName); if(btn){btn.classList.remove('bg-slate-100','text-slate-700','dark:bg-slate-800','dark:text-slate-300');btn.classList.add('bg-blue-950','text-white','shadow-sm','dark:bg-blue-900')} if(tabName==='dashboard'){filterData();refreshOperationsOverview()} if(tabName==='daily')renderDailyReport(); if(tabName==='breakdown')renderBreakdown(); if(tabName==='ed-dashboard')filterEdData(); if(tabName==='ed-breakdown')renderEdBreakdown(); if(tabName==='companies'){renderUserAccountsTable();renderCreditCoTable();renderCustomerTable();refreshSafetyCenter()} if(tabName==='mpu')renderMpuLedger(); }
+
+    function saveCargoNode(item) { const normalized={...item,id:String(item.id)}; const old=getCargoData().find(x=>String(x.id)===normalized.id); const all=sortOperationalRecords(getCargoData().filter(x=>String(x.id)!==normalized.id).concat(normalized)); sortColumn='date';sortAsc=false;localStorage.setItem('bk_CargoData_enc',encryptPayload(all)); saveCloudRecord('cargoData',normalized); recordAudit(old?'UPDATE':'CREATE','Credit',normalized.id,`${normalized.date} | Inv ${normalized.invNo}`); refreshOperationsOverview(); }
+    function saveEdNode(item) { const normalized={...item,id:String(item.id)}; const old=getEdData().find(x=>String(x.id)===normalized.id); const all=sortOperationalRecords(getEdData().filter(x=>String(x.id)!==normalized.id).concat(normalized)); sortEdColumn='date';sortEdAsc=false;localStorage.setItem('bk_EdServiceData_enc',encryptPayload(all)); saveCloudRecord('edData',normalized); recordAudit(old?'UPDATE':'CREATE','ED',normalized.id,`${normalized.date} | Inv ${normalized.invNo}`); refreshOperationsOverview(); }
+    function deleteCargoNode(id) { const item=getCargoData().find(x=>String(x.id)===String(id)); if(item)moveToRecycle('cargoData',item,'Credit စာရင်းဖျက်'); localStorage.setItem('bk_CargoData_enc',encryptPayload(getCargoData().filter(x=>String(x.id)!==String(id)))); deleteCloudRecord('cargoData',String(id)); }
+    function deleteEdNode(id) { const item=getEdData().find(x=>String(x.id)===String(id)); if(item)moveToRecycle('edData',item,'ED စာရင်းဖျက်'); localStorage.setItem('bk_EdServiceData_enc',encryptPayload(getEdData().filter(x=>String(x.id)!==String(id)))); deleteCloudRecord('edData',String(id)); }
+    function recycleWholeCollection(collection, rows, reason) { const now=new Date().toISOString(); const trash=rows.map((item,index)=>({id:generateId('trash')+'_'+index,sourceId:String(item.id),collection,deletedAt:now,deletedBy:currentUser?.username||'System',reason,data:item})); saveRecycleBin([...trash,...getRecycleBin()]); recordAudit('CLEAR',collection,'',`${rows.length} records moved to Recycle Bin`); }
+    function clearAllData() { if(!requirePermission('creditDelete'))return;const rows=getCargoData();if(!rows.length)return;if(confirm('Credit စာရင်းအားလုံးကို Recycle Bin သို့ရွှေ့မှာ သေချာပါသလား?')){recycleWholeCollection('cargoData',rows,'Credit Clear All');localStorage.setItem('bk_CargoData_enc',encryptPayload([]));saveCloudCollection('cargoData',[]);populateMonthDropdown();filterData();renderDailyReport();renderMpuLedger()} }
+    function clearAllEdData() { if(!requirePermission('edDelete'))return;const rows=getEdData();if(!rows.length)return;if(confirm('ED စာရင်းအားလုံးကို Recycle Bin သို့ရွှေ့မှာ သေချာပါသလား?')){recycleWholeCollection('edData',rows,'ED Clear All');localStorage.setItem('bk_EdServiceData_enc',encryptPayload([]));saveCloudCollection('edData',[]);populateEdMonthDropdown();populateEdCustDropdown();filterEdData()} }
+
+    function businessKey(type,row){const inv=String(row.invNo||'').trim().toUpperCase();const date=String(row.date||'');if(type==='credit')return `${date}|${inv}|${String(row.edNo||'').trim()||Number(row.usd||0)+'|'+Number(row.kg||0)}`;return `${date}|${inv}|${String(row.boat||'').trim().toUpperCase()}|${Number(row.invVl||0)}`}
+    function analyzeImport(type,list){const existing=type==='credit'?getCargoData():getEdData();const existingKeys=new Set(existing.map(r=>businessKey(type,r)));const seen=new Set();return list.map((row,index)=>{const key=businessKey(type,row);const invalid=!row.date||!row.invNo;const duplicateExisting=existingKeys.has(key);const duplicateFile=seen.has(key);const duplicate=duplicateExisting||duplicateFile;seen.add(key);return{row,index,invalid,duplicate,duplicateExisting,duplicateFile,key}})}
+    function showImportPreview(type,list){ if(!requirePermission(type==='credit'?'creditImport':'edImport'))return; const analysis=analyzeImport(type,list);pendingImport={type,analysis};const valid=analysis.filter(x=>!x.invalid&&!x.duplicate);const bad=analysis.filter(x=>x.invalid);const dup=analysis.filter(x=>x.duplicate);document.getElementById('importPreviewTitle').innerText=`${type==='credit'?'Credit':'ED'} Excel Import Preview`;document.getElementById('importPreviewSummary').innerText=`စုစုပေါင်း ${analysis.length} | သွင်းနိုင် ${valid.length} | အချက်အလက်မပြည့် ${bad.length} | Duplicate ${dup.length}`;document.getElementById('importPreviewWarnings').innerHTML=`<div class="grid grid-cols-3 gap-2"><div class="p-3 rounded-lg bg-emerald-50 text-emerald-800"><b>${valid.length}</b><br>Valid</div><div class="p-3 rounded-lg bg-rose-50 text-rose-800"><b>${bad.length}</b><br>Invalid</div><div class="p-3 rounded-lg bg-amber-50 text-amber-800"><b>${dup.length}</b><br>Duplicate (မသွင်းပါ)</div></div>`;document.getElementById('importPreviewTable').innerHTML=`<table class="w-full border-collapse"><thead><tr class="bg-slate-100 dark:bg-slate-800"><th class="p-2">Status</th><th class="p-2">Date</th><th class="p-2">Inv No</th><th class="p-2">လှေ</th><th class="p-2">Customer</th><th class="p-2 text-right">Amount</th></tr></thead><tbody>${analysis.slice(0,100).map(x=>`<tr class="border-b ${x.invalid?'bg-rose-50':x.duplicate?'bg-amber-50':''}"><td class="p-2 font-bold">${x.invalid?'❌ Invalid':x.duplicate?'⚠️ Duplicate':'✅ Ready'}</td><td class="p-2">${escapeHtml(x.row.date)}</td><td class="p-2">${escapeHtml(x.row.invNo)}</td><td class="p-2">${escapeHtml(x.row.boat)}</td><td class="p-2">${escapeHtml(x.row.remark||x.row.customer)}</td><td class="p-2 text-right">${formatNum(x.row.amount||x.row.total||0,0)}</td></tr>`).join('')}</tbody></table>${analysis.length>100?'<p class="p-3 text-slate-500">ပထမ 100 ကြောင်းကိုသာ Preview ပြထားသည်။</p>':''}`;document.getElementById('btnImportAppend').disabled=valid.length===0;document.getElementById('btnImportReplace').disabled=valid.length===0;document.getElementById('importPreviewModal').classList.remove('hidden')}
+    function closeImportPreview(){document.getElementById('importPreviewModal').classList.add('hidden');pendingImport=null}
+    function commitImportPreview(mode){if(!pendingImport)return;const {type,analysis}=pendingImport;const permission=type==='credit'?'creditImport':'edImport';if(!requirePermission(permission))return;const clean=sortOperationalRecords(analysis.filter(x=>!x.invalid&&!x.duplicateFile&&(mode==='replace'||!x.duplicateExisting)).map(x=>x.row));if(!clean.length)return alert('သွင်းနိုင်သောစာရင်းမရှိပါ။');if(mode==='replace'&&!confirm('မူလစာရင်းများကို Recycle Bin သို့ရွှေ့ပြီး အစားထိုးမှာ သေချာပါသလား?'))return;const key=type==='credit'?'bk_CargoData_enc':'bk_EdServiceData_enc';const collection=type==='credit'?'cargoData':'edData';const existing=type==='credit'?getCargoData():getEdData();if(mode==='replace'&&existing.length)recycleWholeCollection(collection,existing,'Excel Replace');const finalList=sortOperationalRecords(mode==='append'?[...existing,...clean]:clean);if(type==='credit'){sortColumn='date';sortAsc=false}else{sortEdColumn='date';sortEdAsc=false}localStorage.setItem(key,encryptPayload(finalList));saveCloudCollection(collection,finalList);recordAudit('IMPORT',type==='credit'?'Credit':'ED','',`${clean.length} records (${mode})`);closeImportPreview();populateMonthDropdown();populateEdMonthDropdown();populateEdCustDropdown();filterData();filterEdData();renderMpuLedger();alert(`စာရင်း ${clean.length} ခု အောင်မြင်စွာသွင်းပြီးပါပြီ။`)}
+
+    function duplicateGroups(type){const rows=type==='credit'?getCargoData():getEdData();const map={};rows.forEach(r=>{const k=businessKey(type,r);if(!map[k])map[k]=[];map[k].push(r)});return Object.entries(map).filter(([,v])=>v.length>1)}
+    function refreshSafetyCenter(){const d=duplicateGroups('credit').length+duplicateGroups('ed').length;const r=getRecycleBin().length;const a=getAuditLog().length;const de=document.getElementById('duplicateSummary'),re=document.getElementById('recycleSummary'),ae=document.getElementById('auditSummary');if(de)de.innerText=`${d} duplicate groups`;if(re)re.innerText=`${r} deleted records`;if(ae)ae.innerText=`${a} recent activities`}
+    function openDuplicateManager(){const groups=[...duplicateGroups('credit').map(g=>['credit',...g]),...duplicateGroups('ed').map(g=>['ed',...g])];document.getElementById('safetyModalTitle').innerText='🔎 Duplicate Cleaner';document.getElementById('safetyModalHint').innerText='မှန်ကန်သောတစ်ကြောင်းကို Keep နှိပ်ပါ။ ကျန်စာရင်းများ Recycle Bin သို့ရွှေ့ပါမည်။';document.getElementById('safetyModalBody').innerHTML=groups.length?groups.map(([type,key,rows])=>`<div class="border rounded-xl mb-3 overflow-hidden"><div class="p-2 bg-amber-50 font-bold">${type.toUpperCase()} • ${escapeHtml(key)} • ${rows.length} ကြောင်း</div>${rows.map(r=>`<div class="p-3 border-t flex items-center justify-between gap-3"><span>${escapeHtml(r.date)} | Inv <b>${escapeHtml(r.invNo)}</b> | ${escapeHtml(r.boat)} | ${escapeHtml(r.creditCo||r.customer)} | ${formatNum(r.amount||r.total||0,0)}</span><button onclick="resolveDuplicate('${type}','${encodeURIComponent(key).replace(/'/g,'%27')}','${r.id}')" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white font-bold">ဤတစ်ကြောင်းထားမည်</button></div>`).join('')}</div>`).join(''):'<div class="p-8 text-center text-emerald-700 font-bold">✅ Duplicate မတွေ့ပါ</div>';document.getElementById('safetyCenterModal').classList.remove('hidden')}
+    function resolveDuplicate(type,encodedKey,keepId){if(!confirm('ရွေးထားသောတစ်ကြောင်းသာထားပြီး ကျန် Duplicate များကို Recycle Bin သို့ရွှေ့မှာ သေချာပါသလား?'))return;const key=decodeURIComponent(encodedKey);const collection=type==='credit'?'cargoData':'edData';const rows=type==='credit'?getCargoData():getEdData();const removed=rows.filter(r=>businessKey(type,r)===key&&String(r.id)!==String(keepId));removed.forEach(r=>moveToRecycle(collection,r,'Duplicate Cleaner'));const finalRows=rows.filter(r=>!removed.some(x=>String(x.id)===String(r.id)));localStorage.setItem(type==='credit'?'bk_CargoData_enc':'bk_EdServiceData_enc',encryptPayload(finalRows));saveCloudCollection(collection,finalRows);recordAudit('DEDUPLICATE',type.toUpperCase(),keepId,`${removed.length} duplicate(s) recycled`);filterData();filterEdData();openDuplicateManager()}
+    function showRecycleBin(){const rows=getRecycleBin();document.getElementById('safetyModalTitle').innerText='♻️ Recycle Bin';document.getElementById('safetyModalHint').innerText='ဖျက်ထားသောစာရင်းကို Restore ပြန်လုပ်နိုင်ပါသည်။';document.getElementById('safetyModalBody').innerHTML=rows.length?rows.map(x=>`<div class="p-3 border-b flex items-center justify-between gap-3"><div><b>${escapeHtml(x.collection)}</b> • ${escapeHtml(x.data?.date)} • Inv ${escapeHtml(x.data?.invNo)}<br><small class="text-slate-500">${formatAuditTime(x.deletedAt)} • ${escapeHtml(x.deletedBy)} • ${escapeHtml(x.reason)}</small></div><button onclick="restoreRecycleItem('${x.id}')" class="px-3 py-1.5 bg-blue-700 text-white rounded-lg font-bold">↩ Restore</button></div>`).join(''):'<div class="p-8 text-center text-slate-500">Recycle Bin အလွတ်ဖြစ်ပါသည်</div>';document.getElementById('safetyCenterModal').classList.remove('hidden')}
+    function restoreRecycleItem(trashId){const trash=getRecycleBin().find(x=>String(x.id)===String(trashId));if(!trash)return;if(trash.collection==='cargoData')saveCargoNode(trash.data);else if(trash.collection==='edData')saveEdNode(trash.data);else return;saveRecycleBin(getRecycleBin().filter(x=>String(x.id)!==String(trashId)));deleteCloudRecord('recycleBin',trashId);recordAudit('RESTORE',trash.collection,trash.sourceId,'Restored from Recycle Bin');filterData();filterEdData();showRecycleBin()}
+    function formatAuditTime(value){try{return new Date(value).toLocaleString('en-GB',{hour12:false})}catch(e){return String(value||'')}}
+    function showAuditLog(){const rows=getAuditLog();document.getElementById('safetyModalTitle').innerText='🧾 Activity Log';document.getElementById('safetyModalHint').innerText='နောက်ဆုံးပြောင်းလဲမှု 500 ခုအထိ သိမ်းထားသည်။';document.getElementById('safetyModalBody').innerHTML=rows.length?`<table class="w-full"><thead><tr class="bg-slate-100 dark:bg-slate-800"><th class="p-2 text-left">Time</th><th class="p-2 text-left">User</th><th class="p-2 text-left">Action</th><th class="p-2 text-left">Area</th><th class="p-2 text-left">Detail</th></tr></thead><tbody>${rows.map(x=>`<tr class="border-b"><td class="p-2 whitespace-nowrap">${formatAuditTime(x.at)}</td><td class="p-2 font-bold">${escapeHtml(x.username)}</td><td class="p-2">${escapeHtml(x.action)}</td><td class="p-2">${escapeHtml(x.area)}</td><td class="p-2">${escapeHtml(x.detail)}</td></tr>`).join('')}</tbody></table>`:'<div class="p-8 text-center text-slate-500">Activity မရှိသေးပါ</div>';document.getElementById('safetyCenterModal').classList.remove('hidden')}
+    function closeSafetyCenterModal(){document.getElementById('safetyCenterModal').classList.add('hidden')}
+
+    function refreshOperationsOverview(){const c=getCargoData(),e=getEdData(),m=getMpuTopups(),today=localToday(),month=today.slice(0,7);const todayRows=c.filter(x=>x.date===today);const monthRows=c.filter(x=>String(x.date||'').startsWith(month));const pending=e.filter(x=>!x.payDate||x.payDate==='-');const paid=e.filter(x=>String(x.payDate||'').startsWith(month));const top=m.reduce((s,x)=>s+Number(x.amount||0),0),licenses=c.filter(x=>x.hasLicense).length*15000;const set=(id,v)=>{const el=document.getElementById(id);if(el)el.innerText=v};set('opsTodayCredit','฿'+formatNum(todayRows.reduce((s,x)=>s+Number(x.amount||0),0),0));set('opsTodayTrips',`${todayRows.length} trips`);set('opsMonthCredit','฿'+formatNum(monthRows.reduce((s,x)=>s+Number(x.amount||0),0),0));set('opsEdPending',formatNum(pending.reduce((s,x)=>s+Number(x.total||0),0),0)+' Ks');set('opsEdPendingCount',`${pending.length} vouchers`);set('opsEdPaid',formatNum(paid.reduce((s,x)=>s+Number(x.total||0),0),0)+' Ks');set('opsMpuBalance',formatNum(top-licenses,0)+' Ks');set('opsRecycleCount',`${getRecycleBin().length} deleted`);set('opsLastSync',isCloudConnected?'Cloud synced':'Offline / Local saved')}
+
 
     // 17. INIT
     document.addEventListener("DOMContentLoaded", () => {
