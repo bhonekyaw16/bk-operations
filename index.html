@@ -309,22 +309,27 @@
             <button onclick="toggleUserManagementSection()" id="btnToggleUserMgr" class="text-xs font-bold bg-indigo-50 dark:bg-slate-800 border px-3 py-1 rounded-lg"><span id="userMgrToggleIcon">🙈</span> <span id="userMgrToggleText">အကောင့်များ စီမံခန့်ခွဲမှု ပိတ်မည်</span></button>
           </div>
           <div id="userManagementCollapsibleBody" class="space-y-4 pt-1">
-            <form onsubmit="handleUserFormSubmit(event)" class="space-y-4">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div class="rounded-xl border bg-slate-50 dark:bg-slate-800/60 p-3"><span class="text-[10px] font-bold text-slate-500">TOTAL ACCOUNTS</span><b id="userStatTotal" class="block text-xl mt-1">0</b></div>
+              <div class="rounded-xl border bg-blue-50 dark:bg-blue-950/30 p-3"><span class="text-[10px] font-bold text-blue-600">ADMINS</span><b id="userStatAdmin" class="block text-xl mt-1 text-blue-900 dark:text-blue-200">0</b></div>
+              <div class="rounded-xl border bg-amber-50 dark:bg-amber-950/30 p-3"><span class="text-[10px] font-bold text-amber-700">STAFF</span><b id="userStatStaff" class="block text-xl mt-1 text-amber-900 dark:text-amber-200">0</b></div>
+              <div class="rounded-xl border bg-purple-50 dark:bg-purple-950/30 p-3"><span class="text-[10px] font-bold text-purple-700">VIEWERS</span><b id="userStatViewer" class="block text-xl mt-1 text-purple-900 dark:text-purple-200">0</b></div>
+            </div>
+            <form onsubmit="handleUserFormSubmit(event)" class="space-y-4 rounded-2xl border bg-slate-50/70 dark:bg-slate-800/40 p-4">
               <input type="hidden" id="editingUserId" value="">
+              <div class="flex items-center justify-between"><div><h3 id="userFormTitle" class="font-bold text-sm">အကောင့်အသစ်</h3><p id="userFormHint" class="text-[10px] text-slate-500 mt-0.5">Username၊ Password နဲ့ လုပ်ပိုင်ခွင့်ကို သတ်မှတ်ပါ</p></div><span id="editingUserBadge" class="hidden text-[10px] font-bold bg-blue-100 text-blue-800 px-2 py-1 rounded-lg">EDIT MODE</span></div>
               <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-xs">
-                <div class="sm:col-span-3"><label class="block font-bold mb-1">Username</label><input id="inUserUsername" type="text" placeholder="e.g. staff2" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold"></div>
-                <div class="sm:col-span-3"><label class="block font-bold mb-1">Password</label><input id="inUserPassword" type="text" placeholder="Password" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-mono"></div>
+                <div class="sm:col-span-3"><label class="block font-bold mb-1">Username</label><input id="inUserUsername" type="text" autocomplete="off" placeholder="e.g. staff2" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold"></div>
+                <div class="sm:col-span-3"><label class="block font-bold mb-1">Password</label><div class="relative"><input id="inUserPassword" type="password" autocomplete="new-password" placeholder="အနည်းဆုံး 6 လုံး" class="w-full border rounded-lg p-2.5 pr-10 dark:bg-slate-800 font-mono"><button type="button" onclick="toggleManagedPasswordVisibility()" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 p-1" title="Password ပြ/ဖျောက်">👁️</button></div></div>
                 <div class="sm:col-span-3"><label class="block font-bold mb-1">အမည် (Display Name)</label><input id="inUserDisplayName" type="text" placeholder="Operations Officer" required class="w-full border rounded-lg p-2.5 dark:bg-slate-800"></div>
-                <div class="sm:col-span-3"><label class="block font-bold mb-1">Role / Permission</label><select id="inUserRole" class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold"><option value="staff">Staff (Daily Entry Only)</option><option value="viewer">Viewer (Read-Only)</option><option value="admin">Admin (Full Access)</option></select></div>
+                <div class="sm:col-span-3"><label class="block font-bold mb-1">Role / Permission</label><select id="inUserRole" class="w-full border rounded-lg p-2.5 dark:bg-slate-800 font-semibold"><option value="staff">Staff — စာရင်းထည့်ရန်</option><option value="viewer">Viewer — ကြည့်ရန်သာ</option><option value="admin">Admin — အပြည့်အဝ</option></select></div>
               </div>
-              <div class="flex justify-end gap-2 text-xs">
-                <button type="button" onclick="resetUserForm()" class="px-4 py-2 border rounded-lg">Cancel</button>
-                <button type="submit" id="btnSaveUser" class="px-5 py-2 bg-indigo-950 text-white font-bold rounded-lg">💾 အကောင့် သိမ်းဆည်းမည်</button>
-              </div>
+              <label class="inline-flex items-center gap-2 text-xs font-semibold"><input id="inUserActive" type="checkbox" checked class="w-4 h-4 accent-emerald-600"><span>Account Active — Login ဝင်ခွင့်ပြုမည်</span></label>
+              <div class="flex justify-end gap-2 text-xs"><button type="button" onclick="resetUserForm()" class="px-4 py-2 border rounded-lg">Cancel</button><button type="submit" id="btnSaveUser" class="px-5 py-2 bg-indigo-950 text-white font-bold rounded-lg">💾 အကောင့် သိမ်းဆည်းမည်</button></div>
             </form>
             <div class="overflow-x-auto border rounded-xl">
               <table class="w-full text-left border-collapse text-xs">
-                <thead class="bg-slate-50 dark:bg-slate-800/80 border-b font-bold uppercase select-none"><tr><th class="p-3 w-12 text-center">NO</th><th class="p-3 w-36">USERNAME</th><th class="p-3 w-36">PASSWORD</th><th class="p-3">DISPLAY NAME</th><th class="p-3 w-28 text-center">ROLE</th><th class="p-3 w-24 text-center">ပြင်/ဖျက်</th></tr></thead>
+                <thead class="bg-slate-50 dark:bg-slate-800/80 border-b font-bold uppercase select-none"><tr><th class="p-3 w-12 text-center">NO</th><th class="p-3 w-36">USERNAME</th><th class="p-3">DISPLAY NAME</th><th class="p-3 w-28 text-center">ROLE</th><th class="p-3 w-24 text-center">STATUS</th><th class="p-3 w-36 text-center">ACTIONS</th></tr></thead>
                 <tbody id="userAccountsTableBody" class="divide-y text-slate-700 dark:text-slate-300 font-medium"></tbody>
               </table>
             </div>
@@ -601,25 +606,41 @@
     }
     function saveCustomers(m) { localStorage.setItem('bk_CompanyMap_enc', encryptPayload(m)); populateCustomerDropdowns(); renderCustomerTable(); syncFullStateToCloud(); }
     
-    function getCargoData() { return getSafeArray('bk_CargoData_enc').filter(x => x.id); }
-    function getEdData() { return getSafeArray('bk_EdServiceData_enc').filter(x => x.id); }
-    function getMpuTopups() { return getSafeArray('bk_MPUTopups_enc').filter(x => x.id); }
+    function normalizeRecordList(list) {
+      const byId = new Map();
+      (Array.isArray(list) ? list : []).forEach(row => {
+        if (!row || typeof row !== 'object' || row.id === null || row.id === undefined || String(row.id).trim() === '') return;
+        const id = String(row.id); byId.set(id, { ...row, id });
+      });
+      return Array.from(byId.values());
+    }
+    function getCargoData() { return normalizeRecordList(getSafeArray('bk_CargoData_enc')); }
+    function getEdData() { return normalizeRecordList(getSafeArray('bk_EdServiceData_enc')); }
+    function getMpuTopups() { return normalizeRecordList(getSafeArray('bk_MPUTopups_enc')); }
     
     function getUserAccounts() {
       // Seed only a new installation; never resurrect deleted or renamed users.
       if (localStorage.getItem('bk_user_accounts_enc') === null) {
         localStorage.setItem('bk_user_accounts_enc', encryptPayload(INITIAL_USERS));
       }
-      return getSafeArray('bk_user_accounts_enc').filter(x => typeof x.username === 'string');
+      return getSafeArray('bk_user_accounts_enc').filter(x => typeof x.username === 'string').map(u => ({ ...u, id: String(u.id), isActive: u.isActive !== false }));
     }
     function saveUserAccounts(list) { localStorage.setItem('bk_user_accounts_enc', encryptPayload(list)); renderUserAccountsTable(); syncFullStateToCloud(); }
 
     function saveCloudRecord(collection, item) {
       if (!firebaseDb) return;
-      firebaseDb.ref(`bk_operations_master/${collection}/${item.id}`).set(item).catch(e => {
-        console.warn('Cloud save failed:', e);
-        alert('Cloud မှာ သိမ်းဆည်းမရပါ။ Internet နှင့် Firebase Rules ကို စစ်ဆေးပါ။');
-      });
+      const id = String(item.id); const normalizedItem = { ...item, id };
+      // Remove legacy numeric keys and any duplicate keys for this ID, then write one canonical record.
+      firebaseDb.ref(`bk_operations_master/${collection}`).transaction(current => {
+        const next = current && typeof current === 'object' ? { ...current } : {};
+        Object.keys(next).forEach(key => { const row = next[key]; if (key === id || (row && String(row.id) === id)) delete next[key]; });
+        next[id] = normalizedItem; return next;
+      }).catch(e => { console.warn('Cloud save failed:', e); alert('Cloud မှာ သိမ်းဆည်းမရပါ။ Internet နှင့် Firebase Rules ကို စစ်ဆေးပါ။'); });
+    }
+    function saveCloudCollection(collection, list) {
+      if (!firebaseDb) return;
+      const normalized = {}; normalizeRecordList(list).forEach(row => normalized[row.id] = row);
+      firebaseDb.ref(`bk_operations_master/${collection}`).set(normalized).catch(e => { console.warn('Cloud collection update failed:', e); alert('Cloud မှာ Update မရပါ။ Internet နှင့် Firebase Rules ကို စစ်ဆေးပါ။'); });
     }
     function deleteCloudRecord(collection, id) {
       if (!firebaseDb) {
@@ -640,12 +661,12 @@
         alert('Cloud မှာ ဖျက်မရပါ။ Internet နှင့် Firebase Rules ကို စစ်ဆေးပါ။');
       });
     }
-    function saveCargoNode(item) { let all = getCargoData(); let idx = all.findIndex(x => x.id === item.id); if (idx > -1) all[idx] = item; else all.unshift(item); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); saveCloudRecord('cargoData', item); }
-    function deleteCargoNode(id) { let all = getCargoData().filter(x => x.id !== id); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); deleteCloudRecord('cargoData', id); }
-    function saveEdNode(item) { let all = getEdData(); let idx = all.findIndex(x => x.id === item.id); if (idx > -1) all[idx] = item; else all.unshift(item); localStorage.setItem('bk_EdServiceData_enc', encryptPayload(all)); saveCloudRecord('edData', item); }
-    function deleteEdNode(id) { let all = getEdData().filter(x => x.id !== id); localStorage.setItem('bk_EdServiceData_enc', encryptPayload(all)); deleteCloudRecord('edData', id); }
-    function saveMpuNode(item) { let all = getMpuTopups(); let idx = all.findIndex(x => x.id === item.id); if (idx > -1) all[idx] = item; else all.push(item); localStorage.setItem('bk_MPUTopups_enc', encryptPayload(all)); saveCloudRecord('mpuTopups', item); }
-    function deleteMpuNode(id) { let all = getMpuTopups().filter(x => x.id !== id); localStorage.setItem('bk_MPUTopups_enc', encryptPayload(all)); deleteCloudRecord('mpuTopups', id); }
+    function saveCargoNode(item) { const normalized = { ...item, id: String(item.id) }; let all = getCargoData().filter(x => String(x.id) !== normalized.id); all.unshift(normalized); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); saveCloudRecord('cargoData', normalized); }
+    function deleteCargoNode(id) { const targetId = String(id); let all = getCargoData().filter(x => String(x.id) !== targetId); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); deleteCloudRecord('cargoData', targetId); }
+    function saveEdNode(item) { const normalized = { ...item, id: String(item.id) }; let all = getEdData().filter(x => String(x.id) !== normalized.id); all.unshift(normalized); localStorage.setItem('bk_EdServiceData_enc', encryptPayload(all)); saveCloudRecord('edData', normalized); }
+    function deleteEdNode(id) { const targetId = String(id); let all = getEdData().filter(x => String(x.id) !== targetId); localStorage.setItem('bk_EdServiceData_enc', encryptPayload(all)); deleteCloudRecord('edData', targetId); }
+    function saveMpuNode(item) { const normalized = { ...item, id: String(item.id) }; let all = getMpuTopups().filter(x => String(x.id) !== normalized.id); all.push(normalized); localStorage.setItem('bk_MPUTopups_enc', encryptPayload(all)); saveCloudRecord('mpuTopups', normalized); }
+    function deleteMpuNode(id) { const targetId = String(id); let all = getMpuTopups().filter(x => String(x.id) !== targetId); localStorage.setItem('bk_MPUTopups_enc', encryptPayload(all)); deleteCloudRecord('mpuTopups', targetId); }
 
     // 6. Firebase Cloud Sync
     function syncFullStateToCloud() {
@@ -673,12 +694,12 @@
             try {
               const val = snapshot.val();
               if (val) {
-                const safeParse = (data) => { if (!data) return []; if (Array.isArray(data)) return data; if (typeof data === 'object') return Object.values(data); return []; };
-                const cargoArr = safeParse(val.cargoData).filter(x => x && typeof x === 'object');
-                const edArr = safeParse(val.edData).filter(x => x && typeof x === 'object');
-                let usersArr = safeParse(val.userAccounts).filter(x => x && typeof x === 'object' && x.username);
+                const safeParse = (data) => { if (!data) return []; if (Array.isArray(data)) return data; if (typeof data === 'object') return Object.entries(data).map(([key, row]) => row && typeof row === 'object' ? { ...row, id: String(row.id ?? key) } : row); return []; };
+                const cargoArr = normalizeRecordList(safeParse(val.cargoData));
+                const edArr = normalizeRecordList(safeParse(val.edData));
+                let usersArr = normalizeRecordList(safeParse(val.userAccounts)).filter(x => x.username).map(u => ({ ...u, isActive: u.isActive !== false }));
                 const coArr = safeParse(val.creditCompanies).filter(x => x && typeof x === 'object');
-                const mpuArr = safeParse(val.mpuTopups).filter(x => x && typeof x === 'object');
+                const mpuArr = normalizeRecordList(safeParse(val.mpuTopups));
                 const custMap = (val.customers && typeof val.customers === 'object' && !Array.isArray(val.customers)) ? val.customers : {};
 
                 localStorage.setItem('bk_CargoData_enc', encryptPayload(cargoArr));
@@ -700,7 +721,7 @@
     function triggerEncryptedBackup() {
       if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin အကောင့်သာ Backup ပြုလုပ်ခွင့် ရှိပါသည်။");
       const adminPasswordInput = prompt("Backup ဖိုင်ကို လုံခြုံစွာ Encrypt ပြုလုပ်ရန် Admin Password ကို အတည်ပြုပါ:"); if (!adminPasswordInput) return;
-      const users = getUserAccounts(); const isValidAdmin = users.some(u => u.role === 'admin' && u.password === adminPasswordInput.trim());
+      const users = getUserAccounts(); const isValidAdmin = users.some(u => u.role === 'admin' && u.isActive !== false && u.password === adminPasswordInput.trim());
       if (!isValidAdmin) return alert("Admin Password မှားယွင်းနေပါသည်။ Backup ဆွဲယူခွင့် မပြုပါ။");
 
       const backupData = { version: "23.0", exportDate: new Date().toISOString(), cargoData: getCargoData(), edData: getEdData(), creditCompanies: getCreditCompanies(), customers: getCustomers(), userAccounts: getUserAccounts(), mpuTopups: getMpuTopups() };
@@ -771,7 +792,7 @@
         
         let users = getUserAccounts();
         
-        const match = users.find(x => x && typeof x.username === 'string' && x.username.trim().toLowerCase() === u && x.password === p);
+        const match = users.find(x => x && x.isActive !== false && typeof x.username === 'string' && x.username.trim().toLowerCase() === u && x.password === p);
         
         if (match) {
           currentUser = { id: match.id, username: match.username, displayName: match.displayName, role: match.role, isOwner: match.isOwner }; 
@@ -842,34 +863,67 @@
 
     function renderUserAccountsTable() {
       const list = getUserAccounts(); const tbody = document.getElementById('userAccountsTableBody'); if (!tbody) return;
+      const active = list.filter(u => u.isActive !== false);
+      document.getElementById('userStatTotal').innerText = active.length;
+      document.getElementById('userStatAdmin').innerText = active.filter(u => u.role === 'admin').length;
+      document.getElementById('userStatStaff').innerText = active.filter(u => u.role === 'staff').length;
+      document.getElementById('userStatViewer').innerText = active.filter(u => u.role === 'viewer').length;
       tbody.innerHTML = list.map((u, idx) => {
-        const isOwner = !!u.isOwner; let roleBadge = '';
+        const isOwner = !!u.isOwner; const isActive = u.isActive !== false; let roleBadge = '';
         if (u.role === 'admin') roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-800 border border-blue-200">👑 Admin</span>`;
         else if (u.role === 'viewer') roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-purple-50 text-purple-800 border border-purple-200">👁️ Viewer</span>`;
         else roleBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">👤 Staff</span>`;
-        const deleteBtn = isOwner ? `<span class="text-slate-300">-</span>` : `<button onclick="deleteUserAccount('${u.id}')" class="text-rose-600 hover:text-rose-800 p-1" title="ဖျက်မည်">🗑️</button>`;
-        return `<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition border-b border-slate-100 dark:border-slate-800"><td class="p-3 text-center text-slate-400 font-mono">${idx + 1}</td><td class="p-3 font-bold font-mono text-slate-900 dark:text-white">${escapeHtml(u.username)}</td><td class="p-3 font-mono text-slate-600 dark:text-slate-400">${escapeHtml(u.password)}</td><td class="p-3 font-medium text-slate-800 dark:text-slate-200">${escapeHtml(u.displayName || u.username)}</td><td class="p-3 text-center">${roleBadge}</td><td class="p-3 text-center space-x-1.5 whitespace-nowrap"><button onclick="editUserAccount('${u.id}')" class="text-amber-600 hover:text-amber-800 font-semibold inline-flex items-center gap-0.5" title="ပြင်မည်"><span>✏️</span> <span>ပြင်</span></button>${deleteBtn}</td></tr>`;
+        const statusBadge = isActive ? `<span class="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded-lg text-[10px] font-bold">● ACTIVE</span>` : `<span class="text-slate-500 bg-slate-100 border px-2 py-1 rounded-lg text-[10px] font-bold">○ DISABLED</span>`;
+        const statusBtn = isOwner ? '' : `<button onclick="toggleUserAccountStatus('${u.id}')" class="${isActive ? 'text-slate-500' : 'text-emerald-600'} hover:underline font-semibold" title="${isActive ? 'Login ပိတ်မည်' : 'Login ဖွင့်မည်'}">${isActive ? 'ပိတ်' : 'ဖွင့်'}</button>`;
+        const deleteBtn = isOwner ? `<span class="text-slate-300">Owner</span>` : `<button onclick="deleteUserAccount('${u.id}')" class="text-rose-600 hover:text-rose-800 font-semibold" title="ဖျက်မည်">ဖျက်</button>`;
+        return `<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition border-b border-slate-100 dark:border-slate-800 ${isActive ? '' : 'opacity-60'}"><td class="p-3 text-center text-slate-400 font-mono">${idx + 1}</td><td class="p-3 font-bold font-mono text-slate-900 dark:text-white">${escapeHtml(u.username)}</td><td class="p-3 font-medium">${escapeHtml(u.displayName || u.username)}</td><td class="p-3 text-center">${roleBadge}</td><td class="p-3 text-center">${statusBadge}</td><td class="p-3 text-center space-x-3 whitespace-nowrap"><button onclick="editUserAccount('${u.id}')" class="text-blue-600 hover:underline font-semibold">ပြင်</button>${statusBtn}${deleteBtn}</td></tr>`;
       }).join('');
     }
 
     function handleUserFormSubmit(e) {
-      e.preventDefault(); const editId = document.getElementById('editingUserId').value; const username = document.getElementById('inUserUsername').value.trim();
-      const password = document.getElementById('inUserPassword').value.trim(); const displayName = document.getElementById('inUserDisplayName').value.trim(); const role = document.getElementById('inUserRole').value;
-      if (!username || !password) return alert("Username နှင့် Password မဖြစ်မနေ ထည့်ရပါမည်။"); let users = getUserAccounts();
-      if (users.some(u => u.id !== editId && u.username.toLowerCase() === username.toLowerCase())) return alert('Username already exists.');
-      if (editId) { users = users.map(u => u.id === editId ? { ...u, username, password, displayName, role } : u); alert(`အကောင့် [${username}] အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!`); } 
-      else { if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) return alert("ဤ Username ဖြင့် အကောင့်ရှိပြီးသား ဖြစ်ပါသည်။"); users.push({ id: generateId('usr'), username, password, displayName, role, isOwner: false }); alert(`အကောင့်အသစ် [${username}] အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ!`); }
-      saveUserAccounts(users); resetUserForm();
+      e.preventDefault(); const editId = String(document.getElementById('editingUserId').value || ''); const username = document.getElementById('inUserUsername').value.trim();
+      const password = document.getElementById('inUserPassword').value.trim(); const displayName = document.getElementById('inUserDisplayName').value.trim(); const role = document.getElementById('inUserRole').value; const isActive = document.getElementById('inUserActive').checked;
+      if (!username || !displayName) return alert('Username နှင့် Display Name မဖြစ်မနေ ထည့်ရပါမည်။');
+      if (!editId && password.length < 6) return alert('Password ကို အနည်းဆုံး 6 လုံး ထည့်ပါ။');
+      if (password && password.length < 6) return alert('Password ကို အနည်းဆုံး 6 လုံး ထည့်ပါ။');
+      let users = getUserAccounts();
+      if (users.some(u => String(u.id) !== editId && u.username.toLowerCase() === username.toLowerCase())) return alert('ဤ Username ဖြင့် အကောင့်ရှိပြီးသား ဖြစ်ပါသည်။');
+      if (editId) {
+        const oldUser = users.find(u => String(u.id) === editId); if (!oldUser) return alert('ပြင်မည့်အကောင့်ကို မတွေ့ပါ။');
+        if (oldUser.isOwner && (role !== 'admin' || !isActive)) return alert('Owner account ကို Admin/Active အဖြစ်သာထားနိုင်ပါသည်။');
+        if (oldUser.role === 'admin' && oldUser.isActive !== false && (role !== 'admin' || !isActive) && users.filter(u => u.role === 'admin' && u.isActive !== false).length <= 1) return alert('နောက်ဆုံး Active Admin account ကို ပိတ်၍မရပါ။');
+        users = users.map(u => String(u.id) === editId ? { ...u, username, ...(password ? { password } : {}), displayName, role, isActive } : u);
+        if (currentUser && String(currentUser.id) === editId) { const changed = users.find(u => String(u.id) === editId); currentUser = { id: changed.id, username: changed.username, displayName: changed.displayName, role: changed.role, isOwner: changed.isOwner }; sessionStorage.setItem('bk_current_user', JSON.stringify(currentUser)); }
+        alert(`အကောင့် [${username}] ကို ပြင်ဆင်ပြီးပါပြီ။`);
+      } else {
+        users.push({ id: generateId('usr'), username, password, displayName, role, isActive, isOwner: false });
+        alert(`အကောင့်အသစ် [${username}] ထည့်သွင်းပြီးပါပြီ။`);
+      }
+      saveUserAccounts(users); resetUserForm(); applyRolePermissions();
     }
 
     function editUserAccount(id) {
-      const target = getUserAccounts().find(u => u.id === id); if (!target) return;
-      document.getElementById('editingUserId').value = target.id; document.getElementById('inUserUsername').value = target.username; document.getElementById('inUserPassword').value = target.password;
-      document.getElementById('inUserDisplayName').value = target.displayName || ''; document.getElementById('inUserRole').value = target.role; document.getElementById('btnSaveUser').innerHTML = `<span>✏️</span> <span>ပြင်ဆင်မှု သိမ်းမည်</span>`; window.scrollTo({ top: document.getElementById('inUserUsername').offsetTop - 120, behavior: 'smooth' });
+      const target = getUserAccounts().find(u => String(u.id) === String(id)); if (!target) return;
+      document.getElementById('editingUserId').value = String(target.id); document.getElementById('inUserUsername').value = target.username; document.getElementById('inUserPassword').value = '';
+      document.getElementById('inUserPassword').placeholder = 'မပြောင်းလိုပါက အလွတ်ထားပါ'; document.getElementById('inUserDisplayName').value = target.displayName || ''; document.getElementById('inUserRole').value = target.role; document.getElementById('inUserActive').checked = target.isActive !== false;
+      document.getElementById('userFormTitle').innerText = `အကောင့်ပြင်ဆင်ခြင်း — ${target.username}`; document.getElementById('userFormHint').innerText = 'Password မပြောင်းလိုပါက အလွတ်ထားနိုင်ပါသည်'; document.getElementById('editingUserBadge').classList.remove('hidden'); document.getElementById('btnSaveUser').innerHTML = '✏️ ပြင်ဆင်မှု သိမ်းမည်';
+      window.scrollTo({ top: document.getElementById('inUserUsername').offsetTop - 120, behavior: 'smooth' });
     }
 
-    function deleteUserAccount(id) { const target = getUserAccounts().find(u => u.id === id); if (!target || target.isOwner) return; if (confirm(`အကောင့် [${target.username} (${target.displayName})] ကို ဖျက်ရန် သေချာပါသလား?`)) saveUserAccounts(getUserAccounts().filter(u => u.id !== id)); }
-    function resetUserForm() { document.getElementById('editingUserId').value = ''; document.getElementById('inUserUsername').value = ''; document.getElementById('inUserPassword').value = ''; document.getElementById('inUserDisplayName').value = ''; document.getElementById('inUserRole').value = 'staff'; document.getElementById('btnSaveUser').innerHTML = `<span>💾</span> <span>အကောင့် သိမ်းဆည်းမည်</span>`; }
+    function toggleUserAccountStatus(id) {
+      let users = getUserAccounts(); const target = users.find(u => String(u.id) === String(id)); if (!target || target.isOwner) return;
+      if (currentUser && String(currentUser.id) === String(id)) return alert('လက်ရှိအသုံးပြုနေသော ကိုယ့်အကောင့်ကို ပိတ်၍မရပါ။');
+      if (target.role === 'admin' && target.isActive !== false && users.filter(u => u.role === 'admin' && u.isActive !== false).length <= 1) return alert('နောက်ဆုံး Active Admin account ကို ပိတ်၍မရပါ။');
+      users = users.map(u => String(u.id) === String(id) ? { ...u, isActive: u.isActive === false } : u); saveUserAccounts(users);
+    }
+    function deleteUserAccount(id) {
+      const users = getUserAccounts(); const target = users.find(u => String(u.id) === String(id)); if (!target || target.isOwner) return;
+      if (currentUser && String(currentUser.id) === String(id)) return alert('လက်ရှိအသုံးပြုနေသော ကိုယ့်အကောင့်ကို ဖျက်၍မရပါ။');
+      if (target.role === 'admin' && target.isActive !== false && users.filter(u => u.role === 'admin' && u.isActive !== false).length <= 1) return alert('နောက်ဆုံး Active Admin account ကို ဖျက်၍မရပါ။');
+      if (confirm(`အကောင့် [${target.username} (${target.displayName})] ကို ဖျက်ရန် သေချာပါသလား?`)) saveUserAccounts(users.filter(u => String(u.id) !== String(id)));
+    }
+    function toggleManagedPasswordVisibility() { const input = document.getElementById('inUserPassword'); input.type = input.type === 'password' ? 'text' : 'password'; }
+    function resetUserForm() { document.getElementById('editingUserId').value = ''; document.getElementById('inUserUsername').value = ''; document.getElementById('inUserPassword').value = ''; document.getElementById('inUserPassword').type = 'password'; document.getElementById('inUserPassword').placeholder = 'အနည်းဆုံး 6 လုံး'; document.getElementById('inUserDisplayName').value = ''; document.getElementById('inUserRole').value = 'staff'; document.getElementById('inUserActive').checked = true; document.getElementById('userFormTitle').innerText = 'အကောင့်အသစ်'; document.getElementById('userFormHint').innerText = 'Username၊ Password နဲ့ လုပ်ပိုင်ခွင့်ကို သတ်မှတ်ပါ'; document.getElementById('editingUserBadge').classList.add('hidden'); document.getElementById('btnSaveUser').innerHTML = '💾 အကောင့် သိမ်းဆည်းမည်'; }
     function escapeHtml(str) { return String(str || '').replace(/[&<>"']/g, function(m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]; }); }
 
     // 10. ROBUST BULLETPROOF DATE PARSER
@@ -975,17 +1029,17 @@
     function closeCargoEntryModal() { document.getElementById('cargoEntryModal').classList.add('hidden'); }
     function editCargoShipment(id) {
       if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် စာရင်းပြင်ဆင်ခွင့် ရှိပါသည်။");
-      const all = getCargoData(); const item = all.find(x => x.id === id); if (!item) return;
+      const all = getCargoData(); const item = all.find(x => String(x.id) === String(id)); if (!item) return;
       document.getElementById('editCargoId').value = item.id; document.getElementById('cargoModalTitle').innerText = "✏️ Credit စာရင်း ပြင်ဆင်ခြင်း"; document.getElementById('cargoModalCreditCo').value = item.creditCo || 'SH'; document.getElementById('cargoModalRemark').value = item.remark || ''; document.getElementById('cargoModalDate').value = item.date || ''; document.getElementById('cargoModalBoat').value = item.boat || ''; document.getElementById('cargoModalInvNo').value = item.invNo || ''; document.getElementById('cargoModalEdNo').value = item.edNo || ''; document.getElementById('cargoModalKG').value = item.kg || ''; document.getElementById('cargoModalUSD').value = item.usd || ''; document.getElementById('cargoModalRate').value = item.rate ?? 34.7; document.getElementById('cargoModalPct').value = item.pct ?? 4.0; document.getElementById('cargoModalLicense').checked = item.hasLicense || false; calculateCargoPreview(); document.getElementById('cargoEntryModal').classList.remove('hidden');
     }
     function calculateCargoPreview() { const usd = parseFloat(document.getElementById('cargoModalUSD').value) || 0; const rate = numberOr(document.getElementById('cargoModalRate').value, 34.7); const pct = numberOr(document.getElementById('cargoModalPct').value, 4.0); const thb = Math.round(usd * rate); const amt = Math.round(thb * (pct / 100)); document.getElementById('cargoPreviewTHB').innerText = '฿' + formatNum(thb, 0); document.getElementById('cargoPreviewAmount').innerText = '฿' + formatNum(amt, 0); }
     
     function handleCargoSubmit(e) {
       e.preventDefault(); const editId = document.getElementById('editCargoId').value; if (currentUser && currentUser.role === 'viewer') return alert("Viewer အကောင့်အတွက် စာရင်းသိမ်းဆည်းခွင့် မရှိပါ။"); if (editId && currentUser && currentUser.role === 'staff') return alert("Staff အကောင့်အတွက် စာရင်းပြင်ဆင်ခွင့် ပိတ်ထားပါသည်။");
-      const usd = parseFloat(document.getElementById('cargoModalUSD').value) || 0; const creditCo = document.getElementById('cargoModalCreditCo').value || 'SH'; const remark = document.getElementById('cargoModalRemark').value.trim().toUpperCase(); const custMap = getCustomers(); const companyName = custMap[remark] ? custMap[remark].name : remark; const hasLicense = document.getElementById('cargoModalLicense').checked;
+      const usd = parseFloat(document.getElementById('cargoModalUSD').value) || 0; const creditCo = document.getElementById('cargoModalCreditCo').value || 'SH'; const entryDate = document.getElementById('cargoModalDate').value; const entryInvNo = document.getElementById('cargoModalInvNo').value.trim(); const remark = document.getElementById('cargoModalRemark').value.trim().toUpperCase(); const duplicate = getCargoData().find(x => String(x.id) !== String(editId) && String(x.creditCo || 'SH').trim().toUpperCase() === String(creditCo).trim().toUpperCase() && String(x.date || '') === entryDate && String(x.invNo || '').trim().toUpperCase() === entryInvNo.toUpperCase()); if (duplicate) return alert(`Credit Co., Date နှင့် Invoice No တူသော စာရင်းရှိပြီးသား ဖြစ်ပါသည်။ (${entryInvNo})`); const custMap = getCustomers(); const companyName = custMap[remark] ? custMap[remark].name : remark; const hasLicense = document.getElementById('cargoModalLicense').checked;
       let rate = numberOr(document.getElementById('cargoModalRate').value, 34.7); let pct = numberOr(document.getElementById('cargoModalPct').value, 4.0); if (currentUser && currentUser.role === 'staff') { rate = 34.7; pct = custMap[remark] ? custMap[remark].defaultPct : 4.0; }
       const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); 
-      const newItem = { id: editId || generateId('bk'), no: 0, creditCo, date: document.getElementById('cargoModalDate').value, boat: document.getElementById('cargoModalBoat').value, remark, companyName, invNo: document.getElementById('cargoModalInvNo').value, edNo: document.getElementById('cargoModalEdNo').value, kg: parseFloat(document.getElementById('cargoModalKG').value) || 0, usd, rate, thb, pct, amount, hasLicense };
+      const newItem = { id: editId || generateId('bk'), no: 0, creditCo, date: entryDate, boat: document.getElementById('cargoModalBoat').value, remark, companyName, invNo: entryInvNo, edNo: document.getElementById('cargoModalEdNo').value, kg: parseFloat(document.getElementById('cargoModalKG').value) || 0, usd, rate, thb, pct, amount, hasLicense };
       saveCargoNode(newItem); populateMonthDropdown(); closeCargoEntryModal(); filterData(); renderMpuLedger(); alert(editId ? "ပြင်ဆင်မှု အောင်မြင်ပါသည်" : "စာရင်းအသစ် သိမ်းဆည်းပြီးပါပြီ");
     }
     function deleteCargoShipment(id) { if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် စာရင်းဖျက်ပိုင်ခွင့် ရှိပါသည်။"); if (confirm("ဤစာရင်းကို ဖျက်မှာ သေချာပါသလား?")) { deleteCargoNode(id); populateMonthDropdown(); filterData(); renderDailyReport(); renderMpuLedger(); } }
@@ -996,7 +1050,7 @@
       if (!newRateInput && !newPctInput) return alert("RATE သို့မဟုတ် % အနက် အနည်းဆုံး တစ်ခုကို ထည့်သွင်းပေးရပါမည်။"); const newRate = newRateInput ? parseFloat(newRateInput) : null; const newPct = newPctInput ? parseFloat(newPctInput) : null;
       let all = getCargoData(); let count = 0; let updates = {};
       all = all.map(i => { if ((cust === 'ALL' || String(i.remark || '').trim().toUpperCase() === cust) && (i.date >= start && i.date <= end)) { count++; const usd = Number(i.usd || 0); const rate = newRate !== null ? newRate : Number(i.rate ?? 34.7); const pct = newPct !== null ? newPct : Number(i.pct ?? 4.0); const thb = Math.round(usd * rate); const amount = Math.round(thb * (pct / 100)); const updatedItem = { ...i, rate, pct, thb, amount }; updates[i.id] = updatedItem; return updatedItem; } return i; });
-      if (!count) return alert("ရွေးချယ်ထားသော ရက်စွဲအတွင်း သက်ဆိုင်ရာ စာရင်းမရှိပါ။"); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); if (firebaseDb && Object.keys(updates).length > 0) firebaseDb.ref("bk_operations_master/cargoData").update(updates);
+      if (!count) return alert("ရွေးချယ်ထားသော ရက်စွဲအတွင်း သက်ဆိုင်ရာ စာရင်းမရှိပါ။"); localStorage.setItem('bk_CargoData_enc', encryptPayload(all)); if (firebaseDb && Object.keys(updates).length > 0) saveCloudCollection('cargoData', all);
       filterData(); renderDailyReport(); renderBreakdown(); toggleBatchTool(); alert(`စာရင်းပေါင်း (${count}) ခု၏ Data ကို အောင်မြင်စွာ Update ပြုလုပ်ပြီးပါပြီ။`);
     }
     function exportToExcel() {
@@ -1175,7 +1229,7 @@
     function closeEdEntryModal() { document.getElementById('edEntryModal').classList.add('hidden'); }
     function editEdShipment(id) {
       if ((!currentUser || currentUser.role !== 'admin')) return alert("Admin သာလျှင် ED စာရင်း ပြင်ဆင်ခွင့် ရှိပါသည်။");
-      const all = getEdData(); const item = all.find(x => x.id === id); if (!item) return;
+      const all = getEdData(); const item = all.find(x => String(x.id) === String(id)); if (!item) return;
       document.getElementById('editEdId').value = item.id; 
       document.getElementById('edModalTitle').innerText = "✏️ ED Service စာရင်း ပြင်ဆင်ခြင်း"; 
       document.getElementById('inEdDate').value = item.date || ''; 
