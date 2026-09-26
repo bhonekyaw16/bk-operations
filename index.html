@@ -904,7 +904,7 @@
         try {
           // Keep Excel dates as serial numbers; parseExactExcelDate converts them without timezone drift.
           const data = new Uint8Array(e.target.result); const workbook = XLSX.read(data, { type: 'array', cellDates: false });
-          const configuredSheetCodes=new Set(getCreditCompanies().map(c=>normalizeCode(c.code))),activeSheetCode=getActiveCreditCompanyCode(); let sheetName=workbook.SheetNames.find(s=>normalizeCode(s)===activeSheetCode)||workbook.SheetNames.find(s=>configuredSheetCodes.has(normalizeCode(s)))||workbook.SheetNames[0];
+          const configuredSheetCodes=new Set(getCreditCompanies().map(c=>normalizeCode(c.code))),matchingSheets=workbook.SheetNames.filter(s=>configuredSheetCodes.has(normalizeCode(s)));if(matchingSheets.length===0){const names=workbook.SheetNames.map(s=>normalizeCode(s)||String(s)).join(', ');alert(`Excel Sheet Name [${names}] is not a configured Credit Company.`);return}if(matchingSheets.length>1){alert(`Excel တွင် configured Credit Company sheet များ အများကြီး တွေ့ရှိသည်: ${matchingSheets.join(', ')}။ Import လုပ်မည့် sheet တစ်ခုသာထားပေးပါ။`);return}const sheetName=matchingSheets[0];
           const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
           if (!rawRows || rawRows.length === 0) { alert("Excel ဖိုင်ထဲတွင် ဒေတာ မတွေ့ရှိပါ။"); return; }
           
@@ -920,7 +920,7 @@
           const colBoat = headers.findIndex(h => h.includes('လှေ') || h.includes('boat') || h.includes('name'));
           let colInv = headers.findIndex(h => h === 'inv no' || h === 'inv no.' || h === 'inv: no' || h === 'inv');
           if (colInv === -1) colInv = headers.findIndex(h => h.includes('inv') && !h.includes('usd') && !h.includes('thb') && !h.includes('vl') && !h.includes('amt'));
-          const colEd = headers.findIndex(h => h.includes('ed'));
+          const colEd = headers.findIndex(h => /^ed(?:\s|:|\.|-|_)*?(?:no|number)?\.?$/i.test(h) || h.includes('ed no') || h.includes('ed number'));
           const colKg = headers.findIndex(h => h.includes('kg') || h.includes('qty') || h.includes('weight') || h.includes('ချိန်'));
           const colUsd = headers.findIndex(h => h.includes('usd') || (h.includes('inv') && (h.includes('amt') || h.includes('val') || h.includes('vl'))));
           const colRate = headers.findIndex(h => h.includes('rate') || h.includes('နှုန်း'));
@@ -929,9 +929,7 @@
           const colRemark = headers.findIndex(h => h.includes('remark') || h === 'customer' || h === 'cust' || h.includes('customer code') || h.includes('cust code'));
           const colCompany = headers.findIndex((h, i) => i !== colCreditCo && (h.includes('company name') || h.includes('customer company') || h === 'company' || h.includes('ကုမ္ပဏီ')));
 
-          const knownCoCodes = new Set(getCreditCompanies().map(c => normalizeCode(c.code)));
-          const sheetCreditCo = normalizeCode(sheetName);
-          const detectedCreditCo = knownCoCodes.has(sheetCreditCo) ? sheetCreditCo : '';
+          const detectedCreditCo = normalizeCode(sheetName);
 
           let parsedList = []; const currentCustomers = getCustomers();
           for (let rowIdx = headerIdx + 1; rowIdx < rawRows.length; rowIdx++) {
@@ -939,23 +937,27 @@
             const rowStr = row.map(c => String(c || '')).join(' ').toLowerCase(); 
             if (rowStr.includes('total') || rowStr.includes('grand total') || rowStr.includes('စုစုပေါင်း')) continue;
 
+            const meaningfulColumns=[colDate,colBoat,colInv,colEd,colKg,colUsd,colRemark,colCompany,colRate,colPct];
+            if(!meaningfulColumns.some(col=>col!==-1&&row[col]!=null&&String(row[col]).trim()!==''))continue;
             const dateStr = parseExactExcelDate((colDate !== -1) ? row[colDate] : ''); 
             const boat = (colBoat !== -1 && row[colBoat] != null) ? String(row[colBoat]).trim() : ''; 
             const kg = (colKg !== -1 && row[colKg] != null && row[colKg] !== '') ? finiteNumber(row[colKg]) : null;
             const usd = (colUsd !== -1 && row[colUsd] != null && row[colUsd] !== '') ? finiteNumber(row[colUsd]) : null; 
             let invNo = (colInv !== -1 && row[colInv] != null) ? String(row[colInv]).trim() : '';
             
-            if (!row.some(cell => String(cell ?? '').trim() !== '')) continue;
             if (/^\d{1,2}$/.test(invNo)) { invNo = invNo.padStart(3, '0'); }
 
             const edNo = (colEd !== -1 && row[colEd] != null) ? String(row[colEd]).trim() : ''; 
-            const rate = (colRate !== -1 && row[colRate] != null && row[colRate] !== '') ? finiteNumber(row[colRate]) : null;
-            const pct = (colPct !== -1 && row[colPct] != null && row[colPct] !== '') ? finiteNumber(row[colPct]) : null;
-            const thb = usd !== null && rate !== null ? Math.round(usd * rate) : 0; const amount = pct !== null ? Math.round(thb * (pct / 100)) : 0; 
             const remark = (colRemark !== -1 && row[colRemark]) ? normalizeCode(row[colRemark]) : '';
             const suppliedCompanyName = (colCompany !== -1 && row[colCompany]) ? String(row[colCompany]).trim() : '';
             const compName = currentCustomers[remark]?.name || suppliedCompanyName;
-            const rowCreditCo = colCreditCo !== -1 && row[colCreditCo] != null ? normalizeCode(row[colCreditCo]) : detectedCreditCo;
+            const rateProvided=colRate!==-1&&row[colRate]!=null&&String(row[colRate]).trim()!=='';
+            const pctProvided=colPct!==-1&&row[colPct]!=null&&String(row[colPct]).trim()!=='';
+            const defaultPct=finiteNumber(currentCustomers[remark]?.defaultPct);
+            const rate=rateProvided?finiteNumber(row[colRate]):34.7;
+            const pct=pctProvided?finiteNumber(row[colPct]):(defaultPct!==null&&defaultPct>=0?defaultPct:4.0);
+            const thb = usd !== null && rate !== null ? Math.round(usd * rate) : 0; const amount = pct !== null ? Math.round(thb * (pct / 100)) : 0; 
+            const rowCreditCo = detectedCreditCo;
             parsedList.push({ id: generateId('bk'), no: parsedList.length + 1, _sourceRow: rowIdx + 1, creditCo: rowCreditCo, date: dateStr, boat, invNo, edNo, kg, usd, rate, thb, pct, amount, remark, companyName: compName, hasLicense: false });
           }
           
