@@ -1172,14 +1172,7 @@
       const creditCoObj = creditCompanies.find(c => c.code === selectedCreditCode) || creditCompanies[0];
       const onlyThisCreditCo = document.getElementById('filterOnlySelectedCreditCo').checked;
       let selectedDate = document.getElementById('reportDatePicker').value;
-      if (!selectedDate) {
-        const dateSource = onlyThisCreditCo ? all.filter(r => (r.creditCo || 'SH') === selectedCreditCode) : all;
-        const dates = dateSource.map(d => d.date).filter(Boolean).sort();
-        if (dates.length > 0) {
-          selectedDate = dates[dates.length - 1];
-          document.getElementById('reportDatePicker').value = selectedDate;
-        }
-      }
+      if (!selectedDate) { selectedDate = localToday(); document.getElementById('reportDatePicker').value = selectedDate; }
       const letterArea = document.getElementById('letterheadRenderArea');
       
       renderLetterheadHeader(letterArea,creditCoObj);
